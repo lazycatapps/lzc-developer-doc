@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitepress'
+import { defineConfig } from "vitepress";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -7,22 +7,32 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: "主页", link: "/" },
+      { text: "介绍", link: "/introduction" },
     ],
 
     sidebar: [
       {
-        text: 'Examples',
+        text: "快速上手",
         items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
-        ]
-      }
+          { text: "基本介绍", link: "/introduction" },
+          { text: "如何安装", link: "/installtion" },
+        ],
+      },
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
-    ]
-  }
-})
+      { icon: "github", link: "https://gitee.com/linakesi/lzc-sdk" },
+    ],
+  },
+  markdown: {
+    lineNumbers: true,
+    container: {
+      tipLabel: "小技巧",
+      warningLabel: "警告操作",
+      dangerLabel: "危险操作",
+      infoLabel: "展示信息",
+      detailsLabel: "详细说明",
+    },
+  },
+});

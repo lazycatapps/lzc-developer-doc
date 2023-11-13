@@ -9,10 +9,10 @@ hero:
   actions:
     - theme: brand
       text: 快速上手
-      link: /markdown-examples
+      link: /introduction
     - theme: alt
       text: 立即安装
-      link: /api-examples
+      link: /installtion
 
 features:
   - title: 应用开发
