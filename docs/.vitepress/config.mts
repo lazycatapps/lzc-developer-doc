@@ -16,7 +16,26 @@ export default defineConfig({
         text: "快速上手",
         items: [
           { text: "基本介绍", link: "/introduction" },
-          { text: "如何安装", link: "/installtion" },
+          { text: "安装工具", link: "/installtion" },
+        ],
+      },
+      {
+        text: "文档全览",
+        items: [
+          { text: "SDK文档", link: "/sdk-helper" },
+          { text: "高级配置", link: "/advanced-config" },
+          { text: "开发风格约定", link: "/code-style" },
+          { text: "上架懒猫商店", link: "/submit-appstore" },
+        ],
+      },
+      {
+        text: "开发示例",
+        items: [
+          { text: "Demo1", link: "/demo/demo1" },
+          { text: "Demo2", link: "/demo/demo2" },
+          { text: "Demo3", link: "/demo/demo3" },
+          { text: "Demo4", link: "/demo/demo4" },
+          { text: "Demo5", link: "/demo/demo5" },
         ],
       },
     ],
