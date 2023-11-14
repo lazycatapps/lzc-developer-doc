@@ -1,0 +1,16 @@
+pipeline {
+    agent { label "office-189" }
+    environment {
+        PATH = "/home/linakesi/golang/1.19.9/bin:${env.PATH}"
+        GOPRIVATE = 'gitee.com/linakesi'
+    }
+    stages {
+        stage('build') {
+            steps {
+                sh "make -C deploy"
+                sh "make -C deploy push-image"
+            }
+        }
+    }
+}
+
