@@ -20,26 +20,7 @@ export default defineConfig({
           { text: "应用开发", link: "/appdev" },
           { text: "在微服上开发", link: "/devshell" },
         ],
-      },
-      {
-        text: "文档全览",
-        items: [
-          { text: "SDK文档", link: "/sdk-helper" },
-          { text: "高级配置", link: "/advanced-config" },
-          { text: "开发风格约定", link: "/code-style" },
-          { text: "上架懒猫商店", link: "/submit-appstore" },
-        ],
-      },
-      {
-        text: "开发示例",
-        items: [
-          { text: "Demo1", link: "/demo/demo1" },
-          { text: "Demo2", link: "/demo/demo2" },
-          { text: "Demo3", link: "/demo/demo3" },
-          { text: "Demo4", link: "/demo/demo4" },
-          { text: "Demo5", link: "/demo/demo5" },
-        ],
-      },
+      }
     ],
 
     socialLinks: [
