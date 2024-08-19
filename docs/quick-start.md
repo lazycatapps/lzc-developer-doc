@@ -159,7 +159,7 @@ icon: ./lazycat.png
 #     export npm_config_registry=https://registry.npmmirror.com
 ```
 
-`devshell` 为方便开发和调试应用的一个 `ssh shell`， 通过 `devshell` 可以访问应用容器本身，点击查看更详细的[文档](http://localhost:5173/devshell.html)
+`devshell` 为方便开发和调试应用的一个 `ssh shell`， 通过 `devshell` 可以访问应用容器本身，点击查看更详细的[文档](./devshell.md)
 
 ### 2. Vue3 模板
 
