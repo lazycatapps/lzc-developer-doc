@@ -7,9 +7,10 @@
 ## 前置准备
 
 0. 正在运行的懒猫微服客户端，还没有客户端，[点击下载](https://lazycat.cloud/download)安装
-1. `ssh` 和 `ssh-copy-id` （开发应用的时候和应用容器连接使用）
-2. `rsync` （开发应用是同步开发数据使用）
-3. `nodejs` (运行 lzc-cli 使用)
+1. 微服中安装 [懒猫云开发者工具](https://appstore.lazycat.cloud/#/shop/detail/cloud.lazycat.developer.tools)
+2. `ssh` 和 `ssh-copy-id` （开发应用的时候和应用容器连接使用）
+3. `rsync` （开发应用是同步开发数据使用）
+4. `nodejs` (运行 lzc-cli 使用)
 
 ```bash
 npm install -g @lazycatcloud/lzc-cli
