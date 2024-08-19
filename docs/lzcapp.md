@@ -1,6 +1,10 @@
 # 懒猫微服应用
 
-![lzcos应用布局](./public/lzcos-app.png)
+::: tip
+如果你是有经验的开发者，可以直接查看 [manifest](https://gitee.com/linakesi/lzc-sdk/blob/master/docs/manifest.yml) 的字段说明
+:::
+
+![lzcos应用布局](/lzcos-app.png)
 
 在懒猫微服中，每一个应用都是独立运行的，应用的空间中可以启动别的 `sidecar` 服务。
 
@@ -69,7 +73,7 @@ services:
     image: mysql
 ```
 
-# `application`
+## `application`
 上面基本字段已经在[快速上手](./quick-start.md)中介绍，这里主要介绍 `application` 字段下的配置
 
 ## `application.routers`
@@ -105,20 +109,9 @@ services:
 安装完成后，可以在启动懒猫云客户端的机器上，使用 `ssh -p 22333 user@<app_domain>.<box_name>.heiyu.space` 登录到 `sshd` 容器中去
 
 
-# `services`
+## `services`
 
-定义应用的 `sidecar` 服务，格式和 `docker-compose`一样，但做了限制
-
-1. 仅支持以下挂载点:
-```
-    # /lzcapp/run
-    # /lzcapp/run/mnt/home
-    # /lzcapp/var
-    # /lzcapp/cache
-    # /lzcapp/pkg
-```
-
-以下为一个向量数据库的使用示例
+定义应用的 `sidecar` 服务，格式和 `docker-compose`一样，但做了限制，以下为一个向量数据库的使用示例
 ```yml
 services:
   weaviate:
@@ -134,3 +127,56 @@ services:
       - ENABLE_MODULES=
       - CLUSTER_HOSTNAME=vector_db
 ```
+
+## 资源文件
+
+在 `app` 服务容器中，会自动把下面几个目录挂载，其他的 sidebar 也可以使用 services 中的使用 `binds` 进行绑定到容器中。
+
+```bash
+/lzcapp/run               # lzcos 系统相关的文件
+/lzcapp/run/mnt/home      # lzcos 用户家目录 /home/$uid/xxxx
+/lzcapp/var               # 应用持久化数据目录
+/lzcapp/cache             # 应用缓存数据目录
+/lzcapp/pkg               # 应用通过lpk安装进来的数据目录
+```
+
+## `/lzcapp/pkg`
+
+`lpk` 的微服应用的安装包，里面有应用所需要的各种文件（比如前端界面的构建dist目录，后端运行的二进制文件等）。资源文件是在 `lzc-build.yml` 中的 `contentdir` [查看更多](./devshell.md#contentdir)的定义，在构建的时候，你可以将需要携带的资源文件放在这个目录下，构建完成后，会把里面的资源文件打包到 `lpk` 中。
+
+在一个应用安装完成后，`lpk` 中的资源会放置在 `/lzcapp/pkg` 下面用一个真实的应用示例
+
+```bash
+/ # tree -L 3 /lzcapp/pkg
+/lzcapp/pkg
+├── content                                # 对应 lzc-build.yml 中指定的 contentdir 字段
+│   ├── dist
+│   │   ├── assets
+│   │   ├── favicon-128x128.png
+│   │   ├── favicon-256x256.png
+│   │   ├── favicon-48x48.png
+│   │   ├── favicon-512x512.png
+│   │   ├── favicon-safari-512.png
+│   │   ├── favicon.ico
+│   │   ├── index.html
+│   │   ├── loading.png
+│   │   ├── manifest.webmanifest
+│   │   ├── sw.js
+│   │   ├── sw.js.map
+│   │   ├── workbox-27b29e6f.js
+│   │   └── workbox-27b29e6f.js.map
+│   ├── env.sh
+│   └── lzc-photo
+├── icon.png                             # lzc-build.yml 中指定的 icon 文件
+└── manifest.yml                         # 对应的 lzc-manifest.yml 文件
+```
+
+## `/lzcapp/var`
+
+这个目录为应用持久化数据存储的目录，里面的数据只有在用户卸载应用后才会被清理。
+
+在上面的[示例](./lzcapp.md#services)中向量数据库 service 中的，数据库的存储目录就在 `/lzcapp/var` 下。
+
+## `/lzcapp/cache`
+
+这个目录为应用缓存数据存储的目录，里面的数据在重启应用后也不会丢失，但可能会被用户在应用管理界面中清理缓存数据而清理掉。
