@@ -3,9 +3,6 @@
 UI_DIR = ..
 UI_INDEX = $(UI_DIR)/docs/.vitepress/dist/index.html
 
-export K8S_NAMESPACE ?= lazycat-service
-export K8S_DEPLOYMENT ?= lzc-developer-community
-
 DEPLOY_SOURCE = \
 	Dockerfile \
 	nginx.conf \
@@ -49,7 +46,6 @@ DOCKER_BUILD_CONTEXT = ..
 push-image: $(DOCKER_BUILD_CONTEXT)/.pushed.timestamp
 $(DOCKER_BUILD_CONTEXT)/.pushed.timestamp: $(DOCKER_BUILD_CONTEXT)/.image.timestamp
 	docker push $(IMAGE_TAG)
-		if [ "$(K8S_DEPLOYMENT)" ]; then curl --fail-with-body -d "{\"namespace\":\"$(K8S_NAMESPACE)\",\"name\":\"$(K8S_DEPLOYMENT)\"}" "https://k8s-reset.lazycat.cloud"; fi
 	touch "$@"
 
 # image
