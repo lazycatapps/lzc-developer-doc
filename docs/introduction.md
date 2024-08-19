@@ -1,18 +1,28 @@
-# Lzc SDK是什么?
-懒猫微服平台提供操作，获取系统和应用状态功能的接口。
+# Lzc-SDK是什么?
 
-开发者基于开放的接口创造出有趣的应用程序，并通过SDK提供的工具上架到懒猫微服商店。
+Lzc-SDK 是懒猫微服平台提供的SDK，使开发者能够与系统和应用状态进行交互，创建更多好玩，有趣的应用程序，并将其发布到懒猫微服商店。
 
-使用懒猫微服SDK无须关心服务器的搭建，内部后端逻辑，接口设计，网络安全等繁杂的技术知识，只需要调用几个函数，你的应用就能跑起来并发布到公共商店中。
+使用 Lzc-SDK，开发者可以专注于构建创新应用，无需担心服务器搭建、后端逻辑、API 设计或网络安全。SDK 简化了开发过程，让您只需几个函数调用就能创建和部署应用。
 
 SDK支持多种编程语言的支持，包含系统层，应用层，客户端层所需API，允许开发者全方位扩展懒猫微服。
 
-::: details
+::: info
 目前支持 Go、Javascript/Typescript，后续会提供更多语言版本，例如 Rust、Dart、Cpp、Java、Python、Ruby、C#、PHP、Objective-C、Kotlin 敬请期待...
+:::
+
+## 扩展
+
+对应一些比较常见的场景，懒猫微服平台中也提供了以下扩展:
+  - [lzc-minidb](https://www.npmjs.com/package/@lazycatcloud/minidb)，一个类似 MongoDB 类型的小数据库，方便开发者可以直接开发 Serverless 的应用。
+  - [lzc-file-pickers](https://www.npmjs.com/package/@lazycatcloud/lzc-file-pickers)，一个懒猫微服中的文件选择器，让你的应用支持直接打开微服中的文件。
+
+::: info
+目前提供的扩展都是 Javascript/Typescript 的，方便Web端使用。如果不能满足你的需求，欢迎反馈，我们会尽快加上。:)
 :::
 
 ## Javascript示例
 Javascript(Typescript)的SDK使用npm分发，需要在你的项目中安装对应的npm包。
+
 ```bash
 npm install @lazycatcloud/sdk
 # 或者
@@ -20,6 +30,7 @@ pnpm install @lazycatcloud/sdk
 ```
 
 JS/TS版本是使用[grpc-web](https://github.com/improbable-eng/grpc-web)提供服务，下面提供了一个获取所有应用列表的示例:
+
 ```js
 import { lzcApiGateway } from "@lazycatcloud/sdk"
 
@@ -92,7 +103,7 @@ func main(){
 	devices, err := lzcAPI.Devices.ListEndDevices(ctx, request)
 	if devices == nil {
 		fmt.Println("lazycat没有任何设备")
-		return 
+		return
 	}
 	var onLineDevices []*common.EndDevice
 	for _, device := range devices.Devices {

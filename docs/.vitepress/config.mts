@@ -13,10 +13,12 @@ export default defineConfig({
 
     sidebar: [
       {
-        text: "快速上手",
+        text: "简介",
         items: [
-          { text: "基本介绍", link: "/introduction" },
-          { text: "安装工具", link: "/installtion" },
+          { text: "什么是 Lzc-SDK?", link: "/introduction" },
+          { text: "快速开始", link: "/quick-start" },
+          { text: "应用开发", link: "/appdev" },
+          { text: "在微服上开发", link: "/devshell" },
         ],
       },
       {
@@ -50,7 +52,7 @@ export default defineConfig({
       tipLabel: "小技巧",
       warningLabel: "警告操作",
       dangerLabel: "危险操作",
-      infoLabel: "展示信息",
+      infoLabel: "INFO",
       detailsLabel: "详细说明",
     },
   },
