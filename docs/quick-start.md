@@ -18,6 +18,11 @@ npm install -g @lazycatcloud/lzc-cli
 lzc-cli completion >> ~/.zshrc
 ```
 
+::: info
+开发者工具中的开发容器的帐号密码为 `box:box`，这个在首次使用的 `lzc-cli` 的时候会出现. 如
+`box@dev.<box_name>.heiyu.space`.
+:::
+
 ## 创建项目
 下面开始使用 `lzc-cli` 去创建一个项目吧!
 
