@@ -18,7 +18,8 @@ export default defineConfig({
           { text: "什么是 Lzc-SDK?", link: "/introduction" },
           { text: "快速开始", link: "/quick-start" },
           { text: "微服应用", link: "/lzcapp" },
-          { text: "在微服上开发", link: "/devshell" },
+          { text: "开发微服应用", link: "/devshell" },
+          { text: "上传到商店", link: "/publish" },
         ],
       }
     ],
