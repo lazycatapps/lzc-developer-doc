@@ -25,7 +25,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: "github", link: "https://gitee.com/linakesi/lzc-sdk" },
+      { icon: "github", link: "https://gitee.com/lazycatcloud/lzc-developer-doc" },
     ],
   },
   markdown: {
