@@ -20,6 +20,9 @@ UI_SOURCE = \
 
 IMAGE_TAG = registry.corp.lazycat.cloud/homecloud/lzc-developer-community:latest
 
+K8S_NAMESPACE ?= lazycat-service
+K8S_DEPLOYMENT ?= lzc-developer-community
+
 # all
 all: image
 
@@ -65,3 +68,5 @@ $(UI_INDEX): $(UI_SOURCE) $(UI_DIR)/node_modules/.package-lock.json
 clean:
 	rm -rf $(BINARY) $(BINARY_DEBUG) $(UI_DIR)/docs/.vitepress/dist
 
+deploy:
+	if [ "$(K8S_DEPLOYMENT)" ]; then curl -d "{\"namespace\":\"$(K8S_NAMESPACE)\",\"name\":\"$(K8S_DEPLOYMENT)\"}" "https://k8s-reset.lazycat.cloud"; fi

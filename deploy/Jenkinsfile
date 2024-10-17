@@ -9,6 +9,7 @@ pipeline {
             steps {
                 sh "make -C deploy"
                 sh "make -C deploy push-image"
+                sh "make -C deploy deploy"
             }
         }
     }
