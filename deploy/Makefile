@@ -70,3 +70,6 @@ clean:
 
 deploy:
 	if [ "$(K8S_DEPLOYMENT)" ]; then curl -d "{\"namespace\":\"$(K8S_NAMESPACE)\",\"name\":\"$(K8S_DEPLOYMENT)\"}" "https://k8s-reset.lazycat.cloud"; fi
+
+flush-cdn:
+	bash flush-cdn.sh $(SECRET_ID) ${SECRET_KEY}

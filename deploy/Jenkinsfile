@@ -3,6 +3,8 @@ pipeline {
     environment {
         PATH = "/home/linakesi/golang/1.19.9/bin:${env.PATH}"
         GOPRIVATE = 'gitee.com/linakesi'
+        TENCENT_CLOUD_SECRET_ID = credentials('TENCENT_CLOUD_SECRET_ID')
+        TENCENT_CLOUD_SECRET_KEY = credentials('TENCENT_CLOUD_SECRET_KEY')
     }
     stages {
         stage('build') {
@@ -10,6 +12,7 @@ pipeline {
                 sh "make -C deploy"
                 sh "make -C deploy push-image"
                 sh "make -C deploy deploy"
+                sh "make -C deploy flush-cdn SECRET_ID=$TENCENT_CLOUD_SECRET_ID  SECRET_KEY=$TENCENT_CLOUD_SECRET_KEY"
             }
         }
     }
