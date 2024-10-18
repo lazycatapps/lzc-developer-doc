@@ -19,7 +19,7 @@
 
 1. 安装懒猫云开发者工具
 
-通过懒猫微服客户端商店， 搜索并安装“懒猫云开发者工具”。
+通过懒猫微服客户端商店， 搜索并安装[“懒猫开发者工具”](https://appstore.lazycat.cloud/#/shop/detail/cloud.lazycat.developer.tools)。
 
 2. 安装 lzc-cli
 
