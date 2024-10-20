@@ -21,7 +21,7 @@ export default defineConfig({
           { text: "开发环境", link: "/lzc-cli.md" },
           { text: "开发模式", link: "/develop-mode.md" },
           { text: "Hello World", link: "/hello-world.md" },
-          { text: "反向代理模式配置", link: "/反向代理模式配置.md" },
+          { text: "反向代理模式配置", link: "/proxy.md" },
         ],
       },
       {
