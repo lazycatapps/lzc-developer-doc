@@ -20,15 +20,15 @@ export default defineConfig({
         items: [
           { text: "开发环境", link: "/lzc-cli.md" },
           { text: "开发模式", link: "/develop-mode.md" },
-          { text: "Hello World", link: "/HelloWorld.md" },
+          { text: "Hello World", link: "/hello-world.md" },
           { text: "反向代理模式配置", link: "/反向代理模式配置.md" },
         ],
       },
       {
         text: "第三章",
         items: [
-          { text: "TodoList(Go语言版本)", link: "/TodoList-Go.md" },
-          { text: "TodoList(Python语言版本)", link: "/TodoList-Python.md" },
+          { text: "TodoList(Go语言版本)", link: "/todolist-go.md" },
+          { text: "TodoList(Python语言版本)", link: "/todolist-python.md" },
         ],
       },
     ],

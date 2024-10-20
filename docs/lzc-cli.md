@@ -18,7 +18,7 @@ npm install @lazycatcloud/lzc-cli -g
 
 4. 安装系统依赖
 
-根据你的操作系统， 安装系统依赖。
+根据您的操作系统， 安装系统依赖。
 
 - **Ubuntu / Debian**:
 

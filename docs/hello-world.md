@@ -1,6 +1,7 @@
-# Hello World 示例
+# Hello World
+下面请随我们下面的步骤， 一起来构建我们第一个应用吧。
 
-使用 lzc-cli 可以轻松快速创建新应用。
+首先， 使用 lzc-cli 来创建一个名为 `hellowolrd` 的项目：
 
 ```bash
 lzc-cli project create helloworld
@@ -24,7 +25,7 @@ lzc-cli project create helloworld
    进入微服客户端启动器页面点击应用图标来测试应用
 ```
 
-接着执行以下命令进入容器开发环境：
+其次， 执行以下命令进入容器开发环境：
 
 ```bash
 cd helloworld
@@ -54,6 +55,6 @@ Local:   http://localhost:3000/
 Network: http://172.31.0.36:3000/
 ```
 
-此时， 应用服务已经启动， 你可以在 PC 或者手机端点击 "helloworld" 图标， 查看应用在每个终端平台的效果。
+此时， 应用服务已经启动， 您可以在 PC 或者手机端点击 "helloworld" 图标， 查看应用在每个终端平台的效果。
 
 懒猫微服的一大优势是， 您只需要编写一次 JavaScript, 我们自动解决应用在 Windows/Linux/macOS/Android/iOS/鸿蒙 6 个操作系统平台上跨平台运行的问题， 为开发者节省了大量平台适配的时间。
