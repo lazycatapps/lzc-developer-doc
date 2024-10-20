@@ -39,10 +39,3 @@ npm install @lazycatcloud/lzc-cli -g
   sudo apt update
   sudo apt install openssh-client unzip rsync
   ```
-
-## 开发模式
-
-懒猫微服有两种开发模式， Docker 和 KVM 两种模式。
-
-- **Docker 模式**： 这种模式的优点是， 应用权限更容易管理， 文件系统隔离的特性很适合应用开发和部署， 缺点是细节比较多
-- **KVM 模式**： 这种模式的优点是， 更像公有云开发环境， 装一些软件库在虚拟机环境， 通过懒猫微服外网穿透能力快速做一些技术原型实验， 缺点是文件系统不分离， 不适合做应用分发
