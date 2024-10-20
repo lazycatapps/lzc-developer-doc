@@ -2,24 +2,24 @@ import { defineConfig } from "vitepress";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "懒猫微服应用开发",
-  description: "突破传统，技术赋能",
+  title: "懒猫微服开发者手册",
+  description: "高端私有云， 选懒猫就对了",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [{ text: "指南", link: "/" }],
 
     sidebar: [
       {
-        text: "入门",
+        text: "介绍",
         items: [
-          { text: "欢迎加入", link: "/index.md" },
-          { text: "命令行工具", link: "/lzc-cli.md" },
+          { text: "欢迎", link: "/index.md" },
+          { text: "开发环境", link: "/lzc-cli.md" },
         ],
       },
       {
         text: "Docker开发模式",
         items: [
-          { text: "HelloWorld", link: "/HelloWorld.md" },
+          { text: "Hello World", link: "/HelloWorld.md" },
           { text: "反向代理模式配置", link: "/反向代理模式配置.md" },
           { text: "TodoList(Go语言版本)", link: "/TodoList-Go.md" },
           { text: "TodoList(Python语言版本)", link: "/TodoList-Python.md" },
