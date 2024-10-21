@@ -32,6 +32,12 @@ export default defineConfig({
           { text: "第一个Golang应用", link: "/todolist-go.md" },
         ],
       },
+      {
+        text: "发布应用",
+        items: [
+          { text: "发布自己的第一个应用", link: "/release-app.md" },
+        ],
+      }
     ],
 
     socialLinks: [
