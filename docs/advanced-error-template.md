@@ -28,4 +28,4 @@ application:
 </html>
 ```
 
-- `ErrorDetail`： 是微服内置的错误代码， 当应用发生错误时， 微服系统会用容器失败日志内容替换 `ErrorDetail`
+- `ErrorDetail`： 是微服内置的错误代码， 当应用发生错误时， 微服系统会用容器失败日志内容替换 `ErrorDetail` ， 帮助开发者排查错误
