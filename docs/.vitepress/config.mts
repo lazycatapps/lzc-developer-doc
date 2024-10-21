@@ -10,13 +10,13 @@ export default defineConfig({
 
     sidebar: [
       {
-        text: "第一章",
+        text: "入门",
         items: [
           { text: "欢迎", link: "/index.md" },
         ],
       },
       {
-        text: "第二章",
+        text: "环境搭建",
         items: [
           { text: "开发环境", link: "/lzc-cli.md" },
           { text: "开发模式", link: "/develop-mode.md" },
@@ -25,10 +25,10 @@ export default defineConfig({
         ],
       },
       {
-        text: "第三章",
+        text: "开发应用",
         items: [
-          { text: "TodoList(Go语言版本)", link: "/todolist-go.md" },
-          { text: "TodoList(Python语言版本)", link: "/todolist-python.md" },
+          { text: "第一个Python应用", link: "/todolist-python.md" },
+          { text: "第一个Golang应用", link: "/todolist-go.md" },
         ],
       },
     ],
