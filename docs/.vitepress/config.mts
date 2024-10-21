@@ -29,7 +29,7 @@ export default defineConfig({
         items: [
           { text: "第一个Python应用", link: "/todolist-python.md" },
           { text: "Python应用详解", link: "/todolist-python-description.md" },
-          { text: "第一个Golang应用", link: "/todolist-go.md" },
+          { text: "Golang应用", link: "/todolist-go.md" },
         ],
       },
       {
@@ -41,6 +41,7 @@ export default defineConfig({
           { text: "应用关联", link: "/advanced-mime.md" },
           { text: "后台常驻", link: "/advanced-background.md" },
           { text: "多实例", link: "/advanced-multi-instance.md" },
+          { text: "公开API服务", link: "/advanced-public-path.md" },
           { text: "GPU加速", link: "/advanced-gpu.md" },
           { text: "设置不支持的平台", link: "/advanced-platform.md" },
         ],
