@@ -36,6 +36,7 @@ export default defineConfig({
         text: "高级篇",
         items: [
           { text: "文件访问", link: "/advanced-file.md" },
+          { text: "数据库服务", link: "/advanced-db.md" },
         ],
       },
       {
