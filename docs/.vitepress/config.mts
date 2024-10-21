@@ -54,9 +54,10 @@ export default defineConfig({
         ],
       },
       {
-        text: "中间件",
+        text: "扩展",
         items: [
           { text: "官方扩展", link: "/extensions.md" },
+          { text: "自己假设网络穿透", link: "/network-pass-through.md" },
         ],
       },
       {
