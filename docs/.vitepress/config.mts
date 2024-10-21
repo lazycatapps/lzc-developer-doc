@@ -40,6 +40,7 @@ export default defineConfig({
           { text: "服务启动依赖", link: "/advanced-depends.md" },
           { text: "GPU加速", link: "/advanced-gpu.md" },
           { text: "应用关联", link: "/advanced-mime.md" },
+          { text: "设置不支持的平台", link: "/advanced-platform.md" },
         ],
       },
       {
