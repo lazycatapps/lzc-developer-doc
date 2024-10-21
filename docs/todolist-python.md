@@ -70,7 +70,6 @@ npm install
 
 # 构建 lpk
 lzc-cli project build -o release.lpk
-
 ```
 
 2. 安装应用

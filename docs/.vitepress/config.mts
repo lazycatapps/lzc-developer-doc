@@ -28,6 +28,7 @@ export default defineConfig({
         text: "开发应用",
         items: [
           { text: "第一个Python应用", link: "/todolist-python.md" },
+          { text: "Python应用详解", link: "/todolist-python-description.md" },
           { text: "第一个Golang应用", link: "/todolist-go.md" },
         ],
       },
