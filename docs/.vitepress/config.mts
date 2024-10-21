@@ -12,7 +12,7 @@ export default defineConfig({
       {
         text: "欢迎",
         items: [
-          { text: "欢迎使用懒猫微服", link: "/welcome.md" },
+          { text: "欢迎使用懒猫微服", link: "/index.md" },
         ],
       },
       {
