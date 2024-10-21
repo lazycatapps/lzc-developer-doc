@@ -28,8 +28,8 @@ export default defineConfig({
         text: "开发应用",
         items: [
           { text: "第一个Python应用", link: "/app-example-python.md" },
-          { text: "Python应用配置详解", link: "/app-example-python-description.md" },
-          { text: "Golang应用", link: "/app-example-go.md" },
+          { text: "应用配置详解", link: "/app-example-python-description.md" },
+          { text: "第一个Golang应用", link: "/app-example-go.md" },
         ],
       },
       {
