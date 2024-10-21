@@ -7,9 +7,9 @@
 
 多实例的好处是， 应用代码简单， 不用考虑不同用户访问的权限问题， 缺点是多个用户访问微服时会启动多份容器， 占用额外的内存资源。
 
-微服应用默认是单实例， 当你想开发多实例应用时， 只需在 `lzc-manifest.yml` 文件中的 `application` 字段下加一个 `background_task` 子字段即可， 举例：
+微服应用默认是单实例， 当你想开发多实例应用时， 只需在 `lzc-manifest.yml` 文件中的 `application` 字段下加一个 `multi_instance` 子字段即可， 举例：
 
 ```yml
 application:
-  background_task: true
+  multi_instance: true
 ```
