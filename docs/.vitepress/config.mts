@@ -48,6 +48,12 @@ export default defineConfig({
         ],
       },
       {
+        text: "插件",
+        items: [
+          { text: "官方扩展", link: "/extensions.md" },
+        ],
+      },
+      {
         text: "发布应用",
         items: [
           { text: "发布自己的第一个应用", link: "/release-app.md" },
