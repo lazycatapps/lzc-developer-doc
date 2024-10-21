@@ -37,7 +37,7 @@ export default defineConfig({
         items: [
           { text: "文件访问", link: "/advanced-file.md" },
         ],
-      }
+      },
       {
         text: "发布应用",
         items: [
