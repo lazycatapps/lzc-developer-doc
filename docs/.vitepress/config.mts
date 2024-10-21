@@ -12,7 +12,7 @@ export default defineConfig({
       {
         text: "入门",
         items: [
-          { text: "欢迎", link: "/index.md" },
+          { text: "欢迎", link: "/welcome.md" },
         ],
       },
       {
@@ -21,15 +21,15 @@ export default defineConfig({
           { text: "开发环境", link: "/lzc-cli.md" },
           { text: "开发模式", link: "/develop-mode.md" },
           { text: "Hello World", link: "/hello-world.md" },
-          { text: "反向代理模式配置", link: "/proxy.md" },
+          { text: "反向代理模式配置", link: "/reverse-proxy.md" },
         ],
       },
       {
         text: "开发应用",
         items: [
-          { text: "第一个Python应用", link: "/todolist-python.md" },
-          { text: "Python应用详解", link: "/todolist-python-description.md" },
-          { text: "Golang应用", link: "/todolist-go.md" },
+          { text: "第一个Python应用", link: "/app-example-python.md" },
+          { text: "Python应用详解", link: "/app-example-python-description.md" },
+          { text: "Golang应用", link: "/app-example-go.md" },
         ],
       },
       {
@@ -56,7 +56,7 @@ export default defineConfig({
       {
         text: "发布应用",
         items: [
-          { text: "发布自己的第一个应用", link: "/release-app.md" },
+          { text: "发布自己的第一个应用", link: "/publish-app.md" },
         ],
       }
     ],
