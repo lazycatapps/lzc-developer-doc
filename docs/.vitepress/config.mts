@@ -37,6 +37,7 @@ export default defineConfig({
         items: [
           { text: "文件访问", link: "/advanced-file.md" },
           { text: "数据库服务", link: "/advanced-db.md" },
+          { text: "服务启动依赖", link: "/advanced-depends.md" },
         ],
       },
       {
