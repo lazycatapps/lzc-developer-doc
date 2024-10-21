@@ -13,6 +13,7 @@ export default defineConfig({
         text: "欢迎",
         items: [
           { text: "欢迎使用懒猫微服", link: "/index.md" },
+          { text: "懒猫微服的理念", link: "/start-from.md" },
         ],
       },
       {
