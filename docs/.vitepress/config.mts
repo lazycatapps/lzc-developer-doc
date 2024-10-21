@@ -10,15 +10,15 @@ export default defineConfig({
 
     sidebar: [
       {
-        text: "入门",
+        text: "欢迎",
         items: [
-          { text: "欢迎", link: "/welcome.md" },
+          { text: "欢迎使用懒猫微服", link: "/welcome.md" },
         ],
       },
       {
-        text: "环境搭建",
+        text: "快速入门",
         items: [
-          { text: "开发环境", link: "/lzc-cli.md" },
+          { text: "开发环境搭建", link: "/lzc-cli.md" },
           { text: "开发模式", link: "/develop-mode.md" },
           { text: "Hello World", link: "/hello-world.md" },
           { text: "反向代理模式配置", link: "/reverse-proxy.md" },
@@ -28,7 +28,7 @@ export default defineConfig({
         text: "开发应用",
         items: [
           { text: "第一个Python应用", link: "/app-example-python.md" },
-          { text: "Python应用详解", link: "/app-example-python-description.md" },
+          { text: "Python应用配置详解", link: "/app-example-python-description.md" },
           { text: "Golang应用", link: "/app-example-go.md" },
         ],
       },
@@ -48,7 +48,13 @@ export default defineConfig({
         ],
       },
       {
-        text: "插件",
+        text: "虚拟机",
+        items: [
+          { text: "KVM模式", link: "/kvm.md" },
+        ],
+      },
+      {
+        text: "中间件",
         items: [
           { text: "官方扩展", link: "/extensions.md" },
         ],

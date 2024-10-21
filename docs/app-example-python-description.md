@@ -1,4 +1,4 @@
-# Python 应用详解
+# Python 应用配置详解
 上一章我们讲了怎么构建第一个 Python 应用， 这一章我们详细的分析 Python 应用的构建细节。
 
 ## lzc-build.yml
