@@ -28,31 +28,34 @@ https://gitee.com/lazycatcloud/todolist-py-lzcapp-demo.git
 启动第一个终端， 启动前端服务:
 
 ```shell
+# 进入远程应用容器的 shell
 lzc-cli project devshell
 
-# 进入容器后
+# 进入容器 shell 后
 cd ui
 npm install
 npm run dev
 ```
 
 2. 构建后端
+
 启动第二个终端， 启动后端服务：
 
 ```shell
 lzc-cli project devshell
 
-# 进入容器后
+# 进入容器 shell 后
 cd backend
 pip install -r requirements.txt --break-system-packages
 python main.py
 ```
 
 3. 启动应用
-前后端服务后， 点击启动器图标就可以查看代办枪弹应用的效果啦。
+
+前后端服务后， 点击启动器图标就可以查看代办清单应用的效果啦。
 
 ## 构建应用
-前面讲解的知识， 都需要开发者在本地或者微服中手动启动应用服务后， 应用才能正常运行。 每次重启微服后， 都需要执行一遍构建命令。
+前面讲解的知识， 都需要开发者在本地或者微服中手动启动应用服务后， 应用才能正常运行。 但是， 每次重启微服后， 都需要执行一遍构建命令， 非常不方便。
 
 下面， 我们教大家构建自己的第一个应用安装包， 通过安装包， 我们可以把应用安装到微服中， 每次点击启动器应用图标， 应用的前后端服务会自动启动。
 
