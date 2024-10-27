@@ -5,6 +5,8 @@ export default defineConfig({
   title: "懒猫微服开发者手册",
   description: "高端私有云， 选懒猫就对了",
   themeConfig: {
+    outlineTitle: '章节导航',
+
     // https://vitepress.dev/reference/default-theme-config
     nav: [{ text: "指南", link: "/" }],
 
