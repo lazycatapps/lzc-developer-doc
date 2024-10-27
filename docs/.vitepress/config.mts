@@ -12,6 +12,10 @@ export default defineConfig({
       next: '下一章'
     },
 
+    sidebarMenuLabel: "目录",
+
+    returnToTopLabel: "返回到顶部",
+
     socialLinks: [
       { icon: 'github', link: 'https://gitee.com/linakesi/lzc-sdk' },
       { icon: 'twitter', link: 'https://x.com/manateelazycat' },
