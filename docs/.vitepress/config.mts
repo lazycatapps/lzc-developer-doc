@@ -12,6 +12,14 @@ export default defineConfig({
       { icon: 'twitter', link: 'https://x.com/manateelazycat' },
     ],
 
+    lastUpdated: {
+      text: '最后更新于： ',
+      formatOptions: {
+        dateStyle: 'full',
+        timeStyle: 'medium'
+      }
+    },
+
     // https://vitepress.dev/reference/default-theme-config
     nav: [{ text: "指南", link: "/" }],
 
