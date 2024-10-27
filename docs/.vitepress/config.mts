@@ -5,6 +5,10 @@ export default defineConfig({
   title: "懒猫微服开发者手册",
   description: "高端私有云， 选懒猫就对了",
   themeConfig: {
+    search: {
+      provider: 'local'
+    },
+
     outlineTitle: '章节导航',
 
     docFooter: {
