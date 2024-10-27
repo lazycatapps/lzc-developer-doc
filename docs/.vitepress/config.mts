@@ -7,6 +7,11 @@ export default defineConfig({
   themeConfig: {
     outlineTitle: '章节导航',
 
+    docFooter: {
+      prev: '上一章',
+      next: '下一章'
+    },
+
     socialLinks: [
       { icon: 'github', link: 'https://gitee.com/linakesi/lzc-sdk' },
       { icon: 'twitter', link: 'https://x.com/manateelazycat' },
