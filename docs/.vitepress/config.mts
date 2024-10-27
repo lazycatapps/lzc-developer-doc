@@ -8,7 +8,7 @@ export default defineConfig({
     outlineTitle: '章节导航',
 
     socialLinks: [
-      { icon: 'github', link: 'https://gitee.com/lazycatcloud' },
+      { icon: 'github', link: 'https://gitee.com/linakesi/lzc-sdk' },
       { icon: 'twitter', link: 'https://x.com/manateelazycat' },
     ],
 
@@ -82,10 +82,6 @@ export default defineConfig({
           { text: "发布自己的第一个应用", link: "/publish-app.md" },
         ],
       }
-    ],
-
-    socialLinks: [
-      { icon: "github", link: "https://gitee.com/linakesi/lzc-sdk" },
     ],
   },
   markdown: {
