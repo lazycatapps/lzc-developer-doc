@@ -7,6 +7,11 @@ export default defineConfig({
   themeConfig: {
     outlineTitle: '章节导航',
 
+    socialLinks: [
+      { icon: 'github', link: 'https://gitee.com/lazycatcloud' },
+      { icon: 'twitter', link: 'https://x.com/manateelazycat' },
+    ],
+
     // https://vitepress.dev/reference/default-theme-config
     nav: [{ text: "指南", link: "/" }],
 
