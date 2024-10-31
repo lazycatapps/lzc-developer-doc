@@ -1,4 +1,4 @@
-# 设置不支持的平台
+# 平台支持
 微服官方应用天然支持 Linux/Windows/macOS/Android/iOS/鸿蒙等 6 个平台， 当您开发的应用并不想支持某些平台时， 可以在 `lzc-manifest.yml` 文件中加入 `unsupported_platforms` 字段即可：
 
 ```yml

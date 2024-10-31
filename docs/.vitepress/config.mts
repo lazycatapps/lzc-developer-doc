@@ -94,7 +94,7 @@ export default defineConfig({
           { text: "多实例", link: "/advanced-multi-instance.md" },
           { text: "外网API服务", link: "/advanced-public-api.md" },
           { text: "错误页面", link: "/advanced-error-template.md" },
-          { text: "设置不支持的平台", link: "/advanced-platform.md" },
+          { text: "平台支持", link: "/advanced-platform.md" },
         ],
       },
       {
