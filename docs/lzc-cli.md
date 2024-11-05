@@ -36,6 +36,8 @@ npm install @lazycatcloud/lzc-cli -g
 
 - **Windows (WSL)**:
 
+  > Windows WSL 更多使用指南可以参考 [lzc-cli-wsl](./lzc-cli-wsl)
+
   ```bash
   sudo apt update
   sudo apt install openssh-client unzip rsync
