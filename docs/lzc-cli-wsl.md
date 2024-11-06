@@ -7,11 +7,10 @@
 
 1. 关闭 windows 中的懒猫微服客户端
 
-2. 在 wsl 中安装懒猫微服 linux 客户端 (我这里以 ubuntu 为例)
+2. 在 WSL 中安装懒猫微服 linux 客户端 (我这里以 Ubuntu 为例)
 
 ```
 sudo apt install zenity zstd
-
 sudo apt install libnss3-dev libgdk-pixbuf2.0-dev libgtk-3-dev libxss-dev
 
 /bin/bash -c "$(curl -fsSL https://dl.lazycat.cloud/client/desktop/linux-install)"
@@ -34,16 +33,13 @@ echo 'export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm"
 echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm' >> ~/.bashrc
 
 nvm install v20
-
 nvm use v20
-
 npm install -g lzc-cli
 ```
 
 6. 使用 lzc-cli 构建 lpk 应用以及安装 lpk
 ```
 lzc-cli project build
-
 lzc-cli app install cloud.lazycat.app.demo-v0.0.2.lpk
 ```
 
