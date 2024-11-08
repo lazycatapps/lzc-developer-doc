@@ -120,6 +120,12 @@ export default defineConfig({
           { text: "工具推荐", link: "/tool-suggester.md" },
         ],
       },
+      {
+        text: "感谢",
+        items: [
+          { text: "贡献者", link: "/contributors.md" },
+        ],
+      },
     ],
   },
   markdown: {
