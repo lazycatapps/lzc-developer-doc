@@ -115,7 +115,8 @@ export default defineConfig({
       {
         text: "开发者内测",
         items: [
-          { text: "常见问题", link: "/beta-common-issues.md" }
+          { text: "工具推荐", link: "/tool-suggester.md" },
+          { text: "常见问题", link: "/beta-common-issues.md" },
         ],
       },
     ],
