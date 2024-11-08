@@ -7,4 +7,4 @@
 [glzjin](https://x.com/glzjin), 大佬是安全圈巨佬， 给我们提供了超级多的安全防御建议和代码建议， 大佬每天的鞭策是我们前进的动力。 大佬还是 [lzc-dtl](https://github.com/glzjin/lzc-dtl) 工具的作者， 这个工具可以一键转化 Docker 为懒猫微服应用， 特别方便广大开发者折腾各种好玩应用， 造福广大群众， 感谢大佬。
 
 ## 异星工厂
-[rex](https://x.com/RetroCN_Shop) 老板是游戏圈和 Linux 双料大佬哇， 微服收到第一天就搞定了[异星工厂](https://gitee.com/trexguo/lzc-factorio-server) 的移植。 感谢大佬给我们移植这么好的游戏， 可以让微服的用户下班后， 叫上几个好朋友下班一起打私服游戏。
+[rex](https://x.com/RetroCN_Shop) 老板是游戏圈和 Linux 双料大佬哇， 微服收到第一天就搞定了[异星工厂](https://gitee.com/trexguo/lzc-factorio-server) 的移植。 感谢大佬给我们移植这么好的游戏， 可以让微服的用户下班后， 叫上几个好朋友下班一起打私服游戏。 感谢大佬。
