@@ -62,7 +62,6 @@ export default defineConfig({
         items: [
           { text: "欢迎使用懒猫微服", link: "/index.md" },
           { text: "懒猫微服的理念", link: "/start-from.md" },
-          { text: "FAQ", link: "/faq.md" },
         ],
       },
       {
@@ -105,7 +104,6 @@ export default defineConfig({
         text: "扩展",
         items: [
           { text: "官方扩展", link: "/extensions.md" },
-          { text: "自己架设网络穿透", link: "/network-pass-through.md" },
         ],
       },
       {
@@ -113,10 +111,13 @@ export default defineConfig({
         items: [{ text: "发布自己的第一个应用", link: "/publish-app.md" }],
       },
       {
-        text: "开发者内测",
+        text: "常见问题",
         items: [
+          { text: "应用白屏", link: "/app-block.md" },
+          { text: "网络机制与VPN", link: "/network.md" },
+          { text: "自己架设网络穿透", link: "/network-pass-through.md" },
+          { text: "SSH与内测", link: "/ssh.md" },
           { text: "工具推荐", link: "/tool-suggester.md" },
-          { text: "常见问题", link: "/beta-common-issues.md" },
         ],
       },
     ],
