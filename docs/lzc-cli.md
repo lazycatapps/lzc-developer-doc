@@ -25,14 +25,18 @@ npm install @lazycatcloud/lzc-cli -g
 
   ```bash
   sudo apt update
-  sudo apt install openssh-client unzip rsync
+  sudo apt install openssh-client rsync
   ```
 
 - **macOS**:
 
   ```bash
-  brew install openssh unzip rsync
+  brew install openssh rsync
   ```
+
+- **Windows**
+
+  Windows 10 以上已经自带 `ssh.exe`，不再需要额外安装其他依赖。
 
 - **Windows (WSL)**:
 
@@ -40,5 +44,5 @@ npm install @lazycatcloud/lzc-cli -g
 
   ```bash
   sudo apt update
-  sudo apt install openssh-client unzip rsync
+  sudo apt install openssh-client rsync
   ```
