@@ -16,6 +16,7 @@ application:
 需要注意的是：
 1. 即使 `public_path` 选项打开的同时， 依然需要登录微服客户端才能加密访问
 2. `public_path` 有一定的风险， 请不要对外暴露敏感 API， 比如读取您的文件的服务
+3. `public_path` 与 多实例部署方式存在一定冲突。(具体参阅[多实例](/advanced-multi-instance))
 
 ## TCP/UDP 服务
 上面介绍了公开 HTTP 服务的方法， 如果您想公开一些 TCP/UDP 服务， 可以在 `lzc-manifest.yml` 文件中的 `application` 字段下加一个 `ingress` 子字段即可

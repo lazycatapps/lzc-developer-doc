@@ -13,3 +13,19 @@
 application:
   multi_instance: true
 ```
+
+## 多实例与`public_path`
+
+多实例运行方与[public_path](/advanced-public-api)存在一定冲突，
+多实例下的`public_path`依然需要获取到UID才能将http流量正确路由到具体的用户实例上。
+
+目前有两种方式处理此问题
+
+- 在url中加入uid字段，比如 `https://$myuid@$boxname.heiyu.space/some_public_path`。
+  此方式适合命令行或第三方客户端这类无法进行http登录页面渲染的场景。
+
+- 当浏览器中存在合法的鉴权cookie时，微服会自动使用此cookie获取正确的UID。
+  此方式适合在微服客户端或浏览器中访问应用。需要在其他地方至少登录一次。
+
+
+TODO: 当访问多实例的public_path无法获取UID时自动跳转到登录页面获取正确的cookie
