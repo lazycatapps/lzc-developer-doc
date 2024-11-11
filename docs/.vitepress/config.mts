@@ -94,6 +94,7 @@ export default defineConfig({
           { text: "外网API服务", link: "/advanced-public-api.md" },
           { text: "错误页面", link: "/advanced-error-template.md" },
           { text: "平台支持", link: "/advanced-platform.md" },
+          { text: "系统版本依赖", link: "/advanced-runtime-dependence.md"}
         ],
       },
       {
