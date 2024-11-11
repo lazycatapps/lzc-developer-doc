@@ -118,7 +118,7 @@ export default defineConfig({
           { text: "网络机制与VPN", link: "/network.md" },
           { text: "自己架设网络穿透", link: "/network-pass-through.md" },
           { text: "SSH与内测", link: "/ssh.md" },
-          { text: "工具推荐", link: "/tool-suggester.md" },
+          { text: "开发者应用", link: "/third-apps.md" },
         ],
       },
       {
