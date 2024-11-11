@@ -10,11 +10,11 @@ unsupported_platforms:
 
 相关可用参数如下:
 
-| 参数 | 平台 |
-|--|--|
-| ios | 不支持 iOS 和 iPad 移动端 |
-| android | 不支持 Android 移动端 |
-| linux | 不支持 Linux 桌面端 |
-| windows | 不支持 Windows 桌面端 |
-| macos | 不支持 Macos 桌面端 |
-| tvos | 不支持 懒猫智慧屏 平台端 |
+| 参数    | 平台                                            |
+|---------|-------------------------------------------------|
+| ios     | 不支持 iOS 和 iPad 移动端                       |
+| android | 不支持 Android 移动端                           |
+| linux   | 不支持 Linux 桌面端                             |
+| windows | 不支持 Windows 桌面端                           |
+| macos   | 不支持 Macos 桌面端                             |
+| tvos    | 不支持 懒猫智慧屏 平台端 (要求系统 1.0.18 以上) |
