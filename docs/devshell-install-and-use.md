@@ -13,6 +13,7 @@ apk add python3 py3-pip unzip
 
 因为微服使用的镜像是 `alpine`, 所以需要用 `alpine` 的默认包管理工具 `apk` 来安装软件。
 
+
 ### 定义 setupscript 安装命令自动安装
 
 - 在 lzc-build.yml 配置`setupscript`字段,每次进入 devshell 都会帮你执行 `setupscript` 字段后的脚本
@@ -22,6 +23,7 @@ devshell:
   setupscript:
     apk add python3 py3-pip unzip
 ```
+
 
 ### 定义 dependencies 安装依赖自动安装
 - 在 lzc-build.yml 配置`dependencies`字段,它会自动帮你安装指定的依赖
@@ -33,6 +35,7 @@ devshell:
     - py3-pip
     - unzip
 ```
+
 
 ## 定义 docker 镜像
 - 在 lzc-build.yml 配置`image`字段,它会自动下载 docker 镜像
