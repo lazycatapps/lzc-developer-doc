@@ -1,26 +1,29 @@
-# 软件安装和指定镜像
+# 开发依赖安装
 
-## 在基础镜像安装软件
+我们开发应用中， 需要提前在微服中安装一些开发所需的软件或依赖， 比如 python, pip, unzip 等。
 
-我们开发中经常需要安装一些自己所需要的工具,例如 python,pip,unzip,可以执行下面命令
+下面有 4 种安装方式供您选择：
+
+## devshell 手动安装
+devshell 进入微服应用容器后， 可以直接执行命令来安装
 
 ```bash
 apk add python3 py3-pip unzip
 ```
 
-这里用`apk`去安装是因为 devshell 使用的镜像是`alpine`,这个是它的默认包管理工具
+因为微服使用的镜像是 `alpine`, 所以需要用 `alpine` 的默认包管理工具 `apk` 来安装软件。
 
-### 如果我不想每次devshell都要手动安装怎么办呢?
+### 定义 setupscript 安装命令自动安装
 
-有下面两种方式可以实现
-- 在 lzc-build.yml 配置`setupscript`字段,每次进入devshell都会帮你执行!
+- 在 lzc-build.yml 配置`setupscript`字段,每次进入 devshell 都会帮你执行 `setupscript` 字段后的脚本
 
 ```yml
 devshell:
-  setupscript: |
+  setupscript:
     apk add python3 py3-pip unzip
 ```
 
+### 定义 dependencies 安装依赖自动安装
 - 在 lzc-build.yml 配置`dependencies`字段,它会自动帮你安装指定的依赖
 
 ```yml
@@ -31,8 +34,8 @@ devshell:
     - unzip
 ```
 
-## 指定镜像
-还有一种方法是可以直接指定想要的docker镜像,这样子就不必去配置环境了
+## 定义 docker 镜像
+- 在 lzc-build.yml 配置`image`字段,它会自动下载 docker 镜像
 
 例如下面指定 Go 的环境:
 ``` yml

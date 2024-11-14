@@ -71,7 +71,6 @@ export default defineConfig({
           { text: "开发模式", link: "/develop-mode.md" },
           { text: "Hello World", link: "/hello-world.md" },
           { text: "反向代理模式配置", link: "/reverse-proxy.md" },
-          { text: "软件安装和指定镜像", link: "/devshell-install-and-use.md" },
         ],
       },
       {
@@ -79,6 +78,7 @@ export default defineConfig({
         items: [
           { text: "第一个Python应用", link: "/app-example-python.md" },
           { text: "应用配置详解", link: "/app-example-python-description.md" },
+          { text: "开发依赖安装", link: "/devshell-install-and-use.md" },
           { text: "第一个Golang应用", link: "/app-example-go.md" },
         ],
       },
