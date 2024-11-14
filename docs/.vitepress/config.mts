@@ -71,6 +71,7 @@ export default defineConfig({
           { text: "开发模式", link: "/develop-mode.md" },
           { text: "Hello World", link: "/hello-world.md" },
           { text: "反向代理模式配置", link: "/reverse-proxy.md" },
+          { text: "软件安装和指定镜像", link: "/devshell-install-and-use.md" },
         ],
       },
       {
