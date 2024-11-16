@@ -6,40 +6,18 @@
 - 描述: 《异星工厂》游戏私服
 - 商店: [异星工厂](https://lazycat.cloud/appstore/%2Fshop%2Fdetail%2Fcloud.lazycat.games.factorio)
 
-## 懒猫微服应用转换器
+## glzjin 大佬应用系列
 - 开发者: [glzjin](https://x.com/glzjin), 安全圈大佬
-- 描述: 一个用于转换 Docker Compose 应用到懒猫微服格式的工具。
-- 商店: [lzc-dtl](https://github.com/glzjin/lzc-dtl)
-- 博客: https://www.zhaoj.in
-
-## 迅雷
-- 开发者: [glzjin](https://x.com/glzjin), 安全圈大佬
-- 描述: 迅雷懒猫微服专用版， 需要开通迅雷会员才能使用
-- 商店: [迅雷](https://lazycat.cloud/appstore/%2Fshop%2Fdetail%2Fin.zhaoj.xunlei)
-- 博客: https://www.zhaoj.in
-
-## Cyberchef
-- 开发者: [glzjin](https://x.com/glzjin), 安全圈大佬
-- 描述: “网络瑞士军刀”， 是一款多功能的网络应用程序， 专为各种数据操作任务而设计
-- 商店: [Cyberchef](https://lazycat.cloud/appstore/%2Fshop%2Fdetail%2Fin.zhaoj.cyberchef)
-- 博客: https://www.zhaoj.in
-
-## RevShells
-- 开发者: [glzjin](https://x.com/glzjin), 安全圈大佬
-- 描述: 专为安全专业人士和爱好者设计的强大工具， 特别是在夺旗赛（CTF）中提供支持, 本工具提供多种功能来促进渗透测试和道德黑客活动
-- 商店: [RevShells](https://lazycat.cloud/appstore/%2Fshop%2Fdetail%2Fin.zhaoj.revshells)
-- 博客: https://www.zhaoj.in
-
-## Certimate
-- 开发者: [glzjin](https://x.com/glzjin), 安全圈大佬
-- 描述: 开源的 SSL 证书管理工具， 可以帮助你自动申请、 部署 SSL 证书， 并在证书即将过期时自动续期
-- 商店: [Certimate](https://lazycat.cloud/appstore/%2Fshop%2Fdetail%2Fin.zhaoj.certimate)
-- 博客: https://www.zhaoj.in
-
-## Trilium
-- 开发者: [glzjin](https://x.com/glzjin), 安全圈大佬
-- 描述: 是一个功能强大的分层笔记应用程序， 专为构建和管理大型个人知识库而设计
-- 商店: [Trilium](https://lazycat.cloud/appstore/%2Fshop%2Fdetail%2Fin.zhaoj.trilium)
+- [懒猫微服应用转换器](https://github.com/glzjin/lzc-dtl): 转换 Docker Compose 应用到懒猫微服格式的工具, 用于快速制作 Docker 应用
+- [迅雷](https://lazycat.cloud/appstore/%2Fshop%2Fdetail%2Fin.zhaoj.xunlei): 迅雷懒猫微服专用版， 需要开通迅雷会员才能使用
+- [Nut-WebGUI](https://lazycat.cloud/appstore/%2Fshop%2Fdetail%2Fin.zhaoj.nutwebgui): 查看 UPS 状态， 并在停电且 UPS 电量低时自动关闭懒猫微服
+- [Cyberchef](https://lazycat.cloud/appstore/%2Fshop%2Fdetail%2Fin.zhaoj.cyberchef): “网络瑞士军刀”， 是一款多功能的网络应用程序， 专为各种数据操作任务而设计
+- [RevShells](https://lazycat.cloud/appstore/%2Fshop%2Fdetail%2Fin.zhaoj.revshells): 专为安全专业人士和爱好者设计的强大工具， 特别是在夺旗赛（CTF）中提供支持, 本工具提供多种功能来促进渗透测试和道德黑客活动
+- [Certimate](https://lazycat.cloud/appstore/%2Fshop%2Fdetail%2Fin.zhaoj.certimate): 开源的 SSL 证书管理工具， 可以帮助你自动申请、 部署 SSL 证书， 并在证书即将过期时自动续期
+- [Trilium](https://lazycat.cloud/appstore/%2Fshop%2Fdetail%2Fin.zhaoj.trilium): 是一个功能强大的分层笔记应用程序， 专为构建和管理大型个人知识库而设计
+- [SQLi-Labs](https://lazycat.cloud/appstore/%2Fshop%2Fdetail%2Fin.zhaoj.sqlilabs): SQLI-LABS 是一个专为学习和测试 SQL 注入 (SQL Injection) 技术而设计的平台
+- [Web-Chains](https://lazycat.cloud/appstore/%2Fshop%2Fdetail%2Fin.zhaoj.webchains): 最强的 Java 安全研究领域的瑞士军刀
+- [SuperShell](https://lazycat.cloud/appstore/%2Fshop%2Fdetail%2Fin.zhaoj.supershell): 集成了 reverse_ssh 服务的 WEB 管理平台， 使用 docker 一键部署（快速构建）， 支持团队协作进行 C2 远程控制
 - 博客: https://www.zhaoj.in
 
 ## AnythingLLM
