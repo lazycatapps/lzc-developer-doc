@@ -78,8 +78,8 @@ export default defineConfig({
         items: [
           { text: "第一个Python应用", link: "/app-example-python.md" },
           { text: "应用配置详解", link: "/app-example-python-description.md" },
-          { text: "开发依赖安装", link: "/devshell-install-and-use.md" },
           { text: "第一个Golang应用", link: "/app-example-go.md" },
+          { text: "开发依赖安装", link: "/devshell-install-and-use.md" },
           { text: "开发测试镜像", link: "/advanced-dev-image.md"}
         ],
       },
