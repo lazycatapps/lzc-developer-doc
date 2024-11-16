@@ -10,3 +10,6 @@
 
 ## 异星工厂
 [rex](https://x.com/RetroCN_Shop) 老板是游戏圈和 Linux 双料大佬哇， 微服收到第一天就搞定了[异星工厂](https://gitee.com/trexguo/lzc-factorio-server) 的移植。 感谢大佬给我们移植这么好的游戏， 可以让微服的用户下班后， 叫上几个好朋友下班一起打私服游戏。 感谢大佬。
+
+## AnythingLLM
+[IronFeet](https://x.com/ironfeet) 大佬是 Linux 和硬件黑客， 也是商店 AI 应用 [AnythingLLM](https://lazycat.cloud/appstore/%2Fshop%2Fdetail%2Fme.ironfeet.app.anythingllm) 的作者， AnythingLLM 是一个全栈应用程序， 可以将任何文档、 资源（如网址链接、 音频、 视频）或内容片段转换为上下文， 以便任何大语言模型（LLM）在聊天期间作为参考使用。 感谢大佬的热心贡献。
