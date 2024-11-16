@@ -34,6 +34,8 @@ npm install @lazycatcloud/lzc-cli -g
   brew install openssh rsync
   ```
 
+  `macOS` 系统自带的 `rsync` 版本较老，请使用 `Homebrew` 安装的 `rsync 版本 (v3.2.0+)`
+
 - **Windows**
 
   Windows 10 以上已经自带 `ssh.exe`，不再需要额外安装其他依赖。
