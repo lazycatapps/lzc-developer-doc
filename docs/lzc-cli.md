@@ -32,7 +32,8 @@ npm install @lazycatcloud/lzc-cli -g
 - **macOS**:
 
   ```bash
-  brew install openssh rsync
+  brew install rsync
+  brew install openssh # 如果您已经有 ssh 的话可以不安装
   ```
 
   `macOS` 系统自带的 `rsync` 版本较老，请使用 `Homebrew` 安装的 `rsync 版本 (v3.2.0+)`
