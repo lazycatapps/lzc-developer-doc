@@ -58,3 +58,5 @@ Network: http://172.31.0.36:3000/
 此时， 应用服务已经启动， 您可以在 PC 或者手机端点击 "helloworld" 图标， 查看应用在每个终端平台的效果。
 
 懒猫微服的一大优势是， 您只需要编写一次 JavaScript, 我们自动解决应用在 Windows/Linux/macOS/Android/iOS/鸿蒙 6 个操作系统平台上跨平台运行的问题， 为开发者节省了大量平台适配的时间。
+
+如果想要部署这个 Hello World 到懒猫微服中，可以参考 [构建应用](https://developer.lazycat.cloud/app-example-python.html#构建应用)。
