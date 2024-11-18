@@ -76,9 +76,9 @@ export default defineConfig({
       {
         text: "开发应用",
         items: [
-          { text: "第一个Python应用", link: "/app-example-python.md" },
+          { text: "第一个 Python 应用", link: "/app-example-python.md" },
           { text: "应用配置详解", link: "/app-example-python-description.md" },
-          { text: "第一个Golang应用", link: "/app-example-go.md" },
+          { text: "第一个 Golang 应用", link: "/app-example-go.md" },
           { text: "开发依赖安装", link: "/devshell-install-and-use.md" },
           { text: "开发测试镜像", link: "/advanced-dev-image.md"}
         ],
@@ -92,9 +92,9 @@ export default defineConfig({
           { text: "应用关联", link: "/advanced-mime.md" },
           { text: "环境变量", link: "/advanced-envs.md" },
           { text: "后台常驻", link: "/advanced-background.md" },
-          { text: "GPU加速", link: "/advanced-gpu.md" },
+          { text: "GPU 加速", link: "/advanced-gpu.md" },
           { text: "多实例", link: "/advanced-multi-instance.md" },
-          { text: "外网API服务", link: "/advanced-public-api.md" },
+          { text: "外网 API 服务", link: "/advanced-public-api.md" },
           { text: "错误页面", link: "/advanced-error-template.md" },
           { text: "平台支持", link: "/advanced-platform.md" },
           { text: "系统版本依赖", link: "/advanced-runtime-dependence.md"}
@@ -102,7 +102,7 @@ export default defineConfig({
       },
       {
         text: "虚拟机",
-        items: [{ text: "KVM模式", link: "/kvm.md" }],
+        items: [{ text: "KVM 模式", link: "/kvm.md" }],
       },
       {
         text: "扩展",
@@ -118,9 +118,9 @@ export default defineConfig({
         text: "常见问题",
         items: [
           { text: "应用白屏", link: "/app-block.md" },
-          { text: "网络机制与VPN", link: "/network.md" },
+          { text: "网络机制与 VPN", link: "/network.md" },
           { text: "自己架设网络穿透", link: "/network-pass-through.md" },
-          { text: "SSH与内测", link: "/ssh.md" },
+          { text: "SSH 与内测", link: "/ssh.md" },
           { text: "开发者应用", link: "/third-apps.md" },
         ],
       },
