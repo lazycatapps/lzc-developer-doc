@@ -90,6 +90,7 @@ export default defineConfig({
           { text: "数据库服务", link: "/advanced-db.md" },
           { text: "服务启动依赖", link: "/advanced-depends.md" },
           { text: "应用关联", link: "/advanced-mime.md" },
+          { text: "环境变量", link: "/advanced-envs.md" },
           { text: "后台常驻", link: "/advanced-background.md" },
           { text: "GPU加速", link: "/advanced-gpu.md" },
           { text: "多实例", link: "/advanced-multi-instance.md" },
