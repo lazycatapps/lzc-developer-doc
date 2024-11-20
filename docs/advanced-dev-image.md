@@ -7,14 +7,16 @@
   ```Dockerfile
   FROM busybox:latest
 
-  CMD ["echo", "hello world!"]
+  #lzcapp中的所有service都必须一直处于运行状态,否则应用会进入错误状态
+  CMD ["sleep", "1d"]
   ```
 
 - 构建镜像
 
   ```sh
-  docker build -t lzc/helloworld:latest .
+  docker build --platform linux/amd64 -t lzc/helloworld:latest .
   ```
+  如果您当前是使用ARM64或非x86架构,需要通过`--platform`强制指定平台为`linux/amd64`.
 
 - 重新 `tag` 镜像成 `dev.$BOXNAME.heiyu.space` 地址, `$BOXNAME` 为目标盒子名.
 
