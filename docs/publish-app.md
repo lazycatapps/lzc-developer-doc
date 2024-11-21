@@ -13,24 +13,19 @@
         lzc-cli appstore publish ./your-app.lpk
         ```
 
-# LPK 引用镜像处理
+# 推送镜像到官方仓库
 
-lpk 应用中 manifest.yml 包含所依赖**启动环境镜像**和**依赖服务镜像**。
+docker hub的网络质量不太稳定,因此懒猫官方提供了一个稳定的registry供大家使用.
 
-`manifest.yml` 文件中所有通过 image 字段引用的镜像文件须上传至懒猫微服官方镜像源。请通过 `lzc-cli appstore copy-image <image-name>` 将镜像上传。执行命令后，将获取官方源镜像名如 `registry.lazycat.cloud/<community-username>/<image-name>` 。
-
-待审核 LPK 应用中**引用镜像**需要为公开访问的镜像，使审核员能够正常安装该应用。须要保证使用 `copy-image` 子命令上传的**被上传镜像**可被公开正常访问。若 LPK 引用镜像为非公开镜像，将致使上传失败。
-
+开发者在最终上传商店前, 可以将lpk中用的镜像推送到官方registry. 上传完毕后需要手动调整manifest.yml中的相关引用.
 ```
 $ lzc-cli appstore copy-image <被上传镜像>
 # 上传完成后将打印  registry.lazycat.cloud/<community-username>/<被上传镜像>
 ```
 
-注：被上传镜像若未被 lpk **引用**，将会被**定期清理**。
+注意`registry.lazycat.cloud`的使用存在以下限制
 
-示例：
-```
-user@host:~$ lzc-cli appstore copy-image redis/redis-stack:latest
-Waiting ... ( copy redis/redis-stack:latest to lazycat offical registry)
-lazycat-registry: registry.lazycat.cloud/vim/redis/redis-stack:latest
-```
+0. 为了镜像本身的稳定性,仅支持带明确tag的镜像(不包含latest这个特殊tag)
+1. 被上传的镜像必须是公网存在的, `pull`操作是在服务端进行的, 因此仅在开发者本地存在的镜像无法被`copy-image`
+2. 被上传镜像必须被至少一个商店应用引用, 仓库会定期进行垃圾回收操作
+3. `registry.lazycat.cloud`仅供微服内部使用,在微服外部使用会有黑科技限速
