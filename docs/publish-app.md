@@ -25,7 +25,7 @@ $ lzc-cli appstore copy-image <被上传镜像>
 
 注意`registry.lazycat.cloud`的使用存在以下限制
 
-0. 为了镜像本身的稳定性,仅支持带明确tag的镜像(不包含latest这个特殊tag)
-1. 被上传的镜像必须是公网存在的, `pull`操作是在服务端进行的, 因此仅在开发者本地存在的镜像无法被`copy-image`
-2. 被上传镜像必须被至少一个商店应用引用, 仓库会定期进行垃圾回收操作
-3. `registry.lazycat.cloud`仅供微服内部使用,在微服外部使用会有黑科技限速
+0. 为了保证LPK引用镜像本身的稳定性，生成镜像tag会替换成IMAGE_ID，每次执行`copy-image`，服务端都会强制执行一次 `docker pull`
+1. 被上传的镜像必须是公网存在的，`pull`操作是在服务端进行的, 因此仅在开发者本地存在的镜像无法被`copy-image`
+2. 被上传镜像必须被至少一个商店应用引用，仓库会定期进行垃圾回收操作
+3. `registry.lazycat.cloud`仅供微服内部使用，在微服外部使用会有黑科技限速
