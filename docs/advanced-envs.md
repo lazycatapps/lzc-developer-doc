@@ -26,5 +26,5 @@ services:
 | LAZYCAT_BOX_NAME | example | boxName 微服名称 |
 | LAZYCAT_BOX_DOMAIN | example.heiyu.space | boxDomain 微服域名 |
 | LAZYCAT_APP_ID | cloud.lazycat.app.helloworld | package 应用 ID |
-| LAZYCAT_APP_DOMAIN | helloworld.example.heiyu.space | appDomain 应用域名 |
+| LAZYCAT_APP_ORIGIN | helloworld.example.heiyu.space | appDomain 应用域名 |
 | LAZYCAT_APP_SERVICE_NAME | wordpress | services 服务名 |
