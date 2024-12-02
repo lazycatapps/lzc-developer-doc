@@ -9,10 +9,9 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh "make -C deploy"
-                sh "make -C deploy push-image"
+                sh "make -C deploy dist"
                 sh "make -C deploy deploy"
-                sh "make -C deploy flush-cdn SECRET_ID=$TENCENT_CLOUD_SECRET_ID  SECRET_KEY=$TENCENT_CLOUD_SECRET_KEY"
+                sh "make -C deploy preheat-cdn"
             }
         }
     }

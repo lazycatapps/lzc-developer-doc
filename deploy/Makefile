@@ -1,6 +1,7 @@
 .PHONY: all clean push-image image
 
 UI_DIR = ..
+DIST_DIR = $(UI_DIR)/docs/.vitepress/dist
 UI_INDEX = $(UI_DIR)/docs/.vitepress/dist/index.html
 
 DEPLOY_SOURCE = \
@@ -68,8 +69,16 @@ $(UI_INDEX): $(UI_SOURCE) $(UI_DIR)/node_modules/.package-lock.json
 clean:
 	rm -rf $(BINARY) $(BINARY_DEBUG) $(UI_DIR)/docs/.vitepress/dist
 
+dist:
+	cd $(UI_DIR); npm run docs:build
+
 deploy:
-	if [ "$(K8S_DEPLOYMENT)" ]; then curl -d "{\"namespace\":\"$(K8S_NAMESPACE)\",\"name\":\"$(K8S_DEPLOYMENT)\"}" "https://k8s-reset.lazycat.cloud"; fi
+	coscli sync --recursive $(DIST_DIR) cos://www-dev-lazycat-1301583638
 
 flush-cdn:
 	bash flush-cdn.sh $(SECRET_ID) ${SECRET_KEY}
+
+preheat-cdn:
+	cd $(DIST_DIR) \
+		&& urls=$$(find assets -type f | sed 's|^|https://developer.lazycat.cloud/|' | tr '\n' ' ') \
+		&& tccli cdn PushUrlsCache --cli-unfold-argument --Area global --Urls $${urls}
