@@ -1,0 +1,98 @@
+路由规则
+=========
+
+`application.routes`字段为 `[]Rule`类型
+
+Rule按照`URL_PATH=UPSTREAM`的形式声明, 其中`URL_PATH`为浏览器访问时的实际URL路径(不含hostname部分),
+`UPSTREAM`为具体的上游服务, 目前支持以下3种协议
+
+- `file:///$dir_path`
+- `exec://$port,$exec_file_path`
+- `http(s)://$hostname/$path`
+
+http上游
+=======
+
+`http/https`支持内网或外网服务. 比如内置的应用商这个lzcapp只有一行代码.
+
+```
+routes:
+    - /=https://appstore.lazycat.cloud
+```
+当访问`https://appstore.$微服名称.heiyu.space`时会将所有请求都直接转发到上游的`https://appstore.lazycat.cloud`, 这种
+情况下页面内的js代码依旧可以使用`lzc-sdk/js`的功能, 应用商店的安装\打开逻辑是在微服中运行的,但代码是部署在公有云上,方便统一维护.
+
+绝大部分情况下,lzcapp的http路由是转发到应用内某个service的http端口上, 比如`bitwarden`这个密码管理lzcapp, 就是将整个lzcapp的
+http服务转发到bitwarden这个service的80端口上.
+
+```
+package: cloud.lazycat.app.bitwarden
+description: 一款自由且开源的密码管理服务
+name: Bitwarden
+
+application:
+  routes:
+  - /=http://bitwarden:80
+  subdomain: bitwarden
+services:
+  bitwarden:
+    image: bitwarden/nginx:1.44.1
+
+```
+
+`http://bitwarden:80`中的bitwarden是services中的service名称,这个名称在运行时会自动解析为service实际的ip.
+
+ps: 早期版本推荐的写法为`- /=http://bitwarden.cloud.lazycat.app.bitwarden.lzcapp:80` 但在lzcos-1.2.x之后会引入应用隔离,
+应用之间禁止相互访问, 因此不再提倡`xxx.lzcapp`这种域名
+
+
+file上游
+=========
+
+file路由用来加载静态html文件, 比如pptist这个lzcapp是一个纯前端应用,因此仅使用了一条静态file路由规则,没有运行任何其他service
+
+```
+package: cloud.lazycat.app.pptist
+name: PPTist
+description: 一个基于 Vue3.x + TypeScript 的在线演示文稿（幻灯片）应用
+application:
+  subdomain: pptist
+  routes:
+    - /=file:///lzcapp/pkg/content/
+  file_handler:
+    mime:
+      - x-lzc-extension/pptist         # app支持.pptist
+    actions:  # 打开对应文件的url路径,由文件管理器等app调用
+      open: /?file=%u   # %u是某个webdav上的具体文件路径，一定存在文件名后缀
+
+```
+
+一般静态资源是通过lpk文件打包时引入的,lpk对应的contentdir内容最终会在运行时原封不动的以readonly的形式存放在`/lzcapp/pkg/content/`目录
+
+
+exec上游
+=========
+
+`exec://$port,$exec_file_path`路由稍微特殊一点,由两部分组成
+
+1. 最终提供服务的端口号$port,这里强制隐含了host为127.0.0.1
+2. 具体的可执行文件路径. 可以为任意路径下的脚本或elf文件.
+
+lzcapp启动时,系统会执行exec路由中的`$exec_file_path`文件,并假设此文件提供的服务运行在`http://127.0.0.1:$port`上.
+系统本身不会检测此服务是否真的由`$exec_file_path`启动. (因此也能基于这个特性做一些初始化相关的操作)
+
+一个lzcapp可以创建任意条不同类型的路由规则. 比如官方的懒猫网盘lzcapp的路由规则为
+
+```
+application:
+  image: registry.lazycat.cloud/lzc/lzc-files:v0.1.47
+  subdomain: file
+  routes:
+    - /api/=exec://3001,/lzcapp/pkg/content/backend
+    - /files/=http://127.0.0.1:3001/files/
+    - /=file:///lzcapp/pkg/content/dist
+```
+
+其中前端页面由静态文件`/lzcapp/pkg/content/dist`提供,
+所有以`/api/`开头的路径由可执行文件`/lzcapp/pkg/content/backend`启动后在`http://127.0.0.1:3001`上提供服务,
+并且所有以`/files/`开头的路径也转发到`http://127.0.0.1:3001/files`上.
