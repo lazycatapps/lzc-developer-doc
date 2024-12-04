@@ -80,7 +80,8 @@ export default defineConfig({
           { text: "应用配置详解", link: "/app-example-python-description.md" },
           { text: "第一个 Golang 应用", link: "/app-example-go.md" },
           { text: "开发依赖安装", link: "/devshell-install-and-use.md" },
-          { text: "开发测试镜像", link: "/advanced-dev-image.md"}
+          { text: "开发测试镜像", link: "/advanced-dev-image.md" },
+          { text: "移植应用", link: "/app-example-porting.md" }
         ],
       },
       {
@@ -99,7 +100,7 @@ export default defineConfig({
           { text: "外网 API 服务", link: "/advanced-public-api.md" },
           { text: "错误页面", link: "/advanced-error-template.md" },
           { text: "平台支持", link: "/advanced-platform.md" },
-          { text: "系统版本依赖", link: "/advanced-runtime-dependence.md"}
+          { text: "系统版本依赖", link: "/advanced-runtime-dependence.md" }
         ],
       },
       {
