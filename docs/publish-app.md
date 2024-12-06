@@ -19,8 +19,16 @@ docker hub的网络质量不太稳定,因此懒猫官方提供了一个稳定的
 
 开发者在最终上传商店前, 可以将lpk中用的镜像推送到官方registry. 上传完毕后需要手动调整manifest.yml中的相关引用.
 ```
-$ lzc-cli appstore copy-image <被上传镜像>
-# 上传完成后将打印  registry.lazycat.cloud/<community-username>/<被上传镜像>
+$ lzc-cli appstore copy-image <公网可以访问的镜像名称>
+# 上传完成后将打印  registry.lazycat.cloud/<community-username>/<镜像名称>:<hash版本>
+```
+
+比如
+```
+lzc-cli appstore copy-image alpine:3.18
+Waiting ... ( copy alpine:3.18 to lazycat offical registry)
+lazycat-registry: registry.lazycat.cloud/snyh1010/library/alpine:d3b83042301e01a4
+
 ```
 
 注意`registry.lazycat.cloud`的使用存在以下限制
