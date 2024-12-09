@@ -84,7 +84,7 @@ export default defineConfig({
           { text: "移植应用", link: "/app-example-porting.md" }
         ],
       },
-      nk{
+      {
         text: "高级技巧",
         items: [
           { text: "路由规则", link: "/advanced-route.md" },
