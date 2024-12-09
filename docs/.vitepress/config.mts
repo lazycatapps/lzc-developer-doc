@@ -84,7 +84,7 @@ export default defineConfig({
           { text: "移植应用", link: "/app-example-porting.md" }
         ],
       },
-      {
+      nk{
         text: "高级技巧",
         items: [
           { text: "路由规则", link: "/advanced-route.md" },
@@ -100,6 +100,8 @@ export default defineConfig({
           { text: "外网 API 服务", link: "/advanced-public-api.md" },
           { text: "错误页面", link: "/advanced-error-template.md" },
           { text: "平台支持", link: "/advanced-platform.md" },
+          { text: "通过 dockerd 开发", link: "/dockerd-support.md" },
+          { text: "高级网络配置", link: "/network-config.md" },
           { text: "系统版本依赖", link: "/advanced-runtime-dependence.md" }
         ],
       },
