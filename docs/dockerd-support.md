@@ -1,6 +1,6 @@
 # dockerd 开发模式
 
-部分开发者希望微服能提供完整的docker套件功能, 针对于这一类用户, 微服系统(需要版本>= v1.1.1)提供了新的机制. 
+部分开发者希望微服能提供完整的docker套件功能, 针对于这一类用户, 微服系统(需要版本>= v1.1.0)提供了新的机制. 
 首先, 用户需要先取得微服的[ssh权限](./ssh), 一旦获取到该权限, 即可通过以下命令开启此服务
 ```bash
 playgroundctl enable
@@ -19,6 +19,11 @@ Playground Docker 配置路径为/lzcsys/var/playground/daemon.json
 -----本功能仅为临时方案, 后续可能无效!-----
 ```
 
+:::tip 
+请注意, 如需配置该docker的行为,请修改 **/lzcsys/var/playground/daemon.json**, 修改完成后需要执行`systemctl restart playground-docker` 重启服务
+:::
+
+
 开发者可以通过以下两种方式运行自己的容器
 
 ### Dockge 
@@ -28,5 +33,4 @@ Playground Docker 配置路径为/lzcsys/var/playground/daemon.json
 
 ### pg-docker
 ssh 登录到微服之后, 用户可以直接使用 `pg-docker` 命令执行docker相关的命令, 通过pg-docker暴露的端口, 能够直接在内网中访问
-
 
