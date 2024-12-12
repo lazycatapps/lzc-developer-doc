@@ -67,10 +67,9 @@ export default defineConfig({
       {
         text: "快速入门",
         items: [
-          { text: "开发环境搭建", link: "/lzc-cli.md" },
           { text: "开发模式", link: "/develop-mode.md" },
+          { text: "开发环境搭建", link: "/lzc-cli.md" },
           { text: "Hello World", link: "/hello-world.md" },
-          { text: "反向代理模式配置", link: "/reverse-proxy.md" },
         ],
       },
       {
@@ -81,12 +80,13 @@ export default defineConfig({
           { text: "第一个 Golang 应用", link: "/app-example-go.md" },
           { text: "开发依赖安装", link: "/devshell-install-and-use.md" },
           { text: "开发测试镜像", link: "/advanced-dev-image.md" },
-          { text: "移植应用", link: "/app-example-porting.md" }
+          { text: "移植应用", link: "/app-example-porting.md" },
         ],
       },
       {
         text: "高级技巧",
         items: [
+          { text: "反向代理模式配置", link: "/reverse-proxy.md" },
           { text: "路由规则", link: "/advanced-route.md" },
           { text: "启动依赖", link: "/advanced-depends.md" },
           { text: "文件访问", link: "/advanced-file.md" },
@@ -97,17 +97,11 @@ export default defineConfig({
           { text: "后台常驻", link: "/advanced-background.md" },
           { text: "GPU 加速", link: "/advanced-gpu.md" },
           { text: "多实例", link: "/advanced-multi-instance.md" },
-          { text: "外网 API 服务", link: "/advanced-public-api.md" },
+          { text: "独立鉴权", link: "/advanced-public-api.md" },
           { text: "错误页面", link: "/advanced-error-template.md" },
           { text: "平台支持", link: "/advanced-platform.md" },
-          { text: "通过 dockerd 开发", link: "/dockerd-support.md" },
-          { text: "高级网络配置", link: "/network-config.md" },
           { text: "系统版本依赖", link: "/advanced-runtime-dependence.md" }
         ],
-      },
-      {
-        text: "虚拟机",
-        items: [{ text: "KVM 模式", link: "/kvm.md" }],
       },
       {
         text: "扩展",
@@ -119,6 +113,14 @@ export default defineConfig({
         text: "发布应用",
         items: [{ text: "发布自己的第一个应用", link: "/publish-app.md" }],
       },
+
+      {
+        text: "传统模式",
+          items: [
+          { text: "KVM 模式", link: "/kvm.md" },
+          { text: "dockerd 模式", link: "/dockerd-support.md" },
+        ],
+      },
       {
         text: "常见问题",
         items: [
@@ -126,12 +128,13 @@ export default defineConfig({
           { text: "网络机制与 VPN", link: "/network.md" },
           { text: "自己架设网络穿透", link: "/network-pass-through.md" },
           { text: "SSH 与内测", link: "/ssh.md" },
-          { text: "开发者应用", link: "/third-apps.md" },
+          { text: "高级网络配置", link: "/network-config.md" },
         ],
       },
       {
         text: "感谢",
         items: [
+          { text: "开发者应用", link: "/third-apps.md" },
           { text: "贡献者", link: "/contributors.md" },
         ],
       },

@@ -8,16 +8,16 @@
 
 ```yaml
 devshell:
-  routes:
+  routes: #此字段会合并到lzc-manifest.yml中，最终结果可以进到devshell后cat /lzcapp/pkg/manifest.yml查看
     - /=http://127.0.0.1:3000
 ```
 
-修改为：
+将整个路由都转发到您开发机器的局域网IP，此IP需要确保可以被微服直接访问到
 
 ```yaml
 devshell:
   routes:
-    - /=http://${LocalIP}:3000
+    - /=http://${开发机的局域网IP}:3000
 ```
 
 修改完成后在终端中执行下面命令来重新构建容器:
