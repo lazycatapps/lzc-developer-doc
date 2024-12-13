@@ -12,6 +12,7 @@
 | /lzcapp/var | 应用存储目录 |
 | /lzcapp/cache | 应用缓存目录 |
 | /lzcapp/run/mnt/home | 用户 document 目录，系统会默认自动挂载到容器 |
+| /lzcapp/pkg | 应用静态资源目录，包含配置文件及应用打包时携带的资源。该目录为只读。|
 | /lzcapp/pkg/content | `lzc-build.yml` 参数 `contentdir` 指定的 lpk 包内容 | 构建打包在 lpk 应用中的内容 |
 
 > [!WARNING]
