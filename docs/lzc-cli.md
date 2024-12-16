@@ -4,7 +4,7 @@
 
 1. 安装依赖
 
-- 首先需要按照 [Node.js](https://nodejs.org/zh-cn) 和 [懒猫微服客户端](https://lazycat.cloud/download)
+- 首先需要安装 [Node.js](https://nodejs.org/zh-cn) 和 [懒猫微服客户端](https://lazycat.cloud/download)
 
 2. 安装懒猫云开发者工具
 
