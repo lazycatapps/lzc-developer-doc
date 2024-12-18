@@ -32,7 +32,8 @@ name: Bitwarden
 
 application:
   routes:
-  - /=http://bitwarden:80
+  - /=http://bitwarden.cloud.lazycat.app.bitwarden.lazcapp:80
+  - /or_use_this_short_domain=http://bitwarden:80
   subdomain: bitwarden
 services:
   bitwarden:
@@ -40,11 +41,17 @@ services:
 
 ```
 
-`http://bitwarden:80`中的bitwarden是services中的service名称,这个名称在运行时会自动解析为service实际的ip.
+1. `http://bitwarden:80`中的bitwarden是services中的service名称,这个名称在运行时会自动解析为service实际的ip.
+2. `http://bitwarden.cloud.lazycat.app.bitwarden.lzcapp:80`的写法为`$service_name.$appid.lzcapp`
 
-ps: 早期版本推荐的写法为`- /=http://bitwarden.cloud.lazycat.app.bitwarden.lzcapp:80` 但在lzcos-1.2.x之后会引入应用隔离,
-应用之间禁止相互访问, 因此不再提倡`xxx.lzcapp`这种域名
-
+注意
+1. lzcos-1.3.x之后会引入应用隔离,应用之间禁止相互访问,因此如果没有特殊原因直接使用`service_name`的形式作为域名更简便，也方便修改appid。(`xxx.lzcapp`本身不会被废弃，任意应用都能解析到正确IP，但隔离后无法访问到目标IP)
+2. 但以下特殊情况依旧需要使用`xxx.lzcapp`域名形式
+   1. 在lzcos-1.3.x之前因为没有进行应用隔离，所有应用看到的`service_name`都是互通的。当不同应用有相同service_name时，可能被错误解析到其他容器IP。
+      因此`service_name`是`app`、`db`这类大概率会冲突的情况下在应用网络隔离前依旧需要使用`xxx.lzcapp`形式。
+   2. 如果上游服务会检测`http request host`之类的，则需要使用`xxx.lzcapp`形式，否则上游服务解析http request时，
+      `http header host`会是`service_name`而非`aaaa.xxx.heiyu.space`。
+      此限制是因为上游服务也可能是一个公网服务，此时host必须原封不动传递给上游否则大概率会出现跨域之类的问题。
 
 file上游
 =========
