@@ -6,7 +6,7 @@
 
     - [打开管理界面](https://developer.lazycat.cloud/manage)， 根据界面上的引导提交审核。
 
-    - 或者通过命令行工具 `lzc-cli` (1.2.43 及以上版本) 提交审核， 如何安装 `lzc-cli` 请参考 [开发环境搭建](https://developer.lazycat.cloud/lzc-cli.html)
+    - 或者通过命令行工具 `lzc-cli` (1.2.54 及以上版本) 提交审核， 如何安装 `lzc-cli` 请参考 [开发环境搭建](https://developer.lazycat.cloud/lzc-cli.html)
 
         ```bash
         lzc-cli project build
