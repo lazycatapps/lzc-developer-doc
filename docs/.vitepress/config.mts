@@ -124,6 +124,7 @@ export default defineConfig({
       {
         text: "常见问题",
         items: [
+          { text: "开发应用 FAQ", link: "/faq-dev.md" },
           { text: "应用白屏", link: "/app-block.md" },
           { text: "网络机制与 VPN", link: "/network.md" },
           { text: "自己架设网络穿透", link: "/network-pass-through.md" },
