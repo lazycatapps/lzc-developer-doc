@@ -30,6 +30,9 @@ application:
 application:
   ingress:
     - protocol: tcp
+      port: 8080
+      # service 如果这个 8080 端口为当前 application 中监听(来自 router中执行的脚本或者 image 中监听的)，而不是底部 services 中的服务监听，则不用写 // [!code warning]
+    - protocol: tcp
       description: 数据库服务
       port: 3306
       service: mysql

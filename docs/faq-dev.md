@@ -24,3 +24,9 @@
 
 1. 更改脚本中的创建目录，如 `/lzcapp/cache` 或者 `/lzcapp/var`。 详细信息请看 [访问微服数据](./advanced-file)
 2. 更改应用的执行目录, 通过 `application.workdir` 的字段指定当前的运行目录。详细信息请看 [application 字段](./app-example-python-description)
+
+## 上架应用的介绍文档在哪里写？
+
+上架应用中，并不会自动读取 readme，也不知道 readme 从何而来，所以应用介绍是在开发者管理界面[点击跳转](https://developer.lazycat.cloud/manage)中填写。
+
+应用列表 -> 提交修改 -> 应用描述
