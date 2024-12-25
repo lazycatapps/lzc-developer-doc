@@ -36,9 +36,10 @@ services:
         disable: false
 ```
 
-> [!WARNING] 注意: 
+::: warning
 > 1. lzcapp 中的对应字段为 `health_check` 而非 `healthCheck`
 > 2. 即使 service 中没有填写 `health_check` 也会受 docker image 中对应字段影响
+:::
 
 自动注入的健康检测
 ===============
@@ -53,9 +54,10 @@ lzcapp 主要是通过 `application.routes` 对外提供服务,因此系统会�
    使用 TCP dial `$hostname:$port`，如 dial 成功则表明此上游为就绪状态
 4. 等待所有其他 service 全部进入 healty 状态, 页面中的"应用启动中"切换为实际服务内容
 
-> [!WARNING] 注意:
+::: warning
 > 1. 如果 `$hostname` 为一个公网 IP/域名 则步骤 3 时会忽略此上游服务，避免微服在没有互联网时无法启动此应用
 > 2. 在 dial `$hostname:$port` 时并非使用 http 方式，因为部分上游正常状态时就是404或其他奇怪的状态
 >   因此自动注入的检测逻辑仅确保 TCP 层面正常
 > 3. 因为自动注入的存在，因此在 `services.$service_name.depends_on` 中千万不要填写 `app` 这个特殊 service_name
 > 4. 若您在开发阶段，遇到依赖相关问题,可以设置 `application.health_check.disable=true` 来禁用自动注入的健康检测,但强烈建议在正式发布应用时开启
+:::

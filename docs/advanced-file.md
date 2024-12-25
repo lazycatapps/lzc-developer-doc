@@ -15,8 +15,9 @@
 | /lzcapp/pkg | 应用静态资源目录，包含配置文件及应用打包时携带的资源。该目录为只读。|
 | /lzcapp/pkg/content | `lzc-build.yml` 参数 `contentdir` 指定的 lpk 包内容 | 构建打包在 lpk 应用中的内容 |
 
-> [!WARNING]
-> 请注意: 目前 lzcapp 的 `lzc-manifest.yml` 配置文件中仅支持挂载上列挂载点列表中的文件夹。
+::: warning
+目前 lzcapp 的 `lzc-manifest.yml` 配置文件中仅支持挂载上列挂载点列表中的文件夹。
+:::
 
 ## 常见问题？
 
