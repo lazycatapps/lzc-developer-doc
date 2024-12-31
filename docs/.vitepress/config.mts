@@ -86,7 +86,6 @@ export default defineConfig({
       {
         text: "高级技巧",
         items: [
-          { text: "反向代理模式配置", link: "/reverse-proxy.md" },
           { text: "路由规则", link: "/advanced-route.md" },
           { text: "启动依赖", link: "/advanced-depends.md" },
           { text: "文件访问", link: "/advanced-file.md" },
@@ -100,7 +99,8 @@ export default defineConfig({
           { text: "独立鉴权", link: "/advanced-public-api.md" },
           { text: "错误页面", link: "/advanced-error-template.md" },
           { text: "平台支持", link: "/advanced-platform.md" },
-          { text: "系统版本依赖", link: "/advanced-runtime-dependence.md" }
+          { text: "系统版本依赖", link: "/advanced-runtime-dependence.md" },
+          { text: "反向代理模式配置", link: "/reverse-proxy.md" },
         ],
       },
       {
@@ -133,10 +133,22 @@ export default defineConfig({
         ],
       },
       {
+        text: "规范列表",
+        items: [
+          { text: "lzc-manifest.yml", link: "/spec/manifest.md" },
+        ],
+      },
+      {
         text: "感谢",
         items: [
           { text: "开发者应用", link: "/third-apps.md" },
           { text: "贡献者", link: "/contributors.md" },
+        ],
+      },
+      {
+        text: "系统变更日志",
+        items: [
+          { text: "v1.2.0", link: "/changelogs/v1.2.0.md" },
         ],
       },
     ],
