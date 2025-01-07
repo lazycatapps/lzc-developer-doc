@@ -2,7 +2,7 @@
 
 ## 在登录开发者中心前，先确认您的 `lazycat.cloud` 帐号是否具有开发者权限？
 
-在注册 lazycat.cloud 帐号后，您还需要申请下成为开发者，否则会出现没有权限登录的问题。
+在[注册](https://lazycat.cloud/login?redirect=https://developer.lazycat.cloud/) lazycat.cloud 帐号后，您还需要申请下成为开发者，否则会出现没有权限登录的问题。
 
 ## 资源文件比较大，该如何打包和发布?
 
