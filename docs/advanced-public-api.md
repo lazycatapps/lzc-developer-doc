@@ -38,6 +38,12 @@ application:
 
 ## TCP/UDP 服务 {#tcp-udp-ingress}
 
+::: warning 正常http请使用路由功能
+ingress的TCP/UDP转发能是为了提供给微服客户端之外使用，比如命令行或第三方应用。
+如果只是为了转发容器的某个http端口，请使用lzcapp的[http路由功能](./advanced-route.md)。
+:::
+
+
 上面介绍了公开 HTTP 服务的方法， 如果您想提供一些 TCP/UDP 服务，
 可以在 `lzc-manifest.yml` 文件中的 `application` 字段下加一个 `ingress` 子字段
 
@@ -69,10 +75,7 @@ application:
 
 设置好以后， 就可以通过浏览器来进行访问啦, 比如您的应用域名为 `app-subdomain` (lzc-manifest.yml 文件的 subdomain 字段)， 设备名为 `devicename`, 您就可以通过访问 `app-subdomain.devicename.heiyu.space:3306` 来访问对外提供的 TCP 服务啦。
 
-::: warning 安全警告
-ingress的TCP/UDP转发能是为了提供给微服客户端之外使用，比如命令行或第三方应用。
-如果只是为了转发容器的某个http端口，请使用lzcapp的路由功能。
-
+::: warning 安全提示
 当您使用TCP/UDP功能时，微服系统仅能提供底层虚拟网络的保护，从原理上无法提供鉴权流程。
 微服客户端上的其他进程可以不受限制的访问对应TCP/UDP端口。
 若用户使用端口转发工具进行转发则会进一步降低安全性，因此开发者在提供TCP/UDP功能时一定要妥善处理鉴权逻辑。
