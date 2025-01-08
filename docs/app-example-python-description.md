@@ -7,7 +7,7 @@ lzc-build.yml 这个文件是生成 lpk 的应用安装包的配置文件， 这
 
 ## lzc-manifest.yml
 
-lzc-manifest.yml 是控制应用 Meta 信息的配置文件。
+[lzc-manifest.yml](./spec/manifest) 是控制应用 Meta 信息的配置文件。
 
 先介绍一下这个配置文件基本的关键字和用处：
 - `name`: 应用名称
@@ -18,7 +18,7 @@ lzc-manifest.yml 是控制应用 Meta 信息的配置文件。
 - `homepage`: 项目主页
 - `author`: 作者信息
 
-这个文件最重要的是 `application` 字段：
+这个文件最重要的是 [application.routes](./advanced-route)：
 
 ```shell
 application:
@@ -43,25 +43,16 @@ application:
 
 `application` 字段下具有以下字段:
 
-| 字段            | 说明                                                                     | 默认                                     |
-|-----------------|--------------------------------------------------------------------------|------------------------------------------|
-| background_task | [配置后台任务](./advanced-background)                                    | false                                    |
-| subdomain       | 配置应用子域名                                                           | <必填项>                                 |
-| routes          | [配置应用规则](./advanced-route)                                         |                                          |
-| public_path     | [配置外网API](./advanced-public-api)                                     |                                          |
-| ingress         | [配置外网端口](./advanced-public-api)                                    |                                          |
-| multi_instance  | [配置多实例(同一个应用，各用户数据隔离)](./advanced-multi-instance)      | false                                    |
-| workdir         | 指定应用的启动目录，若不设置或目录不存在则保持使用container的WORKDIR信息 |                                          |
-| usb_accel       | 挂在/dev/bus/usb到容器                                                   | false                                    |
-| gpu_accel       | 是否允许使用硬件加速                                                     | false                                    |
-| kvm_accel       | 是否允许使用 kvm                                                         | false                                    |
-| file_handler    | 声明本app支持操作的文件类型，[应用关联](./advanced-mime)                 |                                          |
-| environment     | 填写 application 容器的环境变量                                          |                                          |
-| image           | 指定应用的镜像，如果为空将使用默认的                                     | registry.lazycat.cloud/lzc/lzcapp:3.20.3 |
-| health_check    | 定义 application 的 health_check 行为                                    |                                          |
-| handlers        | [定义应用错误时的展示模板](./advanced-error-template)                                                 |                                          |
+| 字段           | 说明                                                           | 备注                                   |
+|----------------|---------------------------------------------------------------|----------------------------------------|
+| subdomain      | 配置应用子域名                                                  | 仅为默认值，后续系统版本允许管理员调整 |
+| multi_instance | [配置多实例(同一个应用，各用户数据隔离)](./advanced-multi-instance) | 仅为默认值，后续系统版本允许管理员调整 |
+| routes         | [配置应用规则](./advanced-route)                                | 所有http相关逻辑应该在这里声明         |
+| public_path    | [配置外网API](./advanced-public-api)                           | 不建议使用                             |
+| ingress        | [配置外网端口](./advanced-public-api)                           | 仅建议在需要提供非HTTP服务时使用       |
+| file_handler   | 声明本app支持操作的文件类型，[应用关联](./advanced-mime)            | 工具类应用建议配置此选项，以便网盘里打开文件时可以选择使用本应用|
 
-::: details
+::: details 示例
 
 ```yml
 package: abc.example.com # app的唯一id,上架到商店需要保证不要冲突,尽量使用开发者自己的域名作为后缀.
@@ -126,11 +117,6 @@ application:
     - MYPASSWORD=123456
 
   image: alpine:3.16  #可选的运行环境，为空则使用sdk对应版本的镜像。若上架到商店，则此处的镜像必须上传到商店仓库统一托管。
-
-  health_check:
-    test_url: http://backend.appid.lzcapp:8080 # 进行健康检查的url，如果返回大于500则健康检查失败
-    start_period: 90s # 应用启动超时（如果应用容器启动后过了指定时间段后，健康检查仍然无法通过，则视为应用启动失败）
-    disable: false #禁用后则系统不会执行自动健康检测逻辑,但image中本身存在的health_check依然会执行
 
   handlers:
     # 当routes中https/http/exec类型的反代出现错误时，则渲染对应模板。
