@@ -102,6 +102,7 @@ export default defineConfig({
           { text: "系统版本依赖", link: "/advanced-runtime-dependence.md" },
           { text: "反向代理模式配置", link: "/reverse-proxy.md" },
           { text: "浏览器插件调试", link: "/advanced-browser-extension.md" },
+          { text: "初始化脚本", link: "/advanced-setupscript.md" },
         ],
       },
       {
