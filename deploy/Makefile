@@ -74,11 +74,3 @@ dist:
 
 deploy:
 	coscli sync --recursive $(DIST_DIR) cos://www-dev-lazycat-1301583638
-
-flush-cdn:
-	bash flush-cdn.sh $(SECRET_ID) ${SECRET_KEY}
-
-preheat-cdn:
-	cd $(DIST_DIR) \
-		&& urls=$$(find assets -type f | sed 's|^|https://developer.lazycat.cloud/|' | tr '\n' ' ') \
-		&& tccli cdn PushUrlsCache --cli-unfold-argument --Area global --Urls $${urls}
