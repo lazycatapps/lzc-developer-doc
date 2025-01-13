@@ -1,10 +1,8 @@
 # 发布自己的第一个应用
 
-1. 在发布应用前， 您需要[注册](https://lazycat.cloud/login?redirect=https://developer.lazycat.cloud/)成为懒猫微服的开发者。
+1. 在发布应用前， 您需要 [注册](https://lazycat.cloud/login?redirect=https://developer.lazycat.cloud/) 社区账号，并访问 [开发者应用管理界面](https://developer.lazycat.cloud/manage)，根据界面上的引导提交审核（提交申请后建议在客服群[联系我们](https://lazycat.cloud/about?navtype=AfterSalesService)快速审核），申请完成后成为懒猫微服的开发者。
 
 2. 提交应用到商店审核:
-
-    - [打开管理界面](https://developer.lazycat.cloud/manage)， 根据界面上的引导提交审核。
 
     - 或者通过命令行工具 `lzc-cli` (1.2.54 及以上版本) 提交审核， 如何安装 `lzc-cli` 请参考 [开发环境搭建](https://developer.lazycat.cloud/lzc-cli.html)
 
@@ -36,7 +34,7 @@ lazycat-registry: registry.lazycat.cloud/snyh1010/library/alpine:d3b83042301e01a
 
 注意 `registry.lazycat.cloud` 的使用存在以下限制
 
-1. 为了保证LPK引用镜像本身的稳定性，生成镜像tag会替换成IMAGE_ID，每次执行 `copy-image` ，服务端都会强制执行一次 `docker pull`
+1. 为了保证 LPK 引用镜像本身的稳定性，生成镜像tag会替换成IMAGE_ID，每次执行 `copy-image` ，服务端都会强制执行一次 `docker pull`
 2. 被上传的镜像必须是公网存在的，`pull` 操作是在服务端进行的，因此仅在开发者本地存在的镜像无法被 `copy-image`
 3. 被上传镜像必须被至少一个商店应用引用，仓库会定期进行垃圾回收操作
 4. `registry.lazycat.cloud` 仅供微服内部使用，在微服外部使用会有黑科技**限速**
