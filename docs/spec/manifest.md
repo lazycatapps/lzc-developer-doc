@@ -23,7 +23,7 @@
 | 字段名 | 类型 | 描述 |
 | ---- | ---- | ---- |
 | `ext_config` | `ExtConfig` | 实验性属性， 暂不对外公开 |
-| `unsupported_platforms` | `[]string` | 应用不支持的平台， 有效字段为: "ios", "android", "windows", "macos", "linux", "tvos" |
+| `unsupported_platforms` | `[]string` | 应用不支持的平台， 有效字段为: "iOS", "android", "windows", "macos", "linux", "tvos" |
 | `application` | `ApplicationConfig` | lzcapp 核心服务配置 |
 | `services` | `map[string]ServiceConfig` | 传统 docker container 相关服务配置 |
 

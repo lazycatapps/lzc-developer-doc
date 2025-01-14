@@ -45,90 +45,90 @@ application:
 
 | 字段           | 说明                                                           | 备注                                   |
 |----------------|---------------------------------------------------------------|----------------------------------------|
-| subdomain      | 配置应用子域名                                                  | 仅为默认值，后续系统版本允许管理员调整 |
-| multi_instance | [配置多实例(同一个应用，各用户数据隔离)](./advanced-multi-instance) | 仅为默认值，后续系统版本允许管理员调整 |
-| routes         | [配置应用规则](./advanced-route)                                | 所有http相关逻辑应该在这里声明         |
-| public_path    | [配置外网API](./advanced-public-api)                           | 不建议使用                             |
-| ingress        | [配置外网端口](./advanced-public-api)                           | 仅建议在需要提供非HTTP服务时使用       |
-| file_handler   | 声明本app支持操作的文件类型，[应用关联](./advanced-mime)            | 工具类应用建议配置此选项，以便网盘里打开文件时可以选择使用本应用|
+| subdomain      | 配置应用子域名                                                  | 仅为默认值， 后续系统版本允许管理员调整 |
+| multi_instance | [配置多实例(同一个应用 ， 各用户数据隔离)](./advanced-multi-instance) | 仅为默认 值， 后续系统版本允许管理员调整 |
+| routes         | [配置应用规则](./advanced-route)                                | 所有  http 相关逻辑应该在这里声明         |
+| public_path    |  [配置外网 API](./advanced-public-api)                           | 不建议使用                             |
+| ingress        | [配置外网端口](./advanced-public-api)                           | 仅建议 在需要提 供非 HTTP 服务时使用       |
+| file_handler    | 声明本 app  支持操作的文件类型， [应用关联](./advanced-mime)            | 工具 类应用建议配置此选项， 以便网盘里打开文件时可以选择使用本应用|
 
 ::: details 示例
 
 ```yml
-package: abc.example.com # app的唯一id,上架到商店需要保证不要冲突,尽量使用开发者自己的域名作为后缀.
-version: 2.0.2           #app的版本
+package: abc.examp le. com # app 的唯一 id,上架到商店需要保证不要冲突,尽量使用开发者自己的域名作为后缀.
+version: 2.0.2           #ap p 的版本
 
-name: 测试abc   #软件名称,会显示在启动器之类的地方
+name: 测试 abc   #软件名称,会显示在启动器之类的地方
 description: 简单易用的英语学习软件
 
-license: https://choosealicense.com/licenses/mit/  #软件本身的license
+license: https://choosealicense.com/licen ses/mit/  #软件本身的 license
 homepage: http://github.com/snyh/abc #软件的主页,会在商店等地方体现
-author: snyh@snyh.org #lpk的作者,会在商店等地方体现
+author: s nyh@snyh.org #lpk 的作者,会在商店等地方体现
 
-unsupported_platforms: # 不支持的平台, 不写则表示全平台支持. lpk本身是可以被安装的,但下面列表中的平台无法打开此软件
+unsupported_platforms: # 不支持的平 台, 不写则表示全平台支持. lpk 本身是可以被安装的,但下面列表中的平台无法打开此软件
   - linux
   - macos
   - windows
   - android
-  - ios
-  - tvos
+  - iOS
+  -  tvos
 
 
-#application作为一个特殊的container运行，对应的service名称为固定的`app`，其他service可以通过此名称与app进行通讯
+ #applicat ion 作为 一个特殊的 c ontainer 运行， 对 应的 serv ice 名称为固 定的` app`， 其他 service 可以通过此名称与 app 进行通讯
 application:
-  background_task: false #是否存在后台任务，若存在则系统不会对此app进行主动休眠等操作
+  bac kground_ta sk: false #是否存在后台任务， 若存在则系统不会对此 app  进行主 动休眠 等操作
 
-  subdomain: abc  #期望的app域名，如果系统中已经有对应域名则会提示用户选择其他域名。最终app分配到的域名以/lzcapp/run/app.subdomain为准
+  subdomain: abc  #期 望的 ap p 域名， 如果系统中已经有对应域名则会提示用户选择其他域名。  最终 app 分配到的域名以/lzcapp/run/app.subdomain 为准
 
   routes:
-    - /api/=exec://8000,/lzcapp/pkg/content/bin/backend     #格式与/usr/bin/lzcinit -up参数一致
-    - /api/=http://service.appid.lzcapp:8000            #多实例应用会自动在route里加上uid
+    - /api/=exec://8000,/lzcapp/pkg/content/ bin/backend     #格式与/usr/bin/lzcinit -up 参数一致
+    - /api/=http://servic e.app id. lzcapp:8000            #多实例应用会自动在 route 里加上 uid
     - /=file:///lzcapp/pkg/content/dist/
 
-  public_path:
-    - /api/public  #默认情况下所有路径都需要登陆后才能访问，public_path之下的路径允许非登陆情况下访问
+  public_pa th:
+    - / api/public  #默认情况下所有路径都需要登陆后才能访问， public_path 之下的路径允许非登陆情况下访问
 
   ingress:
     - protocol: tcp     #tcp or udp
       port: 22          #需要曝露的端口号
-      service: db       #为空则为此app容器内的端口,也可以指定为db等其他service的名称
+      servic e: db       #为空则为此 app 容器内的端口,也可以指定为 db 等其他 service 的名称
 
   multi_instance: true # 是否启用多实例
 
-  workdir: /lzcapp/pkg/content/ #设置lzcinit以及后续子进程的WORKDIR,若不设置或目录不存在则保持使用container的WORKDIR信息
+  workdir: /lzcapp/pk g/content / #设置 lz cinit 以及后续子进程的 WORKDIR,若不设置或目录不存在则保持使用  container 的 WORKDIR 信息
 
-  usb_accel: false # 挂在/dev/bus/usb到容器
-  gpu_accel: false # 是否允许使用硬件加速
-  kvm_accel: true  # enable后会挂在/dev/kvm和/dev/network-host到所有service中
+  usb_accel: false # 挂在/dev/bus/usb 到容器
+  gpu_accel : false # 是否允许使用硬件 加速
+  kvm_a ccel: true  # enable 后会挂 在/d ev/kvm 和/d ev/n etwork-ho st 到所有  servi ce 中
 
-  file_handler: # 声明本app支持操作的文件类型，mime至少存在一条记录，actions至少要支持open
-    mime:  #按照mime类型注册到系统
+  file_handle r: # 声明本 app 支持操作的文件类型， mime 至少存在一条记录， actions 至少要支持 open
+    mime:  #按照 mime 类型注册到系统
       - x-scheme-handler/http
       - x-scheme-handler/https
-      - text/html
-      - application/xhtml+xml
-      - x-lzc-extension/km      # app支持.km文件名后缀
-    actions:  #打开对应文件的url路径,由文件管理器等app调用
-      open: /open?file=%u   #%u是某个webdav上的具体文件路径，一定存在
-      new:  /open?file=%u   #%u是某个webdav上的具体文件路径，不一定存在
-      download: /download?file=%u #%u是某个webdav上的具体文件路径，一定存在
+      - tex t/htm l
+      - application/xhtml+ xml
+      - x -lz c-extension/km      # app 支持.km 文件 名后缀
+    a ctions:   #打开对应文件的 url 路径,由文件管理器等 app 调用
+      op en: /o pen?file= %u   #%u 是某个 webdav 上的具体文件路径， 一定存在
+      ne w:  /open ?file=%u   #%u 是某个 webdav 上的具体文件路径， 不一定存在
+      download: /download?file=%u #%u 是某个 we bdav  上的具 体文件路径， 一 定存在
 
-  environment:
+   environment:
     - MYPASSWORD=123456
 
-  image: alpine:3.16  #可选的运行环境，为空则使用sdk对应版本的镜像。若上架到商店，则此处的镜像必须上传到商店仓库统一托管。
+  i mage:  a lpine:3.16  #可选 的运行环境， 为空则使 用 sdk 对应版本的镜像。 若上架到商店， 则此处的镜像必 须上传到商店 仓库统 一托管 。
 
   handlers:
-    # 当routes中https/http/exec类型的反代出现错误时，则渲染对应模板。
-    # 若错误类型为无法返回任何数据，则会生成一个502响应，比如上游游服务器不存在或网络不通等完全获取不到一个http response的情况。
+    # 当 ro utes 中 https/ http/exec 类型的反代出现错误时， 则渲 染对应模板。
+    # 若错误类型为无法返回任何数 据， 则会生成一个 502 响应， 比如上游游服务器不存在或网络不通等完全获取不到一个 http response 的情况。
     #
-    # 其他情况则根据http response status code，选择对应的模板
-    # 若命中错误处理页面, 则http response status code本身不会进行修改
+    # 其他情况则根据 http response status code， 选择对应的模板
+    # 若命中错误处理页面, 则 http response status code 本身不会进行修改
     #
-    # 页面渲染使用此数据结构
+    # 页 面渲染使用此数据结构
       # struct {
       #    StatusCode int
-      #    ErrorDetail string #无法获取http response的情况下，此字段会显示对应错误信息，并将StatusCode设置为502
+      #    ErrorDetail string #无法获取 http response 的情况下， 此字段会显示对应错误信息， 并将 StatusCode 设置为 502
       # }
     error_page_templates:
       502: /lzcapp/pkg/content/errors/502.html.tpl
@@ -136,18 +136,18 @@ application:
 
 
 
-services: #传统docker镜像启动方式，如果需要数据库等配套容器一起运行则可以在这里申明。传统app如nextcloud、aria2c也可以使用这种方式进行兼容运行
+services: #传统 docker 镜像启动方式， 如果需要数据库等配套容器一起运行则可以在这里申明。 传统 app 如 nextcloud、 aria2c 也可以使用这种方式进行兼容运行
   backend:
     image: alpine:3.18
 
     depends_on:
       - db
 
-  db: #目前只支持以下参数，network,ipc之类的配置字段(故意)不支持
+  db: #目前只支持以下参数， network,ipc 之类的配置字段(故意)不支持
     image: bitnami/wordpress:5.8.2
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
-      # oauth相关的环境变量
+      # oauth 相关的环境变量
       - LAZYCAT_AUTH_OIDC_CLIENT_ID=xxx
       - LAZYCAT_AUTH_OIDC_CLIENT_SECRET=xxx
       - LAZYCAT_AUTH_OIDC_ISSUER_URL=xxx
@@ -160,27 +160,27 @@ services: #传统docker镜像启动方式，如果需要数据库等配套容器
     # - /lzcapp/cache
     # - /lzcapp/pkg
     binds:
-      - /lzcapp/run/mnt/home:/home  #将/lzcapp/run/mnt/home(即用户文稿)目录挂在到容器内的/home目录
+      - /lzcapp/run/mnt/home:/home  #将/lzcapp/run/mnt/home(即用户文稿)目录挂在到容器内的/home 目录
       - /lzcapp/var/db:/data
       - /lzcapp/cache/db:/cache
-      - /lzcapp/pkg/content/entrypoint.sh:/entrypoint.sh # 挂载lpk包内的文件
+      - /lzcapp/pkg/content/entrypoint.sh:/entrypoint.sh # 挂载 lpk 包内的文件
 
-    entrypoint: /bin/sh -c
+    entrypoi nt: /bin/sh -c
     command: "/usr/bin/nextcloud"
 
     depends_on:
       - ui
 
-    # network_mode 仅支持host模式，开启后此service可以访问所有网卡，但失去lzcdns特性
-    # 非必要尽量不要使用此模式，需要谨慎处理代码，存在很高安全风险
-    # 如果要在network=host service中提供内部服务，请监听在`host.lzcapp`这个内部IP上，不要直接监听0.0.0.0
+    # network_mode 仅支持 host 模式， 开启后此 service 可以访问所有网卡， 但失去 lzcdns 特性
+    # 非必要尽量不要使用此模式， 需要谨慎处理代码， 存在很高安全风险
+    # 如果要在 network=host service 中提供内部服务， 请监听在`host.lzcapp`这个内部 IP 上， 不要直接监听 0.0.0.0
     network_mode: "host"
 
-    # cpu_shares默认值为 1024，将此值调小可以降低容器的优先级。只有在 CPU 周期受到限制时，这种限制才会生效。
-    # 当 CPU 周期充足时，所有容器会使用所需的全部 CPU 资源。cpu_shares 不会阻止容器在 Swarm 模式下被调度。
-    # 它为可用的 CPU 周期优先分配容器的 CPU 资源，但并不保证或保留任何特定的 CPU 访问权限。
+    # cpu_shares 默认值为 1024， 将此值调小可以降低容器的优先级。 只有在 CPU 周期受到限制时， 这种限制才会生效。
+    # 当 CPU 周期充足时， 所有容器会使用所需的全部 CPU 资源。 cpu_shares 不会阻止容器在 Swarm 模式下被调度。
+    # 它为可用的 CPU 周期优先分配容器的 CPU 资源， 但并不保证或保留任何特定的 CPU 访问权限。
     cpu_share: 2
-    # cpus用于指定容器可以使用的可用 CPU 资源量。例如，如果主机机器有两个 CPU，并且您设置 --cpus="1.5"，
+    # cpus 用于指定容器可以使用的可用 CPU 资源量。 例如， 如果主机机器有两个 CPU， 并且您设置 --cpus="1.5"，
     # 则容器保证最多使用一个半的 CPU。
     cpu: 2
 
