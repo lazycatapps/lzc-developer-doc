@@ -70,8 +70,8 @@ unsupported_platforms: # 不支持的平 台, 不写则表示全平台支持. lp
   - macos
   - windows
   - android
-  - iOS
-  -  tvos
+  - ios
+  - tvos
 
 
  #applicat ion 作为 一个特殊的 c ontainer 运行， 对 应的 serv ice 名称为固 定的` app`， 其他 service 可以通过此名称与 app 进行通讯

@@ -3,7 +3,7 @@
 
 ```yml
 unsupported_platforms:
-  - iOS
+  - ios
 ```
 
 上面的配置的意思是， 您的应用不支持 iOS 平台， 当用户在 iOS 平台下点击应用图标， 微服系统会弹出 `您的应用不支持当前平台` 的提示。
@@ -12,7 +12,7 @@ unsupported_platforms:
 
 | 参数    | 平台                                            |
 |---------|-------------------------------------------------|
-| iOS     | 不支持 iOS 和 iPad 移动端                       |
+| ios     | 不支持 iOS 和 iPad 移动端                       |
 | android | 不支持 Android 移动端                           |
 | linux   | 不支持 Linux 桌面端                             |
 | windows | 不支持 Windows 桌面端                           |
