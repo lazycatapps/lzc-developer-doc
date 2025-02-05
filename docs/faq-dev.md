@@ -1,5 +1,8 @@
 # 开发应用常见问题
 
+## 哪些软件不能上架应用商店？
+目前黄、 赌、 毒、 空投、 破解软件或者违反中国法律的软件不能上架应用商店。
+
 ## 在登录开发者中心前， 先确认您的 `lazycat.cloud` 帐号是否具有开发者权限？
 
 在[注册](https://lazycat.cloud/login?redirect=https://developer.lazycat.cloud/) lazycat.cloud 帐号后， 您还需要申请下成为开发者， 否则会出现没有权限登录的问题。
