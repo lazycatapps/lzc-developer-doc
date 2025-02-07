@@ -89,7 +89,6 @@
 | `command` | `*string` | 对应容器的 command， 可选 |
 | `tmpfs` | `[]string` | 挂载 tmpfs volume， 可选 |
 | `depends_on` | `[]string` | 依赖的其他容器服务， 仅支持本应用内的其他服务， 且强制检测类型为 `healthly`， 可选 |
-| `restart` | `*string` | 容器的 restart 策略 |
 | `health_check` | `*HealthCheckConfig` | 容器的健康检测策略 |
 | `user` | `*string` | 容器运行的 UID 或 username， 可选 |
 | `cpu_shares` | `int64` | CPU 份额 |
