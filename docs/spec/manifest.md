@@ -26,6 +26,7 @@
 | `unsupported_platforms` | `[]string` | 应用不支持的平台， 有效字段为: "ios", "android", "windows", "macos", "linux", "tvos" |
 | `application` | `ApplicationConfig` | lzcapp 核心服务配置 |
 | `services` | `map[string]ServiceConfig` | 传统 docker container 相关服务配置 |
+| `locales` | `map[string]I10nConfigItem` | 应用本地化配置，**需要更新 lzc-os 版本 >= 1.3.0** |
 
 ## 三、 `IngressConfig` 配置
 ### 3.1 网络配置
@@ -98,14 +99,14 @@
 |`setup_script` | `*string` | 配置脚本， 脚本内容会以 root 权限执行后， 再按照 OCI 的规范执行原始的 entrypoint 内容。 本字段和 entrypoint,command 字段冲突， 无法同时设置， 可选 |
 | `binds` | `[]string` | lzcapp 容器的 rootfs 重启后会丢失， 仅 `/lzcapp/var`, `/lzcapp/cache` 路径下的数据会永久保留。 因此其他需要保留的目录需要 bind 到这两个目录之下。 此列表仅支持 `/lzcapp` 开头的路径 |
 
-## 八 `FileHandlerConfig` 配置
+## 八、`FileHandlerConfig` 配置
 ### 8.1 文件处理配置
 | 字段名 | 类型 | 描述 |
 | ---- | ---- | ---- |
 | `mime` | `[]string` | 支持的 MIME 类型列表 |
 | `actions` | `map[string]string` | 动作映射 |
 
-## 九 `HandlersConfig` 配置
+## 九、`HandlersConfig` 配置
 
 ### 9.1 处理程序配置
 | 字段名 | 类型 | 描述 |
@@ -113,7 +114,7 @@
 | `acl_handler` | `string` | ACL 处理程序 |
 | `error_page_templates` | `map[string]string` | 错误页面模板， 可选 |
 
-## 十 与 `UserDeployParams` 的关联
+## 十、与 `UserDeployParams` 的关联
 
 `lzc-deploy-params.yml` 中的 `UserDeployParams` 会在应用实例部署前， 由实例所属者补充相关字段，
 并将最终内容作为`.U`参数来渲染 `lzc-manifest.yml` 后再进行实际部署。 `UserDeployParams` 包含 `UserParam` 数组， `UserParam` 各字段含义如下：
@@ -127,3 +128,31 @@
 | `optional` | `bool` | 此字段是否为必填选项。 当剩余参数均为 `Optional=true` 时， 系统不会主动要求， 用户进入配置界面 |
 | `default_value` | `string` | 开发者提供的默认值 |
 | `hidden` | `bool` | 若为 `true` 则不渲染此字段， 一般是配合开发者提供的 `DefaultValue` 来实现全局常量的作用 |
+
+## 十一、本地化 `I10nConfigItem` 应用配置
+
+配置 `locales` 使应用支持多语言，支持设置的 language key 规范可参考 [BCP 47 标准](https://en.wikipedia.org/wiki/IETF_language_tag)，配置示例如下
+
+```yml
+lzc-sdk-version: 0.1
+package: cloud.lazycat.app.netatalk
+version: 0.0.1
+name: Apple 时间机器备份
+description: Netatalk 服务可用于 Apple 时间机器备份
+author: Netatalk
+locales:
+  zh:
+    name: "Apple 时间机器备份"
+    description: "Netatalk 服务可用于 Apple 时间机器备份"
+  zh_CN:
+    name: "Apple 时间机器备份"
+    description: "Netatalk 服务可用于 Apple 时间机器备份"
+  en:
+    name: "Time Machine Server"
+    description: "Netatalk service can be used for Apple Time Machine backup"
+  ja:
+    name: "タイムマシンサーバー"
+    description: "Netatalk サービスは Apple Time Machine のバックアップに使用できます"
+application:
+  subdomain: netatalk3
+```
