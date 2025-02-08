@@ -26,7 +26,7 @@
 | `unsupported_platforms` | `[]string` | 应用不支持的平台， 有效字段为: "ios", "android", "windows", "macos", "linux", "tvos" |
 | `application` | `ApplicationConfig` | lzcapp 核心服务配置 |
 | `services` | `map[string]ServiceConfig` | 传统 docker container 相关服务配置 |
-| `locales` | `map[string]I10nConfigItem` | 应用本地化配置，**需要更新 lzc-os 版本 >= 1.3.0** |
+| `locales` | `map[string]I10nConfigItem` | 应用本地化配置（可选配置项），**需要更新 lzc-os 版本 >= 1.3.0** |
 
 ## 三、 `IngressConfig` 配置
 ### 3.1 网络配置
@@ -131,8 +131,15 @@
 
 ## 十一、本地化 `I10nConfigItem` 应用配置
 
-配置 `locales` 使应用支持多语言，支持设置的 language key 规范可参考 [BCP 47 标准](https://en.wikipedia.org/wiki/IETF_language_tag)，配置示例如下
+配置 `locales` 使应用支持多语言，支持设置的 language key 规范可参考 [BCP 47 标准](https://en.wikipedia.org/wiki/IETF_language_tag)
 
+| 字段名 | 类型 | 描述 |
+| ---- | ---- | ---- |
+| `name` | `string` | 应用名称本地化字段 |
+| `description` | `string` | 应用描述本地化字段 |
+| `usage` | `string` | 应用的使用须知本地化字段 |
+
+::: details 配置示例
 ```yml
 lzc-sdk-version: 0.1
 package: cloud.lazycat.app.netatalk
@@ -156,3 +163,4 @@ locales:
 application:
   subdomain: netatalk3
 ```
+:::
