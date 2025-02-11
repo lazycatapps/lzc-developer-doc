@@ -41,7 +41,7 @@ export default defineConfig({
     returnToTopLabel: "返回到顶部",
 
     socialLinks: [
-      { icon: "github", link: "https://gitee.com/linakesi/lzc-sdk" },
+      { icon: "gitee", link: "https://gitee.com/lazycatcloud/lzc-developer-doc" },
       { icon: "twitter", link: "https://x.com/manateelazycat" },
     ],
 
