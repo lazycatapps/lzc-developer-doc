@@ -1,0 +1,33 @@
+# compose override
+
+lzcos v1.3.0+后，针对一些lpk规范目前无法覆盖到的运行权限需求，
+可以通过[compose override](https://docs.docker.com/reference/compose-file/merge/)机制来间接实现。
+
+override属于过渡阶段机制，针对一些可控的权限会逐步在lpk规范中进行支持，并在安装应用时由管理员进行决策。
+override机制的兼容性不受支持，特别是volumes挂载系统内部文件路径。
+
+如果有使用到此机制请在开发者群进行说明，官方会记录，以便在可能破坏兼容性前与开发者进行沟通
+
+
+# 使用方式
+
+在lpk文件根目录下按照`compose override`规范放置一个名字为`compose.override.yml`的文件即可。
+
+此外，lzc-build.yml文件的`compose_override`字段的所有内容会自动写入到`lpk/compoe.override.yml`。
+
+比如
+```yml
+pkgout: ./
+icon: ./lazycat.png
+contentdir: ./dist/
+
+compose_override:
+	services:
+	  some_container:
+        cap_drop:
+          - SETCAP
+          - MKNOD
+	    volumes:
+	    - /data/playground:/lzcapp/run/playground:ro
+
+```

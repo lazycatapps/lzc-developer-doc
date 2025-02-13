@@ -129,7 +129,7 @@
 | `default_value` | `string` | 开发者提供的默认值 |
 | `hidden` | `bool` | 若为 `true` 则不渲染此字段， 一般是配合开发者提供的 `DefaultValue` 来实现全局常量的作用 |
 
-## 十一、本地化 `I10nConfigItem` 应用配置
+## 十一、本地化 `I10nConfigItem` 应用配置 {#i18n}
 
 配置 `locales` 使应用支持多语言，支持设置的 language key 规范可参考 [BCP 47 标准](https://en.wikipedia.org/wiki/IETF_language_tag)
 
