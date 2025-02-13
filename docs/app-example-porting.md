@@ -148,3 +148,8 @@ services:
 
 如果你觉得步骤繁琐，想一键把docker-compose转换成懒猫应用，不妨试试社区大佬的转换工具：
 https://github.com/glzjin/lzc-dtl
+
+## 官方移植开源仓库
+
+官方的移植开源是个很好学习的仓库，欢迎参考:
+https://gitee.com/lazycatcloud/appdb
