@@ -50,6 +50,7 @@
 | `usb_accel` | `bool` | 挂载相关设备到所有服务容器内的 `/dev/bus/usb` |
 | `gpu_accel` | `bool` | 挂载相关设备到所有服务容器内的 `/dev/dri` |
 | `kvm_accel` | `bool` | 挂载相关设备到所有服务容器内的 `/dev/kvm` 和 `/dev/vhost-net` |
+| `depends_on` | `[]string` | 依赖的其他容器服务， 仅支持本应用内的其他服务， 且强制检测类型为 `healthly`， 可选 |
 
 ### 4.2 功能配置
 | 字段名 | 类型 | 描述 |
@@ -89,7 +90,7 @@
 | `entrypoint` | `*string` | 对应容器的 entrypoint， 可选 |
 | `command` | `*string` | 对应容器的 command， 可选 |
 | `tmpfs` | `[]string` | 挂载 tmpfs volume， 可选 |
-| `depends_on` | `[]string` | 依赖的其他容器服务， 仅支持本应用内的其他服务， 且强制检测类型为 `healthly`， 可选 |
+| `depends_on` | `[]string` | 依赖的其他容器服务(app这个名字除外)， 仅支持本应用内的其他服务， 且强制检测类型为 `healthly` 可选 |
 | `health_check` | `*HealthCheckConfig` | 容器的健康检测策略 |
 | `user` | `*string` | 容器运行的 UID 或 username， 可选 |
 | `cpu_shares` | `int64` | CPU 份额 |
