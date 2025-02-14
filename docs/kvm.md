@@ -30,8 +30,23 @@
 
 ### 使用`SSH`转发虚拟机内端口
 如果所需端口被占用或无法转发，还可以尝试在虚拟机中使用`SSH forward`将需要的端口转发至本地，或将本地端口转发至虚拟机中。
-相关教程可参考[ArchWiki-OpenSSH](https://wiki.archlinux.org/title/OpenSSH#Forwarding_other_ports)，Windows用户也可使用
+相关教程可参考[ArchWiki-OpenSSH](https://wiki.archlinux.org/title/OpenSSH#Forwarding_other_ports)，Windows用户也可利用
 [Putty](https://apps.microsoft.com/detail/xpfnzksklbp7rj?hl=en-US&gl=US)等GUI工具使用SSH转发。
 
+示例(在Ubuntu虚拟机中开启SSH转发):
+ - 如果没有安装`openssh-server`，可以使用`apt install openssh-server`安装`OpenSSH`服务
+ - 使用指令```sudo useradd -M -U -s /bin/false forward```创建一个用于转发的用户
+ - 使用指令```sudo passwd forward```设置该用户的密码
+ - 在`/etc/ssh/sshd_config.d/`中创建文件`30-forward.conf`并填写下面的配置:
+ ```bash
+ Match User forward
+    AllowTcpForwarding yes # 开启TCP转发
+    PermitTTY no # 禁用ptty
+    X11Forwarding no # 禁用X11转发
+    ForceCommand echo 'This account is restricted to port forwarding only.' # 提示
+    PasswordAuthentication yes # 允许使用密码登陆
+ ```
+ - 使用`sudo systemctl restart sshd`重启`sshd`服务
+ - 在本地计算机上执行`ssh -N -L <端口>:localhost:<端口> forward@ubuntu.<盒子名称>.heiyu.space`即可将虚拟机中端口转发到本地计算机上。
 ## 外网服务连接方式
 ArchLinux 应用的子域名是 archlinux， 假设您的设备名为 devicename, 对外的 TCP 端口为 10086， 您就可以通过访问 archlinux.devicename.heiyu.space:10086 来访问对外提供的 TCP 服务啦。
