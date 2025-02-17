@@ -55,15 +55,15 @@ application:
 ::: details 示例
 
 ```yml
-package: abc.examp le. com # app 的唯一 id,上架到商店需要保证不要冲突,尽量使用开发者自己的域名作为后缀.
-version: 2.0.2           #ap p 的版本
+package: abc.example.com # app 的唯一 id,上架到商店需要保证不要冲突,尽量使用开发者自己的域名作为后缀.
+version: 2.0.2           #app 的版本
 
-name: 测试 abc   #软件名称,会显示在启动器之类的地方
+name: 测试abc   #软件名称,会显示在启动器之类的地方
 description: 简单易用的英语学习软件
 
 license: https://choosealicense.com/licen ses/mit/  #软件本身的 license
 homepage: http://github.com/snyh/abc #软件的主页,会在商店等地方体现
-author: s nyh@snyh.org #lpk 的作者,会在商店等地方体现
+author: snyh@snyh.org #lpk 的作者,会在商店等地方体现
 
 unsupported_platforms: # 不支持的平 台, 不写则表示全平台支持. lpk 本身是可以被安装的,但下面列表中的平台无法打开此软件
   - linux
@@ -74,53 +74,53 @@ unsupported_platforms: # 不支持的平 台, 不写则表示全平台支持. lp
   - tvos
 
 
- #applicat ion 作为 一个特殊的 c ontainer 运行， 对 应的 serv ice 名称为固 定的` app`， 其他 service 可以通过此名称与 app 进行通讯
+ #application 作为一个特殊的 container 运行， 对应的 service 名称为固定的` app`， 其他 service 可以通过此名称与 app 进行通讯
 application:
-  bac kground_ta sk: false #是否存在后台任务， 若存在则系统不会对此 app  进行主 动休眠 等操作
+  background_task: false #是否存在后台任务， 若存在则系统不会对此 app 进行主动休眠等操作
 
-  subdomain: abc  #期 望的 ap p 域名， 如果系统中已经有对应域名则会提示用户选择其他域名。  最终 app 分配到的域名以/lzcapp/run/app.subdomain 为准
+  subdomain: abc  #期望的 app 域名， 如果系统中已经有对应域名则会提示用户选择其他域名。  最终 app 分配到的域名以/lzcapp/run/app.subdomain 为准
 
   routes:
-    - /api/=exec://8000,/lzcapp/pkg/content/ bin/backend     #格式与/usr/bin/lzcinit -up 参数一致
-    - /api/=http://servic e.app id. lzcapp:8000            #多实例应用会自动在 route 里加上 uid
+    - /api/=exec://8000,/lzcapp/pkg/content/bin/backend     #格式与/usr/bin/lzcinit -up 参数一致
+    - /api/=http://service.appid.lzcapp:8000            #多实例应用会自动在 route 里加上 uid
     - /=file:///lzcapp/pkg/content/dist/
 
-  public_pa th:
-    - / api/public  #默认情况下所有路径都需要登陆后才能访问， public_path 之下的路径允许非登陆情况下访问
+  public_path:
+    - /api/public  #默认情况下所有路径都需要登陆后才能访问， public_path 之下的路径允许非登陆情况下访问
 
   ingress:
     - protocol: tcp     #tcp or udp
       port: 22          #需要曝露的端口号
-      servic e: db       #为空则为此 app 容器内的端口,也可以指定为 db 等其他 service 的名称
+      service: db       #为空则为此 app 容器内的端口,也可以指定为 db 等其他 service 的名称
 
   multi_instance: true # 是否启用多实例
 
-  workdir: /lzcapp/pk g/content / #设置 lz cinit 以及后续子进程的 WORKDIR,若不设置或目录不存在则保持使用  container 的 WORKDIR 信息
+  workdir: /lzcapp/pkg/content / #设置 lzcinit 以及后续子进程的 WORKDIR,若不设置或目录不存在则保持使用  container 的 WORKDIR 信息
 
   usb_accel: false # 挂在/dev/bus/usb 到容器
   gpu_accel : false # 是否允许使用硬件 加速
-  kvm_a ccel: true  # enable 后会挂 在/d ev/kvm 和/d ev/n etwork-ho st 到所有  servi ce 中
+  kvm_accel: true  # enable 后会挂 在/dev/kvm 和/dev/network-host 到所有  service 中
 
-  file_handle r: # 声明本 app 支持操作的文件类型， mime 至少存在一条记录， actions 至少要支持 open
+  file_handler: # 声明本 app 支持操作的文件类型， mime 至少存在一条记录， actions 至少要支持 open
     mime:  #按照 mime 类型注册到系统
       - x-scheme-handler/http
       - x-scheme-handler/https
-      - tex t/htm l
-      - application/xhtml+ xml
-      - x -lz c-extension/km      # app 支持.km 文件 名后缀
-    a ctions:   #打开对应文件的 url 路径,由文件管理器等 app 调用
-      op en: /o pen?file= %u   #%u 是某个 webdav 上的具体文件路径， 一定存在
-      ne w:  /open ?file=%u   #%u 是某个 webdav 上的具体文件路径， 不一定存在
-      download: /download?file=%u #%u 是某个 we bdav  上的具 体文件路径， 一 定存在
+      - text/html
+      - application/xhtml+xml
+      - x-lzc-extension/km      # app 支持.km 文件 名后缀
+    actions:   #打开对应文件的 url 路径,由文件管理器等 app 调用
+      open: /open?file=%u   #%u 是某个 webdav 上的具体文件路径， 一定存在
+      new:  /open?file=%u   #%u 是某个 webdav 上的具体文件路径， 不一定存在
+      download: /download?file=%u #%u 是某个 webdav 上的具 体文件路径， 一定存在
 
    environment:
     - MYPASSWORD=123456
 
-  i mage:  a lpine:3.16  #可选 的运行环境， 为空则使 用 sdk 对应版本的镜像。 若上架到商店， 则此处的镜像必 须上传到商店 仓库统 一托管 。
+  image:  alpine:3.16  #可选 的运行环境， 为空则使用 sdk 对应版本的镜像。 若上架到商店， 则此处的镜像必须上传到商店仓库统一托管 。
 
   handlers:
-    # 当 ro utes 中 https/ http/exec 类型的反代出现错误时， 则渲 染对应模板。
-    # 若错误类型为无法返回任何数 据， 则会生成一个 502 响应， 比如上游游服务器不存在或网络不通等完全获取不到一个 http response 的情况。
+    # 当 ro utes 中 https/ http/exec 类型的反代出现错误时， 则渲染对应模板。
+    # 若错误类型为无法返回任何数据， 则会生成一个 502 响应， 比如上游游服务器不存在或网络不通等完全获取不到一个 http response 的情况。
     #
     # 其他情况则根据 http response status code， 选择对应的模板
     # 若命中错误处理页面, 则 http response status code 本身不会进行修改
@@ -165,7 +165,7 @@ services: #传统 docker 镜像启动方式， 如果需要数据库等配套容
       - /lzcapp/cache/db:/cache
       - /lzcapp/pkg/content/entrypoint.sh:/entrypoint.sh # 挂载 lpk 包内的文件
 
-    entrypoi nt: /bin/sh -c
+    entrypoint: /bin/sh -c
     command: "/usr/bin/nextcloud"
 
     depends_on:
