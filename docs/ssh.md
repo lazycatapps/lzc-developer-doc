@@ -14,6 +14,16 @@
 4. cat /data/README.md 查看数据盘相关文件说明
 
 
+::: tip 使用公钥登录ssh
+
+lzcos v1.3.2+版本后，root用户的家目录会调整为永久存储，
+
+若您需要使用公钥登录，可以在电脑上使用ssh-copy-id root@xxx.heiyu.space自动把本地公钥添加到微服中。
+
+若电脑上没有ssh-copy-id命令，可以ssh登录后，手动把公钥添加到~/.ssh/authorized_keys文件
+:::
+
+
 技术原因无法做到在底层系统被任意修改的前提下提供正常的微服平台，因此不适合用来直接安装系统软件提供服务。
 ssh主要的目的是
 
