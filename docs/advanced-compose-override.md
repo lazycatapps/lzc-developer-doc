@@ -11,7 +11,7 @@ override 机制的兼容性不受支持，特别是 volumes 挂载系统内部�
 
 # 使用方式
 
-在 lpk 文件根目录下按照 `compose override` 规范放置一个名字为 `compose.override.yml` 的文件即可。
+在 lpk 文件根目录(不是工程项目根目录)下按照 `compose override` 规范放置一个名字为 `compose.override.yml` 的文件即可。
 
 此外，lzc-build.yml 文件的 `compose_override` 字段的所有内容会自动写入到 `lpk/compoe.override.yml` (该功能仅 lzc-cli@1.2.61 及以上版本可用)。
 
