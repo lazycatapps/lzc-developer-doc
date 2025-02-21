@@ -30,3 +30,11 @@ compose_override:
       volumes:
         - /data/playground:/lzcapp/run/playground:ro
 ```
+
+
+::: tip 文件挂载
+
+1. 挂载宿主系统的文件时，尽量不要挂载/lzcsys/相关的文件，这里的布局属于lzcos内部细节后续版本很可能会变动。
+2. docker-compose里挂载文件的关键字是`volumes`，注意不要写成lzc-manifest.yml中的`binds`。(binds的语义和volumes有很大区别，所以故意不使用一致的名字)
+
+:::
