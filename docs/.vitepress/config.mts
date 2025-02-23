@@ -127,7 +127,7 @@ export default defineConfig({
         text: "传统模式",
           items: [
           { text: "KVM 模式", link: "/kvm.md" },
-          { text: "dockerd 模式", link: "/dockerd-support.md" },
+          { text: "Dockerd 模式", link: "/dockerd-support.md" },
         ],
       },
       {
