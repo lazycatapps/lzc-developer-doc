@@ -69,6 +69,7 @@ export default defineConfig({
           { text: "欢迎使用懒猫微服", link: "/index.md" },
           { text: "懒猫微服的理念", link: "/start-from.md" },
           { text: "懒猫微服的架构设计", link: "/framework.md" },
+          { text: "开发者购机优惠", link: "/developer-cyber-discount.md" },
         ],
       },
       {
