@@ -147,13 +147,6 @@ export default defineConfig({
         ],
       },
       {
-        text: "感谢",
-        items: [
-          { text: "开发者应用", link: "/third-apps.md" },
-          { text: "贡献者", link: "/contributors.md" },
-        ],
-      },
-      {
         text: "系统变更日志",
         items: [
           { text: "v1.2.0", link: "/changelogs/v1.2.0.md" },
