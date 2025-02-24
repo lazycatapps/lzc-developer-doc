@@ -9,7 +9,7 @@
 <script setup>
 const downloadFile = () => {
   const link = document.createElement('a');
-  link.href = 'https://dl.lazycat.cloud/lzcos/files/ab6f5801-ea6a-47a6-bedd-9fd90f7de0de.lpk';
+  link.href = 'https://dl.lazycat.cloud/lzcos/files/8b7557bf-82a9-442a-835c-608b4319a49a.lpk';
   link.download = 'dockge.lpk';
   link.click();
 };
