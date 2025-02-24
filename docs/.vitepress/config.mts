@@ -69,6 +69,7 @@ export default defineConfig({
           { text: "欢迎使用懒猫微服", link: "/index.md" },
           { text: "懒猫微服的理念", link: "/start-from.md" },
           { text: "懒猫微服的架构设计", link: "/framework.md" },
+          { text: "社区激励规则", link: "/store-rule.md" },
           { text: "开发者购机优惠", link: "/developer-cyber-discount.md" },
         ],
       },
@@ -133,7 +134,6 @@ export default defineConfig({
       {
         text: "常见问题",
         items: [
-          { text: "社区激励规则", link: "/store-rule.md" },
           { text: "开发应用 FAQ", link: "/faq-dev.md" },
           { text: "应用白屏", link: "/app-block.md" },
           { text: "网络机制与 VPN", link: "/network.md" },
