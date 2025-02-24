@@ -115,22 +115,7 @@
 | `acl_handler` | `string` | ACL 处理程序 |
 | `error_page_templates` | `map[string]string` | 错误页面模板， 可选 |
 
-## 十、与 `UserDeployParams` 的关联
-
-`lzc-deploy-params.yml` 中的 `UserDeployParams` 会在应用实例部署前， 由实例所属者补充相关字段，
-并将最终内容作为`.U`参数来渲染 `lzc-manifest.yml` 后再进行实际部署。 `UserDeployParams` 包含 `UserParam` 数组， `UserParam` 各字段含义如下：
-
-| 字段名 | 类型 | 描述 |
-| ---- | ---- | ---- |
-| `id` | `string` | 本应用内的唯一 ID， 在最终渲染阶段可以使用 `.U.$id` 的形式引用此参数的实际值 |
-| `type` | `string` | 字段类型。 支持 `bool`、 `lzc_uid`、 `string`。 若出现不识别的类型， 则 fallback 为 `string`； `lzc_uid` 类型会根据实例拥有者本身的权限来决定可以选择的用户列表内容 |
-| `description` | `string` | 描述此参数的含义， 以便用户能正确填写 |
-| `name` | `string` | 字段名称， 避免显示 Id， 名称以作解释 |
-| `optional` | `bool` | 此字段是否为必填选项。 当剩余参数均为 `Optional=true` 时， 系统不会主动要求， 用户进入配置界面 |
-| `default_value` | `string` | 开发者提供的默认值 |
-| `hidden` | `bool` | 若为 `true` 则不渲染此字段， 一般是配合开发者提供的 `DefaultValue` 来实现全局常量的作用 |
-
-## 十一、本地化 `I10nConfigItem` 应用配置 {#i18n}
+## 十、本地化 `I10nConfigItem` 应用配置 {#i18n}
 
 配置 `locales` 使应用支持多语言，支持设置的 language key 规范可参考 [BCP 47 标准](https://en.wikipedia.org/wiki/IETF_language_tag)
 
