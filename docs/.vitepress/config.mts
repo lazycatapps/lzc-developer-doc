@@ -133,6 +133,7 @@ export default defineConfig({
       {
         text: "常见问题",
         items: [
+          { text: "社区激励规则", link: "/store-rule.md" },
           { text: "开发应用 FAQ", link: "/faq-dev.md" },
           { text: "应用白屏", link: "/app-block.md" },
           { text: "网络机制与 VPN", link: "/network.md" },
