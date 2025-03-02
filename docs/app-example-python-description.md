@@ -8,17 +8,28 @@
 先介绍一下这个配置文件基本的关键字和用处：
 
 - `buildscript`: 构建脚本， 可以为构建脚本的路径地址， 也可以直接写 sh 的命令
-> 根据 buildscript 定义的脚本， 把 contentdir 下面的所有文件打包成一个 lpk 压缩包， 最后安装到微服中。
+
+    根据 buildscript 定义的脚本， 把 contentdir 下面的所有文件打包成一个 lpk 压缩包， 最后安装到微服中。
+
 - `manifest`: 指定 lpk 包的 manifest.yml 文件路径
-> 此处的 manifest 文件是应用的元信息， 比如应用的名称， 版本， 描述等。
+
+    此处的 manifest 文件是应用的元信息， 比如应用的名称， 版本， 描述等。
+
 - `contentdir`: 指定打包的内容，将会打包到 lpk 中
-> 此处的 contentdir 是需要指定为目录， 目录里面的文件将会被打包到 lpk 中。
+
+    此处的 contentdir 是需要指定为目录， 目录里面的文件将会被打包到 lpk 中。
+
 - `pkgout`: lpk 包的输出路径
-> 此处的 pkgout 是 lpk 包的输出路径， 将会把打包好的 lpk 包输出到此路径。
+
+    此处的 pkgout 是 lpk 包的输出路径， 将会把打包好的 lpk 包输出到此路径。
+
 - `icon`: lpk 包 icon 的路径路径，如果不指定将会警告
-> icon 仅仅允许 png 后缀的文件
+
+    icon 仅仅允许 png 后缀的文件
+
 - `devshell`: 指定开发依赖的情况
-> 此处的 devshell 是开发依赖的情况， 比如开发依赖的依赖， 开发依赖的脚本等。
+
+    此处的 devshell 是开发依赖的情况， 比如开发依赖的依赖， 开发依赖的脚本等。
 
 
 ::: details 示例

@@ -16,8 +16,6 @@
 
 ```bash
 # 安装 lzc-cli
-npm install @lazycatcloud/lzc-cli -g
-# Windows 系统如果上面的命令安装失败， 请使用下面的命令安装
 npm install -g @lazycatcloud/lzc-cli
 ```
 

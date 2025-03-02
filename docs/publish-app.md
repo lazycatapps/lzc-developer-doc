@@ -1,6 +1,6 @@
 # 发布自己的第一个应用
 
-1. 在发布应用前， 您需要 [注册](https://lazycat.cloud/login?redirect=https://developer.lazycat.cloud/) 社区账号，并访问 [开发者应用管理界面](https://developer.lazycat.cloud/manage)，根据界面上的引导提交审核（提交申请后建议在客服群[联系我们](https://lazycat.cloud/about?navtype=AfterSalesService)快速审核），申请完成后成为懒猫微服的开发者。
+1. 在发布应用前， 您需要 [注册](https://lazycat.cloud/login?redirect=https://developer.lazycat.cloud/) 社区账号，并访问 [开发者应用管理界面](https://developer.lazycat.cloud/manage)，根据界面上的引导提交审核（提交申请后建议在客服群或者尝试 [联系我们](https://lazycat.cloud/about?navtype=AfterSalesService) 快速审核），申请完成后成为懒猫微服的开发者。
 
 2. 提交应用到商店审核:
 
