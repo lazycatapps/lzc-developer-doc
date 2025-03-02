@@ -4,7 +4,7 @@
 
 1. 安装依赖
 
-- 首先需要安装 [Node.js](https://nodejs.org/zh-cn) 和 [懒猫微服客户端](https://lazycat.cloud/download)
+- 首先需要安装 [Node.js](https://nodejs.org/zh-cn) 18 及以上版本和 [懒猫微服客户端](https://lazycat.cloud/download)
 
 2. 安装懒猫云开发者工具
 
@@ -12,11 +12,15 @@
 
 3. <span style="display: flex; align-items: center;">安装 lzc-cli &nbsp;<img style="display: inline-block;" alt="NPM Version" src="https://img.shields.io/npm/v/%40lazycatcloud%2Flzc-cli"></span>
 
-- lzc-cli 是运行在开发者终端的命令行工具，可以认为是懒猫云开发工具的前端，利用它可以进行微服应用的开发、构建、安装、调试以及发布应用到商店等。
+- [lzc-cli](https://www.npmjs.com/package/@lazycatcloud/lzc-cli) 是运行在开发者终端的命令行工具，可以认为是懒猫云开发工具的前端，利用它可以进行微服应用的开发、构建、安装、调试以及发布应用到商店等。
 
 ```bash
+# 安装 lzc-cli
 npm install @lazycatcloud/lzc-cli -g
+# Windows 系统如果上面的命令安装失败， 请使用下面的命令安装
+npm install -g @lazycatcloud/lzc-cli
 ```
+
 
 4. 安装系统依赖
 
