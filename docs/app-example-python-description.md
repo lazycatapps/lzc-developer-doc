@@ -3,7 +3,62 @@
 
 ## lzc-build.yml
 
-lzc-build.yml 这个文件是生成 lpk 的应用安装包的配置文件， 这个脚本的内容用一句话来形容： 根据 `buildscript` 定义的脚本， 把 `contentdir` 下面的所有文件打包成一个 lpk 压缩包， 最后安装到微服中。
+[lzc-build.yml](./spec/build) 是控制应用构建的配置文件。
+
+先介绍一下这个配置文件基本的关键字和用处：
+
+- `buildscript`: 构建脚本， 可以为构建脚本的路径地址， 也可以直接写 sh 的命令
+> 根据 buildscript 定义的脚本， 把 contentdir 下面的所有文件打包成一个 lpk 压缩包， 最后安装到微服中。
+- `manifest`: 指定 lpk 包的 manifest.yml 文件路径
+> 此处的 manifest 文件是应用的元信息， 比如应用的名称， 版本， 描述等。
+- `contentdir`: 指定打包的内容，将会打包到 lpk 中
+> 此处的 contentdir 是需要指定为目录， 目录里面的文件将会被打包到 lpk 中。
+- `pkgout`: lpk 包的输出路径
+> 此处的 pkgout 是 lpk 包的输出路径， 将会把打包好的 lpk 包输出到此路径。
+- `icon`: lpk 包 icon 的路径路径，如果不指定将会警告
+> icon 仅仅允许 png 后缀的文件
+- `devshell`: 指定开发依赖的情况
+> 此处的 devshell 是开发依赖的情况， 比如开发依赖的依赖， 开发依赖的脚本等。
+
+
+::: details 示例
+```shell
+# 整个文件中，可以通过 ${var} 的方式，使用 manifest 字段指定的文件定义的值
+
+# buildscript
+# - 可以为构建脚本的路径地址
+# - 如果构建命令简单，也可以直接写 sh 的命令
+buildscript: sh build.sh
+
+# manifest: 指定 lpk 包的 manifest.yml 文件路径
+manifest: ./lzc-manifest.yml
+
+# contentdir: 指定打包的内容，将会打包到 lpk 中
+contentdir: ./dist
+
+# pkgout: lpk 包的输出路径
+pkgout: ./
+
+# icon 指定 lpk 包 icon 的路径路径，如果不指定将会警告
+# icon 仅仅允许 png 后缀的文件
+icon: ./lzc-icon.png
+
+# dvshell 指定开发依赖的情况
+# 这种情况下，选用 alpine:latest 作为基础镜像，在 dependencies 中添加所需要的开发依赖即可
+# 如果 dependencies 和 build 同时存在，将会优先使用 dependencies
+devshell:
+  routes:
+    - /=http://127.0.0.1:5173
+  dependencies:
+    - nodejs
+    - npm
+    - python3
+    - py3-pip
+  setupscript: |
+    export npm_config_registry=https://registry.npmmirror.com
+    export PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
+```
+:::
 
 ## lzc-manifest.yml
 

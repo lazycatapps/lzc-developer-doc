@@ -145,6 +145,7 @@ export default defineConfig({
       {
         text: "规范列表",
         items: [
+          { text: "lzc-build.yml", link: "/spec/build.md" },
           { text: "lzc-manifest.yml", link: "/spec/manifest.md" },
         ],
       },
