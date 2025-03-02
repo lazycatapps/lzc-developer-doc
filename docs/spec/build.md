@@ -16,7 +16,7 @@
 | `pkgout` | `string` | 指定 lpk 包的输出路径 |
 | `icon` | `string` | 指定 lpk 包 icon 的路径路径，如果不指定将会警告，目前仅允许 png 后缀的文件 |
 | `devshell` | `DevshellConfig` | 指定开发依赖的情况 |
-| `compose_override` | `ComposeOverrideConfig` | 高级 compose override 配置 |
+| `compose_override` | `ComposeOverrideConfig` | 高级 compose override 配置，**需要更新 lzc-os 版本 >= v1.3.0** |
 
 ### 2.2 开发依赖 `DevshellConfig` {#devshell}
 

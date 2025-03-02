@@ -26,7 +26,7 @@
 | `unsupported_platforms` | `[]string` | 应用不支持的平台， 有效字段为: "ios", "android", "windows", "macos", "linux", "tvos" |
 | `application` | `ApplicationConfig` | lzcapp 核心服务配置 |
 | `services` | `map[string]ServiceConfig` | 传统 docker container 相关服务配置 |
-| `locales` | `map[string]I10nConfigItem` | 应用本地化配置（可选配置项），**需要更新 lzc-os 版本 >= 1.3.0** |
+| `locales` | `map[string]I10nConfigItem` | 应用本地化配置（可选配置项），**需要更新 lzc-os 版本 >= v1.3.0** |
 
 ## 三、 `IngressConfig` 配置
 ### 3.1 网络配置
