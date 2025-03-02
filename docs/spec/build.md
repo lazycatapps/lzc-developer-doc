@@ -18,7 +18,7 @@
 | `devshell` | `DevshellConfig` | 指定开发依赖的情况 |
 | `compose_override` | `ComposeOverrideConfig` | 高级 compose override 配置，**需要更新 lzc-os 版本 >= v1.3.0** |
 
-### 2.2 开发依赖 `DevshellConfig` {#devshell}
+## 三、开发依赖 `DevshellConfig` {#devshell}
 
 | 字段名 | 类型 | 描述 |
 | ---- | ---- | ---- |
@@ -27,6 +27,7 @@
 | `setupscript` | `string` | 指定开发依赖的情况 |
 | `image` | `string` | 非必选，使用指定 image 镜像 |
 | `pull_policy` | `string` | 非必选，参数 `build` 为使用指定 dockerfile 构建镜像，此时 image 参数可填 `${package}-devshell:${version}` |
+| `build` | `string` | 非必选，构建容器时使用的 dockerfile 文件路径 |
 
 ::: warning ⚠️ 注意
 
@@ -34,7 +35,7 @@
 
 :::
 
-### 2.3 高级 compose override 配置 `ComposeOverrideConfig` {#compose-override}
+## 四、高级 compose override 配置 `ComposeOverrideConfig` {#compose-override}
 
 1. compose override 是 lzc-cli@1.2.61 及以上版本支持的特性， 用于在构建时指定 compose override 的配置。
 2. compose override 属于 lzcos v1.3.0+ 后，针对一些 lpk 规范目前无法覆盖到的运行权限需求的配置。
