@@ -15,19 +15,21 @@
 | `contentdir` | `string` | 指定打包的内容目录，将会打包到 lpk 中 |
 | `pkgout` | `string` | 指定 lpk 包的输出路径 |
 | `icon` | `string` | 指定 lpk 包 icon 的路径路径，如果不指定将会警告，目前仅允许 png 后缀的文件 |
-| `devshell` | `DevshellConfig` | 指定开发依赖的情况 |
+| `devshell` | `DevshellConfig` | 开发依赖配置 |
 | `compose_override` | `ComposeOverrideConfig` | 高级 compose override 配置，**需要更新 lzc-os 版本 >= v1.3.0** |
 
 ## 三、开发依赖 `DevshellConfig` {#devshell}
 
 | 字段名 | 类型 | 描述 |
 | ---- | ---- | ---- |
-| `routes` | `[]string` | 指定开发依赖的情况 |
-| `dependencies` | `[]string` | 指定开发依赖的情况 |
-| `setupscript` | `string` | 指定开发依赖的情况 |
+| `routes` | `[]string` | 开发路由规则配置 |
+| `dependencies` | `[]string` | 开发依赖安装，自动安装 |
+| `setupscript` | `string` | 开发依赖安装，手动安装 |
 | `image` | `string` | 非必选，使用指定 image 镜像 |
 | `pull_policy` | `string` | 非必选，参数 `build` 为使用指定 dockerfile 构建镜像，此时 image 参数可填 `${package}-devshell:${version}` |
 | `build` | `string` | 非必选，构建容器时使用的 dockerfile 文件路径 |
+
+详情见 [开发依赖安装](../devshell-install-and-use.md)
 
 ::: warning ⚠️ 注意
 
