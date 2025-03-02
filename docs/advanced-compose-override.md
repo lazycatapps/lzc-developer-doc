@@ -23,10 +23,13 @@ contentdir: ./dist/
 
 compose_override:
   services:
+    # 指定服务名称
     some_container:
+      # 指定需要 drop 的 cap
       cap_drop:
         - SETCAP
         - MKNOD
+      # 指定需要挂载的文件
       volumes:
         - /data/playground:/lzcapp/run/playground:ro
 ```
