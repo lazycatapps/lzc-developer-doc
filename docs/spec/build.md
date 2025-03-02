@@ -4,34 +4,42 @@
 
 `lzc-build.yml` 是用于定义应用构建相关配置的文件。 本文档将详细描述其结构和各字段的含义。
 
-## 二、字段说明
+## 二、顶层数据结构 `BuildConfig`
+
 ### 2.1 基本信息 {#basic-config}
 
 | 字段名 | 类型 | 描述 |
 | ---- | ---- | ---- |
-| `buildscript` | 脚本 | 可以为构建脚本的路径地址或者 sh 的命令 |
-| `manifest` | 文件 | 指定 lpk 包的 manifest.yml 文件路径 |
-| `contentdir` | 目录 | 指定打包的内容，将会打包到 lpk 中 |
-| `pkgout` | 目录 | 指定 lpk 包的输出路径 |
-| `icon` | 文件 | 指定 lpk 包 icon 的路径路径，如果不指定将会警告， 仅允许 png 后缀的文件 |
+| `buildscript` | `string` | 可以为构建脚本的路径地址或者 sh 的命令 |
+| `manifest` | `string` | 指定 lpk 包的 manifest.yml 文件路径 |
+| `contentdir` | `string` | 指定打包的内容目录，将会打包到 lpk 中 |
+| `pkgout` | `string` | 指定 lpk 包的输出路径 |
+| `icon` | `string` | 指定 lpk 包 icon 的路径路径，如果不指定将会警告，目前仅允许 png 后缀的文件 |
+| `devshell` | `DevshellConfig` | 指定开发依赖的情况 |
+| `compose_override` | `ComposeOverrideConfig` | 高级 compose override 配置 |
 
-### 2.2 开发依赖 {#devshell}
+### 2.2 开发依赖 `DevshellConfig` {#devshell}
+
 | 字段名 | 类型 | 描述 |
 | ---- | ---- | ---- |
-| `devshell` | 对象 | 指定开发依赖的情况 |
-| `routes` | 数组 | 指定开发依赖的情况 |
-| `dependencies` | 数组 | 指定开发依赖的情况 |
-| `setupscript` | 脚本 | 指定开发依赖的情况 |
+| `routes` | `[]string` | 指定开发依赖的情况 |
+| `dependencies` | `[]string` | 指定开发依赖的情况 |
+| `setupscript` | `string` | 指定开发依赖的情况 |
+| `image` | `string` | 非必选，使用指定 image 镜像 |
+| `pull_policy` | `string` | 非必选，参数 `build` 为使用指定 dockerfile 构建镜像，此时 image 参数可填 `${package}-devshell:${version}` |
 
-### 2.3 compose override 说明
+::: warning ⚠️ 注意
+
+如果 `dependencies` 和 `build` 同时存在，将会优先使用 dependencies
+
+:::
+
+### 2.3 高级 compose override 配置 `ComposeOverrideConfig` {#compose-override}
 
 1. compose override 是 lzc-cli@1.2.61 及以上版本支持的特性， 用于在构建时指定 compose override 的配置。
 2. compose override 属于 lzcos v1.3.0+ 后，针对一些 lpk 规范目前无法覆盖到的运行权限需求的配置。
 
 详情见 [compose override](../advanced-compose-override.md)
-
-
-
 
 ::: details 配置示例
 ```yml
