@@ -60,7 +60,10 @@ export default defineConfig({
     },
 
     // https://vitepress.dev/reference/default-theme-config
-    nav: [{ text: "指南", link: "/" }],
+    nav: [
+        { text: "指南", link: "/" },
+        { text: "开发者中心", link: "https://developer.lazycat.cloud/manage" },
+    ],
 
     sidebar: [
       {
