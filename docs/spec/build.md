@@ -66,6 +66,18 @@ pkgout: ./
 # icon 仅仅允许 png 后缀的文件
 icon: ./lzc-icon.png
 
+compose_override:
+  services:
+    # 指定服务名称
+    some_container:
+      # 指定需要 drop 的 cap
+      cap_drop:
+        - SETCAP
+        - MKNOD
+      # 指定需要挂载的文件
+      volumes:
+        - /data/playground:/lzcapp/run/playground:ro
+
 # dvshell 指定开发依赖的情况
 # 这种情况下，选用 alpine:latest 作为基础镜像，在 dependencies 中添加所需要的开发依赖即可
 # 如果 dependencies 和 build 同时存在，将会优先使用 dependencies
@@ -79,6 +91,6 @@ devshell:
     - py3-pip
   setupscript: |
     export npm_config_registry=https://registry.npmmirror.com
-    export PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
+    export PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple   
 ```
 :::
