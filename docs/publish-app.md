@@ -2,7 +2,9 @@
 
 1. 在发布应用前， 您需要 [注册](https://lazycat.cloud/login?redirect=https://developer.lazycat.cloud/) 社区账号，并访问 [开发者中心](https://developer.lazycat.cloud/manage)，根据界面上的引导提交审核（提交申请后建议在客服群或者尝试 [联系我们](https://lazycat.cloud/about?navtype=AfterSalesService) 快速审核），申请完成后成为懒猫微服的开发者。
 
-2. 提交应用到商店审核:
+2. 提交应用到商店审核之前请阅读[应用上架审核指南](./store-submission-guide.md)。
+
+3. 提交应用到商店审核:
 
     - 或者通过命令行工具 `lzc-cli` (1.2.54 及以上版本) 提交审核， 如何安装 `lzc-cli` 请参考 [开发环境搭建](https://developer.lazycat.cloud/lzc-cli.html)
 
