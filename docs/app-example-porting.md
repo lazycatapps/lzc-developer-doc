@@ -41,7 +41,7 @@ services:
 
 - `--env`是环境变量，对应到`lzc-manifest.yml`的`environment`
 - `--publish`指明了`docker`通过什么端口来提供服务。微服不推荐直接将端口暴露出去，如果是`http(s)`服务建议通过`application`下的`routes`来配置。如果**不是**`http(s)`服务，想要暴露出去，比如这里的22端口，应该是ssh协议的服务，那么可以通过配置`application -> ingress`来完成，详细配置参考 [外网API服务](./advanced-public-api.md)。
-- `--volume`配置的通常是docker中用来存储持久化数据的地方。可以通过配置`service -> binds`参数来实现。`volume`后面的值，冒号右边对应到docker中的实际为知，微服配置的`binds`接收的值和`volume`相似，只是我们的冒号左边，一定需要`/lzcapp`开头的文件路径，通常是`/lzcapp/var`或者`/lzcapp/cache`开头, 更为详细的目录可以参考 [文件访问](./advanced-file)。比如这里的`$GITLAB_HOME/config:/etc/gitlab`，转成`binds`配置，可以写成`/lzcapp/var/config:/etc/gitlab`
+- `--volume`配置的通常是docker中用来存储持久化数据的地方。可以通过配置`service -> binds`参数来实现。`volume`后面的值，冒号右边对应到docker中的实际位置，微服配置的`binds`接收的值和`volume`相似，只是我们的冒号左边，一定需要`/lzcapp`开头的文件路径，通常是`/lzcapp/var`或者`/lzcapp/cache`开头, 更为详细的目录可以参考 [文件访问](./advanced-file)。比如这里的`$GITLAB_HOME/config:/etc/gitlab`，转成`binds`配置，可以写成`/lzcapp/var/config:/etc/gitlab`
 - 镜像名称。这个填到`service`的`image`参数后面就行
 
 因此, 这个docker命令就能转换成`services`配置：
