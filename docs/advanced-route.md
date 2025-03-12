@@ -13,7 +13,7 @@ Rule按照`URL_PATH=UPSTREAM`的形式声明, 其中`URL_PATH`为浏览器访问
 http上游
 =======
 
-`http/https`支持内网或外网服务. 比如内置的应用商这个lzcapp只有一行代码.
+`http/https`支持内网或外网服务. 比如内置的应用商店这个lzcapp只有一行代码.
 
 ```
 routes:
