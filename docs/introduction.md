@@ -32,10 +32,10 @@ pnpm install @lazycatcloud/sdk
 JS/TS 版本是使用 [grpc-web](https://github.com/improbable-eng/grpc-web) 提供服务， 下面提供了一个获取所有应用列表的示例:
 
 ```js
-import { lzcApiGateway } from "@lazycatcloud/sdk"
+import { lzcAPIGateway } from "@lazycatcloud/sdk"
 
 // 初始化 lzcapi
-const lzcapi = new lzcApiGateway(window.location.origin, false)
+const lzcapi = new lzcAPIGateway(window.location.origin, false)
 
 // 使用 lzcapi 调用 package manager 服务以获取所有应用列表
 const apps = await lzcapi.pkgm.QueryApplication({ appidList: [] })
