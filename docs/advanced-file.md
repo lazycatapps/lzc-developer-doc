@@ -16,7 +16,8 @@
 | /lzcapp/pkg/content | `lzc-build.yml` 参数 `contentdir` 指定的 lpk 包内容 ，构建打包在 lpk 应用中的内容。该目录为只读。 |
 
 ::: warning
-目前 lzcapp 的 `lzc-manifest.yml` 配置文件中仅支持挂载上列挂载点列表中的文件夹。
+1. 目前 lzcapp 的 `lzc-manifest.yml` 配置文件中仅支持挂载上列挂载点列表中的文件夹。
+2. /lzcapp/run/mnt/home/ 在没有开启 `多实例(multi_instance)` 选项时，容器就没有用户概念，所以会挂载到 /data/document/，程序需要自行处理用户概念。
 :::
 
 ## 常见问题？
