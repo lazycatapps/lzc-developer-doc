@@ -1,7 +1,7 @@
 # Hello World
 下面请随我们下面的步骤， 一起来构建我们第一个应用吧。
 
-首先， 使用 lzc-cli 来创建一个名为 `hellowolrd` 的项目：
+首先， 使用 lzc-cli 来创建一个名为 `helloworld` 的项目：
 
 ```bash
 lzc-cli project create helloworld
