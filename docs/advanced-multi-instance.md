@@ -14,18 +14,26 @@ application:
   multi_instance: true
 ```
 
-## 多实例与`public_path`
+::: warning
+微服应用配置 **单实例** 与 **多实例** 不同的运行模式时在 [文件服务](./advanced-file.md) 和 [服务域名构造规则](./advanced-domain.md) 上会有一定的差异表现，详细可参考以下文档。
+    
+1. [应用配置了多实例后无法将文件挂载至用户文档目录（懒猫网盘默认展示主目录）？](./advanced-file.md#挂载点列表)
 
-多实例运行方与[public_path](/advanced-public-api)存在一定冲突，
-多实例下的`public_path`依然需要获取到UID才能将http流量正确路由到具体的用户实例上。
+2. [应用配置了多实例后容器 service 之间的域名构造规则是什么？](./advanced-domain.md#多实例-多用户-应用)
+:::
+
+## 多实例与 `public_path`
+
+多实例运行方与 [public_path](/advanced-public-api) 存在一定冲突，
+多实例下的 `public_path` 依然需要获取到 UID 才能将 http 流量正确路由到具体的用户实例上。
 
 目前有两种方式处理此问题
 
-- 在url中加入uid字段，比如 `https://$myuid@$boxname.heiyu.space/some_public_path`。
+- 在 url 中加入 uid 字段，例如 `https://$myuid@$boxname.heiyu.space/some_public_path`，
   此方式适合命令行或第三方客户端这类无法进行http登录页面渲染的场景。
 
-- 当浏览器中存在合法的鉴权cookie时，微服会自动使用此cookie获取正确的UID。
+- 当浏览器中存在合法的鉴权 cookie 时，微服会自动使用此 cookie 获取正确的 UID。
   此方式适合在微服客户端或浏览器中访问应用。需要在其他地方至少登录一次。
 
 
-TODO: 当访问多实例的public_path无法获取UID时自动跳转到登录页面获取正确的cookie
+> TODO: 当访问多实例的 public_path 无法获取 UID 时自动跳转到登录页面获取正确的 cookie

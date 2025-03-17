@@ -10,5 +10,6 @@ application:
   background_task: true
 ```
 
-> [!TIP]
-> 小贴士: 目前的微服版本中 `background_task` 参数还会影响应用是否自启动 (需要注意， 自启动行为仅针对 [单实例](./advanced-multi-instance) 应用有效)， 当然用户可以在微服的应用管理中手动禁用应用自启行为。
+:::tip
+小贴士: 目前的微服版本中 `background_task` 参数还会影响应用是否自启动 (需要注意， 自启动行为仅针对 [单实例](./advanced-multi-instance) 应用有效)， 当然用户可以在微服的应用管理中手动禁用应用自启行为。
+:::

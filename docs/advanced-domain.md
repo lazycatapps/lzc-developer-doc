@@ -48,7 +48,7 @@ user42.db.example.app.id.lzcapp
 
 - **`_outbound`**
 
-此域名将解析到懒猫微服的默认出口IP。
+此域名将解析到懒猫微服的默认出口 IP。
 
 - **`_gateway`**
 
