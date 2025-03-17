@@ -63,7 +63,7 @@ application:
     - protocol: tcp
       description: 1.6W-1.8W端口来源都转发到6666端口
       service: app
-      port: 6668
+      port: 6666
       publish_port: 16000-18000
 ```
 
