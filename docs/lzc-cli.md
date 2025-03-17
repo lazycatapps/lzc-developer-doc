@@ -52,3 +52,18 @@ npm install -g @lazycatcloud/lzc-cli
   sudo apt update
   sudo apt install openssh-client rsync
   ```
+
+5. 连接到微服
+   
+ - 生成公钥:
+  
+    ```bash
+    #请确保 ssh 已经安装，以及 ssh-keygen 生成公钥
+    ssh-keygen -t ed25519
+    ```
+
+ - 添加 ssh 公钥到 `懒猫开发者工具` 中
+  
+    ```bash
+    lzc-cli box add-public-key #执行后，按照提示点击链接，完成添加ssh公钥
+    ```
