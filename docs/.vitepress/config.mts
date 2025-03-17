@@ -145,6 +145,7 @@ export default defineConfig({
           { text: "自己架设网络穿透", link: "/network-pass-through.md" },
           { text: "SSH 与内测", link: "/ssh.md" },
           { text: "高级网络配置", link: "/network-config.md" },
+          { text: "在开机时启动自定义脚本", link: "/faq-startup_script.md"},
         ],
       },
       {
