@@ -24,7 +24,7 @@ sudo apt install libnss3-dev libgdk-pixbuf2.0-dev libgtk-3-dev libxss-dev
 
 4. 输入设备名和密码登录懒猫微服设备
 
-5. 安装 nodejs (我这里使用 nvm 安装) 以及 lzc-cli 
+5. 安装 nodejs (我这里使用 nvm 安装) 以及 lzc-cli
 
 ```
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
@@ -44,3 +44,19 @@ lzc-cli app install cloud.lazycat.app.demo-v0.0.2.lpk
 ```
 
 7. 尽情玩耍吧，上架 lpk 应用可以查看 [发布自己的第一个应用](./publish-app.md)
+
+
+::: tip DNS解析问题 {#wsl_dns}
+
+windows原生客户端在启动时，会使用`powershell AddDnsClientNrptRule`命令将`heiyu.space`相关域名都转发到
+客户端的内部IP中。早期版本客户端并没有做清理工作，因此关闭windows客户端后再启动WSL客户端，并且WSL内使用的是默认
+dns服务，会无法正常解析`heiyu.space`相关域名。
+
+需要手动进行下清理(较新版本的windows客户端会在关闭时进行自动清理操作)
+
+1. 查看相关规则`powershell -Command Get-DnsClientNrptRule`
+2. 删除相关规则`Remove-DnsClientNrptRule -Name  "这里填写的是heiyu.space相关的Name UUID" -Force`
+
+![nrpt_rules](./images/wsl_nrpt_rule.png)
+
+:::
