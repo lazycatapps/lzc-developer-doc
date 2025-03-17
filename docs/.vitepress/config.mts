@@ -100,6 +100,7 @@ export default defineConfig({
         text: "高级技巧",
         items: [
           { text: "路由规则", link: "/advanced-route.md" },
+          { text: "应用域名规则", link: "/advanced-domain.md"},
           { text: "启动依赖", link: "/advanced-depends.md" },
           { text: "文件访问", link: "/advanced-file.md" },
           { text: "数据库服务", link: "/advanced-db.md" },
