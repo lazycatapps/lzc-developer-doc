@@ -18,11 +18,13 @@
 services:
   Debian:
   #服务名称可自行修改
-    image: registry.lazycat.cloud/debian:bookworm-slim
+    image: registry.lazycat.cloud/debian:autostart_mod
     #此镜像可直接在懒猫微服中进行拉取，无需配置代理
     privileged: true
     #注意，如脚本无需对系统进行修改则不要添加
     restart: always
+    entrypoint: /bin/init
+    #这里需要使用init来防止脚本结束后容器重启
     command: sh /data/document/<用户名>/<网盘内路径>/script.sh
     #设置启动时的指令，需要注意脚本在此容器中的路径
     volumes:
