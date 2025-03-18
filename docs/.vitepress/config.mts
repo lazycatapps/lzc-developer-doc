@@ -113,7 +113,7 @@ export default defineConfig({
           { text: "独立鉴权", link: "/advanced-public-api.md" },
           { text: "错误页面", link: "/advanced-error-template.md" },
           { text: "平台支持", link: "/advanced-platform.md" },
-          { text: "反向代理模式配置", link: "/reverse-proxy.md" },
+          { text: "devshell本地模式", link: "/devshell-local.md" },
           { text: "浏览器插件调试", link: "/advanced-browser-extension.md" },
           { text: "初始化脚本", link: "/advanced-setupscript.md" },
         ],
