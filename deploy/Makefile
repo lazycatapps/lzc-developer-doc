@@ -73,5 +73,5 @@ dist:
 	cd $(UI_DIR); npm clean-install --registry https://registry.npmmirror.com; npm run docs:build
 
 deploy:
-	coscli sync --exclude ".*index\.html$$" --recursive $(DIST_DIR) --delete cos://www-dev-lazycat-1301583638
+	coscli sync --exclude ".*index\.html$$" --recursive $(DIST_DIR) --delete --force cos://www-dev-lazycat-1301583638
 	coscli sync --recursive $(DIST_DIR) cos://www-dev-lazycat-1301583638
