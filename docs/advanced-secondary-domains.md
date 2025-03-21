@@ -3,10 +3,11 @@
 
 少量应用需要使用多个域名，可以使用`application.secondary_domains`字段来实现。
 
-因为`application.routes`不支持基于域名的转发，所以一般使用此特性的需要单独配置一个反向代理。
+由于`application.routes`不支持基于域名的转发，如果需要比较细致的调整路由规则，
+可以添加一条特殊route规则，`- /=http://nginx.$appid.lzcapp`。
+注意这里一定要用`$service.$appid.lzcapp`的形式，否则nginx无法收到完整的域名信息，[原因见](advanced-route.html#p2)
 
-
-下面这个配置的效果是
+比如，下面这个配置的效果是
 1. whoami1.xx.heiyu.space, whoami2.xx.heiyu.space, whomai.xx.heiyu.space域名都对应的是相同应用
 2. 应用列表里打开默认是whoami.xx.heiyu.space
 3. whoami2流量会走真实的traefik/whoami应用，其他两个域名进来的流量会返回默认的nginx静态hello world
@@ -15,16 +16,12 @@
 
 package: org.snyh.debug.whoami
 name: whoami-lazycatmicroserver
-version: 0.0.3
 
 application:
   subdomain: whoami
   secondary_domains:
     - whoami1
     - whoami2
-
-  public_path:
-    - /
 
   routes:
     - /=http://nginx.org.snyh.debug.whoami.lzcapp:80
@@ -52,8 +49,6 @@ services:
          }
       }
       EOF
-
-      cat /etc/nginx/conf.d/default.conf
 
   app1:
     image: registry.lazycat.cloud/snyh1010/traefik/whoami:c899811bc4a1f63a

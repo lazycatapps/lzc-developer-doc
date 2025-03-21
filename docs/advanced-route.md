@@ -46,7 +46,7 @@ services:
 
 注意
 1. lzcos-1.3.x之后会引入应用隔离,应用之间禁止相互访问,因此如果没有特殊原因直接使用`service_name`的形式作为域名更简便，也方便修改appid。(`xxx.lzcapp`本身不会被废弃，任意应用都能解析到正确IP，但隔离后无法访问到目标IP)
-2. 但以下特殊情况依旧需要使用`xxx.lzcapp`域名形式
+2. 但以下特殊情况依旧需要使用`xxx.lzcapp`域名形式 {#p2}
    1. 在lzcos-1.3.x之前因为没有进行应用隔离，所有应用看到的`service_name`都是互通的。当不同应用有相同service_name时，可能被错误解析到其他容器IP。
       因此`service_name`是`app`、`db`这类大概率会冲突的情况下在应用网络隔离前依旧需要使用`xxx.lzcapp`形式。
    2. 如果上游服务会检测`http request host`之类的，则需要使用`xxx.lzcapp`形式，否则上游服务解析http request时，

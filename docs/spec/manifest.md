@@ -28,6 +28,17 @@
 | `services` | `map[string]ServiceConfig` | 传统 docker container 相关服务配置 |
 | `locales` | `map[string]I10nConfigItem` | 应用本地化配置（可选配置项），**需要更新 lzc-os 版本 >= v1.3.0** |
 
+### 2.3 实验性属性(application.ExtConfig) {#ext_config}
+
+| 字段名 | 类型 | 描述 |
+| ---- | ---- | ---- |
+| `enable_document_access` | `bool` | 如果为true则将document目录挂载到/lzcapp/run/mnt/home |
+| `enable_media_access` | `bool` | 如果为true则将media目录挂载到/lzcapp/run/mnt/media |
+| `disable_url_raw_path` | `bool` | 如果为true则删除http header中的raw url |
+| `disable_grpc_web_on_root` | `bool` | 如果为true则不再劫持应用的grpc-web流量。需要配合新版本lzc-sdk以便系统本身的grpc-web流量可以正常转发|
+| `remove_this_request_headers` | `[]string` | 删除这个列表内的http request header， 比如"Origin"、"Referer" |
+
+
 ## 三、 `IngressConfig` 配置
 ### 3.1 网络配置
 | 字段名 | 类型 | 描述 |
@@ -45,7 +56,8 @@
 | ---- | ---- | ---- |
 | `image` | `string` | 应用镜像， 若无特殊要求， 请留空使用系统默认镜像(alpine3.21) |
 | `background_task` | `bool` | 若为 `true` 则会自动启动并且不会被自动休眠， 默认为 `true` |
-| `subdomain` | `string` | 本应用的入站子域名 |
+| `subdomain` | `string` | 本应用的入站子域名，应用打开默认使用此子域名 |
+| `secondary_domains` | `[]string` | 本应用其他入站子域名 |
 | `multi_instance` | `bool` | 是否以多实例形式部署 |
 | `usb_accel` | `bool` | 挂载相关设备到所有服务容器内的 `/dev/bus/usb` |
 | `gpu_accel` | `bool` | 挂载相关设备到所有服务容器内的 `/dev/dri` |
