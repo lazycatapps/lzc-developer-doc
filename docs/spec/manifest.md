@@ -28,16 +28,6 @@
 | `services` | `map[string]ServiceConfig` | 传统 docker container 相关服务配置 |
 | `locales` | `map[string]I10nConfigItem` | 应用本地化配置（可选配置项），**需要更新 lzc-os 版本 >= v1.3.0** |
 
-### 2.3 实验性属性(application.ExtConfig) {#ext_config}
-
-| 字段名 | 类型 | 描述 |
-| ---- | ---- | ---- |
-| `enable_document_access` | `bool` | 如果为true则将document目录挂载到/lzcapp/run/mnt/home |
-| `enable_media_access` | `bool` | 如果为true则将media目录挂载到/lzcapp/run/mnt/media |
-| `disable_url_raw_path` | `bool` | 如果为true则删除http header中的raw url |
-| `disable_grpc_web_on_root` | `bool` | 如果为true则不再劫持应用的grpc-web流量。需要配合新版本lzc-sdk以便系统本身的grpc-web流量可以正常转发|
-| `remove_this_request_headers` | `[]string` | 删除这个列表内的http request header， 比如"Origin"、"Referer" |
-
 
 ## 三、 `IngressConfig` 配置
 ### 3.1 网络配置
@@ -84,12 +74,17 @@
 | `disable` | `bool` | 禁用本容器的健康检测 |
 | `test_url` | `string` | 仅 application 字段下生效。 扩展的检测方式， 直接提供一个 http url 不依赖容器内部有 curl/wget 之类的命令行 |
 
-## 六、 `ExtConfig` 配置
-### 6.1 实验性配置
+## 六、 `ExtConfig` 配置 {#ext_config}
+
 | 字段名 | 类型 | 描述 |
 | ---- | ---- | ---- |
-| `disable_url_raw_path` | `bool` | 禁用 URL 的原始路径 |
-| `permissions` | `[]string` | 权限列表 |
+| `enable_document_access` | `bool` | 如果为true则将document目录挂载到/lzcapp/run/mnt/home |
+| `enable_media_access` | `bool` | 如果为true则将media目录挂载到/lzcapp/run/mnt/media |
+| `disable_url_raw_path` | `bool` | 如果为true则删除http header中的raw url |
+| `disable_grpc_web_on_root` | `bool` | 如果为true则不再劫持应用的grpc-web流量。需要配合新版本lzc-sdk以便系统本身的grpc-web流量可以正常转发|
+| `remove_this_request_headers` | `[]string` | 删除这个列表内的http request header， 比如"Origin"、"Referer" |
+
+
 
 ## 七、 `ServiceConfig` 配置
 
