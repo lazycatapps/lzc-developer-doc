@@ -116,6 +116,7 @@ export default defineConfig({
           { text: "devshell本地模式", link: "/devshell-local.md" },
           { text: "浏览器插件调试", link: "/advanced-browser-extension.md" },
           { text: "初始化脚本", link: "/advanced-setupscript.md" },
+          { text: "多应用域名", link: "/advanced-secondary-domains.md" },
         ],
       },
       {
@@ -160,6 +161,7 @@ export default defineConfig({
         items: [
           { text: "v1.2.0", link: "/changelogs/v1.2.0.md" },
           { text: "v1.3.0", link: "/changelogs/v1.3.0.md" },
+          { text: "v1.3.4", link: "/changelogs/v1.3.4.md" },
         ],
       },
     ],
