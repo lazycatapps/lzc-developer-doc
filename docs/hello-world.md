@@ -25,7 +25,7 @@ lzc-cli project create helloworld
    进入微服客户端启动器页面点击应用图标来测试应用
 ```
 
-其次， 执行以下命令进入容器开发环境：
+然后执行以下命令进入容器开发环境：
 
 ```bash
 cd helloworld

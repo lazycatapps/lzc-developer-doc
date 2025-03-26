@@ -59,6 +59,12 @@ python main.py
 
 下面， 我们教大家构建自己的第一个应用安装包， 通过安装包， 我们可以把应用安装到微服中， 每次点击启动器应用图标， 应用的前后端服务会自动启动。
 
+::: warning
+如果您在Windows进行构建操作，下面这步依赖git bash这类unix shell
+
+也可修改build.sh的内容为powershell/cmd支持的语法
+:::
+
 1. 构建应用
 
 首先,我们需要通过 lzc-cli 去构建我们的应用输出一个 lpk 文件：
@@ -76,10 +82,16 @@ lzc-cli project build -o release.lpk
 2. 安装应用
 
 通过下面命令安装到懒猫微服中
-
 ```shell
 lzc-cli app install release.lpk
 ```
+
+::: info
+如果您安装了很久，仍然没有安装完成，可能是您所在地区的网络访问 `清华` 和 `中科大` 镜像不太流畅，需要自行修改。
+
+编辑: backend/run.sh 将里面的 `mirrors.ustc.edu.cn` 或 `tuna.tsinghua.edu.cn` 修改为您所在地区最佳的即可。
+:::
+
 
 安装应用包后， 就可以通过启动器点击应用图标啦， 我们的第一个应用就这样部署完了， 是不是很有成就感？
 
