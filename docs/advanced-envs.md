@@ -16,7 +16,7 @@ services:
       - DISABLE_FEATURE_ABC=yes
 ```
 
-## 运行时环境变量列表
+## 运行时环境变量列表 {#runtime_envs}
 
 每个container在运行环境会自动注入以下环境变量, 其他变量需要开发者手动注入进去
 
@@ -31,7 +31,7 @@ services:
 |LAZYCAT_USER_UID| admin | (lzcos v1.2)废弃字段，请使用LAZYCAT_APP_DEPLOY_UID|
 
 
-## 部署时环境变量列表
+## 部署时环境变量列表  {#deploy_envs}
 
 在部署配置阶段(系统解析lzc-manifest.yml时)可以使用以下环境变量值, 在lzc-manifest.yml中使用`${ENV_NAME}`即可。
 
@@ -53,14 +53,11 @@ services:
 |LAZYCAT_BOX_DOMAIN|snyht3.heiyu.space|微服本身的主域名，不要永久存储此值，后续版本重启后可能会变动|
 |LAZYCAT_BOX_NAME|snyht3|微服名称|
 |LAZYCAT_USER_UID| admin | (lzcos-v1.2)废弃字段，请使用LAZYCAT_APP_DEPLOY_UID|
-|LAZYCAT_AUTH_OIDC_ISSUER_URL|https://snyht3.heiyu.space/sys/oauth|oauth的issuer地址|
 |LAZYCAT_AUTH_OIDC_CLIENT_ID|test.lzcos.l4ingress|oauth的client id|
-|LAZYCAT_AUTH_OIDC_CLIENT_SECRET|a3deb9086885cbbc7|在安装阶段随机生成的oauth密钥|
-|LAZYCAT_AUTH_LDAP_HOST|host.lzcapp|ldap的认证服务器|
-|LAZYCAT_AUTH_LDAP_PORT|389|ldap的认证服务器端口|
-|LAZYCAT_AUTH_LDAP_BASE_DN|dc=heiyu,dc=space|ldap认证基础dn|
-|LAZYCAT_AUTH_LDAP_BIND_DN|cn=admin,dc=heiyu,dc=space|ldap认证的bind账户|
-|LAZYCAT_AUTH_LDAP_BIND_PASS|unsafe_password|ldap认证的bind密码|
+|LAZYCAT_AUTH_OIDC_CLIENT_SECRET|a3deb9086885cbbc7|在安装阶段随机生成的oauth密钥，每次容器重启都会变动，因此不要保存在数据库中|
+|LAZYCAT_AUTH_OIDC_ISSUER_URI|xxx|oauth的issuer地址|
+|LAZYCAT_AUTH_OIDC_AUTH_URI|xxx|AUTH endpoint地址|
+|LAZYCAT_AUTH_OIDC_TOKEN_URI|xxx|Token endpoint地址|
+|LAZYCAT_AUTH_OIDC_USERINFO_URI|xxx|userinfo endpoint地址|
 
-
-注意: ldap和oauth目前年久失修，需要等到lzcos-v1.3之后才会正式支持
+ps: oidc相关环境变量仅在`application.oidc_redirect_path`存在时才会注入
