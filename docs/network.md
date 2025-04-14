@@ -74,3 +74,31 @@
 在存在第三方代理软件时，此IP还可以作为桥梁，来让用户有针对性的进行规则配置，以便让微服客户端能正确获取局域网出口IP等，否则会导致所有打洞逻辑全部失效。
 
 :::
+
+
+
+## 客户端代理模式下优化方案{#optimize-proxy-mode}
+
+### 保活方案
+
+在非VPN模式下，操作系统可能会根据资源管理策略自动清理后台应用。为确保客户端稳定运行并避免因系统自动清理而被关闭，请按照以下优化方法进行设置。
+
+优化教程：
+
+[iOS保活图文教程](#iOS)   
+
+[Android保活图文教程](#Android)
+
+### 开了其他VPN软件，网络感觉变慢了，怎么办
+
+客户端主页上的黄色小地球图标表示当前网络速度较慢。若想提升网络速度，可以参考以下民间图文教程，确保VPN规则放行懒猫微服，使网络畅通无阻。
+
+优化教程：[PeppaPigConfigurationGuide](https://github.com/wlabby-1/PeppaPigConfigurationGuide)
+
+#### iOS保活图文教程{#iOS}
+
+<img src="https://lzc-playground-1301583638.cos.ap-chengdu.myqcloud.com/guidelines/395/20250414140712138.png?imageSlim" alt="image-20250414140711942" style="zoom:50%;" /> 
+
+#### Android保活图文教程{#Android}
+
+等待更新中......
