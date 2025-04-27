@@ -47,7 +47,6 @@
 | `image` | `string` | 应用镜像， 若无特殊要求， 请留空使用系统默认镜像(alpine3.21) |
 | `background_task` | `bool` | 若为 `true` 则会自动启动并且不会被自动休眠， 默认为 `true` |
 | `subdomain` | `string` | 本应用的入站子域名，应用打开默认使用此子域名 |
-| `secondary_domains` | `[]string` | 本应用其他入站子域名 |
 | `multi_instance` | `bool` | 是否以多实例形式部署 |
 | `usb_accel` | `bool` | 挂载相关设备到所有服务容器内的 `/dev/bus/usb` |
 | `gpu_accel` | `bool` | 挂载相关设备到所有服务容器内的 `/dev/dri` |
