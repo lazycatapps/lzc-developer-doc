@@ -45,7 +45,6 @@ const downloadFile = () => {
 ### pg-docker
 ssh 登录到微服之后, 用户可以直接使用 `pg-docker` 命令执行docker相关的命令, 通过pg-docker暴露的端口, 能够直接在内网中访问
 
-
 ### 关于docker存储位置
 在独立 docker 套件中创建的容器将默认使用机械硬盘作为存储空间，容器在重启后内容将持久化存储。
 
@@ -83,3 +82,8 @@ service:
 ### 安装Dockge后无法创建容器
 在安装Dockge后，如果您发现创建容器失败，且右下角有此提示弹出时。请确保第一次安装后已经重启微服。在不安装Dockge应用的情况下系统为保证安全将不会启用独立 docker 守护进程。
 ![右下角错误提示](./public/dockge-error.png)
+
+### pg-docker配置文件
+目前 `pg-docker` 的 `daemon.json` 文件位于 `/lzcsys/var/playground/daemon.json` 目录下，该配置修改后不会回滚，不过下面的配置项会被系统强行配置：
+ - `bridge` 懒猫微服网络环境相关
+ - `cgroup-parent` 懒猫微服进程调度相关
