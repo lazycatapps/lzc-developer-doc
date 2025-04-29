@@ -166,6 +166,7 @@ export default defineConfig({
           { text: "v1.2.0", link: "/changelogs/v1.2.0.md" },
           { text: "v1.3.0", link: "/changelogs/v1.3.0.md" },
           { text: "v1.3.4", link: "/changelogs/v1.3.4.md" },
+          { text: "v1.3.6", link: "/changelogs/v1.3.6.md" },
         ],
       },
     ],
