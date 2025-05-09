@@ -1,8 +1,38 @@
 # 如何在开机时启动自定义的脚本
 
+::: warning
+强烈不建议您通过任何方式对系统文件进行修改，如果出现破坏性操作，可能导致微服所有的救援机制都失效。
+
+如果一定要对系统进行修改，建议增加5分钟的延迟，以便有足够的时间禁用启动脚步
+:::
+
 部分申请了`SSH权限`的开发者或有技术能力的资深用户在重启懒猫微服后，会发现自己通过`systemd`或其他方法配置的开机启动脚本无法像
 正常Linux发行版一样运行，这是因为懒猫系统重启后将[还原系统修改到初始状态](faq-dev.md#为何-ssh-后安装的软件会丢失-readonly_lzcos)。不过在引入[playground-docker<Badge type="tip" text="微服系统v1.1.0" />](dockerd-support.md)后，
 可以通过使用playground-docker的特性在开机时运行一些自定义脚本。
+
+
+::: tip v1.3.7-alpha.1+后支持[systemd --user](https://nts.strzibny.name/systemd-user-services/)方式启动用户脚本
+
+在~/.config/systemd/user/目录下创建任意名称的service文件，比如
+
+```
+lzcbox-a85a42da ~/.config/systemd/user # cat setup-apt-mirror.service
+[Unit]
+Description=切换apt源为 中国大陆，并自动安装上htop
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=sh -c 'apt install -y htop'
+
+[Install]
+WantedBy=default.target
+```
+
+然后使用`systemctl --user enable setup-apt-mirror.service` 即可自动开机运行
+:::
+
+
 
 ## 配置方法
 
