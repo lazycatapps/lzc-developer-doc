@@ -137,7 +137,7 @@ export default defineConfig({
       {
         text: "传统模式",
         items: [
-          { text: "SSH 与内测", link: "/ssh.md" },
+          { text: "开通 SSH 访问", link: "/ssh.md" },
           { text: "KVM 模式", link: "/kvm.md" },
           { text: "Dockerd 模式", link: "/dockerd-support.md" },
         ],
