@@ -3,8 +3,17 @@
 ## 如何开启 SSH?
 
 1. 懒猫客户端商店安装`懒猫开发者工具`
+
 2. 打开`懒猫开发者工具`会看到一个 ssh 的设置项开启和设置密码
+
+   ::: tip 首次打开`懒猫开发者工具`需要切换一下SSHD选项开关，并设置root用户密码
+
+   :::
+
+   <img src="https://lzc-playground-1301583638.cos.ap-chengdu.myqcloud.com/guidelines/395/20250519130007687.png?imageSlim" alt="image-20250519130007602" style="zoom: 50%;" /> 
+
 3. 在您喜欢的终端执行`ssh root@{微服名称}.heiyu.space`
+
 4. cat /data/README.md 查看数据盘相关文件说明
 
 
