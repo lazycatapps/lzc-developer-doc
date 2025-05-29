@@ -28,7 +28,6 @@ services:
 |LAZYCAT_APP_SERVICE_NAME|app|当前容器所属的service名称|
 |LAZYCAT_BOX_DOMAIN|snyht3.heiyu.space|微服本身的主域名，不要永久存储此值，后续版本重启后可能会变动|
 |LAZYCAT_BOX_NAME|snyht3|微服名称|
-|LAZYCAT_USER_UID| admin | (lzcos v1.2)废弃字段，请使用LAZYCAT_APP_DEPLOY_UID|
 
 
 ## 部署时环境变量列表  {#deploy_envs}
@@ -46,13 +45,10 @@ services:
 | 变量名 | 示例值 | 描述 |
 | -- | -- | -- |
 |LAZYCAT_APP_DEPLOY_UID| admin | 多实例应用下容器所属用户,若为空说明是单实例部署 (lzcos-v1.2引入)|
-|LAZYCAT_APP_ORIGIN|l4test.snyht3.heiyu.space|(lzcos-v1.2)废弃字段，请使用LAZYCAT_APP_DOMAIN|
 |LAZYCAT_APP_DOMAIN|l4test.snyht3.heiyu.space|应用分配到的域名，不要永久存储此值，后续版本重启后可能会变动.(lzc-os-v1.2引入)|
 |LAZYCAT_APP_ID|test.lzcos.l4ingress|应用的appid,等同/lzcapp/pkg/manifest.yml:Package字段|
-|LAZYCAT_APP_SERVICE_NAME|app|当前容器所属的service名称|
 |LAZYCAT_BOX_DOMAIN|snyht3.heiyu.space|微服本身的主域名，不要永久存储此值，后续版本重启后可能会变动|
 |LAZYCAT_BOX_NAME|snyht3|微服名称|
-|LAZYCAT_USER_UID| admin | (lzcos-v1.2)废弃字段，请使用LAZYCAT_APP_DEPLOY_UID|
 |LAZYCAT_AUTH_OIDC_CLIENT_ID|test.lzcos.l4ingress|oauth的client id|
 |LAZYCAT_AUTH_OIDC_CLIENT_SECRET|a3deb9086885cbbc7|在安装阶段随机生成的oauth密钥，每次容器重启都会变动，因此不要保存在数据库中|
 |LAZYCAT_AUTH_OIDC_ISSUER_URI|xxx|oauth的issuer地址|
