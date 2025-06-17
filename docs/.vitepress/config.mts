@@ -98,6 +98,7 @@ export default defineConfig({
           { text: "开发依赖安装", link: "/devshell-install-and-use.md" },
           { text: "开发测试镜像", link: "/advanced-dev-image.md" },
           { text: "浏览器插件调试", link: "/advanced-browser-extension.md" },
+          { text: "第一个 VNC应用", link: "/app-vnc.md" }
         ],
       },
       {
