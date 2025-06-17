@@ -133,7 +133,7 @@ lzc-docker images | grep dev.微服名.heiyu
 ```
 ![image-20250612180605983](https://lzc-playground-1301583638.cos.ap-chengdu.myqcloud.com/guidelines/439/image-20250612180605983.png?imageSlim)
 
-> 1. 如果是构建测试镜像一定需要把镜像的 tag 标记为 `dev.$BOXNAME.heiyu.space`地址，`$BOXNAME` 为目标微服名。具体请看[懒猫开发者手册-开发测试镜像](!https://developer.lazycat.cloud/advanced-dev-image.html)
+> 1. 如果是构建测试镜像一定需要把镜像的 tag 标记为 `dev.$BOXNAME.heiyu.space`地址，`$BOXNAME` 为目标微服名。具体请看[懒猫开发者手册-开发测试镜像](https://developer.lazycat.cloud/advanced-dev-image.html)
 >
 > 2. 为什么用lzc-docker，请看[微服一台机器跑三套 Docker？](https://mp.weixin.qq.com/s/_dXE0CxWvLgA5EX1sIft8Q)
 
