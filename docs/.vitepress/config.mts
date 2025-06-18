@@ -120,6 +120,7 @@ export default defineConfig({
           { text: "环境变量", link: "/advanced-envs.md" },
           { text: "初始化脚本", link: "/advanced-setupscript.md" },
           { text: "独立鉴权", link: "/advanced-public-api.md" },
+          { text: "4层转发", link: "/advanced-l4forward.md" },
           { text: "HTTP Headers", link: "/http-request-headers.md" },
           { text: "对接 OIDC ", link: "/advanced-oidc.html" },
         ],

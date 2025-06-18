@@ -45,6 +45,7 @@ services:
 | 变量名 | 示例值 | 描述 |
 | -- | -- | -- |
 |LAZYCAT_APP_DEPLOY_UID| admin | 多实例应用下容器所属用户,若为空说明是单实例部署 (lzcos-v1.2引入)|
+|LAZYCAT_APP_DEPLOY_ID| xx.yy.zz | 实例自身的ID (lzcos-v1.3.8引入)|
 |LAZYCAT_APP_DOMAIN|l4test.snyht3.heiyu.space|应用分配到的域名，不要永久存储此值，后续版本重启后可能会变动.(lzc-os-v1.2引入)|
 |LAZYCAT_APP_ID|test.lzcos.l4ingress|应用的appid,等同/lzcapp/pkg/manifest.yml:Package字段|
 |LAZYCAT_BOX_DOMAIN|snyht3.heiyu.space|微服本身的主域名，不要永久存储此值，后续版本重启后可能会变动|

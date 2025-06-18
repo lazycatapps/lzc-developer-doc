@@ -101,10 +101,14 @@
 | `user` | `*string` | 容器运行的 UID 或 username， 可选 |
 | `cpu_shares` | `int64` | CPU 份额 |
 | `cpus` | `float32` | CPU 核心数 |
+| `mem_limit`| `string\|int` | 容器的内存上限 |
+| `shm_size`| `string\|int` | /dev/shm/大小 |
 | `network_mode` | `string` | 网络模式， 目前只支持`host`或留空。 若为 `host` 则会容器的网络为宿主网络空间。 此模式下应用进行网络监听时务必注意鉴权， 非必要不要监听 `0.0.0.0` |
 | `netadmin` | `bool` | 若为 `true`， 则容器具备 `NET_ADMIN` 权限， 可以操作网络相关系统调用， 如无必要请不要使用。 若使用此功能， 请务必小心不要扰乱 iptables 相关规则 |
 |`setup_script` | `*string` | 配置脚本， 脚本内容会以 root 权限执行后， 再按照 OCI 的规范执行原始的 entrypoint 内容。 本字段和 entrypoint,command 字段冲突， 无法同时设置， 可选 |
 | `binds` | `[]string` | lzcapp 容器的 rootfs 重启后会丢失， 仅 `/lzcapp/var`, `/lzcapp/cache` 路径下的数据会永久保留。 因此其他需要保留的目录需要 bind 到这两个目录之下。 此列表仅支持 `/lzcapp` 开头的路径 |
+| `runtime` | `string` | 	指定OCI runtime。支持`runc`和`sysbox-runc`。sysbox-runc隔离程度更高，能跑完整的dockerd,systemd等。但不支持network_mode=host之类namespace共享相关的功能更|
+
 
 ## 八、`FileHandlerConfig` 配置
 ### 8.1 文件处理配置
