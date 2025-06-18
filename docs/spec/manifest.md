@@ -57,7 +57,8 @@
 | 字段名 | 类型 | 描述 |
 | ---- | ---- | ---- |
 | `file_handler` | `FileHandlerConfig` | 声明本应用支持的扩展名， 以便其他应用在打开特定文件时可以调用本应用 |
-| `routes` | `[]string` | http 相关路由规则 |
+| `routes` | `[]string` | 简化版 http 相关路由规则 |
+| `upstreams` | `[]UpstreamConfig` | 高级版本 http 相关路由规则，与routes共存 |
 | `public_path` | `[]string` | 独立鉴权的 http 路径列表 |
 | `workdir` | `string` | `app` 容器启动时的工作目录 |
 | `ingress` | `[]IngressConfig` | TCP/UDP 服务相关 |
@@ -125,7 +126,26 @@
 | `acl_handler` | `string` | ACL 处理程序 |
 | `error_page_templates` | `map[string]string` | 错误页面模板， 可选 |
 
-## 十、本地化 `I10nConfigItem` 应用配置 {#i18n}
+
+## 十、`UpstreamConfig` 配置
+| 字段名 | 类型 | 描述 |
+| ---- | ---- | ---- |
+| `location` | `string` | 入口匹配的路径 |
+| `domain_prefix` | `string` | 入口匹配的域名前缀 |
+| `backend` | `string` | 上游的地址，需要是一个合法的url，支持http,https,file三个协议 |
+| `use_backend_host` | `bool` | 如果为true,则访问上游时http host header使用backend中的host，而非浏览器请求时的host |
+| `backend_launch_command` | `string` | 自动启动此字段里的程序 |
+| `disable_backend_ssl_verify` | `bool` | 请求backend时不进行ssl安全验证 |
+| `disable_auto_health_chekcing` | `bool` | 禁止系统自动针对此条目生成的健康检测 |
+| `disable_url_raw_path` | `bool` | 如果为true则删除http header中的raw url |
+| `remove_this_request_headers` | `[]string` | 删除这个列表内的http request header， 比如"Origin"、"Referer" |
+| `fix_websocket_header` | `bool` | 自动将Sec-Websocket-xxx替换为Sec-WebSocket-xxx |
+| `dump_http_headers_when_5xx` | `bool` | 如果http上游出现5xx, 则dump请求 |
+| `dump_http_headers_when_paths` | `[]string` | 如果与到此路径下的http, 则dump请求 |
+
+
+
+## 十一、本地化 `I10nConfigItem` 应用配置 {#i18n}
 
 配置 `locales` 使应用支持多语言，支持设置的 language key 规范可参考 [BCP 47 标准](https://en.wikipedia.org/wiki/IETF_language_tag)
 

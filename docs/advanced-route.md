@@ -46,12 +46,13 @@ services:
 
 注意
 1. lzcos-1.3.x之后会引入应用隔离,应用之间禁止相互访问,因此如果没有特殊原因直接使用`service_name`的形式作为域名更简便，也方便修改appid。(`xxx.lzcapp`本身不会被废弃，任意应用都能解析到正确IP，但隔离后无法访问到目标IP)
-2. 但以下特殊情况依旧需要使用`xxx.lzcapp`域名形式 {#p2}
+2. 但以下特殊情况依旧需要使用`xxx.lzcapp`域名形式
    1. 在lzcos-1.3.x之前因为没有进行应用隔离，所有应用看到的`service_name`都是互通的。当不同应用有相同service_name时，可能被错误解析到其他容器IP。
       因此`service_name`是`app`、`db`这类大概率会冲突的情况下在应用网络隔离前依旧需要使用`xxx.lzcapp`形式。
    2. 如果上游服务会检测`http request host`之类的，则需要使用`xxx.lzcapp`形式，否则上游服务解析http request时，
       `http header host`会是`service_name`而非`aaaa.xxx.heiyu.space`。
       此限制是因为上游服务也可能是一个公网服务，此时host必须原封不动传递给上游否则大概率会出现跨域之类的问题。
+      如果有相关需求，建议使用`upstreams.[].use_backend_host=true`明确指定此行为。
 
 file上游
 =========
@@ -103,3 +104,44 @@ application:
 其中前端页面由静态文件`/lzcapp/pkg/content/dist`提供,
 所有以`/api/`开头的路径由可执行文件`/lzcapp/pkg/content/backend`启动后在`http://127.0.0.1:3001`上提供服务,
 并且所有以`/files/`开头的路径也转发到`http://127.0.0.1:3001/files`上.
+
+
+
+UpstreamConfig
+===============
+除此外还(v1.3.8+)可以使用`applications.upstreams`字段配置更细致的路由规则，
+
+比如,
+```
+subdomain: debug
+
+routes: #简单版本的routes也是可以一起工作的
+  - /=http://app1.org.snyh.debug.whoami.lzcapp:80
+
+upstreams:
+  # 明确指定一些细微行为
+  - location: /search
+    backend: https://baidu.com/
+    use_backend_host: true  #如果不设置则一般外网服务器会因为host字段不对拒绝服务
+    disable_auto_health_checking: true #不要针对这条路由做健康检测
+    remove_this_request_headers: #删除origin,referer等header避免跨域之类的问题
+      - origin
+      - Referer
+    disable_url_raw_path: true # 将原始url也进行规范化的转化
+
+  # 跳过后端自签SSL证书问题
+  - location: /other
+    backend: https://app2.snyh.debug.lzcapp:4443 #正常情况下这个域名是不会有合法正式的
+    disable_backend_ssl_verify: true #因此需要在这里配置跳过SSL验证
+
+  # 使用domain_prefix做基于域名前缀的分流
+  - location: /
+    domain_prefix: config  #当访问https://config-debug.xx.heiyu.space/时走这里的规则
+    backend: http://config.snyh.debug.lzcapp:80
+
+  # 使用backend_launch_command替代exec路由规则，语义更明确
+  - location: /api
+    backend: http://127.0.0.1:3001/
+    backend_launch_command: /lzcapp/pkg/content/my-super-backend -listen :3001
+
+```
