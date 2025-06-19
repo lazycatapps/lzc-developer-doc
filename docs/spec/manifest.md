@@ -39,6 +39,8 @@
 | `description` | `string` | 服务描述， 以便系统组件渲染应用服务给管理员查阅 |
 | `publish_port` | `string` | 允许的入站端口号， 可以为具体的端口号或 `1000~50000` 这种端口范围 |
 | `send_port_info` | `bool` | 以 little ending 发送 uint16 类型的实际入站端口给目标端口后再进行数据转发 |
+| `yes_i_want_80_443`| `bool` | 为true则允许将80,443流量转发到应用，此时流量完全绕过系统，因此鉴权、唤醒等都不会生效|
+
 
 ## 四、 `ApplicationConfig` 配置
 ### 4.1 基础配置

@@ -51,9 +51,12 @@ application:
 - 账户鉴权
 - 自动唤醒应用
 - HTTPS证书配置
+- application.routes,application.upstreams等配置
 
 几乎所有情况下您都不应该去使用443端口配置。
 
 目前设想唯一合理的场景是：使用微服分配的EIP，全流量转发到另外一台主机/NAS上，并配置一个非微服域名。
+
+如果您真的确定要自行处理80/443流量则需要在对应ingress条目里明确声明`yes_i_want_80_443:true`
 
 :::
