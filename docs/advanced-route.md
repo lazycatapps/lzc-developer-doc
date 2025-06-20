@@ -109,7 +109,7 @@ application:
 
 UpstreamConfig
 ===============
-除此外还(v1.3.8+)可以使用`applications.upstreams`字段配置更细致的路由规则，
+除此外还(v1.3.8+)可以使用[applications.upstreams](./spec/manifest.md)字段配置更细致的路由规则，
 
 比如,
 ```

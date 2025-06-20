@@ -82,9 +82,8 @@
 | ---- | ---- | ---- |
 | `enable_document_access` | `bool` | 如果为true则将document目录挂载到/lzcapp/run/mnt/home |
 | `enable_media_access` | `bool` | 如果为true则将media目录挂载到/lzcapp/run/mnt/media |
-| `disable_url_raw_path` | `bool` | 如果为true则删除http header中的raw url |
 | `disable_grpc_web_on_root` | `bool` | 如果为true则不再劫持应用的grpc-web流量。需要配合新版本lzc-sdk以便系统本身的grpc-web流量可以正常转发|
-| `remove_this_request_headers` | `[]string` | 删除这个列表内的http request header， 比如"Origin"、"Referer" |
+| `default_prefix_domain` | string | 会调整启动器中点击应用后打开的[最终域名](../advanced-secondary-domains)，可以写任何不含`.`的字符串 |
 
 
 

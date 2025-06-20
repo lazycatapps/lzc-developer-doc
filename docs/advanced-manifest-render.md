@@ -1,23 +1,26 @@
 # manifest.yml渲染
 
-::: warning
-此功能未发布
-:::
+lzcos-v1.3.8+支持manifest.yml文件的动态渲染，以便开发者可以更好的控制部署参数。
 
-lzcos-v1.2+支持manifest.yml文件的动态渲染，以便开发者可以更好的控制部署参数。
+manifest.yml的渲染流程为
 
-manifest.yml的转换流程为
+1. 开发者在项目根目录下创建一个[lzc-deploy-params.yml](./spec/deploy-params)文件，并使用lzc-cli project build打包到lpk中(需要lzc-cli版本 v1.3.7+)
+2. 在运行前会跳转到一个参数补充的UI界面，要求用户补充开发者在`lzc-deploy-params.yml`中定义的所有参数
+3. 系统获取到用户提供的参数，并将其作为模板参数`U` 与lpk中的lzc-manifest.yml一起渲染为最终结果
+4. 将最终的manifest存放在`/lzcapp/run/manifest.yml`(相对于原始文件`/lzcapp/pkg/manifest.yml`)并以此作为最终文件
 
-1. 开发阶段通过lzc-cli打包进xxx.lpk文件中
-2. 安装到微服后lpk会被解压到`/data/system/pkgm/apps/$appid`目录下
-3. 在被要求运行前根据`/data/system/pkgm/apps/$appid`以及UID等运行时信息一起渲染到`/data/system/pkgm/run/$uid@$appid`目录下。
-   此时manifest.yml文件会被渲染为最终结果。应用重启后会被重新渲染，(如果多实例)每个用户会独立渲染。
-4. 将最终manifest.yml转换为docker规范并运行相关容器
+
+--------------
+
+1. 用户可以在应用列表中主动重新进入修改部署参数的页面，点击后进入步骤2. 每次修改部署参数后应用实例会被停止并重新走上述流程
+2. 多实例应用下，每个用户的部署参数都是独立的，由每个用户自行填写。
+3. 即使应用没有配置`lzc-deploy-params.yml`依旧会进行manifest渲染流程
 
 ## 渲染机制
 
-使用golang的`text/template`对lpk中的emanifest.yml进行渲染，您需要先熟悉一下[Go官方的模板语法](https://pkg.go.dev/text/template)外
+使用golang的`text/template`对lpk中的manifest.yml进行渲染，您需要先熟悉一下[Go官方的模板语法](https://pkg.go.dev/text/template)外
 以下为一些内置的模板函数和模板参数。
+
 
 ## 内置模板函数
 
@@ -29,11 +32,9 @@ manifest.yml的转换流程为
 
 ## 模板参数
 
-主要为三个大参数(括号内为其简写方式)
+主要为两个大参数(括号内为其简写方式)
 
 - `.UserParams(.U)` lzc-deploy-params.yml中要求的参数
-
-- `.Manifest(.M)`原始未经过渲染的lzc-manifest.yml文件，可以同个这个去引用`Package`之类的字段。注意这里的参数是驼峰命名法和yml中的字段名不同。
 
 - `.SysParams(.S)`系统相关参数
     - `.BoxName`  微服的名称
@@ -42,6 +43,9 @@ manifest.yml的转换流程为
     - `.AppDomain`  应用的域名，注意此域名目前是根据开发者写死，将来会动态分配并支持管理员动态调整。
     - `.IsMultiInstance` 是否为多实例部署方式，目前是开发者写死，将来版本会调整为管理员可以动态调整最终值。
     - `.DepolyUID`  实际部署时的用户ID,单实例部署方案下无此字段。
+    - `.DepolyID`   实例本身的唯一ID
+
+
 
 ::: tip
 调试阶段，您可以在lzc-manifest.yml任意位置添加来渲染出所有的可用参数
@@ -49,17 +53,18 @@ manifest.yml的转换流程为
 xx-debug: {{ . }}
 ```
 
-
 您可以在`application.route`里增加一条规则来查看最终的manifest.yml
 ```
 application:
     route:
-        - /m=file:///lzcapp/pkg/manifest.yml
+        - /m=file:///lzcapp/run/manifest.yml
 ```
-或直接使用devshell后cat /lzcapp/pkg/manifest.yml
+或直接使用devshell后cat /lzcapp/run/manifest.yml
 :::
 
 ## 示例
+
+完整demo示例可以参考[这里](https://gitee.com/lazycatcloud/netmap)
 
 ### 更安全的内部密码
 
@@ -80,8 +85,52 @@ services:
     - DB_PASSWORD={{ stable_secret "root_password" }}
 ```
 
-### 获取域名信息
-
 ### 多实例/单实例不同配置
 
-### 根据用户参数进行不同配置
+如果是单实例应用，则将用户数据放到应用内部
+如果是多实例应用，则将数据放到每个用户的文稿目录下
+
+
+```yml
+#lzc-manifest.yml
+
+services:
+  some_service_name:
+    binds:
+    {{ if .S.IsMultiInstance }}
+      - /lzcapp/document/{{ .S.DeployUID }}/the_name:/home/
+    {{ else }}
+      - /lzcapp/var/storage:/home/
+    {{ end }}
+```
+
+
+### 启动参数由用户配置
+```yml
+#lzc-deploy-params.yml
+params:
+  - id: target
+    type: string
+    name: "target"
+    description: "the target IP you want forward"
+
+  - id: listen.port
+    type: string
+    name: "listen port"
+    description: "the forwarder listen port, can't be 80, 81"
+    default_value: "33"
+    optional: true
+```
+
+```yml
+#lzc-manifest.yml
+package: org.snyh.netmap
+version: 0.0.1
+name: netmap
+application:
+  subdomain: netmap
+
+  upstreams:
+    - location: /
+      backend_launch_command: /lzcapp/pkg/content/netmap -target={{ .U.target }} -port={{ index .U "listen.port" }}
+```

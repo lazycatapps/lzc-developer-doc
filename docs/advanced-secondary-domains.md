@@ -5,9 +5,12 @@
 
 1. 如果多个应用使用相同的`subdomain`字段，则后安装的会被添加域名小尾巴
 2. 多实例类型应用，同一个应用每个用户会分配独立的域名，因此非管理员看到的域名大概率会加上小尾巴
-3. 域名前缀概念:  `xxxx-subdomain`的域名和`subdomain`的效果是一致。(即每个应用自动拥有任意多个域名)
+3. 域名前缀概念:  `xxxx-subdomain`的域名和`subdomain`的效果是一致，即每个应用自动拥有任意多个域名。
 4. 最终实际分配到的`subdomain`只能通过环境变量`LAZYCAT_APP_DOMAIN`获取到。
+5. 所有前缀域名进入的流量都会忽略`TCP/UDP Ingress`配置。 (不影响默认应用域名进入的流量)
 
+
+v1.3.8已支持[基于域名的流量转发](./advanced-route#upstreamconfig)
 
 由于`application.routes`不支持基于域名的转发，如果需要比较细致的调整路由规则，
 可以添加一条特殊route规则，`- /=http://nginx.$appid.lzcapp`。
