@@ -16,6 +16,13 @@ v1.3.5+提供了统一的oidc的支持，lzcapp适配oidc后即可自动获取ui
     部分应用则需要填写多个具体ENDPOINT的信息， 具体支持的信息可以参考[部署时环境变量](./advanced-envs#deploy_envs)。
 
 
+::: warning oidc_redirect_path
+必须设置了`application.oidc_redirect_path`系统才会动态生成oidc client相关的环境变量
+
+如果您不知道这个值应该填写什么，可以先随便填写，一般应用的报错页面会告知您正确值。
+:::
+
+
 比如outline这个应用的OIDC适配，根据[outline官方文档](https://docs.getoutline.com/s/hosting/doc/oidc-8CPBm6uC0I)得知需要设置以下环境变量
 * `OIDC_CLIENT_ID` – OAuth client ID
 * `OIDC_CLIENT_SECRET` – OAuth client secret
