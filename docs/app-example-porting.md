@@ -147,7 +147,7 @@ services:
 ## 社区移植工具
 
 如果你觉得步骤繁琐，想一键把docker-compose转换成懒猫应用，不妨试试社区大佬的转换工具：
-https://www.npmjs.com/package/docker2lzc
+[docker2lzc](https://www.npmjs.com/package/docker2lzc)
 
 ## 官方移植开源仓库
 
