@@ -99,9 +99,9 @@ services:
   some_service_name:
     binds:
     {{ if .S.IsMultiInstance }}
-      - /lzcapp/var/storage:/home/
+      - /lzcapp/run/mnt/home:/home/
     {{ else }}
-      - /lzcapp/document/{{ .S.DeployUID }}/the_name:/home/
+      - /lzcapp/run/mnt/home/{{ .S.DeployUID }}/the_name:/home/
     {{ end }}
 ```
 
