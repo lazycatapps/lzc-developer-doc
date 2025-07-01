@@ -136,6 +136,7 @@
 | `backend` | `string` | 上游的地址，需要是一个合法的url，支持http,https,file三个协议 |
 | `use_backend_host` | `bool` | 如果为true,则访问上游时http host header使用backend中的host，而非浏览器请求时的host |
 | `backend_launch_command` | `string` | 自动启动此字段里的程序 |
+| `trim_url_suffix` | `string` | 自动删除请求后端时url可能携带的指定字符 |
 | `disable_backend_ssl_verify` | `bool` | 请求backend时不进行ssl安全验证 |
 | `disable_auto_health_chekcing` | `bool` | 禁止系统自动针对此条目生成的健康检测 |
 | `disable_url_raw_path` | `bool` | 如果为true则删除http header中的raw url |
