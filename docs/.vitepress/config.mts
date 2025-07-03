@@ -78,6 +78,7 @@ export default defineConfig({
           { text: "社区激励规则", link: "/store-rule.md" },
           { text: "开发者购机优惠", link: "/developer-cyber-discount.md" },
           { text: "应用上架审核指南", link: "/store-submission-guide.md" },
+          { text: "入门必看文集(看了就会)", link: "/wangjishanren-lazycat-developer-startup.md" },
         ],
       },
       {
