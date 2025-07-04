@@ -78,6 +78,12 @@
 
 
 
+### 路由器设置{#router_config}
+
+- upnp不要开secure相关选项
+
+- DMZ不要开，开启后路由器的upnp会自动被禁用
+
 ## 客户端代理模式下优化方案{#optimize-proxy-mode}
 
 ### 保活方案
