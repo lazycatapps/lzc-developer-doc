@@ -132,6 +132,7 @@
 | 字段名 | 类型 | 描述 |
 | ---- | ---- | ---- |
 | `location` | `string` | 入口匹配的路径 |
+| `disable_trim_location` | `bool` | 转发到`backend`时，不要自动去掉`location`前缀 (lzcos v1.3.9+)|
 | `domain_prefix` | `string` | 入口匹配的域名前缀 |
 | `backend` | `string` | 上游的地址，需要是一个合法的url，支持http,https,file三个协议 |
 | `use_backend_host` | `bool` | 如果为true,则访问上游时http host header使用backend中的host，而非浏览器请求时的host |
