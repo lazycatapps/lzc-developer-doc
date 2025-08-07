@@ -167,6 +167,7 @@ export default defineConfig({
       {
         text: "系统变更日志(开发者相关)",
         items: [
+          { text: "v1.3.9", link: "/changelogs/v1.3.9.md" },
           { text: "v1.3.8", link: "/changelogs/v1.3.8.md" },
           { text: "v1.3.7", link: "/changelogs/v1.3.7.md" },
           { text: "v1.3.6", link: "/changelogs/v1.3.6.md" },
