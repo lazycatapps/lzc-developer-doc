@@ -1,0 +1,3 @@
+.reached-top:not(:has(.menu)) {
+  display: none !important;
+}
