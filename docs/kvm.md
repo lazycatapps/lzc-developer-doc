@@ -14,7 +14,7 @@
 
 ## 虚拟机和开发库安装
 使用方法举例， 我们以 ArchLinux 为例：
-1. 首先要安装 ArchLinux 虚拟机， 请参考[攻略](https://lazycat.cloud/playground//#/guideline/423)
+1. 首先要安装 ArchLinux 虚拟机， 请参考[攻略](https://lazycat.cloud/playground/guideline/423)
 2. 在虚拟机中用包管理器安装对应的开发库， 可使用 pacman 或 aur
 3. 编写后台服务脚本并启动, 后台服务可以依托于微服的网络穿透， 对外网提供服务
 
