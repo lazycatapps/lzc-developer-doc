@@ -6,7 +6,7 @@
 
 2. 下拉找到**开启SSHD** 
 
-   ::: 设定root用户密码并开启选项
+   设定root用户密码并开启选项
    
 
 ![image.png](https://lzc-playground-1301583638.cos.ap-chengdu.myqcloud.com/guidelines/625/833cf476-1710-4320-a96b-3e780334d81a.png "image.png")
