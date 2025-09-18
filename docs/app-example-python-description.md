@@ -25,7 +25,7 @@
 
 - `icon`: lpk 包 icon 的路径路径，如果不指定将会警告
 
-    icon 仅仅允许 png 后缀的文件
+    icon 仅仅允许 png 后缀的文件，应用icon.png 宽高比需要为1:1 建议宽高大于等于 512*512 个像素
 
 - `devshell`: 指定开发依赖的情况
 
@@ -98,11 +98,11 @@ application:
 
   应用子域名， 和上面的 `package` 字段的域名相关联。
 
-- ​`/=file:///lzcapp/pkg/content/web`
+- `/=file:///lzcapp/pkg/content/web`
 
   这个路由表示， 当用户访问应用时， 也就是访问路由 `/` 时， 应用程序会自动返回 `/lzcapp/pkg/content/web` 目录下的 `index.html` 文件。 `/lzcapp/pkg/content` 其实就是对应前面 `lzc-build.yml` 文件中的 `contentdir` 目录。
 
-- ​`/api/=exec://3000,./lzcapp/pkg/content/backend/run.sh`:
+- `/api/=exec://3000,./lzcapp/pkg/content/backend/run.sh`:
 
   这个路由表示， 当用户访问路由 `/api/`​ 时， 应用程序会启动 `./lzcapp/pkg/content/backend/run.sh` 脚本提供后端服务， 后端服务脚本监听 3000 端口。
 
