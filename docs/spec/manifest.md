@@ -33,7 +33,7 @@
 ### 3.1 网络配置
 | 字段名 | 类型 | 描述 |
 | ---- | ---- | ---- |
-| `protocol` | `string` | 协议类型， 支持 `TCP` 或 `UDP` |
+| `protocol` | `string` | 协议类型， 支持 `tcp` 或 `udp` |
 | `port` | `int` | 目标端口号， 若为空， 则使用实际入站的端口 |
 | `service` | `string` | 服务容器的名称， 若为空， 则为 `app` 这个特殊 service |
 | `description` | `string` | 服务描述， 以便系统组件渲染应用服务给管理员查阅 |
