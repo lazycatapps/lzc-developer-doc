@@ -153,3 +153,9 @@ services:
 
 官方的移植开源是个很好学习的仓库，欢迎参考:
 https://gitee.com/lazycatcloud/appdb
+
+## 进阶阅读
+
+使用 Github Actions 实现 Docker 应用的自动更新和发布: <https://lazycat.cloud/playground/guideline/572>
+
+懒猫微服如何使用 OpenID Connect （OIDC）: <https://lazycat.cloud/playground/guideline/663>
