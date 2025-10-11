@@ -87,6 +87,8 @@
 - [懒猫微服实战入门（二十七）：KSpeeder 加速，让 Docker 镜像不再超时](https://mp.weixin.qq.com/s?__biz=MzI3NTY4MjcxNg==&mid=2247488424&idx=1&sn=b199bb1c8e48c76c08da9df5f59bfc5d&chksm=eb00575bdc77de4dcad1308564a80d34939fb1a5d480dacace12219461c2fbf476ac3b1137c9&scene=178&cur_album_id=4010832321455538176&search_click_id=&poc_token=HG4X4Wij1RsOGWzz-QljKuQcLg7mwsxprxnuu5hg)
 - [懒猫微服实战入门（二十八）：坏掉的 Windows 不要扔，硬盘插在懒猫上还能用](https://mp.weixin.qq.com/s?__biz=MzI3NTY4MjcxNg==&mid=2247488575&idx=1&sn=df1ee36c349920dc865a32f8a9e2ae95&chksm=eb0050ccdc77d9da570844fe8df4d72dac47d230cc6db7c8640544727119868953cee6fa3548&scene=178&cur_album_id=4010832321455538176&search_click_id=#rd)
 
+- [懒猫微服实战入门（三十）：懒猫微服改装闺蜜机，一台设备的多重人生](https://mp.weixin.qq.com/s?__biz=MzI3NTY4MjcxNg==&mid=2247488604&idx=1&sn=a6fb06152a16c00aa49c03017b309a76&chksm=eb0050afdc77d9b9bbadebf696b5e21876cdecaf6f624caa18b4fe2c24388b5571357b63b272&scene=178&cur_album_id=4010832321455538176&search_click_id=#rd)
+
 ### 进阶篇
 
 - [懒猫微服进阶心得（一）M 芯片移植懒猫应用构建 Docker 镜像的常见问题排查及解决方案](http://mp.weixin.qq.com/s?__biz=MzI3NTY4MjcxNg==&mid=2247486233&idx=1&sn=8ced3e6062c989222e3f6b9d0b418eca&chksm=eb004feadc77c6fc860185060156856b84f36009c20662e459c59e337266b12039fcf456efdc#rd)
@@ -134,6 +136,8 @@
 - [懒猫算力仓初探（三）：如何 SSH 免密登陆以及配置免密 sudo？](https://mp.weixin.qq.com/s?__biz=MzI3NTY4MjcxNg==&mid=2247488467&idx=1&sn=db0a20f069f3cc50c121959b7b826840&chksm=eb005720dc77de3629531dd233c1892e07dc27b53ff96402abbf0c2e817e5f53d509a2d4a1a7&scene=178&cur_album_id=4010832321455538176&search_click_id=#rd)
 
 - [懒猫算力仓初探（四）：如何高效的向算力仓传输文件？](https://mp.weixin.qq.com/s?__biz=MzI3NTY4MjcxNg==&mid=2247488479&idx=1&sn=6740e03f76e11d385333eb81d782113f&chksm=eb00572cdc77de3aec8ca6a148df9ba221b815fe5700469ba53a48717b0fb1e15d47ea976c7d&scene=178&cur_album_id=4010832321455538176&search_click_id=#rd)
+
+- [懒猫算力仓初探（五）：有了图形界面，算力仓轻松设置静态 IP](https://mp.weixin.qq.com/s?__biz=MzI3NTY4MjcxNg==&mid=2247488670&idx=1&sn=1f416bad9b05e1650b0a101194387a4a&chksm=eb00506ddc77d97b7cce728eb267011cc93d0b8bf5887cf5a0d129fa70b8144585fd646e5773&scene=178&cur_album_id=4010832321455538176&search_click_id=#rd)
 
 ### 容器篇
 
