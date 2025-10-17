@@ -1,0 +1,49 @@
+name: Sync Gitee Master
+
+on:
+  schedule:
+    - cron: "0 */3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-master
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch gitee master
+        run: |
+          if git remote get-url gitee; then
+            git remote set-url gitee https://gitee.com/lazycatcloud/lzc-developer-doc.git
+          else
+            git remote add gitee https://gitee.com/lazycatcloud/lzc-developer-doc.git
+          fi
+          git fetch gitee master
+
+      - name: Fast-forward merge
+        id: ff
+        run: |
+          git fetch origin master
+          git checkout -B master origin/master
+          git merge --ff-only gitee/master || { echo "fast-forward merge failed"; exit 1; }
+          ahead=$(git rev-list --count origin/master..master || echo "0")
+          echo "ahead=${ahead}" >> "$GITHUB_OUTPUT"
+
+      - name: Push to origin
+        if: steps.ff.outputs.ahead != '0'
+        run: git push origin master
