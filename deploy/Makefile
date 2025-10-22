@@ -73,5 +73,5 @@ dist:
 	cd $(UI_DIR); npm clean-install --registry https://registry.npmmirror.com; npm run docs:build
 
 deploy:
-	coscli sync --exclude ".*index\.html$$|manage/" --recursive --delete --force $(DIST_DIR)  cos://www-dev-lazycat-1301583638
+	coscli sync --exclude ".*index\.html$$|manage/|aipod/" --recursive --delete --force $(DIST_DIR)  cos://www-dev-lazycat-1301583638
 	coscli sync --recursive $(DIST_DIR) cos://www-dev-lazycat-1301583638
