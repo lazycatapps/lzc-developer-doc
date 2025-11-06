@@ -29,3 +29,7 @@ A: 这里会有一个应用 **单实例** 和 **多实例** 的概念 (参考 [�
 1. 在应用声明为 **多实例** 情况时 `/lzcapp/run/mnt/home` 微服会自动根据当前客户端登录用户 `username` 挂载 document 目录
 
 2. 在应用声明为 **单实例** 情况时 `/lzcapp/run/mnt/home` 会将全部用户的 document 目录挂载进去，此时需要应用自行实现需要将文件写入哪个用户的 document 目录
+
+Q: 如何在应用容器内访问懒猫网盘挂载的资源？
+
+A: 在 `lzc-manifest.yml` 文件中配置 [enable_media_access: true](https://developer.lazycat.cloud/spec/manifest.html#ext_config) 即可在容器的 `/lzcapp/media/RemoteFS` 目录下找到你挂载的资源。
