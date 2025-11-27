@@ -10,7 +10,7 @@
 | 字段名 | 类型 | 描述 |
 | ---- | ---- | ---- |
 | `package` | `string` | 应用的唯一 id， 需保持全球唯一， 建议以个人域名开头 |
-| `version` | `string` | 应用的版本号，X、Y 和 Z 为非负的整數，X 是主版本号、Y 是次版本号、而 Z 为修订号，格式：`X.Y.Z` |
+| `version` | `string` | 应用的版本号，X、Y 和 Z 为非负的整數，X 是主版本号、Y 是次版本号、而 Z 为修订号，格式：`X.Y.Z`，[阅读详细规范](https://semver.org/)|
 | `name` | `string` | 应用名称 |
 | `description` | `string` | 应用描述 |
 | `usage` | `string` | 应用的使用须知， 如果不为空， 则微服内每个用户第一次访问本应用时会自动渲染 |
