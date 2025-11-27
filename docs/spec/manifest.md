@@ -65,16 +65,30 @@
 | `workdir` | `string` | `app` 容器启动时的工作目录 |
 | `ingress` | `[]IngressConfig` | TCP/UDP 服务相关 |
 | `environment` | `[]string` | `app` 容器的环境变量 |
-| `health_check` | `HealthCheckConfig` | `app` 容器的健康检测， 仅建立在开发调试阶段设置 `Disable` 字段， 不建议进行替换， 否则系统默认注入的自动依赖检测逻辑会丢失 |
+| `health_check` | `AppHealthCheckExt` | `app` 容器的健康检测， 仅建议在开发调试阶段设置 `disable` 字段， 不建议进行替换， 否则系统默认注入的自动依赖检测逻辑会丢失 |
 
 ## 五、 `HealthCheckConfig` 配置
-### 5.1 检测配置
+### 5.1 AppHealthCheckExt
 | 字段名 | 类型 | 描述 |
 | ---- | ---- | ---- |
-| `test` | `[]string` | 仅 services 字段下生效。 例如： `["CMD", "curl", "-f", "http://localhost"]` 或 `test: curl -f https://localhost || exit 1` |
-| `start_period` | `time.Duration` | 启动等待阶段时间， 超出此时间范围后若还未进入 `healthly` 状态则会变为 `unhealthy` |
-| `disable` | `bool` | 禁用本容器的健康检测 |
 | `test_url` | `string` | 仅 application 字段下生效。 扩展的检测方式， 直接提供一个 http url 不依赖容器内部有 curl/wget 之类的命令行 |
+| `disable` | `bool` | 禁用本容器的健康检测 |
+| `start_period` | `string` | 启动等待阶段时间， 超出此时间范围后若还未进入 `healthly` 状态则会变为 `unhealthy` |
+| `timeout` | `string` | 单次检测耗时超过`timeout`则认为检测失败 |
+
+
+### 5.2 HealthCheckConfig
+
+| 字段名 | 类型 | 描述 |
+| ---- | ---- | ---- |
+| `test` | `[]string` | 在对应容器内执行什么命令进行检测， 如：`["CMD", "curl", "-f", "http://localhost"]`
+| `timeout` | `string` | 单次检测耗时超过`timeout`则认为本次检测失败 |
+| `interval` | `string` | 每次检测间隔时间 |
+| `retries` | `int` | 连续多少次检测失败后让整个容器进入unhealthy状态。默认值1 |
+| `start_period` | `string` | 启动等待阶段时间， 超出此时间范围后若还未进入 `healthly` 状态则会变为 `unhealthy` |
+| `start_interval` | `string` | 在start_period时间内，每隔多久执行一次检测 |
+| `disable` | `bool` | 禁用本容器的健康检测 |
+
 
 ## 六、 `ExtConfig` 配置 {#ext_config}
 
@@ -99,7 +113,7 @@
 | `command` | `*string` | 对应容器的 command， 可选 |
 | `tmpfs` | `[]string` | 挂载 tmpfs volume， 可选 |
 | `depends_on` | `[]string` | 依赖的其他容器服务(app这个名字除外)， 仅支持本应用内的其他服务， 且强制检测类型为 `healthly` 可选 |
-| `health_check` | `*HealthCheckConfig` | 容器的健康检测策略 |
+| `healthcheck` | `*HealthCheckConfig` | 容器的健康检测策略, 老版本`health_check`已被废弃 |
 | `user` | `*string` | 容器运行的 UID 或 username， 可选 |
 | `cpu_shares` | `int64` | CPU 份额 |
 | `cpus` | `float32` | CPU 核心数 |
