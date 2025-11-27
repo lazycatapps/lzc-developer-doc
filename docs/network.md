@@ -100,7 +100,7 @@
 
 客户端主页上的黄色小地球图标表示当前网络速度较慢。若想提升网络速度，可以参考以下民间图文教程，确保VPN规则放行懒猫微服，使网络畅通无阻。
 
-优化教程：[小猪佩奇](https://github.com/wlabby/peppapigconfigurationguide)
+优化教程：[小猪佩奇](https://github.com/wlabbyflower/peppapigconfigurationguide/tree/main)
 
 #### iOS保活图文教程{#iOS}
 
