@@ -7,7 +7,7 @@ prev: false
 
 # Relay
 
-- 请检查代理分流规则，确保开启了"绕过中国大陆"选项。并且配置"6.6.6.6"和"2000::6666"绕过代理。
+- Please check proxy routing rules to ensure the "Bypass Mainland China" option is enabled. Also configure "6.6.6.6" and "2000::6666" to bypass proxy.
 
 Clash
 

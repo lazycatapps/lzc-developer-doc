@@ -1,54 +1,54 @@
-# 社区激励规则
-为了让懒猫微服的应用越来越多，越来越好用，我们为社区贡献者都准备了红包奖励：
+# Community Incentive Rules
+To make LCMD MicroServer applications more numerous and better to use, we have prepared red envelope rewards for community contributors:
 
-#### 1. 移植高质量自托管应用
-移植一个自托管应用，每成功移植一个，我们会送上 100 元的红包。
+#### 1. Port High-Quality Self-Hosted Applications
+For each successfully ported self-hosted application, we will give a 100 yuan red envelope reward.
 
-移植游戏大作的服务端，每成功移植一个，我们送上 300 元的红包，游戏大作的评判标准是，画面精美，比较出名，玩的人多。 一般质量的游戏服务端，100 元一个。
+For porting game masterpieces' server-side, for each successfully ported one, we will give a 300 yuan red envelope reward. The criteria for game masterpieces are: beautiful graphics, relatively famous, and many players. For general quality game server-side, 100 yuan each.
 
-开源软件必须带上游作者地址，也欢迎闭源软件上架商店。
+Open source software must include the upstream author's address, and closed source software is also welcome to be listed in the store.
 
-当两个开发者移植同一款应用时，激励红包只发给第一个上架的应用，只有功能正常的应用才能上架。  
+When two developers port the same application, the incentive red envelope will only be given to the first application to be listed, and only applications with normal functionality can be listed.
 
-#### 2. 原创应用
-开发者自己开发的原创应用按照 150 ~ 500 元进行激励，激励金额根据应用的功能、界面精美度、质量稳定性综合评估，目前比较主观，还请各位开发者见谅。
+#### 2. Original Applications
+Original applications developed by developers themselves are incentivized at 150 ~ 500 yuan, and the incentive amount is comprehensively evaluated based on the application's functionality, interface beauty, and quality stability. Currently, it's quite subjective, so please understand.
 
-原创应用响应用户需求更新功能，还会继续激励。
+Original applications that respond to user needs and update features will continue to be incentivized.
 
-#### 3. 对接微服账户系统和网盘右键菜单接口
-在移植应用的基础上，如果你还能对接上微服账户系统或者网盘右键菜单接口，我们会再额外奖励 50 元红包。
+#### 3. Integrate with LCMD Account System and Cloud Storage Right-Click Menu Interface
+On the basis of porting applications, if you can also integrate with the LCMD account system or cloud storage right-click menu interface, we will give an additional 50 yuan red envelope reward.
 
-自己移植应用带对接功能，每个应用奖励 150 元红包。
-Fork 其他开发者的软件，增加对接功能，每个应用奖励 50 元红包。
+For self-ported applications with integration features, each application rewards 150 yuan red envelope.
+Fork other developers' software and add integration features, each application rewards 50 yuan red envelope.
 
-#### 4. 编写商店应用攻略
+#### 4. Write Store Application Guides
 
-我们为高质量的应用攻略提供 50 元红包奖励。为了确保攻略内容实用且有价值，请遵循以下规则。只有满足这些规则的攻略才能获得奖励。
+We provide 50 yuan red envelope rewards for high-quality application guides. To ensure the guide content is practical and valuable, please follow the rules below. Only guides that meet these rules can receive rewards.
 
-**高质量攻略的要求**
-攻略必须真实、详细，并针对应用的具体使用场景提供完整指导。具体包括：
-1. **包含软件截图并关联应用商店**：攻略中需插入实际的软件界面截图，并明确链接或引用应用商店的相关信息。
-2. **步骤真实有效**：所有操作步骤必须基于实际测试，确保用户能顺利复现。
-3. **针对特定使用场景的详细介绍**：选择应用的一个典型场景（如日常使用或专业功能），并提供从开始到结束的完整步骤。
-4. **复杂应用的重点说明**：对于操作较复杂的应用，要详细介绍关键步骤、操作技巧或参数填写规则（如输入格式、注意事项）。
-5. **使用场景举例**：结合实际例子说明应用的适用场景，帮助用户理解其价值。
-6. **分享实用技巧**：重点突出内容层面的技巧分享，例如在 AI 生成图片的应用中，不仅介绍软件操作，更强调如何优化 Prompt 来获得更好效果。
+**Requirements for High-Quality Guides**
+Guides must be authentic, detailed, and provide complete guidance for specific use cases of the application. Specifically including:
+1. **Include software screenshots and link to app store**: The guide needs to insert actual software interface screenshots and clearly link or reference relevant information from the app store.
+2. **Steps are authentic and effective**: All operation steps must be based on actual testing to ensure users can successfully reproduce them.
+3. **Detailed introduction for specific use cases**: Choose a typical scenario of the application (such as daily use or professional functions) and provide complete steps from start to finish.
+4. **Key explanations for complex applications**: For applications with more complex operations, provide detailed explanations of key steps, operation techniques, or parameter filling rules (such as input format, precautions).
+5. **Use case examples**: Use actual examples to illustrate the application's applicable scenarios and help users understand its value.
+6. **Share practical tips**: Focus on content-level tip sharing, for example, in AI image generation applications, not only introduce software operations but also emphasize how to optimize Prompts to achieve better results.
 
-**不计入奖励的攻略类型**
-以下类型的攻略虽可能通过审核上架，但不具备足够的深度或创新性，因此无法获得红包奖励：
-1. **简单工具类软件**：软件本身开箱即用，无需复杂操作，也没有可分享的内容技巧（如基本计算器）。
-2. **仅标注和翻译界面**：只对软件界面进行简单标注或翻译，而未提供实际使用指导。
-3. **孤立按钮介绍**：仅针对某个按钮或功能进行浅显描述，而缺乏完整的使用流程。
+**Guide Types Not Eligible for Rewards**
+The following types of guides may pass review and be listed, but do not have sufficient depth or innovation, so they cannot receive red envelope rewards:
+1. **Simple tool software**: The software itself is ready to use out of the box, requires no complex operations, and has no shareable content tips (such as basic calculators).
+2. **Only labeling and translating interfaces**: Only simple labeling or translation of software interfaces without providing actual usage guidance.
+3. **Isolated button introductions**: Only superficial descriptions of a certain button or function without a complete usage flow.
 
-请注意，即使攻略不计入奖励，只要内容准确且符合基本规范，仍可审核上架。我们鼓励大家创作高质量内容，以获得奖励并帮助更多用户！
+Please note that even if guides are not eligible for rewards, as long as the content is accurate and meets basic standards, they can still be reviewed and listed. We encourage everyone to create high-quality content to receive rewards and help more users!
 
-#### 5. 不发红包的应用类型
-当然啦，有些类型的应用暂时不在奖励范围内，比如纯网页游戏、纯书籍页面、纯教程网站、网页离线应用，游戏服务器的不同模组或者纯数据库软件。
-这些应用开发者觉得有必要，欢迎大家上传应用商店。
+#### 5. Application Types Not Eligible for Red Envelopes
+Of course, some types of applications are temporarily not within the reward scope, such as pure web games, pure book pages, pure tutorial websites, web offline applications, different mods of game servers, or pure database software.
+If developers feel these applications are necessary, everyone is welcome to upload them to the app store.
 
-#### 6. 不能上架应用商店的应用类型
-目前黄、 赌、 毒、 空投、 破解软件或者违反中国法律的软件不能上架应用商店。
+#### 6. Application Types That Cannot Be Listed in the App Store
+Currently, pornography, gambling, drugs, airdrops, cracked software, or software that violates Chinese laws cannot be listed in the app store.
 
 ::: warning
-额外说明：对于需要用户名和密码的应用，若普通用户无法在懒猫商店获取相应凭证，则无法在懒猫商店上架。
+Additional note: For applications that require usernames and passwords, if regular users cannot obtain corresponding credentials in the Lazycat store, they cannot be listed in the Lazycat store.
 :::

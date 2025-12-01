@@ -1,32 +1,30 @@
 http headers
 ==============
 
-所有从客户端发起的https/http的流量会先进入`lzc-ingress`这个组件进行分流。
+All https/http traffic initiated from the client will first enter the `lzc-ingress` component for traffic distribution.
 
-lzc-ingress主要处理以下任务
+lzc-ingress mainly handles the following tasks:
 
-- 对http请求进行鉴权，若未登录则跳转到登录页面
-- 根据请求的域名分流到不同的lzcapp后端
+- Authenticate http requests, redirect to login page if not logged in
+- Distribute traffic to different lzcapp backends based on the requested domain
 
-在鉴权成功转发给具体的lzcapp前，`lzc-ingress`会设置以下额外的http headers
+Before forwarding to the specific lzcapp after successful authentication, `lzc-ingress` will set the following additional http headers:
 
-- `X-HC-User-ID`        登录的UID(用户名)
-- `X-HC-Device-ID`      客户端位于本微服内的唯一ID， 应用程序可以使用这个作为设备标识符
-- `X-HC-Device-PeerID`  客户端的peerid， 仅内部使用。
-- `X-HC-Device-Version` 客户端的内核版本号
-- `X-HC-Login-Time` 微服客户端最后一次的登录时间， 格式为unix时间戳(一个int32的整数)
-- `X-HC-User-Role`  普通用户为:"NORMAL"， 管理员用户为: "ADMIN"
-- `X-Forwarded-Proto` 固定为"https"，以便少量强制https的应用可以正常工作
-- `X-Forwarded-By`  固定为"lzc-ingress"
+- `X-HC-User-ID`        Logged in UID (username)
+- `X-HC-Device-ID`      Unique ID of the client within this LCMD, applications can use this as a device identifier
+- `X-HC-Device-PeerID`  Client's peerid, for internal use only.
+- `X-HC-Device-Version` Client's kernel version number
+- `X-HC-Login-Time`     Last login time of the LCMD client, formatted as unix timestamp (an int32 integer)
+- `X-HC-User-Role`      Normal users: "NORMAL", administrator users: "ADMIN"
+- `X-Forwarded-Proto`   Fixed as "https" so that a small number of applications that force https can work normally
+- `X-Forwarded-By`      Fixed as "lzc-ingress"
 
+`lzc-ingress` authenticates through the `HC-Auth-Token` cookie (authentication is completed through other internal methods within the client).
 
+When `lzc-ingress` encounters an invalid or empty cookie value, and the target address is not `public_path`, it will redirect to the login page.
 
-`lzc-ingress`是通过`HC-Auth-Token`这个cookie来进行鉴权的(客户端内是通过其他内部方式完成鉴权)。
+When the target address is `public_path`, `lzc-ingress` will still perform authentication once, but will not redirect to the login page.
+- If authentication fails, it will clear the above `X-HC-XX` headers to avoid some security risks
+- If authentication succeeds, it will include the above `X-HC-XX` headers.
 
-当`lzc-ingress`遇到此cookie值无效或为空时，且目标地址不是`public_path`，则会跳转到登录页面。
-
-当目标地址为`public_path`时， `lzc-ingress`依旧会进行一次鉴权，但不会跳转到登录页面。
-- 如果鉴权失败，则会清空上述`X-HC-XX`的header，避免一些安全风险
-- 如果鉴权成功，则会带上上述`X-HC-XX`的header。
-
-也就是lzcapp开发者在编写后端代码时，不用考虑是否为`public_path`， 直接信任`X-HC-User-ID`即可。
+That is, when lzcapp developers write backend code, they don't need to consider whether it's `public_path`, they can directly trust `X-HC-User-ID`.

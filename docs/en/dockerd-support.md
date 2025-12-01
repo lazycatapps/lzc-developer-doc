@@ -1,10 +1,10 @@
-# Dockerd 开发模式
+# Dockerd Development Mode
 
-部分开发者希望微服能提供完整的 docker 套件功能, 针对于这一类用户, 微服系统<Badge type="tip" text="≥v1.3.0" /> 提供了一个独立的 Docker 守护进程以供开发者使用。
+Some developers hope that LCMD can provide complete docker suite functionality. For this type of user, the LCMD system<Badge type="tip" text="≥v1.3.0" /> provides an independent Docker daemon for developers to use.
 
 
-## 获取并安装Dockge应用
-虽然非开发者用户可以使用独立 docker 套件，但具有`privileged`属性或赋予`CAP_SYS_ADMIN`等权限的容器可以读写并访问懒猫微服中的所有文件数据，甚至对系统造成无法修复的错误。因此请在启用独立 docker 套件后，仔细阅读本文的剩余内容。
+## Get and Install Dockge Application
+Although non-developer users can use the independent docker suite, containers with `privileged` attributes or containers granted permissions such as `CAP_SYS_ADMIN` can read, write and access all file data in LCMD MicroServer, and may even cause irreparable errors to the system. Therefore, please carefully read the remaining content of this article after enabling the independent docker suite.
 
 <script setup>
 const downloadFile = () => {
@@ -15,7 +15,7 @@ const downloadFile = () => {
 };
 </script>
 
-<button :class="$style.button" @click="downloadFile">下载Dockge应用LPK</button>
+<button :class="$style.button" @click="downloadFile">Download Dockge Application LPK</button>
 
 <style module>
 .button {
@@ -28,37 +28,37 @@ const downloadFile = () => {
 }
 </style>
 
- - 点击上方按钮，下载`Dockge`应用lpk。
- - 将lpk上传至`懒猫网盘`，并右键安装。
- - 安装完成后重启懒猫微服，系统将自动激活独立 Docker 守护进程。
- - (可选)若需要重启后自动启动dockerd，请在应用列表中将dockage设置为后台运行
+ - Click the button above to download the `Dockge` application lpk.
+ - Upload the lpk to `Lazycat cloud storage` and right-click to install.
+ - After installation is complete, restart LCMD MicroServer, and the system will automatically activate the independent Docker daemon.
+ - (Optional) If you need dockerd to start automatically after restart, please set dockage to run in the background in the application list
 
-## 使用说明
+## Usage Instructions
 
-开发者可以通过以下两种方式运行自己的容器
+Developers can run their own containers through the following two methods:
 
 ### Dockge
-该应用可以在应用列表中访问到, 通过 `dockge` 应用, 用户可以自己编写docker-compose 文件, 部署并且测试
+This application can be accessed in the application list. Through the `dockge` application, users can write their own docker-compose files, deploy and test
 
 ![dockge](./public/dockge.png)
 
 ### pg-docker
-ssh 登录到微服之后, 用户可以直接使用 `pg-docker` 命令执行docker相关的命令, 通过pg-docker暴露的端口, 能够直接在内网中访问
+After ssh logging into LCMD, users can directly use the `pg-docker` command to execute docker-related commands. Through the port exposed by pg-docker, they can directly access it in the intranet
 
-### 关于docker存储位置
-在独立 docker 套件中创建的容器将默认使用机械硬盘作为存储空间，容器在重启后内容将持久化存储。
+### About docker storage location
+Containers created in the independent docker suite will use mechanical hard drives as storage space by default, and container content will be persistently stored after restart.
 
-### 将用户数据文件映射至容器内
-docker容器默认状况下将与系统隔离，可以使用下面的compose表达式将用户磁盘数据绑定至容器内。
+### Map user data files to containers
+Docker containers are isolated from the system by default. You can use the following compose expression to bind user disk data to containers.
 ```yaml
 service:
   example:
     volumes:
-      - /data/document/{用户名}:/容器/内/路径
+      - /data/document/{username}:/container/internal/path
 ```
 
-### 映射容器内端口
-使用下面的compose表达式即可将容器内`2222`端口转发到外部的`3333`端口。如须访问，可通过懒猫微服`局域网ip:端口号`进行访问。
+### Map container ports
+Using the following compose expression, you can forward the `2222` port inside the container to the external `3333` port. If you need to access it, you can access it through LCMD MicroServer `LAN ip:port number`.
 ```yaml
 service:
   example:
@@ -66,24 +66,24 @@ service:
       - 3333:2222
 ```
 
-### 带有权限的容器
-为容器添加`privileged`权限或某些[特权](https://man.archlinux.org/man/core/man-pages/capabilities.7.en)（例如`CAP_SYS_ADMIN`）会赋予该容器极高的系统权限。这样一来，容器可能会对懒猫微服的系统资源产生很大影响，甚至可能造成严重的安全风险。特别是在将容器的高风险端口暴露给外部网络时，容器可能成为攻击的目标。
+### Containers with permissions
+Adding `privileged` permissions or certain [privileges](https://man.archlinux.org/man/core/man-pages/capabilities.7.en) (such as `CAP_SYS_ADMIN`) to containers will grant the container extremely high system permissions. In this way, containers may have a great impact on LCMD MicroServer's system resources, and may even cause serious security risks. Especially when exposing high-risk ports of containers to external networks, containers may become targets of attacks.
 
-如果容器内运行恶意程序，这些程序可能会影响系统的正常运行，甚至导致数据丢失或损坏。因此，在使用别人提供的Compose文件时，需要特别留意文件中是否会授予容器过多的权限，避免潜在的安全隐患。
+If malicious programs run inside containers, these programs may affect the normal operation of the system, and may even cause data loss or corruption. Therefore, when using Compose files provided by others, you need to pay special attention to whether the files will grant containers excessive permissions to avoid potential security risks.
 ```yaml
 service:
   example:
     privileged: true
     cap_add:
       - SYS_ADMIN
-      - NET_ADMIN # 开放所有网络相关权限
+      - NET_ADMIN # Open all network-related permissions
 ```
 
-### 安装Dockge后无法创建容器
-在安装Dockge后，如果您发现创建容器失败，且右下角有此提示弹出时。请确保第一次安装后已经重启微服。在不安装Dockge应用的情况下系统为保证安全将不会启用独立 docker 守护进程。
-![右下角错误提示](./public/dockge-error.png)
+### Cannot create containers after installing Dockge
+After installing Dockge, if you find that creating containers fails and there's this prompt popping up in the bottom right corner. Please ensure that MicroServer has been restarted after the first installation. Without installing the Dockge application, the system will not enable the independent docker daemon to ensure security.
+![Bottom right error prompt](./public/dockge-error.png)
 
-### pg-docker配置文件
-目前 `pg-docker` 的 `daemon.json` 文件位于 `/lzcsys/var/playground/daemon.json` 目录下，该配置修改后不会回滚，不过下面的配置项会被系统强行配置：
- - `bridge` 懒猫微服网络环境相关
- - `cgroup-parent` 懒猫微服进程调度相关
+### pg-docker configuration file
+Currently, the `daemon.json` file of `pg-docker` is located in the `/lzcsys/var/playground/daemon.json` directory. This configuration will not be rolled back after modification, but the following configuration items will be forcibly configured by the system:
+ - `bridge` LCMD MicroServer network environment related
+ - `cgroup-parent` LCMD MicroServer process scheduling related

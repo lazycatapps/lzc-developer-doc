@@ -1,24 +1,24 @@
-浏览器插件
+Browser Extension
 ========
 
-如果您的应用支持浏览器插件访问，则需要配置`public_path`，以便插件可以正常访问。
+If your application supports browser extension access, you need to configure `public_path` so that the extension can access normally.
 
-因为插件js的`context`与正常页面的`context`是隔离的，因此访问微服的登录cookie是不生效的。
+Because the extension js's `context` is isolated from the normal page's `context`, accessing LCMD's login cookie is not effective.
 
-需要将插件访问的url地址做[独立鉴权](./advanced-public-api)，让系统ingress放行相关请求，由应用自身进行鉴权。
+You need to configure [Independent Authentication](./advanced-public-api) for the URL addresses accessed by the extension, so that the system ingress allows related requests, and the application itself performs authentication.
 
-调试方式一般是，先在插件页面右键点击`inspect`之类的按钮，访问到插件的调试工具栏。
+The debugging method is generally to right-click on the extension page and click buttons like `inspect` to access the extension's debugging toolbar.
 
-![插件调试](./images/chrome_extension_inspect.jpg)
+![Extension Debugging](./images/chrome_extension_inspect.jpg)
 
-在调试工具栏里跳转到`network`页面，然后尝试访问插件的功能，找到被401的地址。
+Jump to the `network` page in the debugging toolbar, then try to access the extension's functions to find the address that returns 401.
 
 
-比如`hoarder`这个插件访问的就是`/api/trpc/`路径。
+For example, the `hoarder` extension accesses the `/api/trpc/` path.
 
-![hoarder访问](./images/hoarder_access_error.png)
+![hoarder Access](./images/hoarder_access_error.png)
 
-我们将这个路径加到`lzc-manifest.yml`中
+We add this path to `lzc-manifest.yml`
 
 ```yaml
 application:
@@ -30,8 +30,8 @@ application:
 ```
 
 
-:::warning 安全提示
-加入到public_path的路径，请一定要多加测试，务必确保敏感数据有受到应用的额外保护。
+:::warning Security Notice
+For paths added to public_path, please test thoroughly to ensure that sensitive data is protected by additional application-level protection.
 
-配置后，可以在插件的调试页面里观察下实际访问的url地址，然后在命令行下用curl访问，看是否会被拒绝访问。
+After configuration, you can observe the actual accessed URL addresses in the extension's debugging page, then use curl in the command line to access and see if it will be rejected.
 :::

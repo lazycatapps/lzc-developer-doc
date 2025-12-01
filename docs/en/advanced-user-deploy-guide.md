@@ -1,10 +1,10 @@
-# 部署向导
+# Deployment Guide
 ::: warning
-此功能未发布
+This feature is not released yet
 :::
 
 TODO
 
-## 语法
-## 支持的类型说明
-## 示例
+## Syntax
+## Supported Type Descriptions
+## Examples

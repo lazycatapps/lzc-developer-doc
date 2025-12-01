@@ -1,17 +1,17 @@
-# 懒猫微服的理念
+# LCMD MicroServer Philosophy
 
-我做了开源社区 20 多年，观察到一个现象： 一个超级黑客的力量和创造力往往比比一个公司力量还要强大，他们给世界分享创意的时候，却很少获得同等的物质回报。
+I've been in the open source community for over 20 years and observed a phenomenon: the power and creativity of a super hacker is often stronger than that of a company. When they share their creativity with the world, they rarely receive equal material returns.
 
-根本原因是 “个人数据公有云化后，商业模式最后全部都是基于数据变现的逻辑，当以数据隐私为中心的商业模式越来越多时，应用和云服务只是流量入口和数据获取的工具。这正是资本擅长的事情，而那些擅长创意和工具的开发者就活不下去，因为他们没那么多钱，在竞争的起点就输了。”
+The fundamental reason is: "After personal data is public cloud-based, business models ultimately all rely on data monetization logic. When more and more business models are centered on data privacy, applications and cloud services are just tools for traffic entry and data acquisition. This is exactly what capital is good at, and developers who are good at creativity and tools can't survive because they don't have that much money and lose at the starting point of competition."
 
-而懒猫微服的目标是，通过私有硬件把个人数据保护在自己的手里，当硬件和云服务都只是工具时，个人开发者就有机会通过工具来赚钱。云服务的竞争力不再是数据、云服务器和资本时。云服务最后会回归到创意、质量和服务上，这样竞争格局才会引发市场的良性竞争。消费者也因为有更多的云服务开发者参与进来，从而获得更大的利益和选择的空间。
+LCMD MicroServer's goal is to protect personal data in users' own hands through private hardware. When hardware and cloud services are just tools, individual developers have the opportunity to make money through tools. When the competitiveness of cloud services is no longer data, cloud servers, and capital, cloud services will eventually return to creativity, quality, and service. This competitive landscape will trigger healthy market competition. Consumers also benefit from more cloud service developers participating, gaining greater benefits and more choices.
 
-所以，我们希望懒猫微服的理念包含下面三个原则：
+Therefore, we hope that LCMD MicroServer's philosophy includes the following three principles:
 
-1. **用户数据自主权**： 我们相信用户应该完全掌控自己的数字资产。 通过家庭服务器， 您可以自主管理数据、 程序和访问权限。 这不仅保护隐私， 还让您可以自由选择和切换应用， 不被单一服务锁定。 我们希望通过这种方式， 为用户提供更多选择， 激发市场活力。
+1. **User Data Autonomy**: We believe users should have complete control over their digital assets. Through home servers, you can independently manage data, programs, and access permissions. This not only protects privacy but also allows you to freely choose and switch applications without being locked into a single service. We hope to provide users with more choices and stimulate market vitality through this approach.
 
-2. **降低创新门槛**： 我们希望让个人开发者也能轻松创业。 通过将计算资源分散到家庭， 我们降低了创业成本。 这样， 开发者可以专注于创意和服务质量， 而不是资本竞争。 我们相信， 这将带来更多样化的服务， 满足用户多元需求， 同时也为经验丰富的开发者提供更多机会。
+2. **Lowering Innovation Barriers**: We hope to make it easy for individual developers to start businesses. By distributing computing resources to homes, we reduce startup costs. In this way, developers can focus on creativity and service quality rather than capital competition. We believe this will bring more diverse services, meet users' diverse needs, and also provide more opportunities for experienced developers.
 
-3. **开放生态系统**： 我们致力于构建一个开放的生态系统。 我们反对因商业考虑而设置的人为壁垒， 这些壁垒限制了设备间的互联互通。 相反， 我们拥抱开源技术和开放协议， 鼓励开发者充分利用各种 API， 促进不同品牌硬件的兼容性。 我们的目标是为用户创造一个无缝连接的数字中枢。
+3. **Open Ecosystem**: We are committed to building an open ecosystem. We oppose artificial barriers set up for business considerations that limit interoperability between devices. Instead, we embrace open source technologies and open protocols, encourage developers to make full use of various APIs, and promote compatibility between different brands of hardware. Our goal is to create a seamlessly connected digital hub for users.
 
-这些理念体现了我们对用户自由、 创新精神和开放合作的追求。 我们相信， 通过这种方式， 我们可以为用户和开发者创造更多价值， 推动技术的良性发展。
+These principles reflect our pursuit of user freedom, innovation spirit, and open cooperation. We believe that through this approach, we can create more value for users and developers and promote the healthy development of technology.

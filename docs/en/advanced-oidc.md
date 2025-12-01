@@ -1,43 +1,43 @@
-lzcapp对接微服的OIDC
+lzcapp Integration with LCMD's OIDC
 ====================
 
-v1.3.5+提供了统一的oidc的支持，lzcapp适配oidc后即可自动获取uid和对应权限组(`ADMIN`代表管理员)
+v1.3.5+ provides unified oidc support. After lzcapp adapts to oidc, it can automatically obtain uid and corresponding permission groups (`ADMIN` represents administrator)
 
-开发者只需要在manifest.yml中提供以下两个信息即可完成适配。
+Developers only need to provide the following two pieces of information in manifest.yml to complete the adaptation.
 
-1. 在`application.oidc_redirect_path`中填写正确的oidc回调地址
-     这个路径一般是`/oauth2/callback`或者`/auth/oidc.callback`，
-     具体需要查阅应用本身的文档。如果应用文档未提供相关信息，可以先随便填写一个，
-     登录时浏览器报错时可以查看到实际使用的路径。
+1. Fill in the correct oidc callback address in `application.oidc_redirect_path`
+     This path is generally `/oauth2/callback` or `/auth/oidc.callback`,
+     you need to check the application's own documentation for specifics. If the application documentation does not provide relevant information, you can fill in any value first,
+     when the browser reports an error during login, you can see the actual path used.
 
-2. 通过部署时环境变量获取系统自动生成的相关环境变量给实际应用即可。
-    必填项为`client_id`、`client_secret`。
-    部分应用额外只需要填写一个ISSUER信息，剩下的会自动事实探测。
-    部分应用则需要填写多个具体ENDPOINT的信息， 具体支持的信息可以参考[部署时环境变量](./advanced-envs#deploy_envs)。
+2. Get system automatically generated related environment variables through deployment environment variables and pass them to the actual application.
+    Required items are `client_id`, `client_secret`.
+    Some applications only need to fill in one ISSUER information additionally, and the rest will be automatically detected.
+    Some applications need to fill in multiple specific ENDPOINT information. For specific supported information, refer to [Deployment Environment Variables](./advanced-envs#deploy_envs).
 
 
 ::: warning oidc_redirect_path
-必须设置了`application.oidc_redirect_path`系统才会动态生成oidc client相关的环境变量
+Only after setting `application.oidc_redirect_path` will the system dynamically generate oidc client-related environment variables
 
-如果您不知道这个值应该填写什么，可以先随便填写，一般应用的报错页面会告知您正确值。
+If you don't know what value to fill in, you can fill in any value first. Generally, the application's error page will tell you the correct value.
 :::
 
 
-比如outline这个应用的OIDC适配，根据[outline官方文档](https://docs.getoutline.com/s/hosting/doc/oidc-8CPBm6uC0I)得知需要设置以下环境变量
+For example, the OIDC adaptation of the outline application. According to [outline official documentation](https://docs.getoutline.com/s/hosting/doc/oidc-8CPBm6uC0I), the following environment variables need to be set
 * `OIDC_CLIENT_ID` – OAuth client ID
 * `OIDC_CLIENT_SECRET` – OAuth client secret
 * `OIDC_AUTH_URI`
 * `OIDC_TOKEN_URI`
 * `OIDC_USERINFO_URI`
 
-在manifest.yml中可以这样填写
+In manifest.yml, you can fill it like this:
 ```yml
 name: Outline
 package: cloud.lazycat.app.outline
 version: 0.0.1
 application:
   subdomain: outline
-  #outline官方文档没有提供这个信息，但通过报错信息可以得到这个地址
+  #outline official documentation does not provide this information, but this address can be obtained through error messages
   oidc_redirect_path: /auth/oidc.callback
   routes:
     - /=http://outline.cloud.lazycat.app.outline.lzcapp:3000
@@ -56,9 +56,9 @@ services:
 oidc issuer info
 ===============
 
-访问`https://$微服名称.heiyu.space/sys/oauth/.well-known/openid-configuration#/`可以获取完整的issuer信息。
+Access `https://$LCMD_NAME.heiyu.space/sys/oauth/.well-known/openid-configuration#/` to get complete issuer information.
 
-然后使用 `https://$LAZYCAT_BOXDOMAIN/$endpoint_path`即可自行获取任何endpoint的地址信息。
+Then use `https://$LAZYCAT_BOXDOMAIN/$endpoint_path` to get the address information of any endpoint yourself.
 
 
 ```json

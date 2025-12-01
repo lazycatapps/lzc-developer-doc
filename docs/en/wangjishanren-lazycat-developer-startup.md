@@ -1,31 +1,31 @@
-# 懒猫微服文集推荐
+# LCMD MicroServer Article Collection Recommendation
 
-🚀 如果你刚入手懒猫微服，或者还在犹豫怎么把应用迁过去——别再到处翻资料了，这里就是最硬核的系列。
+🚀 If you've just started with LCMD MicroServer, or are still hesitating about how to migrate applications—stop searching everywhere for information, this is the most hardcore series.
 
-这不是一篇普通的技术分享，而是顶级开发者留下的实战手记。
+This is not an ordinary technical sharing, but a practical handbook left by top developers.
 
-由懒猫微服资深用户、懒猫专栏作家 **忘机山人**（韩旭）精心撰写。
+Carefully written by **Wangjishanren** (Han Xu), a senior LCMD MicroServer user and LCMD columnist.
 
-整整 80+ 篇连载，手把手拆解懒猫微服的底层逻辑与迁移秘诀。
+A full 80+ serialized articles, step-by-step breakdown of LCMD MicroServer's underlying logic and migration secrets.
 
-阅读它，你将收获：
+By reading it, you will gain:
 
-- 可直接应用的实战经验：避免重复踩坑
-- 深入底层的逻辑拆解：理解系统背后的设计哲学
-- 迁移与优化的秘诀：让你的懒猫微服跑得更稳更快
+- Practical experience that can be directly applied: avoid repeating mistakes
+- Deep underlying logic breakdown: understand the design philosophy behind the system
+- Migration and optimization secrets: make your LCMD MicroServer run more stable and faster
 
-每一篇都能省你一天时间，每一篇都值得读三遍。
+Each article can save you a day, and each one is worth reading three times.
 
-> “写代码里最会写文章的，写文章里最会写代码的。”
+> "The best writer among coders, the best coder among writers."
 
-🚀 所有文章已整理在公众号，扫码就能看到～
+🚀 All articles are organized in the WeChat official account, scan the QR code to see～
 
-![忘机山人](./images/wangjishanren-qrcode.jpg){width=150px height=150px}
+![Wangjishanren](./images/wangjishanren-qrcode.jpg){width=150px height=150px}
 
-## 文集内容
+## Article Collection Content
 
-这是目前中文圈对懒猫微服最系统、最深入的实战指南，
-[点击此处获取最新更新。](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI3NTY4MjcxNg==&action=getalbum&album_id=4010832321455538176#wechat_redirect "点击此处获取最新更新")
+This is currently the most systematic and in-depth practical guide to LCMD MicroServer in the Chinese community,
+[Click here to get the latest updates.](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI3NTY4MjcxNg==&action=getalbum&album_id=4010832321455538176#wechat_redirect "Click here to get the latest updates")
 
 ---
 
@@ -155,8 +155,8 @@
 - [自带内网穿透,懒猫微服治好了我的 NAS 焦虑](https://mp.weixin.qq.com/s?__biz=MzI3NTY4MjcxNg==&mid=2247486027&idx=1&sn=2185d401b7ae3e00936ce1ca2cc52421&chksm=eb004eb8dc77c7aed622737b26bb141f43e0efa9c972ee6188d0626ad39f903c5096ca396688&scene=178&cur_album_id=4010832321455538176&search_click_id=#rd)
 - [懒猫微服买硬件送服务，刚学的计算机知识顺便接了个单](https://mp.weixin.qq.com/s?__biz=MzI3NTY4MjcxNg==&mid=2247487352&idx=1&sn=6cb019fda3bcc306f6b71998ea8085ee&chksm=eb004b8bdc77c29d8c457edef2eb335c29dcb2cbf3fd1ebce6ff15c9fbe248c81ed181cf6c20&scene=178&cur_album_id=4010832321455538176&search_click_id=#rd)
 
-折腾懒猫微服，本质上是一次又一次理解系统、挑战自我的过程。
-每一篇文章都记录着实践的脚印，也预示着新的探索方向。
+Tinkering with LCMD MicroServer is essentially a process of understanding the system and challenging oneself again and again.
+Each article records the footprints of practice and also indicates new directions for exploration.
 
-一个人的经验有限，一群人的分享才有力量。
-愿大家在折腾与学习中不断积累，把经验沉淀下来，分享出去，共同推动这个生态更稳、更强。🚀🤝
+One person's experience is limited, but a group's sharing has power.
+May everyone continue to accumulate through tinkering and learning, precipitate experience, share it, and jointly promote this ecosystem to be more stable and stronger. 🚀🤝

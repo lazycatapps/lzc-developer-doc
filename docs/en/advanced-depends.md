@@ -1,18 +1,18 @@
-# 服务启动依赖
+# Service Startup Dependencies
 
-lzcapp 提供了两个和服务依赖相关的字段，用来处理应用启动时的时序问题
+lzcapp provides two fields related to service dependencies to handle timing issues during application startup
 
-1. 简化版的 `depends_on` 字段
-2. 根据 `application.routes` 字段自动注入的健康检测机制
+1. Simplified `depends_on` field
+2. Health check mechanism automatically injected based on `application.routes` field
 
 depends_on
 ===========
 
-绝大部分情况, `depends_on` 仅需要在 `services.$service_name` 字段下使用，类型为 `[]string`
-其中每一条填写一个 `$service_name`，当前 service 在启动时会等 `depends_on` 中所有的 service 的容器状态为 `healthy`
+In most cases, `depends_on` only needs to be used under the `services.$service_name` field, type is `[]string`
+Each entry fills in a `$service_name`, the current service will wait for all services in `depends_on` to have container status as `healthy` when starting
 
-`service.$service_name.health_check` 字段会影响 service 进入 `healthy` 状态, 此字段与 docker-compose 的 healthCheck 语义一致，
-但只支持以下 4 个字段
+The `service.$service_name.health_check` field will affect the service entering `healthy` state. This field has the same semantics as docker-compose's healthCheck,
+but only supports the following 4 fields
 ```go
 type HealthCheckConfig struct {
 	Test        []string      `yaml:"test"`
@@ -41,23 +41,23 @@ services:
 > 2. 即使 service 中没有填写 `health_check` 也会受 docker image 中对应字段影响
 :::
 
-自动注入的健康检测
+Automatically Injected Health Checks
 ===============
 
-lzcapp 主要是通过 `application.routes` 对外提供服务,因此系统会自动根据routes中的上游状态做智能的检测，
-因此绝大部分情况下是不需要手动处理依赖关系，具体规则如下:
+lzcapp mainly provides services externally through `application.routes`, so the system will automatically perform intelligent detection based on the upstream state in routes.
+Therefore, in most cases, there is no need to manually handle dependencies. The specific rules are as follows:
 
-1. 检测并等待所有 service 对应的容器进入 running 状态
-2. 检测并等待 `application.health_check.test_url` 中对应服务返回 200 状态(若有此配置)
-3. 检测并等待所有上游就绪后 `application` 这个特殊 service 进入 healthy 状态
-   具体方法为，扫描所有 routes 规则，并提取其中的 `http://$hostname:$port` 部分， exec 类型会自动转换为 `http://127.0.0.1:$port`
-   使用 TCP dial `$hostname:$port`，如 dial 成功则表明此上游为就绪状态
-4. 等待所有其他 service 全部进入 healty 状态, 页面中的"应用启动中"切换为实际服务内容
+1. Detect and wait for all service containers to enter running state
+2. Detect and wait for the corresponding service in `application.health_check.test_url` to return 200 status (if this configuration exists)
+3. Detect and wait for all upstreams to be ready, then the special service `application` enters healthy state
+   The specific method is to scan all routes rules and extract the `http://$hostname:$port` part. exec type will be automatically converted to `http://127.0.0.1:$port`
+   Use TCP dial `$hostname:$port`, if dial succeeds, it indicates that this upstream is ready
+4. Wait for all other services to enter healthy state, the "Application starting" page switches to actual service content
 
 ::: warning
-> 1. 如果 `$hostname` 为一个公网 IP/域名 则步骤 3 时会忽略此上游服务，避免微服在没有互联网时无法启动此应用
-> 2. 在 dial `$hostname:$port` 时并非使用 http 方式，因为部分上游正常状态时就是404或其他奇怪的状态
->   因此自动注入的检测逻辑仅确保 TCP 层面正常
-> 3. 因为自动注入的存在，因此在 `services.$service_name.depends_on` 中千万不要填写 `app` 这个特殊 service_name
-> 4. 若您在开发阶段，遇到依赖相关问题,可以设置 `application.health_check.disable=true` 来禁用自动注入的健康检测,但强烈建议在正式发布应用时开启
+> 1. If `$hostname` is a public IP/domain, step 3 will ignore this upstream service to avoid LCMD being unable to start this application without internet
+> 2. When dialing `$hostname:$port`, HTTP method is not used, because some upstreams are in 404 or other strange states when normal
+>   Therefore, the automatically injected detection logic only ensures TCP level is normal
+> 3. Due to the existence of automatic injection, never fill in the special service_name `app` in `services.$service_name.depends_on`
+> 4. If you encounter dependency-related issues during development, you can set `application.health_check.disable=true` to disable automatically injected health checks, but it is strongly recommended to enable it when officially releasing the application
 :::

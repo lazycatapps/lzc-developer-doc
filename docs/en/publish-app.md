@@ -1,32 +1,32 @@
-# 发布自己的第一个应用
+# Publish Your First Application
 
-1. 在发布应用前， 您需要 [注册](https://lazycat.cloud/login?redirect=https://developer.lazycat.cloud/) 社区账号，并访问 [开发者中心](https://developer.lazycat.cloud/manage)，根据界面上的引导提交审核（提交申请后建议在客服群或者尝试 [联系我们](https://lazycat.cloud/about?navtype=AfterSalesService) 快速审核），申请完成后成为懒猫微服的开发者。
+1. Before publishing an application, you need to [register](https://lazycat.cloud/login?redirect=https://developer.lazycat.cloud/) a community account and visit the [Developer Center](https://developer.lazycat.cloud/manage). Follow the interface guidance to submit for review (after submitting the application, it's recommended to contact the customer service group or try to [contact us](https://lazycat.cloud/about?navtype=AfterSalesService) for quick review). After the application is completed, you become a LCMD MicroServer developer.
 
-2. 提交应用到商店审核之前请阅读[应用上架审核指南](./store-submission-guide.md)。
+2. Before submitting your application to the store for review, please read the [Application Store Submission Guide](./store-submission-guide.md).
 
-3. 提交应用到商店审核:
+3. Submit your application to the store for review:
 
-    - 或者通过命令行工具 `lzc-cli` (1.2.54 及以上版本) 提交审核， 如何安装 `lzc-cli` 请参考 [开发环境搭建](https://developer.lazycat.cloud/lzc-cli.html)
+    - Or submit for review through the command-line tool `lzc-cli` (version 1.2.54 and above). For how to install `lzc-cli`, please refer to [Development Environment Setup](https://developer.lazycat.cloud/lzc-cli.html)
 
         ```bash
         lzc-cli project build
         lzc-cli appstore publish ./your-app.lpk
         ```
 
-# 推送镜像到官方仓库
+# Push Images to Official Registry
 
-docker hub 的网络质量不太稳定，因此懒猫官方提供了一个稳定的 registry 供大家使用
+The network quality of Docker Hub is not very stable, so Lazycat officially provides a stable registry for everyone to use.
 
 :::tip
-开发者在最终上传商店前，需要将 lpk 中用的镜像推送到官方 registry，上传完毕后需要手动调整 manifest.yml 中的相关引用 (否则可能会使应用审核人员无法安装应用导致 **上架审核失败** )
+Before developers finally upload to the store, they need to push the images used in the lpk to the official registry. After the upload is complete, they need to manually adjust the relevant references in manifest.yml (otherwise it may cause application reviewers to be unable to install the application, leading to **store review failure**)
 :::
 
 ```
-$ lzc-cli appstore copy-image <公网可以访问的镜像名称>
-# 上传完成后将打印  registry.lazycat.cloud/<community-username>/<镜像名称>:<hash版本>
+$ lzc-cli appstore copy-image <image name accessible from public network>
+# After upload completion, it will print registry.lazycat.cloud/<community-username>/<image name>:<hash version>
 ```
 
-比如
+For example:
 ```
 lzc-cli appstore copy-image alpine:3.18
 Waiting ... ( copy alpine:3.18 to lazycat offical registry)
@@ -34,9 +34,9 @@ lazycat-registry: registry.lazycat.cloud/snyh1010/library/alpine:d3b83042301e01a
 
 ```
 
-注意 `registry.lazycat.cloud` 的使用存在以下限制
+Note that the use of `registry.lazycat.cloud` has the following limitations:
 
-1. 为了保证 LPK 引用镜像本身的稳定性，生成镜像tag会替换成IMAGE_ID，每次执行 `copy-image` ，服务端都会强制执行一次 `docker pull`
-2. 被上传的镜像必须是公网存在的，`pull` 操作是在服务端进行的，因此仅在开发者本地存在的镜像无法被 `copy-image`
-3. 被上传镜像必须被至少一个商店应用引用，仓库会定期进行垃圾回收操作
-4. `registry.lazycat.cloud` 仅供微服内部使用，在微服外部使用会有黑科技**限速**
+1. To ensure the stability of the images referenced by LPK, the generated image tag will be replaced with IMAGE_ID. Each time `copy-image` is executed, the server will forcibly execute a `docker pull`
+2. The uploaded image must exist on the public network. The `pull` operation is performed on the server side, so images that only exist locally on the developer cannot be `copy-image`
+3. The uploaded image must be referenced by at least one store application. The repository will periodically perform garbage collection operations
+4. `registry.lazycat.cloud` is only for internal use within LCMD. Using it outside LCMD will have black technology **rate limiting**

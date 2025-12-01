@@ -1,39 +1,39 @@
-# 应用上架审核指南
-欢迎各位开发者来到[懒猫微服应用商店](https://appstore.lazycat.cloud/#/shop)！为确保用户获得高质量且稳定的应用体验，同时维护应用商店的良好生态，特制定本应用上架指南。请您在提交应用前，仔细阅读并遵循以下规则。
+# Application Store Submission Guide
+Welcome developers to the [LCMD MicroServer App Store](https://appstore.lazycat.cloud/#/shop)! To ensure users receive high-quality and stable application experiences while maintaining a good ecosystem for the app store, we have established this application submission guide. Please carefully read and follow the following rules before submitting your application.
 
-#### 1.应用资料完备性
-提交应用时，务必确保应用的 logo、名称、描述及截图等信息完整无缺。这些信息是用户了解应用的第一窗口，也是我们审核应用的重要依据。其中，应用名称、描述和使用须知应支持多语言，配置 locales 来实现本地化，支持设置的 language key 规范可参考[BCP 47 标准](https://en.wikipedia.org/wiki/IETF_language_tag)。
+#### 1. Application Information Completeness
+When submitting an application, be sure to ensure that the application's logo, name, description, and screenshots are complete and accurate. This information is the first window for users to understand the application and is also an important basis for our application review. Among them, application name, description and usage instructions should support multiple languages, configure locales to achieve localization, and the language key specifications that support settings can refer to the [BCP 47 standard](https://en.wikipedia.org/wiki/IETF_language_tag).
 
-[查看本地化应用配置示例](./spec/manifest.md#i18n)
+[View Localized Application Configuration Example](./spec/manifest.md#i18n)
 
-#### 2.可安装与可加载性
-应用必须具备良好的安装与加载性能。若出现无法安装、安装后无法加载或加载后无响应等情况，将无法通过审核上架。请在提交前，对应用的安装流程及初始加载功能进行全面测试，由其注意检查应用安装所需的依赖是否能正常访问。
+#### 2. Installability and Loadability
+Applications must have good installation and loading performance. If issues such as inability to install, inability to load after installation, or no response after loading occur, the application will not pass review for listing. Before submission, please comprehensively test the application's installation process and initial loading functionality, paying special attention to checking whether the dependencies required for application installation can be accessed normally.
 
-#### 3.应用质量稳定性
-应避免出现严重崩溃、闪退现象。
+#### 3. Application Quality Stability
+Serious crashes and flashback phenomena should be avoided.
 
-#### 4.速度指标
-应用的启动速度、响应时间等不得超过5分钟。
+#### 4. Speed Indicators
+The application's startup speed, response time, etc. should not exceed 5 minutes.
 
-#### 5.特殊场景适配性
--  **硬件搭配类应用**
+#### 5. Special Scenario Adaptability
+-  **Hardware Integration Applications**
 
-对于需要搭配硬件使用的应用，提交前必须在真实的硬件环境下进行全面测试，确保应用与硬件之间的交互功能均可正常实现。请提供包含硬件型号信息的测试说明。
+For applications that need to be used with hardware, comprehensive testing must be conducted in a real hardware environment before submission to ensure that all interaction functions between the application and hardware can be implemented normally. Please provide test instructions including hardware model information.
 
--  **特殊场景类应用**
+-  **Special Scenario Applications**
 
-限制在某些特殊场景下使用的应用（如浏览器等），需在对应的场景下进行充分测试，确保各项功能均可正常使用。
+Applications restricted to certain special scenarios (such as browsers, etc.) need to be fully tested in the corresponding scenarios to ensure all functions can be used normally.
 
--  **更新提示合理性**
+-  **Update Prompt Reasonableness**
 
-应用内的更新提示不应严重影响其正常使用。若更新提示出现干扰应用正常运行的情况，开发者需对其做出合理处理。应用如无法完成应用内更新，建议去掉更新提示。
+Update prompts within the application should not seriously affect its normal use. If update prompts interfere with the normal operation of the application, developers need to handle them reasonably. If the application cannot complete in-app updates, it is recommended to remove the update prompt.
 
-#### 6.应用场景有效性
-提交的应用必须具备对用户真实有效的应用场景。开发库、中间件类的软件形式原则上不允许上架；工具类应用需要和懒猫网盘里对应的文件类型做关联。
+#### 6. Application Scenario Effectiveness
+Submitted applications must have real and effective application scenarios for users. Development libraries and middleware software forms are not allowed to be listed in principle; tool applications need to be associated with corresponding file types in Lazycat cloud storage.
 
-#### 7.应用数据持久化
-对于需要持久化数据的应用，需要进行测试数据是否能进行正常持久化，重启应用或升级应用确保数据不会丢失；对已经上架的应用进行升级不要轻易做实例的变更，实例的变更会导致存储路径的变更，如需做实例的变更，应做好数据的迁移和恢复工作。
+#### 7. Application Data Persistence
+For applications that need persistent data, it is necessary to test whether the data can be persisted normally, restart the application or upgrade the application to ensure data is not lost; for already listed applications, do not easily make instance changes during upgrades, as instance changes will cause storage path changes. If instance changes are needed, proper data migration and recovery work should be done.
 
-希望各位开发者能够严格遵循以上上架指南，提交高质量的应用。我们相信，通过共同努力，懒猫微服应用商店将为用户提供一个丰富、优质且安全的应用生态环境。如有任何疑问或需要进一步的帮助，请随时联系[懒猫微服应用商店官方支持团队](https://lazycat.cloud/about?navtype=AfterSalesService)。
+We hope all developers can strictly follow the above submission guidelines and submit high-quality applications. We believe that through joint efforts, the LCMD MicroServer App Store will provide users with a rich, high-quality, and secure application ecosystem. If you have any questions or need further help, please feel free to contact the [LCMD MicroServer App Store Official Support Team](https://lazycat.cloud/about?navtype=AfterSalesService).
 
-查看如何[上架应用](./publish-app.md)。
+See how to [publish applications](./publish-app.md).

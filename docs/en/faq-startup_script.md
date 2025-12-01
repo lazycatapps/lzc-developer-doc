@@ -1,24 +1,22 @@
-# 如何在开机时启动自定义的脚本
+# How to Start Custom Scripts on Boot
 
 ::: warning
-强烈不建议您通过任何方式对系统文件进行修改，如果出现破坏性操作，可能导致微服所有的救援机制都失效。
+We strongly recommend that you do not modify system files in any way. If destructive operations occur, it may cause all rescue mechanisms of LCMD to fail.
 
-如果一定要对系统进行修改，建议增加5分钟的延迟，以便有足够的时间禁用启动脚本
+If you must modify the system, it's recommended to add a 5-minute delay to have enough time to disable startup scripts
 :::
 
-部分申请了`SSH权限`的开发者或有技术能力的资深用户在重启懒猫微服后，会发现自己通过`systemd`或其他方法配置的开机启动脚本无法像
-正常Linux发行版一样运行，这是因为懒猫系统重启后将[还原系统修改到初始状态](faq-dev.md#为何-ssh-后安装的软件会丢失-readonly_lzcos)。不过在引入[playground-docker<Badge type="tip" text="微服系统v1.1.0" />](dockerd-support.md)后，
-可以通过使用playground-docker的特性在开机时运行一些自定义脚本。
+Some developers who have applied for `SSH permissions` or senior users with technical capabilities will find that their boot startup scripts configured through `systemd` or other methods cannot run like normal Linux distributions after restarting LCMD MicroServer. This is because the LCMD system will [restore system modifications to initial state](faq-dev.md#为何-ssh-后安装的软件会丢失-readonly_lzcos) after restart. However, after introducing [playground-docker<Badge type="tip" text="LCMD system v1.1.0" />](dockerd-support.md), you can run some custom scripts on boot by using playground-docker features.
 
 
-::: tip v1.3.7-alpha.1+后支持[systemd --user](https://nts.strzibny.name/systemd-user-services/)方式启动用户脚本
+::: tip v1.3.7-alpha.1+ supports [systemd --user](https://nts.strzibny.name/systemd-user-services/) method to start user scripts
 
-在~/.config/systemd/user/目录下创建任意名称的service文件，比如
+Create a service file with any name in the ~/.config/systemd/user/ directory, for example:
 
 ```
 lzcbox-a85a42da ~/.config/systemd/user # cat setup-apt-mirror.service
 [Unit]
-Description=切换apt源为 中国大陆，并自动安装上htop
+Description=Switch apt source to Mainland China and automatically install htop
 After=network.target
 
 [Service]
@@ -29,41 +27,41 @@ ExecStart=sh -c 'apt install -y htop'
 WantedBy=default.target
 ```
 
-然后使用`systemctl --user enable setup-apt-mirror.service` 即可自动开机运行
+Then use `systemctl --user enable setup-apt-mirror.service` to automatically run on boot
 :::
 
 
 
-## 配置方法
+## Configuration Method
 
-1. 在微服商店下载Dockge应用
+1. Download the Dockge application from the LCMD store
 
-2. 在微服设置——>应用管理——>找到Dockge这个应用并将“应用自启动”设置为“开启”
+2. In LCMD Settings -> Application Management -> Find the Dockge application and set "Application Auto-start" to "Enable"
 
-![设置开机自启](./public/startup_script/auto_start.png)
+![Set Auto-start on Boot](./public/startup_script/auto_start.png)
 
-3. 在应用里面打开Dockge新建一个compose配置，并设置容器名称，compose配置可以参考下面给出的示例，配置完成后点击部署。
+3. Open Dockge in the application and create a new compose configuration, set the container name. The compose configuration can refer to the example given below. After configuration is complete, click deploy.
 
 ```yaml
 services:
   Debian:
-  #服务名称可自行修改
+  #Service name can be modified by yourself
     image: registry.lazycat.cloud/debian:autostart_mod
-    #此镜像可直接在懒猫微服中进行拉取，无需配置代理
+    #This image can be pulled directly in LCMD MicroServer without configuring proxy
     privileged: true
-    #注意，如脚本无需对系统进行修改则不要添加
+    #Note: if the script doesn't need to modify the system, don't add this
     restart: always
     entrypoint: /bin/init
-    #这里需要使用init来防止脚本结束后容器重启
-    command: sh /data/document/<用户名>/<网盘内路径>/script.sh
-    #设置启动时的指令，需要注意脚本在此容器中的路径
+    #Here you need to use init to prevent container restart after script ends
+    command: sh /data/document/<username>/<cloud storage path>/script.sh
+    #Set the command at startup, note the path of the script in this container
     volumes:
-      - /data/document/<用户名>:/data/document/<用户名>:ro
-      #此配置将网盘目录挂载到容器的/data/document/<用户名>目录下。后面的":ro"用于防止对网盘目录进行修改。该字段可视情况进行修改
+      - /data/document/<username>:/data/document/<username>:ro
+      #This configuration mounts the cloud storage directory to the /data/document/<username> directory in the container. The ":ro" at the end is used to prevent modification of the cloud storage directory. This field can be modified as needed
       - /data/playground/docker.sock:/var/run/docker.sock
-      #此配置可以将playground-docker的socket文件绑定到容器内，允许容器对playground-docker进行修改。
+      #This configuration can bind the playground-docker socket file to the container, allowing the container to modify playground-docker.
     network_mode: "host"
-    #添加该字段并配合privileded可以控制微服系统的网络设备
+    #Adding this field and combining with privileged can control LCMD system network devices
 ```
 
-![配置示例](./public/startup_script/example.png)
+![Configuration Example](./public/startup_script/example.png)

@@ -1,76 +1,74 @@
-# 开发应用常见问题
+# Common Development Application Issues
 
-## 哪些软件不能上架应用商店？
-目前黄、 赌、 毒、 空投、 破解软件或者违反中国法律的软件不能上架应用商店。
+## Which software cannot be listed on the app store?
+Currently, pornography, gambling, drugs, airdrops, cracked software, or software that violates Chinese laws cannot be listed on the app store.
 
-## 在登录开发者中心前， 先确认您的 `lazycat.cloud` 帐号是否具有开发者权限？
+## Before logging into the developer center, first confirm whether your `lazycat.cloud` account has developer permissions?
 
-在[注册](https://lazycat.cloud/login?redirect=https://developer.lazycat.cloud/) lazycat.cloud 帐号后， 您还需要申请下成为开发者， 否则会出现没有权限登录的问题。
+After [registering](https://lazycat.cloud/login?redirect=https://developer.lazycat.cloud/) a lazycat.cloud account, you also need to apply to become a developer, otherwise there will be permission issues when logging in.
 
-## 资源文件比较大， 该如何打包和发布?
+## Resource files are large, how to package and publish?
 
-像一些应用中， 需要携带一些资源文件（类似模型文件， 避免用户启动时候 `长时间下载` 或者 `下载不了` 等问题）， 则可以将文件打包到镜像中去， 然后在镜像启动脚本或者 `entrypoint` 中做后续的操作。
+For some applications that need to carry resource files (similar to model files, to avoid issues like `long download time` or `unable to download` when users start), you can package the files into the image, then do subsequent operations in the image startup script or `entrypoint`.
 
 ::: warning
-拷贝到镜像中的资源文件， 不能放在 `/lzcapp/` 的目录下, 这个目录在应用运行的时候， 会被覆盖，  更详细的说明请看 [访问微服数据](./advanced-file)
+Resource files copied to the image cannot be placed under the `/lzcapp/` directory. This directory will be overwritten when the application runs. For more detailed explanation, see [Access LCMD Data](./advanced-file)
 :::
 
-如果资源文件比较小(<200M)， 也可以将资源文件打包到 lpk 中去， 在应用运行的时候， 通过访问 `/lzcapp/pkg/content` 目录读取.
+If resource files are small (<200M), you can also package resource files into lpk, and when the application runs, read them by accessing the `/lzcapp/pkg/content` directory.
 
-## `devshell` 模式下, 将不会打包 `lzc-build.yml` 中指定的 `contentdir`
+## In `devshell` mode, the `contentdir` specified in `lzc-build.yml` will not be packaged
 
-如果您需要打包 contentdir 中的内容， 您可以使用 `lzc-cli project devshell --contentdir`.
+If you need to package the content in contentdir, you can use `lzc-cli project devshell --contentdir`.
 
-## 由于 `/lzcapp/pkg/content` 目录为只读的， 会导致打包进去的脚本在当前目录下创建文件失败
+## Since the `/lzcapp/pkg/content` directory is read-only, scripts packaged in it will fail to create files in the current directory
 
-`/lzcapp/pkg/content` 这个目录为 lpk 打包进去的资源文件， 是不允许修改的。  有两种解决方法:
+The `/lzcapp/pkg/content` directory contains resource files packaged into lpk and is not allowed to be modified. There are two solutions:
 
-1. 更改脚本中的创建目录， 如 `/lzcapp/cache` 或者 `/lzcapp/var`。 详细信息请看 [访问微服数据](./advanced-file)
-2. 更改应用的执行目录, 通过 `application.workdir` 的字段指定当前的运行目录。 详细信息请看 [application 字段](./app-example-python-description)
+1. Change the creation directory in the script, such as `/lzcapp/cache` or `/lzcapp/var`. For detailed information, see [Access LCMD Data](./advanced-file)
+2. Change the application execution directory by specifying the current running directory through the `application.workdir` field. For detailed information, see [application field](./app-example-python-description)
 
-## 上架应用的介绍文档在哪里写？
+## Where to write the introduction document for listing applications?
 
-上架应用中， 并不会自动读取 readme， 也不知道 readme 从何而来， 所以应用介绍是在开发者管理界面[点击跳转](https://developer.lazycat.cloud/manage) 中填写。
+In listing applications, readme is not automatically read, and we don't know where readme comes from, so the application introduction is filled in the developer management interface [click to jump](https://developer.lazycat.cloud/manage).
 
-应用列表 -> 提交修改 -> 应用描述
-
-
-## 为何 ssh 后安装的软件会丢失? {#readonly_lzcos}
-
-部分用户申请 ssh 权限后， 会发现依旧无法对系统进行完全操控， 就连最基本的 apt install xxx  操作， 在重启后相关软件也会丢失。
-我们非常理解用户的困惑。
-- 我的系统我做主， 为何要受到限制？
-- 我有足够能力为自己的操作负责！
-- 怎么一重启， 我辛辛苦苦写的这么多配置都没了？
-
-我们是一群技术出身的创业团队， 爱折腾， 向往自由， 尊重自由。
-我们也想让产品足够自由， 但我们思考了很久： 一个好的产品应该给用户提供什么？
-
-重启后系统修改会丢失， 这一结果并非为了限制任何人， 尤其是那些花了真金白银和宝贵时间支持我们的用户。
-
-本质原因： 从技术层面来讲， 我们无法保证系统处于任意状态时，  一整套上层应用软件都能正常运行。
-这个问题类似于为何懒猫微服不单纯做系统， 因为只做系统需要在硬件适配方面投入大量精力（我们这个团队在过去 10 年就做了很多这方面的工作）。
-如果系统修改在重启后不丢失， 那么随着时间的积累， 整个系统会处于一种完全无法预料的状态。
-要在这种状态下运行上层应用， 需要花费巨大精力去做适配（我们不想在这里浪费用户的钱）。
-更糟糕的是， 某次系统更新可能会不小心破坏用户已经正常运行了几年的系统修改，  如果涉及用户数据， 那将造成灾难性后果。
-
-我们期望把懒猫微服打造成一个整合跨设备、 具备极高安全性的新平台。
-为实现这一目标， 很多权限需要逐步加以限制。  这种限制并非将原有的权限从用户手中转交给懒猫厂商， 而是将权限从用户和应用手中转交给用户的懒猫系统。
-在这个过程中（目前远未完成）， 必然会出现一些与用户产生冲突的决策（我们始终清楚，  最终决策权应该且必须交到每一位具体用户手中）
-最初， 懒猫系统并未开放 ssh 权限， 但考虑到：
-- 用户自由审计的权利
-- 部分我们未考虑到开发周期或来不及实现的功能， 需要给用户一个自由探索的途径
-但我们从未想过限制用户， 否则在开启 SSH 权限时， 我们会像一些产品那样，  让用户签署一份放弃保修的协议。
-
-最初设想的用户群体是非技术用户， 但目前来看， 种子用户都是有一定技术能力的资深用户， 这个问题确实比较突出。
-所以， 我们逐步实现了虚拟机、 [playground-docker](./dockerd-support) 这两个原本未曾考虑甚至反对的组件来解决这一用户需求。
-
-因为我们能感受到 lzcapp 这套存在无法满足大家需求的地方， 而我们又有能力去实现改进， 所以就进行了修改。
-
-同样， [Tun 模式/代理模式](./network) 也是在我们真切感受到资深用户的困扰后， 与大家共同提出各种方案，
-最终从多套方案中确定了现在的方案。
+Application List -> Submit Changes -> Application Description
 
 
-我们越来越体会到， 做产品的逻辑： 理解用户对产品说的真心话， 并用真心去对待用户。
+## Why do software installed after ssh get lost? {#readonly_lzcos}
 
-衷心感谢各位种子用户中的资深大佬们， 你们是我们在遇到困难时继续坚持的动力
+Some users find that they still cannot fully control the system after applying for ssh permissions. Even the most basic apt install xxx operations will lose related software after restart.
+We fully understand users' confusion.
+- My system, my rules, why should I be restricted?
+- I have enough ability to be responsible for my own operations!
+- How come all the configurations I worked so hard to write are gone after a restart?
+
+We are a startup team with technical backgrounds, love tinkering, aspire to freedom, and respect freedom.
+We also want to make the product free enough, but we've thought for a long time: what should a good product provide to users?
+
+The fact that system modifications are lost after restart is not to restrict anyone, especially those users who spent real money and precious time supporting us.
+
+The fundamental reason: From a technical perspective, we cannot guarantee that when the system is in any state, a complete set of upper-layer application software can run normally.
+This problem is similar to why LCMD MicroServer doesn't just do the system, because only doing the system requires investing a lot of energy in hardware adaptation (our team has done a lot of work in this area over the past 10 years).
+If system modifications don't get lost after restart, then with the accumulation of time, the entire system will be in a completely unpredictable state.
+To run upper-layer applications in this state, it takes enormous effort to do adaptation (we don't want to waste users' money here).
+Worse, a system update might accidentally break user modifications that have been running normally for years. If it involves user data, that would cause disastrous consequences.
+
+We expect to build LCMD MicroServer into a new platform that integrates cross-device capabilities and has extremely high security.
+To achieve this goal, many permissions need to be gradually restricted. This restriction is not transferring existing permissions from users to Lazycat manufacturers, but transferring permissions from users and applications to users' LCMD systems.
+In this process (currently far from complete), there will inevitably be some decisions that conflict with users (we always know that the final decision-making power should and must be handed over to each specific user)
+Initially, the LCMD system didn't open ssh permissions, but considering:
+- Users' right to freely audit
+- Some functions we haven't considered in the development cycle or haven't had time to implement, we need to give users a way to freely explore
+But we never thought of restricting users, otherwise when opening SSH permissions, we would make users sign an agreement to waive warranty like some products do.
+
+The initially envisioned user group was non-technical users, but currently, seed users are all senior users with certain technical capabilities, so this issue is indeed quite prominent.
+Therefore, we gradually implemented virtual machines and [playground-docker](./dockerd-support), two components that were originally not considered or even opposed, to solve this user need.
+
+Because we can feel that the lzcapp system has places that cannot meet everyone's needs, and we have the ability to implement improvements, so we made modifications.
+
+Similarly, [Tun mode/Proxy mode](./network) was also proposed together with everyone after we truly felt the troubles of senior users, and we determined the current solution from multiple solutions.
+
+We increasingly realize the logic of making products: understand users' sincere words about the product and treat users with sincerity.
+
+We sincerely thank all the senior experts among the seed users. You are the motivation for us to persist when encountering difficulties.

@@ -1,6 +1,6 @@
-# 开发模式
+# Development Mode
 
-懒猫微服有两种开发模式， 应用模式(lzcapp)和传统模式。
+LCMD MicroServer has two development modes: application mode (lzcapp) and traditional mode.
 
-- **应用模式** : 从lzcapp的开发、调试、分发、部署、运行、访问进行了全方位的设计和支持。对最终用户友好，但开发者需要一定时间熟悉。
-- **传统模式**： 基于KVM和独立的Dockerd使用传统NAS方式部署应用。对于开发者自己折腾非常友好，不受应用模式的限制。但无法便捷的传播给其他微服用户使用。
+- **Application Mode**: Comprehensive design and support for lzcapp development, debugging, distribution, deployment, running, and access. Friendly to end users, but developers need some time to familiarize themselves.
+- **Traditional Mode**: Deploy applications using traditional NAS methods based on KVM and independent Dockerd. Very friendly for developers to experiment with themselves, not limited by application mode. However, it cannot be easily distributed to other LCMD users.

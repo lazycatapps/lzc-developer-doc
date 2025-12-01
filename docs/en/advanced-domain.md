@@ -1,62 +1,62 @@
-# 应用内部域名规则
+# Application Internal Domain Rules
 
-虽然 lzcapp 都运行在独立的容器中，但是 lzcapp 中的多个 service 之间可以互相访问。下面就来介绍一下应用内各服务的域名规则
+Although lzcapp runs in independent containers, multiple services within lzcapp can access each other. Below is an introduction to the domain rules for each service within the application.
 
-## 服务域名构造规则
-每个容器的 service 访问遵循特定的域名格式，以确保服务间的隔离和访问控制。
+## Service Domain Construction Rules
+Each container's service access follows a specific domain format to ensure service isolation and access control.
 
-### 单实例（单用户）应用
-在 **单实例应用** 中，service 之间的访问通过以下域名格式进行：
+### Single-Instance (Single-User) Applications
+In **single-instance applications**, access between services is done through the following domain format:
 ```
 ${service_name}.${lzcapp_appid}.lzcapp
 ```
 
-- `${service_name}` :容器内部的服务名称。
+- `${service_name}`: Service name inside the container.
 
-- `${lzcapp_appid}` :应用的唯一 ID。
+- `${lzcapp_appid}`: Application's unique ID.
 
-- `.lzcapp` :固定的顶级域。
+- `.lzcapp`: Fixed top-level domain.
 
-示例:
+Example:
 ```
 db.example.app.id.lzcapp
 ^^ ^^^^^^^^^^^^^^
-|  |_____________${lzcapp_appid}
-|
-|________________${service_name}
+||  |_____________${lzcapp_appid}
+||
+||________________${service_name}
 ```
 
-### 多实例（多用户）应用
-如果该应用支持 **多用户实例**，可以通过以下格式访问特定用户的实例：
+### Multi-Instance (Multi-User) Applications
+If the application supports **multi-user instances**, you can access a specific user's instance through the following format:
 ```
 ${userId}.${service_name}.${lzcapp_appid}.lzcapp
 ```
-- `${userId}` :用户 ID，用于标识该用户的实例。
+- `${userId}`: User ID, used to identify the user's instance.
 
-示例：
+Example:
 ```
 user42.db.example.app.id.lzcapp
 ```
-表示 `user42` 访问 `lzcapp_appid = example.app.id` 中的 db 服务。
+Indicates that `user42` accesses the db service in `lzcapp_appid = example.app.id`.
 
-### 特殊域名
+### Special Domains
 
 - **`host.lzcapp`**
 
-此域名将解析到 lzc-docker 网桥。
-当 lzcapp 的服务使用 `host` [网络模式](./spec/manifest.md#71-容器配置-container-config) 时。服务内容器可以
-监听在 `host.lzcapp` 上使得其他应用可以访问到此服务。
+This domain will resolve to the lzc-docker bridge.
+When lzcapp services use `host` [network mode](./spec/manifest.md#71-容器配置-container-config). Containers in the service can
+listen on `host.lzcapp` so that other applications can access this service.
 
 - **`_outbound`**
 
-此域名将解析到懒猫微服的默认出口 IP。
+This domain will resolve to LCMD MicroServer's default egress IP.
 
 - **`_gateway`**
 
-此域名将解析到懒猫微服所在网络的网关。
+This domain will resolve to the gateway of the network where LCMD MicroServer is located.
 
-:::tip 应用间网络隔离
+:::tip Inter-Application Network Isolation
 
-lzcos-1.3.x 前各个应用间网络并未完全隔离，隔离后使用对应服务的域名也可以获取到 IP 地址，但是无法访问。
+Before lzcos-1.3.x, networks between applications were not completely isolated. After isolation, using the corresponding service domain can still obtain IP addresses, but cannot access.
 
 :::

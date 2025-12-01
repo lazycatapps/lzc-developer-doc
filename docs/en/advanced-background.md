@@ -1,9 +1,9 @@
-# 后台常驻
-微服系统具备先进的 \`服务调度机制\`， 当某个应用长期不活跃时， 微服系统会自动停止对应的应用， 提升系统的整体响应速度。
+# Background Persistence
+The LCMD system has an advanced `service scheduling mechanism`. When an application is inactive for a long time, the LCMD system will automatically stop the corresponding application to improve the overall system response speed.
 
-当我们开发某些特殊应用时， 比如下载器， 需要长时间后台下载文件。 这时我们并不希望微服系统按照活跃度来调度我们的应用。
+When we develop certain special applications, such as downloaders that need to download files in the background for a long time, we don't want the LCMD system to schedule our applications based on activity.
 
-只需在 `lzc-manifest.yml` 文件中的 `application` 字段下加一个 `background_task` 子字段即可， 举例：
+You only need to add a `background_task` sub-field under the `application` field in the `lzc-manifest.yml` file, for example:
 
 ```yml
 application:
@@ -11,5 +11,5 @@ application:
 ```
 
 :::tip
-小贴士: 目前的微服版本中 `background_task` 参数还会影响应用是否自启动 (需要注意， 自启动行为仅针对 [单实例](./advanced-multi-instance) 应用有效)， 当然用户可以在微服的应用管理中手动禁用应用自启行为。
+Tip: In the current LCMD version, the `background_task` parameter will also affect whether the application auto-starts (note that auto-start behavior is only effective for [single-instance](./advanced-multi-instance) applications). Of course, users can manually disable application auto-start behavior in LCMD's application management.
 :::

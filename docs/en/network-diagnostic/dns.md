@@ -6,7 +6,7 @@ prev: false
 ---
 # DNS
 
-- 在代理配置中，添加规则绕过"*.heiyu.space"。
+- In proxy configuration, add rules to bypass "*.heiyu.space".
 
 Clash:
 

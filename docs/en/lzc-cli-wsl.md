@@ -3,25 +3,24 @@
  * @Date: 2024-11-05
  * @FilePath: /lzc-developer-doc/docs/lzc-cli-wsl.md
 -->
-# 如何在 Windows WSL 中使用 lzc-cli
+# How to Use lzc-cli in Windows WSL
 
-1. 关闭 windows 中的懒猫微服客户端
+1. Close the LCMD MicroServer client in Windows
 
-::: tip DNS 解析问题 {#wsl_dns}
+::: tip DNS Resolution Issue {#wsl_dns}
 
-Windows 原生客户端在启动时，会使用 `powershell AddDnsClientNrptRule` 命令将 `heiyu.space` 相关域名都转发到
-客户端的内部 IP 中。早期版本客户端并没有做清理工作，因此关闭 Windows 客户端后再启动 WSL 客户端，并且 WSL 内使用的是默认 dns 服务，会无法正常解析 `heiyu.space` 相关域名。
+When the Windows native client starts, it uses the `powershell AddDnsClientNrptRule` command to forward all `heiyu.space` related domains to the client's internal IP. Early version clients didn't perform cleanup work, so after closing the Windows client and starting the WSL client, and since WSL uses the default DNS service, it cannot properly resolve `heiyu.space` related domains.
 
-需要手动进行下清理 (**较新版本的 Windows 客户端会在关闭时进行自动清理操作**)
+Manual cleanup is required (**Newer versions of Windows clients will perform automatic cleanup when closing**)
 
-1. 查看相关规则 `powershell -Command Get-DnsClientNrptRule`
-2. 删除相关规则 `Remove-DnsClientNrptRule -Name  "这里填写的是 heiyu.space 相关的 Name UUID" -Force`
+1. View related rules `powershell -Command Get-DnsClientNrptRule`
+2. Delete related rules `Remove-DnsClientNrptRule -Name "Fill in the heiyu.space related Name UUID here" -Force`
 
 ![nrpt_rules](./images/wsl_nrpt_rule.png)
 
 :::
 
-2. 在 WSL 中安装懒猫微服 linux 客户端 (我这里以 Ubuntu 为例)
+2. Install the LCMD MicroServer Linux client in WSL (I'm using Ubuntu as an example here)
 
 ```
 sudo apt install zenity zstd
@@ -30,15 +29,15 @@ sudo apt install libnss3-dev libgdk-pixbuf2.0-dev libgtk-3-dev libxss-dev
 /bin/bash -c "$(curl -fsSL https://dl.lazycat.cloud/client/desktop/linux-install)"
 ```
 
-3. 启动懒猫微服客户端
+3. Start the LCMD MicroServer client
 
 ```
 ~/.local/share/lzc-client-desktop/lzc-client-desktop
 ```
 
-4. 输入设备名和密码登录懒猫微服设备
+4. Enter device name and password to log into the LCMD MicroServer device
 
-5. 安装 nodejs (我这里使用 nvm 安装) 以及 lzc-cli
+5. Install nodejs (I'm using nvm here) and lzc-cli
 
 ```
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
@@ -51,10 +50,10 @@ nvm use v20
 npm install -g lzc-cli
 ```
 
-6. 使用 lzc-cli 构建 lpk 应用以及安装 lpk
+6. Use lzc-cli to build lpk applications and install lpk
 ```
 lzc-cli project build
 lzc-cli app install cloud.lazycat.app.demo-v0.0.2.lpk
 ```
 
-7. 尽情玩耍吧，上架 lpk 应用可以查看 [发布自己的第一个应用](./publish-app.md)
+7. Have fun! For publishing lpk applications, you can check [Publish Your First Application](./publish-app.md)

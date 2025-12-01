@@ -1,6 +1,16 @@
 import { defineConfig } from "vitepress";
 
 const zhLocaleThemeConfig = {
+  markdown: {
+    lineNumbers: true,
+    container: {
+      tipLabel: "小技巧",
+      warningLabel: "警告操作",
+      dangerLabel: "危险操作",
+      infoLabel: "INFO",
+      detailsLabel: "详细说明",
+    },
+  },
   sidebar: [
     {
       text: "欢迎",
@@ -116,7 +126,161 @@ const zhLocaleThemeConfig = {
   ],
 };
 
-const enLocaleThemeConfig = {};
+const enLocaleThemeConfig = {
+  sidebar: [
+    {
+      text: "Welcome",
+      items: [
+        { text: "Welcome to LCMD", link: "/en/index.md" },
+        { text: "LCMD Philosophy", link: "/en/start-from.md" },
+        { text: "LCMD Architecture Design", link: "/en/framework.md" },
+        { text: "Community Incentive Rules", link: "/en/store-rule.md" },
+        {
+          text: "Developer Hardware Discount",
+          link: "/en/developer-cyber-discount.md",
+        },
+        {
+          text: "App Store Submission Guide",
+          link: "/en/store-submission-guide.md",
+        },
+        // {
+        //   text: "Essential Reading Collection (Learn by Reading)",
+        //   link: "/en/wangjishanren-lazycat-developer-startup.md",
+        // },
+      ],
+    },
+    {
+      text: "Quick Start",
+      items: [
+        { text: "Development Mode", link: "/en/develop-mode.md" },
+        { text: "Development Environment Setup", link: "/en/lzc-cli.md" },
+        { text: "Hello World", link: "/en/hello-world.md" },
+      ],
+    },
+    {
+      text: "Developing Applications",
+      items: [
+        { text: "First Python Application", link: "/en/app-example-python.md" },
+        {
+          text: "Application Configuration Details",
+          link: "/en/app-example-python-description.md",
+        },
+        { text: "First Golang Application", link: "/en/app-example-go.md" },
+        { text: "DevShell Development Mode", link: "/en/devshell-local.md" },
+        {
+          text: "Development Dependency Installation",
+          link: "/en/devshell-install-and-use.md",
+        },
+        { text: "Development Test Images", link: "/en/advanced-dev-image.md" },
+        {
+          text: "Browser Extension Debugging",
+          link: "/en/advanced-browser-extension.md",
+        },
+        { text: "First VNC Application", link: "/en/app-vnc.md" },
+      ],
+    },
+    {
+      text: "Advanced Techniques",
+      items: [
+        { text: "Startup Dependencies", link: "/en/advanced-depends.md" },
+        { text: "File Access", link: "/en/advanced-file.md" },
+        { text: "Database Service", link: "/en/advanced-db.md" },
+        { text: "Application Association", link: "/en/advanced-mime.md" },
+        { text: "Background Persistence", link: "/en/advanced-background.md" },
+        { text: "GPU Acceleration", link: "/en/advanced-gpu.md" },
+        { text: "Multi-Instance", link: "/en/advanced-multi-instance.md" },
+        { text: "Platform Support", link: "/en/advanced-platform.md" },
+        { text: "Error Pages", link: "/en/advanced-error-template.md" },
+        { text: "Routing Rules", link: "/en/advanced-route.md" },
+        { text: "Advanced Routing", link: "/en/advanced-routes.md" },
+        { text: "Application Domain Rules", link: "/en/advanced-domain.md" },
+        {
+          text: "Application Multi-Domain",
+          link: "/en/advanced-secondary-domains.md",
+        },
+        { text: "Environment Variables", link: "/en/advanced-envs.md" },
+        { text: "Initialization Script", link: "/en/advanced-setupscript.md" },
+        {
+          text: "Independent Authentication",
+          link: "/en/advanced-public-api.md",
+        },
+        { text: "Layer 4 Forwarding", link: "/en/advanced-l4forward.md" },
+        { text: "HTTP Headers", link: "/en/http-request-headers.md" },
+        { text: "OIDC Integration", link: "/en/advanced-oidc.html" },
+        {
+          text: "manifest.yml Rendering",
+          link: "/en/advanced-manifest-render.html",
+        },
+      ],
+    },
+    {
+      text: "Extensions",
+      items: [{ text: "Official Extensions", link: "/en/extensions.md" }],
+    },
+    {
+      text: "Publishing Applications",
+      items: [
+        { text: "Publish Your First Application", link: "/en/publish-app.md" },
+        { text: "Porting an Application", link: "/en/app-example-porting.md" },
+      ],
+    },
+    {
+      text: "Traditional Mode",
+      items: [
+        { text: "Enable SSH Access", link: "/en/ssh.md" },
+        { text: "KVM Mode", link: "/en/kvm.md" },
+        { text: "Dockerd Mode", link: "/en/dockerd-support.md" },
+      ],
+    },
+    {
+      text: "FAQ",
+      items: [
+        { text: "Development FAQ", link: "/en/faq-dev.md" },
+        { text: "Network Mechanism and VPN", link: "/en/network.md" },
+        { text: "Application Blank Display", link: "/en/app-block.md" },
+        {
+          text: "Advanced Network Configuration",
+          link: "/en/network-config.md",
+        },
+        { text: "Boot Startup Script", link: "/en/faq-startup_script.md" },
+        {
+          text: "Self-Hosted Network Penetration",
+          link: "/en/network-pass-through.md",
+        },
+      ],
+    },
+    {
+      text: "Specifications",
+      items: [
+        { text: "lzc-build.yml", link: "/en/spec/build.md" },
+        { text: "lzc-manifest.yml", link: "/en/spec/manifest.md" },
+      ],
+    },
+    {
+      text: "Changelog (Developer Only)",
+      items: [
+        { text: "v1.4.1", link: "/en/changelogs/v1.4.1.md" },
+        { text: "v1.3.9", link: "/en/changelogs/v1.3.9.md" },
+        { text: "v1.3.8", link: "/en/changelogs/v1.3.8.md" },
+        { text: "v1.3.7", link: "/en/changelogs/v1.3.7.md" },
+        { text: "v1.3.6", link: "/en/changelogs/v1.3.6.md" },
+        { text: "v1.3.4", link: "/en/changelogs/v1.3.4.md" },
+        { text: "v1.3.0", link: "/en/changelogs/v1.3.0.md" },
+        { text: "v1.2.0", link: "/en/changelogs/v1.2.0.md" },
+      ],
+    },
+  ],
+  markdown: {
+    lineNumbers: true,
+    container: {
+      tipLabel: "Tip",
+      warningLabel: "Warning",
+      dangerLabel: "Danger",
+      infoLabel: "INFO",
+      detailsLabel: "Details",
+    },
+  },
+};
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -198,15 +362,5 @@ export default defineConfig({
       { text: "指南", link: "/" },
       { text: "开发者中心", link: "https://developer.lazycat.cloud/manage" },
     ],
-  },
-  markdown: {
-    lineNumbers: true,
-    container: {
-      tipLabel: "小技巧",
-      warningLabel: "警告操作",
-      dangerLabel: "危险操作",
-      infoLabel: "INFO",
-      detailsLabel: "详细说明",
-    },
   },
 });

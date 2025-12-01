@@ -1,13 +1,13 @@
-# 多实例
-微服应用有两种运行模式：
-* 单实例： 不论多少用户调用， 永远都启动一个应用容器， 由应用内部来控制用户访问权限
-* 多实例： 每个用户点击应用图标都会启动一个单独的应用容器， 用户的数据因为容器的机制， 天然对彼此隔离
+# Multi-Instance
+LCMD applications have two running modes:
+* Single-instance: No matter how many users call it, only one application container is started, and user access permissions are controlled internally by the application
+* Multi-instance: Each user clicking the application icon will start a separate application container, and user data is naturally isolated from each other due to the container mechanism
 
-单实例的好处是节省系统内存资源， 缺点是需要应用自己开发大量代码来处理不同用户的访问数据隔离。
+The advantage of single-instance is saving system memory resources, the disadvantage is that the application needs to develop a lot of code to handle data isolation for different users' access.
 
-多实例的好处是， 应用代码简单， 不用考虑不同用户访问的权限问题， 缺点是多个用户访问微服时会启动多份容器， 占用额外的内存资源。
+The advantage of multi-instance is that the application code is simple and doesn't need to consider permission issues for different users' access. The disadvantage is that when multiple users access LCMD, multiple containers will be started, occupying additional memory resources.
 
-微服应用默认是单实例， 当您想开发多实例应用时， 只需在 `lzc-manifest.yml` 文件中的 `application` 字段下加一个 `multi_instance` 子字段即可， 举例：
+LCMD applications default to single-instance. When you want to develop multi-instance applications, just add a `multi_instance` sub-field under the `application` field in the `lzc-manifest.yml` file, for example:
 
 ```yml
 application:
@@ -15,11 +15,11 @@ application:
 ```
 
 ::: warning
-微服应用配置 **单实例** 与 **多实例** 不同的运行模式时在 [文件服务](./advanced-file.md) 和 [服务域名构造规则](./advanced-domain.md) 上会有一定的差异表现，详细可参考以下文档。
+When LCMD applications are configured with different running modes of **single-instance** and **multi-instance**, there will be certain differences in [file services](./advanced-file.md) and [service domain construction rules](./advanced-domain.md). For details, please refer to the following documents.
 
-1. [应用配置了多实例后无法将文件挂载至用户文档目录（懒猫网盘默认展示主目录）？](./advanced-file.md#挂载点列表)
+1. [After configuring multi-instance, the application cannot mount files to the user document directory (LCMD Cloud Drive defaults to showing the main directory)?](./advanced-file.md#mount-point-list)
 
-2. [应用配置了多实例后容器 service 之间的域名构造规则是什么？](./advanced-domain.md#多实例-多用户-应用)
+2. [What are the domain construction rules between container services after the application is configured with multi-instance?](./advanced-domain.md#multi-instance-multi-user-application)
 
-3. 多实例下每个用户访问的应用域名都是不相同的
+3. In multi-instance mode, each user accesses a different application domain
 :::

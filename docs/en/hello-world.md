@@ -1,62 +1,62 @@
 # Hello World
-下面请随我们下面的步骤， 一起来构建我们第一个应用吧。
+Please follow the steps below to build our first application together.
 
-首先， 使用 lzc-cli 来创建一个名为 `helloworld` 的项目：
+First, use lzc-cli to create a project named `helloworld`:
 
 ```bash
 lzc-cli project create helloworld
 ```
 
-按提示完成初始化后， 终端会输出如下内容：
+After completing initialization according to the prompts, the terminal will output the following:
 
 ```bash
-? 选择项目构建模板 vue3
-? 请输入应用 ID, 如(helloworld) helloworld
-✨ 初始化项目 helloworld
-✨ 初始化懒猫云应用
-✨ 懒猫微服应用已创建成功 !
-✨ 进行下面步骤后即可进入容器开发
+? Select project build template vue3
+? Please enter application ID, such as (helloworld) helloworld
+✨ Initializing project helloworld
+✨ Initializing LCMD Cloud application
+✨ LCMD MicroServer application created successfully!
+✨ After the following steps, you can enter container development
    cd helloworld
    lzc-cli project devshell
-⚙️  进入应用容器后执行下面命令:
+⚙️  After entering the application container, execute the following commands:
    npm install
    npm run dev
-🚀 启动应用:
-   进入微服客户端启动器页面点击应用图标来测试应用
+🚀 Start application:
+   Enter the LCMD client launcher page and click the application icon to test the application
 ```
 
-然后执行以下命令进入容器开发环境：
+Then execute the following command to enter the container development environment:
 
 ```bash
 cd helloworld
 lzc-cli project devshell
 ```
 
-成功进入容器后， 终端将显示如下信息：
+After successfully entering the container, the terminal will display the following information:
 
 ```bash
-[info] 开始部署应用
-[info] 安装成功！
-[info] 👉 请在浏览器中访问 https://helloworld.178me.heiyu.space
-[info] 👉 使用微服的用户名和密码登录
+[info] Starting application deployment
+[info] Installation successful!
+[info] 👉 Please access https://helloworld.178me.heiyu.space in your browser
+[info] 👉 Login with LCMD username and password
 ```
 
-在容器中执行以下命令启动应用：
+Execute the following commands in the container to start the application:
 
 ```bash
 npm install
 npm run dev
 ```
 
-前端服务将运行在容器的 3000 端口：
+The frontend service will run on port 3000 of the container:
 
 ```bash
 Local:   http://localhost:3000/
 Network: http://172.31.0.36:3000/
 ```
 
-此时， 应用服务已经启动， 您可以在 PC 或者手机端点击 "helloworld" 图标， 查看应用在每个终端平台的效果。
+At this point, the application service has started. You can click the "helloworld" icon on PC or mobile to see the application's effect on each terminal platform.
 
-懒猫微服的一大优势是， 您只需要编写一次 JavaScript, 我们自动解决应用在 Windows/Linux/macOS/Android/iOS/鸿蒙 6 个操作系统平台上跨平台运行的问题， 为开发者节省了大量平台适配的时间。
+A major advantage of LCMD MicroServer is that you only need to write JavaScript once, and we automatically solve the problem of cross-platform operation of applications on 6 operating system platforms: Windows/Linux/macOS/Android/iOS/HarmonyOS, saving developers a lot of time on platform adaptation.
 
-如果想要部署这个 Hello World 到懒猫微服中，可以参考 [构建应用](https://developer.lazycat.cloud/app-example-python.html#构建应用)。
+If you want to deploy this Hello World to LCMD MicroServer, you can refer to [Building Application](https://developer.lazycat.cloud/app-example-python.html#构建应用).

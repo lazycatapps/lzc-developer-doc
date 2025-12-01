@@ -1,86 +1,86 @@
-# lzc-build.yml 规范文档
+# lzc-build.yml Specification Document
 
-## 一、 概述
+## 1. Overview
 
-`lzc-build.yml` 是用于定义应用构建相关配置的文件。 本文档将详细描述其结构和各字段的含义。
+`lzc-build.yml` is a file used to define application build-related configurations. This document will describe its structure and the meaning of each field in detail.
 
-## 二、顶层数据结构 `BuildConfig`
+## 2. Top-level Data Structure `BuildConfig`
 
-### 2.1 基本信息 {#basic-config}
+### 2.1 Basic Information {#basic-config}
 
-| 字段名 | 类型 | 描述 |
+| Field Name | Type | Description |
 | ---- | ---- | ---- |
-| `buildscript` | `string` | 可以为构建脚本的路径地址或者 sh 的命令 |
-| `manifest` | `string` | 指定 lpk 包的 manifest.yml 文件路径 |
-| `contentdir` | `string` | 指定打包的内容目录，将会打包到 lpk 中 |
-| `pkgout` | `string` | 指定 lpk 包的输出路径 |
-| `icon` | `string` | 指定 lpk 包 icon 的路径路径，如果不指定将会警告，目前仅允许 png 后缀的文件 |
-| `devshell` | `DevshellConfig` | 开发依赖配置 |
-| `compose_override` | `ComposeOverrideConfig` | 高级 compose override 配置，**需要更新 lzc-os 版本 >= v1.3.0** |
+| `buildscript` | `string` | Can be the path to the build script or sh command |
+| `manifest` | `string` | Specifies the path to the manifest.yml file for the lpk package |
+| `contentdir` | `string` | Specifies the content directory to be packaged, which will be packaged into the lpk |
+| `pkgout` | `string` | Specifies the output path for the lpk package |
+| `icon` | `string` | Specifies the path to the lpk package icon, a warning will be shown if not specified, currently only PNG format files are allowed |
+| `devshell` | `DevshellConfig` | Development dependency configuration |
+| `compose_override` | `ComposeOverrideConfig` | Advanced compose override configuration, **requires lzc-os version >= v1.3.0** |
 
-## 三、开发依赖 `DevshellConfig` {#devshell}
+## 3. Development Dependencies `DevshellConfig` {#devshell}
 
-| 字段名 | 类型 | 描述 |
+| Field Name | Type | Description |
 | ---- | ---- | ---- |
-| `routes` | `[]string` | 开发路由规则配置 |
-| `dependencies` | `[]string` | 开发依赖安装，自动安装 |
-| `setupscript` | `string` | 开发依赖安装，手动安装 |
-| `image` | `string` | 非必选，使用指定 image 镜像 |
-| `pull_policy` | `string` | 非必选，参数 `build` 为使用指定 dockerfile 构建镜像，此时 image 参数可填 `${package}-devshell:${version}` |
-| `build` | `string` | 非必选，构建容器时使用的 dockerfile 文件路径 |
+| `routes` | `[]string` | Development routing rule configuration |
+| `dependencies` | `[]string` | Development dependency installation, automatic installation |
+| `setupscript` | `string` | Development dependency installation, manual installation |
+| `image` | `string` | Optional, use specified image |
+| `pull_policy` | `string` | Optional, parameter `build` is to use specified dockerfile to build image, at this time the image parameter can be filled with `${package}-devshell:${version}` |
+| `build` | `string` | Optional, the dockerfile file path used when building the container |
 
-详情见 [开发依赖安装](../devshell-install-and-use.md)
+For details, see [Development Dependency Installation](../devshell-install-and-use.md)
 
-::: warning ⚠️ 注意
+::: warning ⚠️ Note
 
-如果 `dependencies` 和 `build` 同时存在，将会优先使用 dependencies
+If `dependencies` and `build` exist at the same time, dependencies will be used first
 
 :::
 
-## 四、高级 compose override 配置 `ComposeOverrideConfig` {#compose-override}
+## 4. Advanced Compose Override Configuration `ComposeOverrideConfig` {#compose-override}
 
-1. compose override 是 lzc-cli@1.2.61 及以上版本支持的特性， 用于在构建时指定 compose override 的配置。
-2. compose override 属于 lzcos v1.3.0+ 后，针对一些 lpk 规范目前无法覆盖到的运行权限需求的配置。
+1. Compose override is a feature supported by lzc-cli@1.2.61 and above versions, used to specify compose override configuration during build.
+2. Compose override belongs to lzcos v1.3.0+, targeting configurations for runtime permission requirements that the current lpk specification cannot cover.
 
-详情见 [compose override](../advanced-compose-override.md)
+For details, see [compose override](../advanced-compose-override.md)
 
-::: details 配置示例
+::: details Configuration Example
 ```yml
-# 整个文件中，可以通过 ${var} 的方式，使用 manifest 字段指定的文件定义的值
+# Throughout the file, you can use values defined in the file specified by the manifest field through ${var}
 
 # buildscript
-# - 可以为构建脚本的路径地址
-# - 如果构建命令简单，也可以直接写 sh 的命令
+# - Can be the path to the build script
+# - If the build command is simple, you can also write sh commands directly
 buildscript: sh build.sh
 
-# manifest: 指定 lpk 包的 manifest.yml 文件路径
+# manifest: Specifies the path to the manifest.yml file for the lpk package
 manifest: ./lzc-manifest.yml
 
-# contentdir: 指定打包的内容，将会打包到 lpk 中
+# contentdir: Specifies the content to be packaged, which will be packaged into the lpk
 contentdir: ./dist
 
-# pkgout: lpk 包的输出路径
+# pkgout: Output path for the lpk package
 pkgout: ./
 
-# icon 指定 lpk 包 icon 的路径路径，如果不指定将会警告
-# icon 仅仅允许 png 后缀的文件
+# icon specifies the path to the lpk package icon, a warning will be shown if not specified
+# icon only allows PNG format files
 icon: ./lzc-icon.png
 
 compose_override:
   services:
-    # 指定服务名称
+    # Specify service name
     some_container:
-      # 指定需要 drop 的 cap
+      # Specify caps to drop
       cap_drop:
         - SETCAP
         - MKNOD
-      # 指定需要挂载的文件
+      # Specify files to mount
       volumes:
         - /data/playground:/lzcapp/run/playground:ro
 
-# dvshell 指定开发依赖的情况
-# 这种情况下，选用 alpine:latest 作为基础镜像，在 dependencies 中添加所需要的开发依赖即可
-# 如果 dependencies 和 build 同时存在，将会优先使用 dependencies
+# devshell specifies development dependency situation
+# In this case, choose alpine:latest as the base image, and add the required development dependencies in dependencies
+# If dependencies and build exist at the same time, dependencies will be used first
 devshell:
   routes:
     - /=http://127.0.0.1:5173

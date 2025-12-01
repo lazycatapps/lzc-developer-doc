@@ -1,17 +1,18 @@
-# 自己架设网络穿透
-懒猫微服设计之初就是为了 `去中心化` 设计的， 我们希望用户可以自由的构建自己的云服务、 免费的访问自己的数据， 我们更希望有一天用户不用依赖官方提供的基础设施去做网络穿透。
+# Self-Hosted Network Penetration
 
-懒猫微服目前的设计是， 在手机电脑等终端连接微服时， 会提供快速的 DNS 查询服务， 当用户的网络具有公网 IP 或者 NAT 环境较好时， 我们的设计是会确保用户的终端直接和家里微服直连传输数据， 这样的好处是：
-1. 用户的隐私数据得到绝对的保护
-2. 用户可以充分利用家庭的带宽提供高速的对外互联网服务
-3. 非中心化的网络传输更加稳定
+LCMD MicroServer was designed from the beginning for `decentralization`. We hope users can freely build their own cloud services and access their data for free. We even hope that one day users won't need to rely on official infrastructure for network penetration.
 
-对于一些极端情况， 无法进行网络穿透时， 我们的服务器也会提供免费的网络中转服务， 这些极限情况下的中转服务全程都是端到端加密的， 没有人（包括我们）可以知道用户的数据。
+The current design of LCMD MicroServer is that when terminals like phones and computers connect to LCMD, it provides fast DNS query services. When users' networks have public IPs or good NAT environments, our design ensures that users' terminals directly connect to their home LCMD for data transmission. The benefits of this are:
+1. Users' private data is absolutely protected
+2. Users can fully utilize their home bandwidth to provide high-speed external internet services
+3. Decentralized network transmission is more stable
 
-当然， 对于一些高级用户来说， 如果能够自己搭建网络穿透服务， 会更加放心。 我们设计之初已经考虑到高级用户的需求， 我们会在未来一年之内提供“网络穿透服务搭建指南”， 帮助高级用户搭建自己的网络穿透服务。
+For some extreme situations where network penetration cannot be performed, our servers also provide free network relay services. These relay services in extreme situations are end-to-end encrypted throughout, and no one (including us) can know users' data.
 
-::: tip 自建中继服务器
-如果您有较大带宽的公有云服务器，但微服或客户端又处在特殊网络环境下，可以自行建立中继服务器获取更好的网络体验。
+Of course, for some advanced users, if they can build their own network penetration services, they will feel more reassured. We considered the needs of advanced users from the beginning of our design. We will provide a "Network Penetration Service Setup Guide" within the next year to help advanced users build their own network penetration services.
 
-目前具体部署方式需要咨询VIP群，后续完善后会推出自助搭建方式，不需要官方进行调度调整。
+::: tip Self-Built Relay Server
+If you have a public cloud server with large bandwidth, but LCMD or client is in a special network environment, you can build your own relay server to get a better network experience.
+
+Currently, the specific deployment method needs to be consulted with the VIP group. After subsequent improvements, a self-service setup method will be launched that doesn't require official scheduling adjustments.
 :::

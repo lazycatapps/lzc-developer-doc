@@ -1,5 +1,5 @@
-# 错误页面
-当应用出错时， 可以通过在 `lzc-manifest.yml` 文件中的 `application` 字段下加一个 `handlers` 子字段即可:
+# Error Pages
+When an application encounters an error, you can add a `handlers` sub-field under the `application` field in the `lzc-manifest.yml` file:
 
 ```yml
 application:
@@ -9,23 +9,23 @@ application:
       404: /lzcapp/pkg/content/errors/404.html.tpl
 ```
 
-上面配置的意思是， 当微服系统检测到 HTTP 错误时， 会根据配置的错误代码自动去找应用提供的错误页面模板。
+The above configuration means that when the LCMD system detects an HTTP error, it will automatically find the error page template provided by the application based on the configured error code.
 
-默认的模板是:
+The default template is:
 ```html
 <html>
   <body>
     <h1>
-      您的应用发生错误啦！
+      Your application encountered an error!
     </h1>
     <p>
-      失败原因: {{ .ErrorDetail}}
+      Failure reason: {{ .ErrorDetail}}
     </p >
     <p>
-      请稍后再试吧
+      Please try again later
     </p >
   </body>
 </html>
 ```
 
-- `ErrorDetail`： 是微服内置的错误代码， 当应用发生错误时， 微服系统会用容器失败日志内容替换 `ErrorDetail` ， 帮助开发者排查错误
+- `ErrorDetail`: This is LCMD's built-in error code. When an application error occurs, the LCMD system will replace `ErrorDetail` with the container failure log content to help developers troubleshoot errors

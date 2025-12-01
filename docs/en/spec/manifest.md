@@ -1,184 +1,184 @@
-# lzc-manifest.yml 规范文档
+# lzc-manifest.yml Specification Document
 
-## 一、 概述
-`lzc-manifest.yml` 是用于定义应用部署相关配置的文件。 本文档将详细描述其结构和各字段的含义。
+## 1. Overview
+`lzc-manifest.yml` is a file used to define application deployment-related configurations. This document will describe its structure and the meaning of each field in detail.
 
-## 二、 顶层数据结构 `ManifestConfig`
+## 2. Top-level Data Structure `ManifestConfig`
 
-### 2.1 基本信息 {#basic-config}
+### 2.1 Basic Information {#basic-config}
 
-| 字段名 | 类型 | 描述 |
+| Field Name | Type | Description |
 | ---- | ---- | ---- |
-| `package` | `string` | 应用的唯一 id， 需保持全球唯一， 建议以个人域名开头 |
-| `version` | `string` | 应用的版本号，X、Y 和 Z 为非负的整數，X 是主版本号、Y 是次版本号、而 Z 为修订号，格式：`X.Y.Z`，[阅读详细规范](https://semver.org/)|
-| `name` | `string` | 应用名称 |
-| `description` | `string` | 应用描述 |
-| `usage` | `string` | 应用的使用须知， 如果不为空， 则微服内每个用户第一次访问本应用时会自动渲染 |
-| `license` | `string` | 应用的 License 说明 |
-| `homepage` | `string` | 应用的主页 |
-| `author` | `string` | 作者名称， 若通过商店渠道则商店账号优先级更高 |
-| `min_os_version` | `string` | 本应用要求的最低系统版本， 若不满足则应用安装时会失败， 且应用商店会拒绝安装此应用 |
+| `package` | `string` | Application's unique ID, must be globally unique, recommended to start with personal domain |
+| `version` | `string` | Application version number, X, Y and Z are non-negative integers, X is the major version number, Y is the minor version number, and Z is the revision number, format: `X.Y.Z`, [Read detailed specification](https://semver.org/)|
+| `name` | `string` | Application name |
+| `description` | `string` | Application description |
+| `usage` | `string` | Application usage instructions, if not empty, will be automatically rendered when each user in LCMD first accesses this application |
+| `license` | `string` | Application license description |
+| `homepage` | `string` | Application homepage |
+| `author` | `string` | Author name, if through store channel then store account has higher priority |
+| `min_os_version` | `string` | Minimum system version required by this application, if not met the application installation will fail, and the app store will refuse to install this application |
 
-### 2.2 其他配置
-| 字段名 | 类型 | 描述 |
+### 2.2 Other Configurations
+| Field Name | Type | Description |
 | ---- | ---- | ---- |
-| `ext_config` | `ExtConfig` | 实验性属性， 暂不对外公开 |
-| `unsupported_platforms` | `[]string` | 应用不支持的平台， 有效字段为: "ios", "android", "windows", "macos", "linux", "tvos" |
-| `application` | `ApplicationConfig` | lzcapp 核心服务配置 |
-| `services` | `map[string]ServiceConfig` | 传统 docker container 相关服务配置 |
-| `locales` | `map[string]I10nConfigItem` | 应用本地化配置（可选配置项），**需要更新 lzc-os 版本 >= v1.3.0** |
+| `ext_config` | `ExtConfig` | Experimental properties, not publicly available yet |
+| `unsupported_platforms` | `[]string` | Platforms not supported by the application, valid fields are: "ios", "android", "windows", "macos", "linux", "tvos" |
+| `application` | `ApplicationConfig` | lzcapp core service configuration |
+| `services` | `map[string]ServiceConfig` | Traditional docker container related service configuration |
+| `locales` | `map[string]I10nConfigItem` | Application localization configuration (optional configuration item), **requires lzc-os version >= v1.3.0** |
 
 
-## 三、 `IngressConfig` 配置
-### 3.1 网络配置
-| 字段名 | 类型 | 描述 |
+## 3. `IngressConfig` Configuration
+### 3.1 Network Configuration
+| Field Name | Type | Description |
 | ---- | ---- | ---- |
-| `protocol` | `string` | 协议类型， 支持 `tcp` 或 `udp` |
-| `port` | `int` | 目标端口号， 若为空， 则使用实际入站的端口 |
-| `service` | `string` | 服务容器的名称， 若为空， 则为 `app` 这个特殊 service |
-| `description` | `string` | 服务描述， 以便系统组件渲染应用服务给管理员查阅 |
-| `publish_port` | `string` | 允许的入站端口号， 可以为具体的端口号或 `1000~50000` 这种端口范围 |
-| `send_port_info` | `bool` | 以 little ending 发送 uint16 类型的实际入站端口给目标端口后再进行数据转发 |
-| `yes_i_want_80_443`| `bool` | 为true则允许将80,443流量转发到应用，此时流量完全绕过系统，因此鉴权、唤醒等都不会生效|
+| `protocol` | `string` | Protocol type, supports `tcp` or `udp` |
+| `port` | `int` | Target port number, if empty, uses the actual inbound port |
+| `service` | `string` | Service container name, if empty, defaults to the special service `app` |
+| `description` | `string` | Service description, for system components to render application services for administrators to review |
+| `publish_port` | `string` | Allowed inbound port number, can be a specific port number or port range like `1000~50000` |
+| `send_port_info` | `bool` | Send the actual inbound port as uint16 type in little endian to the target port before data forwarding |
+| `yes_i_want_80_443`| `bool` | If true, allows forwarding 80,443 traffic to the application, at this time the traffic completely bypasses the system, so authentication, wake-up, etc. will not take effect|
 
 
-## 四、 `ApplicationConfig` 配置
-### 4.1 基础配置
-| 字段名 | 类型 | 描述 |
+## 4. `ApplicationConfig` Configuration
+### 4.1 Basic Configuration
+| Field Name | Type | Description |
 | ---- | ---- | ---- |
-| `image` | `string` | 应用镜像， 若无特殊要求， 请留空使用系统默认镜像(alpine3.21) |
-| `background_task` | `bool` | 若为 `true` 则会自动启动并且不会被自动休眠， 默认为 `true` |
-| `subdomain` | `string` | 本应用的入站子域名，应用打开默认使用此子域名 |
-| `multi_instance` | `bool` | 是否以多实例形式部署 |
-| `usb_accel` | `bool` | 挂载相关设备到所有服务容器内的 `/dev/bus/usb` |
-| `gpu_accel` | `bool` | 挂载相关设备到所有服务容器内的 `/dev/dri` |
-| `kvm_accel` | `bool` | 挂载相关设备到所有服务容器内的 `/dev/kvm` 和 `/dev/vhost-net` |
-| `depends_on` | `[]string` | 依赖的其他容器服务， 仅支持本应用内的其他服务， 且强制检测类型为 `healthly`， 可选 |
+| `image` | `string` | Application image, if no special requirements, leave empty to use system default image (alpine3.21) |
+| `background_task` | `bool` | If `true`, will automatically start and not be automatically hibernated, defaults to `true` |
+| `subdomain` | `string` | Inbound subdomain for this application, application opens using this subdomain by default |
+| `multi_instance` | `bool` | Whether to deploy in multi-instance form |
+| `usb_accel` | `bool` | Mount related devices to `/dev/bus/usb` in all service containers |
+| `gpu_accel` | `bool` | Mount related devices to `/dev/dri` in all service containers |
+| `kvm_accel` | `bool` | Mount related devices to `/dev/kvm` and `/dev/vhost-net` in all service containers |
+| `depends_on` | `[]string` | Dependencies on other container services, only supports other services within this application, and enforces detection type as `healthly`, optional |
 
-### 4.2 功能配置
-| 字段名 | 类型 | 描述 |
+### 4.2 Functional Configuration
+| Field Name | Type | Description |
 | ---- | ---- | ---- |
-| `file_handler` | `FileHandlerConfig` | 声明本应用支持的扩展名， 以便其他应用在打开特定文件时可以调用本应用 |
-| `routes` | `[]string` | 简化版 http 相关路由规则 |
-| `upstreams` | `[]UpstreamConfig` | 高级版本 http 相关路由规则，与routes共存 |
-| `public_path` | `[]string` | 独立鉴权的 http 路径列表 |
-| `workdir` | `string` | `app` 容器启动时的工作目录 |
-| `ingress` | `[]IngressConfig` | TCP/UDP 服务相关 |
-| `environment` | `[]string` | `app` 容器的环境变量 |
-| `health_check` | `AppHealthCheckExt` | `app` 容器的健康检测， 仅建议在开发调试阶段设置 `disable` 字段， 不建议进行替换， 否则系统默认注入的自动依赖检测逻辑会丢失 |
+| `file_handler` | `FileHandlerConfig` | Declare file extensions supported by this application, so other applications can call this application when opening specific files |
+| `routes` | `[]string` | Simplified HTTP related routing rules |
+| `upstreams` | `[]UpstreamConfig` | Advanced version HTTP related routing rules, coexisting with routes |
+| `public_path` | `[]string` | List of HTTP paths for independent authentication |
+| `workdir` | `string` | Working directory when `app` container starts |
+| `ingress` | `[]IngressConfig` | TCP/UDP service related |
+| `environment` | `[]string` | Environment variables for `app` container |
+| `health_check` | `AppHealthCheckExt` | Health check for `app` container, only recommended to set `disable` field during development and debugging, not recommended to replace, otherwise the system's default injected automatic dependency detection logic will be lost |
 
-## 五、 `HealthCheckConfig` 配置
+## 5. `HealthCheckConfig` Configuration
 ### 5.1 AppHealthCheckExt
-| 字段名 | 类型 | 描述 |
+| Field Name | Type | Description |
 | ---- | ---- | ---- |
-| `test_url` | `string` | 仅 application 字段下生效。 扩展的检测方式， 直接提供一个 http url 不依赖容器内部有 curl/wget 之类的命令行 |
-| `disable` | `bool` | 禁用本容器的健康检测 |
-| `start_period` | `string` | 启动等待阶段时间， 超出此时间范围后若还未进入 `healthly` 状态则会变为 `unhealthy` |
-| `timeout` | `string` | 单次检测耗时超过`timeout`则认为检测失败 |
+| `test_url` | `string` | Only effective under application field. Extended detection method, directly provides an HTTP URL without relying on curl/wget and other command lines inside the container |
+| `disable` | `bool` | Disable health check for this container |
+| `start_period` | `string` | Startup wait period time, if not entering `healthly` state after exceeding this time range, will become `unhealthy` |
+| `timeout` | `string` | If a single detection takes longer than `timeout`, the detection is considered failed |
 
 
 ### 5.2 HealthCheckConfig
 
-| 字段名 | 类型 | 描述 |
+| Field Name | Type | Description |
 | ---- | ---- | ---- |
-| `test` | `[]string` | 在对应容器内执行什么命令进行检测， 如：`["CMD", "curl", "-f", "http://localhost"]`
-| `timeout` | `string` | 单次检测耗时超过`timeout`则认为本次检测失败 |
-| `interval` | `string` | 每次检测间隔时间 |
-| `retries` | `int` | 连续多少次检测失败后让整个容器进入unhealthy状态。默认值1 |
-| `start_period` | `string` | 启动等待阶段时间， 超出此时间范围后若还未进入 `healthly` 状态则会变为 `unhealthy` |
-| `start_interval` | `string` | 在start_period时间内，每隔多久执行一次检测 |
-| `disable` | `bool` | 禁用本容器的健康检测 |
+| `test` | `[]string` | What command to execute in the corresponding container for detection, such as: `["CMD", "curl", "-f", "http://localhost"]`
+| `timeout` | `string` | If a single detection takes longer than `timeout`, this detection is considered failed |
+| `interval` | `string` | Interval between each detection |
+| `retries` | `int` | After how many consecutive detection failures, the entire container enters unhealthy state. Default value 1 |
+| `start_period` | `string` | Startup wait period time, if not entering `healthly` state after exceeding this time range, will become `unhealthy` |
+| `start_interval` | `string` | During the start_period time, how often to execute detection |
+| `disable` | `bool` | Disable health check for this container |
 
 
-## 六、 `ExtConfig` 配置 {#ext_config}
+## 6. `ExtConfig` Configuration {#ext_config}
 
-| 字段名 | 类型 | 描述 |
+| Field Name | Type | Description |
 | ---- | ---- | ---- |
-| `enable_document_access` | `bool` | 如果为true则将document目录挂载到/lzcapp/run/mnt/home |
-| `enable_media_access` | `bool` | 如果为true则将media目录挂载到/lzcapp/run/mnt/media |
-| `disable_grpc_web_on_root` | `bool` | 如果为true则不再劫持应用的grpc-web流量。需要配合新版本lzc-sdk以便系统本身的grpc-web流量可以正常转发|
-| `default_prefix_domain` | string | 会调整启动器中点击应用后打开的[最终域名](../advanced-secondary-domains)，可以写任何不含`.`的字符串 |
+| `enable_document_access` | `bool` | If true, mounts document directory to /lzcapp/run/mnt/home |
+| `enable_media_access` | `bool` | If true, mounts media directory to /lzcapp/run/mnt/media |
+| `disable_grpc_web_on_root` | `bool` | If true, no longer hijacks application's grpc-web traffic. Needs to work with new version lzc-sdk so system's own grpc-web traffic can be forwarded normally|
+| `default_prefix_domain` | string | Will adjust the [final domain](../advanced-secondary-domains) opened after clicking the application in the launcher, can write any string without `.` |
 
 
 
-## 七、 `ServiceConfig` 配置
+## 7. `ServiceConfig` Configuration
 
-### 7.1 容器配置 {#container-config}
+### 7.1 Container Configuration {#container-config}
 
-| 字段名 | 类型 | 描述 |
+| Field Name | Type | Description |
 | ---- | ---- | ---- |
-| `image` | `string` | 对应容器的 docker 镜像 |
-| `environment` | `[]string` | 对应容器的环境变量 |
-| `entrypoint` | `*string` | 对应容器的 entrypoint， 可选 |
-| `command` | `*string` | 对应容器的 command， 可选 |
-| `tmpfs` | `[]string` | 挂载 tmpfs volume， 可选 |
-| `depends_on` | `[]string` | 依赖的其他容器服务(app这个名字除外)， 仅支持本应用内的其他服务， 且强制检测类型为 `healthly` 可选 |
-| `healthcheck` | `*HealthCheckConfig` | 容器的健康检测策略, 老版本`health_check`已被废弃 |
-| `user` | `*string` | 容器运行的 UID 或 username， 可选 |
-| `cpu_shares` | `int64` | CPU 份额 |
-| `cpus` | `float32` | CPU 核心数 |
-| `mem_limit`| `string\|int` | 容器的内存上限 |
-| `shm_size`| `string\|int` | /dev/shm/大小 |
-| `network_mode` | `string` | 网络模式， 目前只支持`host`或留空。 若为 `host` 则会容器的网络为宿主网络空间。 此模式下应用进行网络监听时务必注意鉴权， 非必要不要监听 `0.0.0.0` |
-| `netadmin` | `bool` | 若为 `true`， 则容器具备 `NET_ADMIN` 权限， 可以操作网络相关系统调用， 如无必要请不要使用。 若使用此功能， 请务必小心不要扰乱 iptables 相关规则 |
-|`setup_script` | `*string` | 配置脚本， 脚本内容会以 root 权限执行后， 再按照 OCI 的规范执行原始的 entrypoint 内容。 本字段和 entrypoint,command 字段冲突， 无法同时设置， 可选 |
-| `binds` | `[]string` | lzcapp 容器的 rootfs 重启后会丢失， 仅 `/lzcapp/var`, `/lzcapp/cache` 路径下的数据会永久保留。 因此其他需要保留的目录需要 bind 到这两个目录之下。 此列表仅支持 `/lzcapp` 开头的路径 |
-| `runtime` | `string` | 	指定OCI runtime。支持`runc`和`sysbox-runc`。sysbox-runc隔离程度更高，能跑完整的dockerd,systemd等。但不支持network_mode=host之类namespace共享相关的功能更|
+| `image` | `string` | Docker image for the corresponding container |
+| `environment` | `[]string` | Environment variables for the corresponding container |
+| `entrypoint` | `*string` | Entrypoint for the corresponding container, optional |
+| `command` | `*string` | Command for the corresponding container, optional |
+| `tmpfs` | `[]string` | Mount tmpfs volume, optional |
+| `depends_on` | `[]string` | Dependencies on other container services (except the name app), only supports other services within this application, and enforces detection type as `healthly`, optional |
+| `healthcheck` | `*HealthCheckConfig` | Health check strategy for the container, old version `health_check` has been deprecated |
+| `user` | `*string` | UID or username for container operation, optional |
+| `cpu_shares` | `int64` | CPU shares |
+| `cpus` | `float32` | Number of CPU cores |
+| `mem_limit`| `string\|int` | Container's memory limit |
+| `shm_size`| `string\|int` | /dev/shm/ size |
+| `network_mode` | `string` | Network mode, currently only supports `host` or leave empty. If `host`, the container's network will be the host network space. In this mode, applications must pay attention to authentication when performing network listening, avoid listening on `0.0.0.0` unless necessary |
+| `netadmin` | `bool` | If `true`, the container has `NET_ADMIN` permissions and can operate network-related system calls, please do not use unless necessary. If using this feature, please be careful not to disturb iptables related rules |
+|`setup_script` | `*string` | Configuration script, script content will be executed with root permissions, then execute original entrypoint content according to OCI specification. This field conflicts with entrypoint and command fields, cannot be set simultaneously, optional |
+| `binds` | `[]string` | lzcapp container rootfs will be lost after restart, only data under `/lzcapp/var`, `/lzcapp/cache` paths will be permanently retained. Therefore, other directories that need to be retained need to be bound under these two directories. This list only supports paths starting with `/lzcapp` |
+| `runtime` | `string` | 	Specify OCI runtime. Supports `runc` and `sysbox-runc`. sysbox-runc has higher isolation, can run complete dockerd, systemd, etc. But does not support namespace sharing related functions like network_mode=host|
 
 
-## 八、`FileHandlerConfig` 配置
-### 8.1 文件处理配置
-| 字段名 | 类型 | 描述 |
+## 8. `FileHandlerConfig` Configuration
+### 8.1 File Processing Configuration
+| Field Name | Type | Description |
 | ---- | ---- | ---- |
-| `mime` | `[]string` | 支持的 MIME 类型列表 |
-| `actions` | `map[string]string` | 动作映射 |
+| `mime` | `[]string` | List of supported MIME types |
+| `actions` | `map[string]string` | Action mapping |
 
-## 九、`HandlersConfig` 配置
+## 9. `HandlersConfig` Configuration
 
-### 9.1 处理程序配置
-| 字段名 | 类型 | 描述 |
+### 9.1 Handler Configuration
+| Field Name | Type | Description |
 | ---- | ---- | ---- |
-| `acl_handler` | `string` | ACL 处理程序 |
-| `error_page_templates` | `map[string]string` | 错误页面模板， 可选 |
+| `acl_handler` | `string` | ACL handler |
+| `error_page_templates` | `map[string]string` | Error page templates, optional |
 
 
-## 十、`UpstreamConfig` 配置
-| 字段名 | 类型 | 描述 |
+## 10. `UpstreamConfig` Configuration
+| Field Name | Type | Description |
 | ---- | ---- | ---- |
-| `location` | `string` | 入口匹配的路径 |
-| `disable_trim_location` | `bool` | 转发到`backend`时，不要自动去掉`location`前缀 (lzcos v1.3.9+)|
-| `domain_prefix` | `string` | 入口匹配的域名前缀 |
-| `backend` | `string` | 上游的地址，需要是一个合法的url，支持http,https,file三个协议 |
-| `use_backend_host` | `bool` | 如果为true,则访问上游时http host header使用backend中的host，而非浏览器请求时的host |
-| `backend_launch_command` | `string` | 自动启动此字段里的程序 |
-| `trim_url_suffix` | `string` | 自动删除请求后端时url可能携带的指定字符 |
-| `disable_backend_ssl_verify` | `bool` | 请求backend时不进行ssl安全验证 |
-| `disable_auto_health_chekcing` | `bool` | 禁止系统自动针对此条目生成的健康检测 |
-| `disable_url_raw_path` | `bool` | 如果为true则删除http header中的raw url |
-| `remove_this_request_headers` | `[]string` | 删除这个列表内的http request header， 比如"Origin"、"Referer" |
-| `fix_websocket_header` | `bool` | 自动将Sec-Websocket-xxx替换为Sec-WebSocket-xxx |
-| `dump_http_headers_when_5xx` | `bool` | 如果http上游出现5xx, 则dump请求 |
-| `dump_http_headers_when_paths` | `[]string` | 如果与到此路径下的http, 则dump请求 |
+| `location` | `string` | Path matched by entry |
+| `disable_trim_location` | `bool` | When forwarding to `backend`, do not automatically remove the `location` prefix (lzcos v1.3.9+)|
+| `domain_prefix` | `string` | Domain prefix matched by entry |
+| `backend` | `string` | Upstream address, needs to be a valid url, supports three protocols: http, https, file |
+| `use_backend_host` | `bool` | If true, when accessing upstream, the http host header uses the host in backend, not the host when the browser requests |
+| `backend_launch_command` | `string` | Automatically start the program in this field |
+| `trim_url_suffix` | `string` | Automatically delete specified characters that the url may carry when requesting backend |
+| `disable_backend_ssl_verify` | `bool` | Do not perform ssl security verification when requesting backend |
+| `disable_auto_health_chekcing` | `bool` | Disable system automatic health checking generated for this entry |
+| `disable_url_raw_path` | `bool` | If true, removes raw URL from HTTP header |
+| `remove_this_request_headers` | `[]string` | Remove HTTP request headers in this list, such as "Origin", "Referer" |
+| `fix_websocket_header` | `bool` | Automatically replace Sec-Websocket-xxx with Sec-WebSocket-xxx |
+| `dump_http_headers_when_5xx` | `bool` | If HTTP upstream appears 5xx, dump the request |
+| `dump_http_headers_when_paths` | `[]string` | If HTTP matches this path, dump the request |
 
 
 
-## 十一、本地化 `I10nConfigItem` 应用配置 {#i18n}
+## 11. Localization `I10nConfigItem` Application Configuration {#i18n}
 
-配置 `locales` 使应用支持多语言，支持设置的 language key 规范可参考 [BCP 47 标准](https://en.wikipedia.org/wiki/IETF_language_tag)
+Configure `locales` to make applications support multiple languages. For supported language key specifications, refer to [BCP 47 standard](https://en.wikipedia.org/wiki/IETF_language_tag)
 
-| 字段名 | 类型 | 描述 |
+| Field Name | Type | Description |
 | ---- | ---- | ---- |
-| `name` | `string` | 应用名称本地化字段 |
-| `description` | `string` | 应用描述本地化字段 |
-| `usage` | `string` | 应用的使用须知本地化字段 |
+| `name` | `string` | Application name localization field |
+| `description` | `string` | Application description localization field |
+| `usage` | `string` | Application usage instructions localization field |
 
-::: details 配置示例
+::: details Configuration Example
 ```yml
 lzc-sdk-version: 0.1
 package: cloud.lazycat.app.netatalk
 version: 0.0.1
-name: Apple 时间机器备份
-description: Netatalk 服务可用于 Apple 时间机器备份
+name: Apple Time Machine Backup
+description: Netatalk service can be used for Apple Time Machine backup
 author: Netatalk
 locales:
   zh:

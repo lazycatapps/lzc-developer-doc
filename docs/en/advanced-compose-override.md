@@ -1,22 +1,22 @@
-# compose override
+# Compose Override
 
-lzcos v1.3.0+ 后，针对一些 lpk 规范目前无法覆盖到的运行权限需求，
-可以通过 [compose override](https://docs.docker.com/reference/compose-file/merge/) 机制来间接实现。
+After lzcos v1.3.0+, for some runtime permission requirements that the lpk specification currently cannot cover,
+it can be indirectly implemented through the [compose override](https://docs.docker.com/reference/compose-file/merge/) mechanism.
 
-override 属于过渡阶段机制，针对一些可控的权限会逐步在 lpk 规范中进行支持，并在安装应用时由管理员进行决策。
-override 机制的兼容性不受支持，特别是 volumes 挂载系统内部文件路径。
+override is a transitional mechanism. For some controllable permissions, they will gradually be supported in the lpk specification and decided by administrators when installing applications.
+The compatibility of the override mechanism is not supported, especially volumes mounting system internal file paths.
 
 ::: warning
 
-如果有使用到此机制请在开发者群进行说明或通过 [联系我们](https://lazycat.cloud/about?navtype=AfterSalesService) 找到客服联系开发者服务，官方会记录，以便在可能破坏兼容性前与开发者进行沟通，否则提交应用商店审核可能会被拒绝。
+If you use this mechanism, please explain it in the developer group or contact developer services through [Contact Us](https://lazycat.cloud/about?navtype=AfterSalesService) to find customer service. The official will record it so as to communicate with developers before compatibility may be broken, otherwise submitting to the app store for review may be rejected.
 
 :::
 
-# 使用方式
+# Usage
 
-在lzc-build.yml文件中添加 `compose_override` 字段。
+Add the `compose_override` field in the lzc-build.yml file.
 
-比如
+For example:
 ```yml
 pkgout: ./
 icon: ./lazycat.png
@@ -24,28 +24,28 @@ contentdir: ./dist/
 
 compose_override:
   services:
-    # 指定服务名称
+    # Specify service name
     some_container:
-      # 指定需要 drop 的 cap
+      # Specify caps that need to be dropped
       cap_drop:
         - SETCAP
         - MKNOD
-      # 指定需要挂载的文件
+      # Specify files that need to be mounted
       volumes:
         - /data/playground:/lzcapp/run/playground:ro
 ```
 
 
-::: tip 文件挂载
+::: tip File Mounting
 
-1. 挂载宿主系统的文件时，尽量不要挂载/lzcsys/相关的文件，这里的布局属于lzcos内部细节后续版本很可能会变动。
-2. docker-compose里挂载文件的关键字是`volumes`，注意不要写成lzc-manifest.yml中的`binds`。(binds的语义和volumes有很大区别，所以故意不使用一致的名字)
+1. When mounting host system files, try not to mount /lzcsys/ related files. The layout here belongs to lzcos internal details and is likely to change in subsequent versions.
+2. The keyword for mounting files in docker-compose is `volumes`, note not to write it as `binds` in lzc-manifest.yml. (The semantics of binds and volumes are very different, so we deliberately don't use consistent names)
 
 :::
 
 
-# 调试
+# Debugging
 
-1. 确认最终生成的lpk中存在名为`compose.override.yml`的文件，内容应该为一个合法的`compose merge`文件
-2. ssh进入`/data/system/pkgm/run/$appid`后确认有`override.yml`文件
-3. 使用`lzc-docker-compose config`查看最终合并后的文件是您预期的
+1. Confirm that the final generated lpk contains a file named `compose.override.yml`, the content should be a valid `compose merge` file
+2. SSH into `/data/system/pkgm/run/$appid` and confirm there is an `override.yml` file
+3. Use `lzc-docker-compose config` to view that the final merged file is as expected

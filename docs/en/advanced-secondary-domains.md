@@ -1,25 +1,25 @@
-一个应用使用多个域名
+One Application Using Multiple Domains
 ===================
 
-`lzc-manifest.yml:application.subdomain`是开发者期望使用的域名，但微服系统(v1.3.6+后)会进行一定调整
+`lzc-manifest.yml:application.subdomain` is the domain name expected by developers, but the LCMD system (after v1.3.6+) will make certain adjustments
 
-1. 如果多个应用使用相同的`subdomain`字段，则后安装的会被添加域名小尾巴
-2. 多实例类型应用，同一个应用每个用户会分配独立的域名，因此非管理员看到的域名大概率会加上小尾巴
-3. 域名前缀概念:  `xxxx-subdomain`的域名和`subdomain`的效果是一致，即每个应用自动拥有任意多个域名。
-4. 最终实际分配到的`subdomain`只能通过环境变量`LAZYCAT_APP_DOMAIN`获取到。
-5. 所有前缀域名进入的流量都会忽略`TCP/UDP Ingress`配置。 (不影响默认应用域名进入的流量)
+1. If multiple applications use the same `subdomain` field, the one installed later will have a domain suffix added
+2. For multi-instance type applications, each user of the same application will be assigned an independent domain, so non-administrators will most likely see domains with suffixes added
+3. Domain prefix concept: The domain `xxxx-subdomain` has the same effect as `subdomain`, meaning each application automatically has any number of domains.
+4. The final actually assigned `subdomain` can only be obtained through the environment variable `LAZYCAT_APP_DOMAIN`.
+5. All traffic entering from prefix domains will ignore `TCP/UDP Ingress` configuration. (Does not affect traffic entering from default application domain)
 
 
-v1.3.8已支持[基于域名的流量转发](./advanced-route#upstreamconfig)
+v1.3.8 supports [Domain-based Traffic Forwarding](./advanced-route#upstreamconfig)
 
-由于`application.routes`不支持基于域名的转发，如果需要比较细致的调整路由规则，
-可以添加一条特殊route规则，`- /=http://nginx.$appid.lzcapp`。
-注意这里一定要用`$service.$appid.lzcapp`的形式，否则nginx无法收到完整的域名信息，[原因见](advanced-route.html#p2)
+Since `application.routes` does not support domain-based forwarding, if you need more detailed routing rule adjustments,
+you can add a special route rule, `- /=http://nginx.$appid.lzcapp`.
+Note that you must use the `$service.$appid.lzcapp` form here, otherwise nginx cannot receive complete domain information, [see reason](advanced-route.html#p2)
 
-比如，下面这个配置的效果是
-1. 应用列表里打开默认是`whoami.xx.heiyu.space`(假设实际分配到的`subdomain`是`whoami`)
-2. `nginx-whoami.xx.heiyu.space`流量会返回默认的nginx静态hello world
-3. `任意内容-whoami.xx.heiyu.space`与访问`whoami.xx.heiyu.space`效果相同
+For example, the effect of the following configuration is:
+1. Opening from the application list defaults to `whoami.xx.heiyu.space` (assuming the actually assigned `subdomain` is `whoami`)
+2. `nginx-whoami.xx.heiyu.space` traffic will return the default nginx static hello world
+3. `any-content-whoami.xx.heiyu.space` has the same effect as accessing `whoami.xx.heiyu.space`
 
 
 ```yaml
@@ -37,15 +37,15 @@ services:
     image: registry.lazycat.cloud/snyh1010/library/nginx:54809b2f36d0ff38
     setup_script: |
       cat <<'EOF' > /etc/nginx/conf.d/default.conf
-      server {  # whoami.xxx.heiyu.space以及其他任意域名前缀都转发到traefix/whoami
+      server {  # whoami.xxx.heiyu.space and any other domain prefixes forward to traefik/whoami
          server_name _;
          location / {
             proxy_pass http://app1:80;
-            #目前setup_script机制还有点问题，这里不能直接写环境变量，如果有这个需求则
-            #只能使用binds的形式把文件放到pkg/content中binds进去
+            # Currently the setup_script mechanism still has some issues, environment variables cannot be written directly here. If you have this need, you can
+            # only use binds to put files in pkg/content and bind them in
          }
       }
-      server {  # nginx开头的域名转发到nginx默认页，比如nginx3-whoami.xxx.heiyu.space, nginx-whoami.xxx.heiyu.space
+      server {  # Domains starting with nginx forward to nginx default page, such as nginx3-whoami.xxx.heiyu.space, nginx-whoami.xxx.heiyu.space
          server_name  ~^nginx.*-.*;
          location / {
             root   /usr/share/nginx/html;

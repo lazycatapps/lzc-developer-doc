@@ -6,9 +6,9 @@ prev: false
 ---
 # NAT Type
 
-假如您配置了代理：
+If you have configured a proxy:
 
-- 请检查代理分流规则，确保开启了"绕过中国大陆"选项。并且配置"6.6.6.6"和"2000::6666"绕过代理。
+- Please check proxy routing rules to ensure the "Bypass Mainland China" option is enabled. Also configure "6.6.6.6" and "2000::6666" to bypass proxy.
 
 Clash
 
@@ -21,6 +21,6 @@ tun:
     - 2000::6666/128
 ```
 
-如果您没有配置代理，您的运营商可能配置了NAT4。
+If you have not configured a proxy, your ISP may have configured NAT4.
 
-您可以联系运营商要求更改成NAT3，或者考虑更换成别的运营商。
+You can contact your ISP to request changing to NAT3, or consider switching to another ISP.

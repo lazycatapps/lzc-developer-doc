@@ -1,28 +1,28 @@
-# 开发环境搭建
+# Development Environment Setup
 
-懒猫微服的应用的开发环境支持 Windows, Linux, macOS， 下面是开发环境的安装步骤:
+The development environment for LCMD MicroServer applications supports Windows, Linux, and macOS. Below are the installation steps for the development environment:
 
-1. 安装依赖
+1. Install Dependencies
 
-- 首先需要安装 [Node.js](https://nodejs.org/zh-cn) 18 及以上版本和 [懒猫微服客户端](https://lazycat.cloud/download)
+- First, you need to install [Node.js](https://nodejs.org/zh-cn) version 18 or higher and the [LCMD MicroServer Client](https://lazycat.cloud/download)
 
-2. 安装懒猫云开发者工具
+2. Install Lazycat Cloud Developer Tools
 
-- 懒猫云开发者工具是构建、 安装和部署懒猫微服应用的后台工具, 通过懒猫微服客户端商店， 搜索并安装[“懒猫开发者工具”](https://appstore.lazycat.cloud/#/shop/detail/cloud.lazycat.developer.tools)。
+- Lazycat Cloud Developer Tools is a backend tool for building, installing, and deploying LCMD MicroServer applications. Through the LCMD MicroServer client store, search for and install ["Lazycat Developer Tools"](https://appstore.lazycat.cloud/#/shop/detail/cloud.lazycat.developer.tools).
 
-3. <span style="display: flex; align-items: center;">安装 lzc-cli &nbsp;<img style="display: inline-block;" alt="NPM Version" src="https://img.shields.io/npm/v/%40lazycatcloud%2Flzc-cli"></span>
+3. <span style="display: flex; align-items: center;">Install lzc-cli &nbsp;<img style="display: inline-block;" alt="NPM Version" src="https://img.shields.io/npm/v/%40lazycatcloud%2Flzc-cli"></span>
 
-- [lzc-cli](https://www.npmjs.com/package/@lazycatcloud/lzc-cli) 是运行在开发者终端的命令行工具，可以认为是懒猫云开发工具的前端，利用它可以进行微服应用的开发、构建、安装、调试以及发布应用到商店等。
+- [lzc-cli](https://www.npmjs.com/package/@lazycatcloud/lzc-cli) is a command-line tool that runs on the developer's terminal. It can be considered as the frontend of Lazycat Cloud Developer Tools. Using it, you can develop, build, install, debug, and publish LCMD applications to the store.
 
 ```bash
-# 安装 lzc-cli
+# Install lzc-cli
 npm install -g @lazycatcloud/lzc-cli
 ```
 
 
-4. 安装系统依赖
+4. Install System Dependencies
 
-根据您的操作系统， 安装系统依赖。
+Install system dependencies according to your operating system.
 
 - **Ubuntu / Debian**:
 
@@ -35,35 +35,35 @@ npm install -g @lazycatcloud/lzc-cli
 
   ```bash
   brew install rsync
-  brew install openssh # 如果您已经有 ssh 的话可以不安装
+  brew install openssh # You can skip this if you already have ssh
   ```
 
-  `macOS` 系统自带的 `rsync` 版本较老，请使用 `Homebrew` 安装的 `rsync 版本 (v3.2.0+)`
+  The `rsync` version that comes with `macOS` is older, please use the `rsync` version (v3.2.0+) installed via `Homebrew`
 
 - **Windows**
 
-  Windows 10 以上已经自带 `ssh.exe`，不再需要额外安装其他依赖。
+  Windows 10 and above already come with `ssh.exe`, so no additional dependencies need to be installed.
 
 - **Windows (WSL)**:
 
-  > Windows WSL 更多使用指南可以参考 [lzc-cli-wsl](./lzc-cli-wsl)
+  > For more usage guides on Windows WSL, please refer to [lzc-cli-wsl](./lzc-cli-wsl)
 
   ```bash
   sudo apt update
   sudo apt install openssh-client rsync
   ```
 
-5. 连接到微服
+5. Connect to LCMD
    
- - 生成公钥:
+ - Generate public key:
   
     ```bash
-    #请确保 ssh 已经安装，以及 ssh-keygen 生成公钥
+    # Please ensure ssh is installed and ssh-keygen generates the public key
     ssh-keygen -t ed25519
     ```
 
- - 添加 ssh 公钥到 `懒猫开发者工具` 中
+ - Add ssh public key to `Lazycat Developer Tools`
   
     ```bash
-    lzc-cli box add-public-key #执行后，按照提示点击链接，完成添加ssh公钥
+    lzc-cli box add-public-key # After execution, follow the prompts to click the link and complete adding the ssh public key
     ```

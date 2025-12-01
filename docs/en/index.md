@@ -1,2 +1,2 @@
-# 欢迎使用懒猫微服
-欢迎使用懒猫微服， 懒猫微服是新一代的私有云产品， 懒猫微服提供了包括外网穿透访问、 网络安全传输、 多终端平台适配、 跨平台 JS 运行时、 容器管理、 AI 大模型服务、 应用构建和分发等基础设施。 您通过本教程可以快速学习懒猫微服应用的开发、 构建、 安装的方法， 期待您的大作！
+# Welcome to LCMD MicroServer
+Welcome to LCMD MicroServer. LCMD MicroServer is a new generation of private cloud products. LCMD MicroServer provides infrastructure including external network penetration access, network security transmission, multi-terminal platform adaptation, cross-platform JS runtime, container management, AI large model services, application building and distribution. Through this tutorial, you can quickly learn the development, building, and installation methods of LCMD MicroServer applications. We look forward to your masterpiece!

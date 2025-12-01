@@ -6,7 +6,7 @@ prev: false
 ---
 # Public servers
 
-- 在代理配置中，添加规则绕过懒猫微服公共服务器的域名。
+- In proxy configuration, add rules to bypass LCMD MicroServer public service server domains.
 
 Clash:
 

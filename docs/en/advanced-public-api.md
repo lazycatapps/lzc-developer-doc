@@ -1,12 +1,12 @@
-# 独立鉴权
+# Independent Authentication
 
-## HTTP 服务
+## HTTP Service
 
-当您用浏览器访问微服应用时， 为了您的安全必须输入用户名密码才能访问。
+When you access LCMD applications with a browser, you must enter a username and password for security.
 
-但是在一些安全要求不高的场景， 比如公共文件下载服务， 输入用户名密码太繁琐， 您只需要在 `lzc-manifest.yml` 文件中的 `application` 字段下加一个 `public_path` 子字段即可
+However, in some scenarios with low security requirements, such as public file download services, entering username and password is too cumbersome. You only need to add a `public_path` sub-field under the `application` field in the `lzc-manifest.yml` file.
 
-另外有部分应用有自身的独立鉴权机制，比如通过url中携带token，则可以将此类服务地址的强制鉴权关闭。
+In addition, some applications have their own independent authentication mechanisms, such as carrying tokens in URLs. In this case, you can disable forced authentication for such service addresses.
 
 ```yml
 application:
@@ -14,14 +14,14 @@ application:
     - /api/public
 ```
 
-上面配置的意思是， 当浏览器访问 `/api/public` 路由时， 可以直接访问， 不需要输入用户名密码。
+The above configuration means that when the browser accesses the `/api/public` route, it can access directly without entering username and password.
 
-需要注意的是：
-1. `public_path` 仅是关闭微服的http账号密码鉴权，访问时依旧需要登录微服客户端建立虚拟网络
-2. `public_path` 有一定的风险， 请不要对外暴露敏感 API， 比如读取您的文件的服务
+Note:
+1. `public_path` only disables LCMD's HTTP account password authentication. Access still requires logging into the LCMD client to establish a virtual network
+2. `public_path` has certain risks. Please do not expose sensitive APIs externally, such as services that read your files.
 
 
-此外，还可以使用`!`排除语法，将除`/admin`外的整个路径都绕过强制鉴权。(不推荐使用此方式绕过强制鉴权)
+Additionally, you can use the `!` exclusion syntax to bypass forced authentication for the entire path except `/admin`. (Not recommended to use this method to bypass forced authentication)
 ```yml
 application:
   public_path:
@@ -29,6 +29,6 @@ application:
     - !/admin
 ```
 
-::: warning 排除语法具有最高优先级，不支持嵌套判断
-比如上述规则中如果添加 `/admin/unsafe` 这条规则是不会生效的。
+::: warning Exclusion syntax has the highest priority and does not support nested judgment
+For example, if you add the rule `/admin/unsafe` in the above rules, this rule will not take effect.
 :::

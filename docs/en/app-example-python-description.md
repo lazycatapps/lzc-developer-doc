@@ -1,62 +1,62 @@
-# Python 应用配置详解
-上一章我们讲了怎么构建第一个 Python 应用， 这一章我们详细的分析 Python 应用的构建细节。
+# Python Application Configuration Details
+In the previous chapter, we explained how to build the first Python application. In this chapter, we will analyze the construction details of Python applications in detail.
 
 ## lzc-build.yml
 
-[lzc-build.yml](./spec/build) 是控制应用构建的配置文件。
+[lzc-build.yml](./spec/build) is the configuration file that controls application building.
 
-先介绍一下这个配置文件基本的关键字和用处：
+First, let's introduce the basic keywords and uses of this configuration file:
 
-- `buildscript`: 构建脚本， 可以为构建脚本的路径地址， 也可以直接写 sh 的命令
+- `buildscript`: Build script, can be the path address of the build script, or directly write sh commands
 
-    根据 buildscript 定义的脚本， 把 contentdir 下面的所有文件打包成一个 lpk 压缩包， 最后安装到微服中。
+    According to the script defined by buildscript, all files under contentdir are packaged into an lpk compressed package, and finally installed into LCMD.
 
-- `manifest`: 指定 lpk 包的 manifest.yml 文件路径
+- `manifest`: Specify the manifest.yml file path of the lpk package
 
-    此处的 manifest 文件是应用的元信息， 比如应用的名称， 版本， 描述等。
+    The manifest file here is the application's meta information, such as application name, version, description, etc.
 
-- `contentdir`: 指定打包的内容，将会打包到 lpk 中
+- `contentdir`: Specify the content to be packaged, which will be packaged into lpk
 
-    此处的 contentdir 是需要指定为目录， 目录里面的文件将会被打包到 lpk 中。
+    The contentdir here needs to be specified as a directory. Files in the directory will be packaged into lpk.
 
-- `pkgout`: lpk 包的输出路径
+- `pkgout`: Output path of the lpk package
 
-    此处的 pkgout 是 lpk 包的输出路径， 将会把打包好的 lpk 包输出到此路径。
+    The pkgout here is the output path of the lpk package, and the packaged lpk package will be output to this path.
 
-- `icon`: lpk 包 icon 的路径路径，如果不指定将会警告
+- `icon`: Path of the lpk package icon. If not specified, a warning will be issued
 
-    icon 仅仅允许 png 后缀的文件，应用icon.png 宽高比需要为1:1 建议宽高大于等于 512*512 个像素
+    icon only allows files with png suffix. The application icon.png aspect ratio needs to be 1:1, and it is recommended that the width and height be greater than or equal to 512*512 pixels
 
-- `devshell`: 指定开发依赖的情况
+- `devshell`: Specify development dependency situation
 
-    此处的 devshell 是开发依赖的情况， 比如开发依赖的依赖， 开发依赖的脚本等。
+    The devshell here is the development dependency situation, such as development dependency dependencies, development dependency scripts, etc.
 
 
-::: details 示例
+::: details Example
 ```shell
-# 整个文件中，可以通过 ${var} 的方式，使用 manifest 字段指定的文件定义的值
+# In the entire file, you can use values defined in the file specified by the manifest field through ${var}
 
 # buildscript
-# - 可以为构建脚本的路径地址
-# - 如果构建命令简单，也可以直接写 sh 的命令
+# - Can be the path address of the build script
+# - If the build command is simple, you can also directly write sh commands
 buildscript: sh build.sh
 
-# manifest: 指定 lpk 包的 manifest.yml 文件路径
+# manifest: Specify the manifest.yml file path of the lpk package
 manifest: ./lzc-manifest.yml
 
-# contentdir: 指定打包的内容，将会打包到 lpk 中
+# contentdir: Specify the content to be packaged, which will be packaged into lpk
 contentdir: ./dist
 
-# pkgout: lpk 包的输出路径
+# pkgout: Output path of the lpk package
 pkgout: ./
 
-# icon 指定 lpk 包 icon 的路径路径，如果不指定将会警告
-# icon 仅仅允许 png 后缀的文件
+# icon specifies the path of the lpk package icon. If not specified, a warning will be issued
+# icon only allows files with png suffix
 icon: ./lzc-icon.png
 
-# dvshell 指定开发依赖的情况
-# 这种情况下，选用 alpine:latest 作为基础镜像，在 dependencies 中添加所需要的开发依赖即可
-# 如果 dependencies 和 build 同时存在，将会优先使用 dependencies
+# devshell specifies the development dependency situation
+# In this case, use alpine:latest as the base image and add the required development dependencies in dependencies
+# If dependencies and build exist at the same time, dependencies will be used first
 devshell:
   routes:
     - /=http://127.0.0.1:5173
@@ -73,18 +73,18 @@ devshell:
 
 ## lzc-manifest.yml
 
-[lzc-manifest.yml](./spec/manifest) 是控制应用 Meta 信息的配置文件。
+[lzc-manifest.yml](./spec/manifest) is the configuration file that controls application Meta information.
 
-先介绍一下这个配置文件基本的关键字和用处：
-- `name`: 应用名称
-- `package`: 应用的子域名， 如果不上架懒猫微服应用商店， 这个名字可以随便取
-- `version`: 版本号
-- `description`: 应用描述
-- `license`: 应用的发行许可证
-- `homepage`: 项目主页
-- `author`: 作者信息
+First, let's introduce the basic keywords and uses of this configuration file:
+- `name`: Application name
+- `package`: Application subdomain. If not listed in LCMD MicroServer app store, this name can be arbitrary
+- `version`: Version number
+- `description`: Application description
+- `license`: Application distribution license
+- `homepage`: Project homepage
+- `author`: Author information
 
-这个文件最重要的是 [application.routes](./advanced-route)：
+The most important part of this file is [application.routes](./advanced-route):
 
 ```shell
 application:
@@ -96,42 +96,42 @@ application:
 
 - `subdomain: todolistpy`
 
-  应用子域名， 和上面的 `package` 字段的域名相关联。
+  Application subdomain, associated with the domain name in the `package` field above.
 
 - `/=file:///lzcapp/pkg/content/web`
 
-  这个路由表示， 当用户访问应用时， 也就是访问路由 `/` 时， 应用程序会自动返回 `/lzcapp/pkg/content/web` 目录下的 `index.html` 文件。 `/lzcapp/pkg/content` 其实就是对应前面 `lzc-build.yml` 文件中的 `contentdir` 目录。
+  This route means that when users access the application, that is, when accessing the route `/`, the application will automatically return the `index.html` file in the `/lzcapp/pkg/content/web` directory. `/lzcapp/pkg/content` actually corresponds to the `contentdir` directory in the `lzc-build.yml` file mentioned earlier.
 
 - `/api/=exec://3000,./lzcapp/pkg/content/backend/run.sh`:
 
-  这个路由表示， 当用户访问路由 `/api/`​ 时， 应用程序会启动 `./lzcapp/pkg/content/backend/run.sh` 脚本提供后端服务， 后端服务脚本监听 3000 端口。
+  This route means that when users access the route `/api/`, the application will start the `./lzcapp/pkg/content/backend/run.sh` script to provide backend services. The backend service script listens on port 3000.
 
 
-`application` 字段下具有以下字段:
+The `application` field has the following fields:
 
-| 字段           | 说明                                                           | 备注                                   |
+| Field           | Description                                                           | Notes                                   |
 |----------------|---------------------------------------------------------------|----------------------------------------|
-| subdomain      | 配置应用子域名                                                  | 仅为默认值， 后续系统版本允许管理员调整 |
-| multi_instance | [配置多实例(同一个应用 ， 各用户数据隔离)](./advanced-multi-instance) | 仅为默认 值， 后续系统版本允许管理员调整 |
-| routes         | [配置应用规则](./advanced-route)                                | 所有  http 相关逻辑应该在这里声明         |
-| public_path    |  [配置外网 API](./advanced-public-api)                           | 不建议使用                             |
-| ingress        | [配置外网端口](./advanced-public-api)                           | 仅建议 在需要提 供非 HTTP 服务时使用       |
-| file_handler    | 声明本 app  支持操作的文件类型， [应用关联](./advanced-mime)            | 工具 类应用建议配置此选项， 以便网盘里打开文件时可以选择使用本应用|
+| subdomain      | Configure application subdomain                                                  | Only default value, subsequent system versions allow administrator adjustment |
+| multi_instance | [Configure multi-instance (same application, user data isolation)](./advanced-multi-instance) | Only default value, subsequent system versions allow administrator adjustment |
+| routes         | [Configure application rules](./advanced-route)                                | All HTTP related logic should be declared here         |
+| public_path    |  [Configure external API](./advanced-public-api)                           | Not recommended                             |
+| ingress        | [Configure external ports](./advanced-public-api)                           | Only recommended when providing non-HTTP services       |
+| file_handler    | Declare file types supported by this app, [Application Association](./advanced-mime)            | Tool-type applications are recommended to configure this option so that when opening files in cloud drive, this application can be selected|
 
 ::: details 示例
 
 ```yml
-package: abc.example.com # app 的唯一 id,上架到商店需要保证不要冲突,尽量使用开发者自己的域名作为后缀.
-version: 2.0.2           #app 的版本
+package: abc.example.com # App's unique id, when listing to store need to ensure no conflicts, try to use developer's own domain as suffix.
+version: 2.0.2           # App version
 
-name: 测试abc   #软件名称,会显示在启动器之类的地方
-description: 简单易用的英语学习软件
+name: Test abc   # Software name, will be displayed in launcher and similar places
+description: Simple and easy-to-use English learning software
 
-license: https://choosealicense.com/licen ses/mit/  #软件本身的 license
-homepage: http://github.com/snyh/abc #软件的主页,会在商店等地方体现
-author: snyh@snyh.org #lpk 的作者,会在商店等地方体现
+license: https://choosealicense.com/licen ses/mit/  # Software's own license
+homepage: http://github.com/snyh/abc # Software homepage, will be reflected in store and other places
+author: snyh@snyh.org # lpk author, will be reflected in store and other places
 
-unsupported_platforms: # 不支持的平 台, 不写则表示全平台支持. lpk 本身是可以被安装的,但下面列表中的平台无法打开此软件
+unsupported_platforms: # Unsupported platforms, if not written means full platform support. lpk itself can be installed, but platforms in the list below cannot open this software
   - linux
   - macos
   - windows
@@ -140,61 +140,61 @@ unsupported_platforms: # 不支持的平 台, 不写则表示全平台支持. lp
   - tvos
 
 
- #application 作为一个特殊的 container 运行， 对应的 service 名称为固定的` app`， 其他 service 可以通过此名称与 app 进行通讯
+ # application runs as a special container, the corresponding service name is fixed `app`, other services can communicate with app through this name
 application:
-  background_task: false #是否存在后台任务， 若存在则系统不会对此 app 进行主动休眠等操作
+  background_task: false # Whether there are background tasks, if yes, the system will not actively hibernate this app
 
-  subdomain: abc  #期望的 app 域名， 如果系统中已经有对应域名则会提示用户选择其他域名。  最终 app 分配到的域名以/lzcapp/run/app.subdomain 为准
+  subdomain: abc  # Expected app domain, if the system already has the corresponding domain, it will prompt the user to choose another domain. The final app assigned domain is based on /lzcapp/run/app.subdomain
 
   routes:
-    - /api/=exec://8000,/lzcapp/pkg/content/bin/backend     #格式与/usr/bin/lzcinit -up 参数一致
-    - /api/=http://service.appid.lzcapp:8000            #多实例应用会自动在 route 里加上 uid
+    - /api/=exec://8000,/lzcapp/pkg/content/bin/backend     # Format consistent with /usr/bin/lzcinit -up parameter
+    - /api/=http://service.appid.lzcapp:8000            # Multi-instance applications will automatically add uid in route
     - /=file:///lzcapp/pkg/content/dist/
 
   public_path:
-    - /api/public  #默认情况下所有路径都需要登陆后才能访问， public_path 之下的路径允许非登陆情况下访问
+    - /api/public  # By default, all paths require login to access, paths under public_path allow access without login
 
   ingress:
-    - protocol: tcp     #tcp or udp
-      port: 22          #需要曝露的端口号
-      service: db       #为空则为此 app 容器内的端口,也可以指定为 db 等其他 service 的名称
+    - protocol: tcp     # tcp or udp
+      port: 22          # Port number that needs to be exposed
+      service: db       # If empty, it is the port within this app container, can also specify the name of other services like db
 
-  multi_instance: true # 是否启用多实例
+  multi_instance: true # Whether to enable multi-instance
 
-  workdir: /lzcapp/pkg/content / #设置 lzcinit 以及后续子进程的 WORKDIR,若不设置或目录不存在则保持使用  container 的 WORKDIR 信息
+  workdir: /lzcapp/pkg/content / # Set WORKDIR for lzcinit and subsequent child processes, if not set or directory does not exist, keep using container's WORKDIR information
 
-  usb_accel: false # 挂在/dev/bus/usb 到容器
-  gpu_accel : false # 是否允许使用硬件 加速
-  kvm_accel: true  # enable 后会挂 在/dev/kvm 和/dev/network-host 到所有  service 中
+  usb_accel: false # Mount /dev/bus/usb to container
+  gpu_accel : false # Whether to allow hardware acceleration
+  kvm_accel: true  # After enable, will mount /dev/kvm and /dev/network-host to all services
 
-  file_handler: # 声明本 app 支持操作的文件类型， mime 至少存在一条记录， actions 至少要支持 open
-    mime:  #按照 mime 类型注册到系统
+  file_handler: # Declare file types supported by this app, mime must have at least one record, actions must support at least open
+    mime:  # Register to system according to mime type
       - x-scheme-handler/http
       - x-scheme-handler/https
       - text/html
       - application/xhtml+xml
-      - x-lzc-extension/km      # app 支持.km 文件 名后缀
-    actions:   #打开对应文件的 url 路径,由文件管理器等 app 调用
-      open: /open?file=%u   #%u 是某个 webdav 上的具体文件路径， 一定存在
-      new:  /open?file=%u   #%u 是某个 webdav 上的具体文件路径， 不一定存在
-      download: /download?file=%u #%u 是某个 webdav 上的具 体文件路径， 一定存在
+      - x-lzc-extension/km      # App supports .km file name suffix
+    actions:   # URL path to open corresponding files, called by file manager and other apps
+      open: /open?file=%u   # %u is a specific file path on a webdav, must exist
+      new:  /open?file=%u   # %u is a specific file path on a webdav, may not exist
+      download: /download?file=%u # %u is a specific file path on a webdav, must exist
 
    environment:
     - MYPASSWORD=123456
 
-  image:  alpine:3.16  #可选 的运行环境， 为空则使用 sdk 对应版本的镜像。 若上架到商店， 则此处的镜像必须上传到商店仓库统一托管 。
+  image:  alpine:3.16  # Optional runtime environment, if empty, use the image corresponding to the sdk version. If listed to store, the image here must be uploaded to the store repository for unified hosting.
 
   handlers:
-    # 当 ro utes 中 https/ http/exec 类型的反代出现错误时， 则渲染对应模板。
-    # 若错误类型为无法返回任何数据， 则会生成一个 502 响应， 比如上游游服务器不存在或网络不通等完全获取不到一个 http response 的情况。
+    # When https/http/exec type reverse proxy in routes encounters an error, render the corresponding template.
+    # If the error type is unable to return any data, a 502 response will be generated, such as when the upstream server does not exist or network is unreachable and completely unable to get an http response.
     #
-    # 其他情况则根据 http response status code， 选择对应的模板
-    # 若命中错误处理页面, 则 http response status code 本身不会进行修改
+    # Other cases select the corresponding template according to http response status code
+    # If error handling page is hit, the http response status code itself will not be modified
     #
-    # 页 面渲染使用此数据结构
+    # Page rendering uses this data structure
       # struct {
       #    StatusCode int
-      #    ErrorDetail string #无法获取 http response 的情况下， 此字段会显示对应错误信息， 并将 StatusCode 设置为 502
+      #    ErrorDetail string # In cases where http response cannot be obtained, this field will display corresponding error information and set StatusCode to 502
       # }
     error_page_templates:
       502: /lzcapp/pkg/content/errors/502.html.tpl
@@ -202,34 +202,34 @@ application:
 
 
 
-services: #传统 docker 镜像启动方式， 如果需要数据库等配套容器一起运行则可以在这里申明。 传统 app 如 nextcloud、 aria2c 也可以使用这种方式进行兼容运行
+services: # Traditional docker image startup method, if you need database and other supporting containers to run together, you can declare them here. Traditional apps like nextcloud, aria2c can also use this method for compatible operation
   backend:
     image: alpine:3.18
 
     depends_on:
       - db
 
-  db: #目前只支持以下参数， network,ipc 之类的配置字段(故意)不支持
+  db: # Currently only supports the following parameters, configuration fields like network, ipc are (intentionally) not supported
     image: bitnami/wordpress:5.8.2
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
-      # oauth 相关的环境变量
+      # OAuth related environment variables
       - LAZYCAT_AUTH_OIDC_CLIENT_ID=xxx
       - LAZYCAT_AUTH_OIDC_CLIENT_SECRET=xxx
       - LAZYCAT_AUTH_OIDC_ISSUER_URL=xxx
 
 
-    # 仅支持以下挂载点:
+    # Only the following mount points are supported:
     # - /lzcapp/run
     # - /lzcapp/run/mnt/home
     # - /lzcapp/var
     # - /lzcapp/cache
     # - /lzcapp/pkg
     binds:
-      - /lzcapp/run/mnt/home:/home  #将/lzcapp/run/mnt/home(即用户文稿)目录挂在到容器内的/home 目录
+      - /lzcapp/run/mnt/home:/home  # Mount /lzcapp/run/mnt/home (i.e., user documents) directory to /home directory in container
       - /lzcapp/var/db:/data
       - /lzcapp/cache/db:/cache
-      - /lzcapp/pkg/content/entrypoint.sh:/entrypoint.sh # 挂载 lpk 包内的文件
+      - /lzcapp/pkg/content/entrypoint.sh:/entrypoint.sh # Mount files within lpk package
 
     entrypoint: /bin/sh -c
     command: "/usr/bin/nextcloud"
@@ -237,22 +237,22 @@ services: #传统 docker 镜像启动方式， 如果需要数据库等配套容
     depends_on:
       - ui
 
-    # network_mode 仅支持 host 模式， 开启后此 service 可以访问所有网卡， 但失去 lzcdns 特性
-    # 非必要尽量不要使用此模式， 需要谨慎处理代码， 存在很高安全风险
-    # 如果要在 network=host service 中提供内部服务， 请监听在`host.lzcapp`这个内部 IP 上， 不要直接监听 0.0.0.0
+    # network_mode only supports host mode, after enabling this service can access all network cards, but loses lzcdns feature
+    # Try not to use this mode unless necessary, need to carefully handle code, there is a high security risk
+    # If you want to provide internal services in network=host service, please listen on the internal IP `host.lzcapp`, do not directly listen on 0.0.0.0
     network_mode: "host"
 
-    # cpu_shares 默认值为 1024， 将此值调小可以降低容器的优先级。 只有在 CPU 周期受到限制时， 这种限制才会生效。
-    # 当 CPU 周期充足时， 所有容器会使用所需的全部 CPU 资源。 cpu_shares 不会阻止容器在 Swarm 模式下被调度。
-    # 它为可用的 CPU 周期优先分配容器的 CPU 资源， 但并不保证或保留任何特定的 CPU 访问权限。
+    # cpu_shares default value is 1024, reducing this value can lower container priority. This restriction only takes effect when CPU cycles are limited.
+    # When CPU cycles are sufficient, all containers will use all required CPU resources. cpu_shares will not prevent containers from being scheduled in Swarm mode.
+    # It prioritizes container CPU resources for available CPU cycles, but does not guarantee or reserve any specific CPU access rights.
     cpu_share: 2
-    # cpus 用于指定容器可以使用的可用 CPU 资源量。 例如， 如果主机机器有两个 CPU， 并且您设置 --cpus="1.5"，
-    # 则容器保证最多使用一个半的 CPU。
+    # cpus is used to specify the amount of available CPU resources that the container can use. For example, if the host machine has two CPUs, and you set --cpus="1.5",
+    # the container is guaranteed to use at most one and a half CPUs.
     cpu: 2
 
 ```
 
 :::
 
-## 保存数据的路径
-当后端需要存储文件或者数据库时， 请确保文件放在 `/lzcapp/var`​ 目录下， 存在其他目录下的文件会在应用 Docker 重启后被系统清空。
+## Data Storage Path
+When the backend needs to store files or databases, please ensure that files are placed in the `/lzcapp/var` directory. Files stored in other directories will be cleared by the system after the application Docker restarts.

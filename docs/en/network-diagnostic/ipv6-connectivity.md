@@ -6,6 +6,6 @@ prev: false
 ---
 # IPv6 Connectivity
 
-参考 https://test-ipv6.com
+Refer to https://test-ipv6.com
 
-您的运营商可能不支持IPv6网络。
+Your ISP may not support IPv6 networks.

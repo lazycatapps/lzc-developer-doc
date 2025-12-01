@@ -1,9 +1,9 @@
-# 应用关联
-懒猫微服的目标是构建家庭的数字生活中枢， 随着生态应用越来越多， 懒猫网盘的很多文件可以由生态应用直接打开。
+# Application Association
+LCMD MicroServer's goal is to build a family digital life hub. As more and more ecosystem applications emerge, many files in LCMD Cloud Drive can be directly opened by ecosystem applications.
 
-比如， 您开发了一款音乐播放器， 您期望用户在懒猫网盘点击音乐文件时， 懒猫网盘会自动弹出应用选择对话框供用户挑选。
+For example, if you develop a music player, you expect that when users click on music files in LCMD Cloud Drive, LCMD Cloud Drive will automatically pop up an application selection dialog for users to choose.
 
-只需要在 `lzc-manifest.yml` 文件中加入 `file_handler` 字段即可：
+You only need to add a `file_handler` field in the `lzc-manifest.yml` file:
 
 ```yml
 application:
@@ -15,13 +15,13 @@ application:
       open: /open?file=%u
 ```
 
-- `mime`: 是应用可以支持的 MIME 列表
-- `actions`: 启动应用的动作， 目前只有 `open` 一个选项
+- `mime`: List of MIME types supported by the application
+- `actions`: Action to start the application, currently only `open` option
 
-应用需要支持 `/open` 这个路由， 并解析 `file` 参数的内容， 系统会自动把 `%u` 参数替换成打开文件的实际路径。
+The application needs to support the `/open` route and parse the content of the `file` parameter. The system will automatically replace the `%u` parameter with the actual path of the opened file.
 
-v1.3.8+后，mime字段支持一些特殊的配置：
+After v1.3.8+, the mime field supports some special configurations:
 
-- `text/*`  包含了`text/plain`在内的所有text类别的mime类型
-- `*/*` 所有文件类型都会被匹配上，适合“MD5计算”、“文件分享”等特殊应用场景。(写这个注意加个字符串引号，否则yaml会尝试解析`*`导致报错)
-- `x-lzc-extension/md` 所有后缀为md的文件
+- `text/*` includes all text category mime types including `text/plain`
+- `*/*` All file types will be matched, suitable for special application scenarios such as "MD5 calculation" and "file sharing". (Note: add string quotes when writing this, otherwise yaml will try to parse `*` causing errors)
+- `x-lzc-extension/md` All files with md extension

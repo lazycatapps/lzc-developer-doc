@@ -1,7 +1,7 @@
-# 数据库服务
+# Database Service
 
-## 启动数据库服务
-当您需要启动类似 MySQL 这样的数据库服务时， 只需要在 `lzc-manifest.yml` 文件中加入下面内容即可， 微服会自动启动一个数据库容器， 对外提供数据库读写服务， 默认监听 `3306` 端口。
+## Starting Database Service
+When you need to start a database service like MySQL, you only need to add the following content to the `lzc-manifest.yml` file. LCMD will automatically start a database container to provide database read and write services externally, defaulting to listening on port `3306`.
 
 ```yml
 services:
@@ -16,19 +16,19 @@ services:
       - MYSQL_PASSWORD=LAZYCAT
 ```
 
-配置详细解释：
-- `mysql`: 数据库 Docker 服务的名字
-- `image`: 从懒猫微服下载 MySQL Docker 的地址
-- `binds`: 当 MySQL 写入数据到 `/var/lib/mysql` 时， 微服系统会自动绑定到应用容器的 `/lzcapp/var/mysql` 路径
-- `environment`: 定义 MySQL 启动所需的环境变量
+Detailed configuration explanation:
+- `mysql`: Name of the database Docker service
+- `image`: Address to download MySQL Docker from LCMD MicroServer
+- `binds`: When MySQL writes data to `/var/lib/mysql`, the LCMD system will automatically bind to the `/lzcapp/var/mysql` path of the application container
+- `environment`: Define environment variables required for MySQL startup
 
-## 连接数据库服务
-一旦数据库服务启动后， 访问也很简单， 只需要通过 `mysql.package.lzcapp:3306` 的方式就可以访问。
+## Connecting to Database Service
+Once the database service is started, access is also simple. You can access it through `mysql.package.lzcapp:3306`.
 
-比如， 应用的 `package` 为 `cloud.lazycat.app.todolistpy`， 在代码中只需要访问 `mysql.cloud.lazycat.app.todolistpy.lzcapp:3306` 就可以自由的读写 MySQL 啦。
+For example, if the application's `package` is `cloud.lazycat.app.todolistpy`, you only need to access `mysql.cloud.lazycat.app.todolistpy.lzcapp:3306` in the code to freely read and write MySQL.
 
-## 其他数据库服务
-当您需要启动类似PostgreSQL这样的数据库服务时， 只需要在 `lzc-manifest.yml` 文件中加入下面内容即可， 微服会自动启动一个数据库容器， 对外提供数据库读写服务， 默认监听 `5432` 端口。
+## Other Database Services
+When you need to start a database service like PostgreSQL, you only need to add the following content to the `lzc-manifest.yml` file. LCMD will automatically start a database container to provide database read and write services externally, defaulting to listening on port `5432`.
 
 ```yml
 services:
@@ -41,7 +41,7 @@ services:
     binds:
       - /lzcapp/var/pgdata:/var/lib/postgresql
 ```
-当您需要启动类似Redis这样的数据库服务时， 只需要在 `lzc-manifest.yml` 文件中加入下面内容即可， 微服会自动启动一个数据库容器， 对外提供数据库读写服务， 默认监听 `6379` 端口。
+When you need to start a database service like Redis, you only need to add the following content to the `lzc-manifest.yml` file. LCMD will automatically start a database container to provide database read and write services externally, defaulting to listening on port `6379`.
 
 ```yml
 services:

@@ -1,33 +1,33 @@
-路由规则
+Routing Rules
 =========
 
-`application.routes`字段为 `[]Rule`类型
+The `application.routes` field is of type `[]Rule`
 
-Rule按照`URL_PATH=UPSTREAM`的形式声明, 其中`URL_PATH`为浏览器访问时的实际URL路径(不含hostname部分),
-`UPSTREAM`为具体的上游服务, 目前支持以下3种协议
+Rule is declared in the form of `URL_PATH=UPSTREAM`, where `URL_PATH` is the actual URL path when the browser accesses (excluding the hostname part),
+`UPSTREAM` is the specific upstream service, currently supports the following 3 protocols
 
 - `file:///$dir_path`
 - `exec://$port,$exec_file_path`
 - `http(s)://$hostname/$path`
 
-http上游
+HTTP Upstream
 =======
 
-`http/https`支持内网或外网服务. 比如内置的应用商店这个lzcapp只有一行代码.
+`http/https` supports internal or external services. For example, the built-in app store lzcapp only has one line of code.
 
 ```
 routes:
     - /=https://appstore.lazycat.cloud
 ```
-当访问`https://appstore.$微服名称.heiyu.space`时会将所有请求都直接转发到上游的`https://appstore.lazycat.cloud`, 这种
-情况下页面内的js代码依旧可以使用`lzc-sdk/js`的功能, 应用商店的安装\打开逻辑是在微服中运行的,但代码是部署在公有云上,方便统一维护.
+When accessing `https://appstore.$LCMD_NAME.heiyu.space`, all requests will be directly forwarded to the upstream `https://appstore.lazycat.cloud`. In this
+case, the js code in the page can still use the functions of `lzc-sdk/js`. The app store's install\open logic runs in LCMD, but the code is deployed on public cloud for unified maintenance.
 
-绝大部分情况下,lzcapp的http路由是转发到应用内某个service的http端口上, 比如`bitwarden`这个密码管理lzcapp, 就是将整个lzcapp的
-http服务转发到bitwarden这个service的80端口上.
+In most cases, lzcapp's http routing forwards to a certain service's http port within the application. For example, the `bitwarden` password management lzcapp forwards the entire lzcapp's
+http service to bitwarden service's port 80.
 
 ```
 package: cloud.lazycat.app.bitwarden
-description: 一款自由且开源的密码管理服务
+description: A free and open source password management service
 name: Bitwarden
 
 application:
@@ -41,55 +41,55 @@ services:
 
 ```
 
-1. `http://bitwarden:80`中的bitwarden是services中的service名称,这个名称在运行时会自动解析为service实际的ip.
-2. `http://bitwarden.cloud.lazycat.app.bitwarden.lzcapp:80`的写法为`$service_name.$appid.lzcapp`
+1. `bitwarden` in `http://bitwarden:80` is the service name in services. This name will be automatically resolved to the service's actual ip at runtime.
+2. The writing of `http://bitwarden.cloud.lazycat.app.bitwarden.lzcapp:80` is `$service_name.$appid.lzcapp`
 
-注意
-1. lzcos-1.3.x之后会引入应用隔离,应用之间禁止相互访问,因此如果没有特殊原因直接使用`service_name`的形式作为域名更简便，也方便修改appid。(`xxx.lzcapp`本身不会被废弃，任意应用都能解析到正确IP，但隔离后无法访问到目标IP)
-2. 但以下特殊情况依旧需要使用`xxx.lzcapp`域名形式
-   1. 在lzcos-1.3.x之前因为没有进行应用隔离，所有应用看到的`service_name`都是互通的。当不同应用有相同service_name时，可能被错误解析到其他容器IP。
-      因此`service_name`是`app`、`db`这类大概率会冲突的情况下在应用网络隔离前依旧需要使用`xxx.lzcapp`形式。
-   2. 如果上游服务会检测`http request host`之类的，则需要使用`xxx.lzcapp`形式，否则上游服务解析http request时，
-      `http header host`会是`service_name`而非`aaaa.xxx.heiyu.space`。
-      此限制是因为上游服务也可能是一个公网服务，此时host必须原封不动传递给上游否则大概率会出现跨域之类的问题。
-      如果有相关需求，建议使用`upstreams.[].use_backend_host=true`明确指定此行为。
+Notes
+1. After lzcos-1.3.x, application isolation will be introduced, prohibiting mutual access between applications. Therefore, if there is no special reason, using `service_name` form as the domain name is simpler and also convenient for modifying appid. (`xxx.lzcapp` itself will not be deprecated, any application can resolve to the correct IP, but after isolation, it cannot access the target IP)
+2. But the following special cases still need to use `xxx.lzcapp` domain name form
+   1. Before lzcos-1.3.x, because application isolation was not performed, all applications saw `service_name` as interconnected. When different applications have the same service_name, they may be incorrectly resolved to other container IPs.
+      Therefore, when `service_name` is `app`, `db` and other cases that are likely to conflict, you still need to use `xxx.lzcapp` form before application network isolation.
+   2. If the upstream service will detect `http request host` and the like, you need to use `xxx.lzcapp` form, otherwise when the upstream service parses the http request,
+      `http header host` will be `service_name` instead of `aaaa.xxx.heiyu.space`.
+      This limitation is because the upstream service may also be a public network service. In this case, the host must be passed to the upstream unchanged, otherwise cross-origin and other problems are likely to occur.
+      If you have related needs, it is recommended to use `upstreams.[].use_backend_host=true` to explicitly specify this behavior.
 
-file上游
+File Upstream
 =========
 
-file路由用来加载静态html文件, 比如pptist这个lzcapp是一个纯前端应用,因此仅使用了一条静态file路由规则,没有运行任何其他service
+File routing is used to load static html files. For example, pptist lzcapp is a pure frontend application, so it only uses one static file routing rule and does not run any other services
 
 ```
 package: cloud.lazycat.app.pptist
 name: PPTist
-description: 一个基于 Vue3.x + TypeScript 的在线演示文稿（幻灯片）应用
+description: An online presentation (slides) application based on Vue3.x + TypeScript
 application:
   subdomain: pptist
   routes:
     - /=file:///lzcapp/pkg/content/
   file_handler:
     mime:
-      - x-lzc-extension/pptist         # app支持.pptist
-    actions:  # 打开对应文件的url路径,由文件管理器等app调用
-      open: /?file=%u   # %u是某个webdav上的具体文件路径，一定存在文件名后缀
+      - x-lzc-extension/pptist         # app supports .pptist
+    actions:  # URL path to open corresponding files, called by file manager and other apps
+      open: /?file=%u   # %u is a specific file path on a webdav, must have file name suffix
 
 ```
 
-一般静态资源是通过lpk文件打包时引入的,lpk对应的contentdir内容最终会在运行时原封不动的以readonly的形式存放在`/lzcapp/pkg/content/`目录
+Generally, static resources are introduced when the lpk file is packaged. The contentdir content corresponding to lpk will eventually be stored in the `/lzcapp/pkg/content/` directory in readonly form unchanged at runtime
 
 
-exec上游
+Exec Upstream
 =========
 
-`exec://$port,$exec_file_path`路由稍微特殊一点,由两部分组成
+`exec://$port,$exec_file_path` routing is slightly special, consisting of two parts
 
-1. 最终提供服务的端口号$port,这里强制隐含了host为127.0.0.1
-2. 具体的可执行文件路径. 可以为任意路径下的脚本或elf文件.
+1. The final service port number $port, here the host is implicitly forced to be 127.0.0.1
+2. The specific executable file path. Can be a script or elf file under any path.
 
-lzcapp启动时,系统会执行exec路由中的`$exec_file_path`文件,并假设此文件提供的服务运行在`http://127.0.0.1:$port`上.
-系统本身不会检测此服务是否真的由`$exec_file_path`启动. (因此也能基于这个特性做一些初始化相关的操作)
+When lzcapp starts, the system will execute the `$exec_file_path` file in the exec route, and assume that the service provided by this file runs on `http://127.0.0.1:$port`.
+The system itself does not detect whether this service is really started by `$exec_file_path`. (Therefore, you can also do some initialization-related operations based on this feature)
 
-一个lzcapp可以创建任意条不同类型的路由规则. 比如官方的懒猫网盘lzcapp的路由规则为
+An lzcapp can create any number of different types of routing rules. For example, the official LCMD Cloud Drive lzcapp routing rules are
 
 ```
 application:
@@ -101,45 +101,45 @@ application:
     - /=file:///lzcapp/pkg/content/dist
 ```
 
-其中前端页面由静态文件`/lzcapp/pkg/content/dist`提供,
-所有以`/api/`开头的路径由可执行文件`/lzcapp/pkg/content/backend`启动后在`http://127.0.0.1:3001`上提供服务,
-并且所有以`/files/`开头的路径也转发到`http://127.0.0.1:3001/files`上.
+The frontend page is provided by static files `/lzcapp/pkg/content/dist`,
+all paths starting with `/api/` are provided by the executable file `/lzcapp/pkg/content/backend` after startup on `http://127.0.0.1:3001`,
+and all paths starting with `/files/` are also forwarded to `http://127.0.0.1:3001/files`.
 
 
 
 UpstreamConfig
 ===============
-除此外还(v1.3.8+)可以使用[applications.upstreams](./spec/manifest.md)字段配置更细致的路由规则，
+In addition (v1.3.8+), you can use the [applications.upstreams](./spec/manifest.md) field to configure more detailed routing rules,
 
-比如,
+For example,
 ```
 subdomain: debug
 
-routes: #简单版本的routes也是可以一起工作的
+routes: # Simple version routes can also work together
   - /=http://app1.org.snyh.debug.whoami.lzcapp:80
 
 upstreams:
-  # 明确指定一些细微行为
+  # Explicitly specify some subtle behaviors
   - location: /search
     backend: https://baidu.com/
-    use_backend_host: true  #如果不设置则一般外网服务器会因为host字段不对拒绝服务
-    disable_auto_health_checking: true #不要针对这条路由做健康检测
-    remove_this_request_headers: #删除origin,referer等header避免跨域之类的问题
+    use_backend_host: true  # If not set, external servers will generally reject service because the host field is incorrect
+    disable_auto_health_checking: true # Don't do health checking for this route
+    remove_this_request_headers: # Remove origin, referer and other headers to avoid cross-origin and other problems
       - origin
       - Referer
-    disable_url_raw_path: true # 将原始url也进行规范化的转化
+    disable_url_raw_path: true # Also normalize the original url
 
-  # 跳过后端自签SSL证书问题
+  # Skip backend self-signed SSL certificate issues
   - location: /other
-    backend: https://app2.snyh.debug.lzcapp:4443 #正常情况下这个域名是不会有合法正式的
-    disable_backend_ssl_verify: true #因此需要在这里配置跳过SSL验证
+    backend: https://app2.snyh.debug.lzcapp:4443 # Normally this domain name will not have a legitimate certificate
+    disable_backend_ssl_verify: true # Therefore need to configure skipping SSL verification here
 
-  # 使用domain_prefix做基于域名前缀的分流
+  # Use domain_prefix for domain prefix-based routing
   - location: /
-    domain_prefix: config  #当访问https://config-debug.xx.heiyu.space/时走这里的规则
+    domain_prefix: config  # When accessing https://config-debug.xx.heiyu.space/, use the rules here
     backend: http://config.snyh.debug.lzcapp:80
 
-  # 使用backend_launch_command替代exec路由规则，语义更明确
+  # Use backend_launch_command to replace exec routing rules, semantics are clearer
   - location: /api
     backend: http://127.0.0.1:3001/
     backend_launch_command: /lzcapp/pkg/content/my-super-backend -listen :3001

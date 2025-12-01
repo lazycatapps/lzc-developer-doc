@@ -1,14 +1,15 @@
-# 如何配置微服的网络
-除了通过系统设置页面修改网络之外, 针对部分开发者, 微服也提供了更为灵活的方式进行网络配置. 本文将介绍如何通过配置文件的方式修改网络配置.
+# How to Configure LCMD Network
 
-首先需要获取微服的[ssh权限](./ssh), 一旦通过ssh登录上微服之后, 可以使用 `nmtui` 和 `nmcli` 命令来修改网络配置.下面重新配置有线使用静态ip为例
+In addition to modifying the network through the system settings page, for some developers, LCMD also provides more flexible ways to configure the network. This article will introduce how to modify network configuration through configuration files.
 
-## 设置使用静态ip
-执行`nmtui`命令后, 会进入一个交互式的界面, 选择`Edit a connection`选项, 选择需要修改的连接, 比如`Wired connection 1`, 然后选择`Edit`, 在弹出的界面中, 选择`IPv4 CONFIGURATION`, 将`Method`设置为`Manual`, 然后添加`Address`, `Netmask`, `Gateway`, `DNS Servers`等信息, 最后选择`OK`保存设置.
+First, you need to obtain [SSH permissions](./ssh) for LCMD. Once you log into LCMD via SSH, you can use the `nmtui` and `nmcli` commands to modify network configuration. Below is an example of reconfiguring wired connection to use static IP.
+
+## Set Static IP
+After executing the `nmtui` command, you will enter an interactive interface. Select the `Edit a connection` option, choose the connection you want to modify, such as `Wired connection 1`, then select `Edit`. In the popup interface, select `IPv4 CONFIGURATION`, set `Method` to `Manual`, then add `Address`, `Netmask`, `Gateway`, `DNS Servers` and other information. Finally, select `OK` to save the settings.
 
 ![nmtui](./public/nmtui.png)
 
-完成之后可以通过`nmcli`命令重新加载网络配置, 例如:
+After completion, you can reload the network configuration using the `nmcli` command, for example:
 ```
 nmcli device reapply enp2s0
 ```

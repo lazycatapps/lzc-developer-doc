@@ -1,43 +1,43 @@
-# Lzc-SDK 是什么?
+# What is Lzc-SDK?
 
-Lzc-SDK 是懒猫微服平台提供的 SDK， 使开发者能够与系统和应用状态进行交互， 创建更多好玩，  有趣的应用程序，  并将其发布到懒猫微服商店。
+Lzc-SDK is the SDK provided by the LCMD MicroServer platform, enabling developers to interact with system and application states, create more fun and interesting applications, and publish them to the LCMD MicroServer store.
 
-使用 Lzc-SDK， 开发者可以专注于构建创新应用， 无需担心服务器搭建、 后端逻辑、 API 设计或网络安全。 SDK 简化了开发过程， 让您只需几个函数调用就能创建和部署应用。
+Using Lzc-SDK, developers can focus on building innovative applications without worrying about server setup, backend logic, API design, or network security. The SDK simplifies the development process, allowing you to create and deploy applications with just a few function calls.
 
-SDK 支持多种编程语言的支持， 包含系统层， 应用层， 客户端层所需 API， 允许开发者全方位扩展懒猫微服。
-
-::: info
-目前支持 Go、 Javascript/Typescript， 后续会提供更多语言版本， 例如 Rust、 Dart、 Cpp、 Java、 Python、 Ruby、 C#、  PHP、 Objective-C、 Kotlin 敬请期待...
-:::
-
-## 扩展
-
-对应一些比较常见的场景， 懒猫微服平台中也提供了以下扩展:
-  - [lzc-minidb](https://www.npmjs.com/package/@lazycatcloud/minidb)， 一个类似 MongoDB 类型的小数据库， 方便开发者可以直接开发 Serverless 的应用。
-  - [lzc-file-pickers](https://www.npmjs.com/package/@lazycatcloud/lzc-file-pickers)， 一个懒猫微服中的文件选择器，  让您的应用支持直接打开微服中的文件。
+The SDK supports multiple programming languages, including APIs required for system layer, application layer, and client layer, allowing developers to comprehensively extend LCMD MicroServer.
 
 ::: info
-目前提供的扩展都是 Javascript/Typescript 的， 方便 Web 端使用。 如果不能满足您的需求， 欢迎反馈， 我们会尽快加上。 :)
+Currently supports Go, Javascript/Typescript. More language versions will be provided in the future, such as Rust, Dart, Cpp, Java, Python, Ruby, C#, PHP, Objective-C, Kotlin. Stay tuned...
 :::
 
-## Javascript 示例
-Javascript(Typescript)的 SDK  使用 npm 分发， 需要在您的项目中安装对应的  npm 包。
+## Extensions
+
+For some common scenarios, the LCMD MicroServer platform also provides the following extensions:
+  - [lzc-minidb](https://www.npmjs.com/package/@lazycatcloud/minidb), a small database similar to MongoDB type, convenient for developers to directly develop Serverless applications.
+  - [lzc-file-pickers](https://www.npmjs.com/package/@lazycatcloud/lzc-file-pickers), a file picker in LCMD MicroServer, allowing your application to directly open files in LCMD.
+
+::: info
+Currently provided extensions are all Javascript/Typescript, convenient for web use. If they don't meet your needs, please provide feedback, and we will add them as soon as possible. :)
+:::
+
+## Javascript Example
+The Javascript(Typescript) SDK is distributed using npm, and you need to install the corresponding npm package in your project.
 
 ```bash
 npm install @lazycatcloud/sdk
-# 或者
+# or
 pnpm install @lazycatcloud/sdk
 ```
 
-JS/TS 版本是使用 [grpc-web](https://github.com/improbable-eng/grpc-web) 提供服务， 下面提供了一个获取所有应用列表的示例:
+The JS/TS version uses [grpc-web](https://github.com/improbable-eng/grpc-web) to provide services. Below is an example of getting all application lists:
 
 ```js
 import { lzcAPIGateway } from "@lazycatcloud/sdk"
 
-// 初始化 lzcapi
+// Initialize lzcapi
 const lzcapi = new lzcAPIGateway(window.location.origin, false)
 
-// 使用 lzcapi 调用 package manager 服务以获取所有应用列表
+// Use lzcapi to call package manager service to get all application lists
 const apps = await lzcapi.pkgm.QueryApplication({ appidList: [] })
 
 console.debug("applicatons: ", apps)
@@ -51,7 +51,7 @@ console.debug("applicatons: ", apps)
       "appid": "cloud.lazycat.developer.tools",
       "status": 4,
       "version": "0.1.3",
-      "title": "懒猫云开发者工具",
+      "title": "LCMD Cloud Developer Tools",
       "description": "",
       "icon": "//lcc.heiyu.space/sys/icons/cloud.lazycat.developer.tools.png",
       "domain": "dev.lcc.heiyu.space",
@@ -63,21 +63,21 @@ console.debug("applicatons: ", apps)
 ```
 :::
 
-简单几步， 就可以很方便的和微服进行交互， 详细的 API 文档请查看 [LzcSDK API(JavaScript)](./api/javascript.md)。
+With just a few steps, you can easily interact with LCMD. For detailed API documentation, please see [LzcSDK API(JavaScript)](./api/javascript.md).
 
-## Go 示例
+## Go Example
 
-Go 原生支持 [grpc-go](https://github.com/grpc/grpc-go)， LzcSDK 也提供了对应的[支持](https://pkg.go.dev/gitee.com/linakesi/lzc-sdk/lang/go)。
+Go natively supports [grpc-go](https://github.com/grpc/grpc-go), and LzcSDK also provides corresponding [support](https://pkg.go.dev/gitee.com/linakesi/lzc-sdk/lang/go).
 
-下面使用几行代码快速体验和微服生态交互的能力。
+Below uses a few lines of code to quickly experience the ability to interact with the LCMD ecosystem.
 
-首先需要先在项目里安装 Lzc SDK 的依赖:
+First, you need to install Lzc SDK dependencies in your project:
 
 ```shell
 go get -u gitee.com/linakesi/lzc-sdk/lang/go
 ```
 
-随后只需要简单几步， 即可调用 SDK 提供的 API 了。
+Then you can call the APIs provided by the SDK with just a few simple steps.
 
 ```go
 package main
@@ -89,41 +89,41 @@ import (
 
 func main(){
 	ctx := context.TODO()
-	// 初始化 LzcAPI
+	// Initialize LzcAPI
 	lzcapi, err := lzcsdk.NewAPIGateway(ctx)
 	if err != nil {
 		fmt.Println("Initial Lzc Api failed:", err)
 		return
 	}
-	// 构建请求内容， 表示要获取 lazycat 这个用户的所有设备
+	// Build request content, indicating to get all devices of the user "lazycat"
 	request := &common.ListEndDeviceRequest{
 		Uid: "lazycat"
 	}
-	// 获取 lazycat 用户所有设备
+	// Get all devices of lazycat user
 	devices, err := lzcAPI.Devices.ListEndDevices(ctx, request)
 	if devices == nil {
-		fmt.Println("lazycat 没有任何设备")
+		fmt.Println("lazycat has no devices")
 		return
 	}
 	var onLineDevices []*common.EndDevice
 	for _, device := range devices.Devices {
 		d := device
-		// 判断设备是否在线
+		// Check if device is online
 		if d.IsOnline {
 			onLineDevices = append(onLineDevices, d)
-			fmt.Printf("%s 设备在线\n", d.Name)
+			fmt.Printf("%s device is online\n", d.Name)
 			}
 	}
-    fmt.Printf("在线的设备共有%d 个\n", len(onLineDevices))
+    fmt.Printf("There are %d online devices\n", len(onLineDevices))
 }
 ```
 
 :::info
 ```txt:no-line-numbers
-evan 设备在线
-wwh 设备在线
-在线的设备共有 2 个
+evan device is online
+wwh device is online
+There are 2 online devices
 ```
 :::
 
-调用 SDK 的 API 十分简单自然， 更详细的 API 请参阅 [LzcSDk API(Golang)](./api/golang.md)。
+Calling the SDK's API is very simple and natural. For more detailed APIs, please refer to [LzcSDk API(Golang)](./api/golang.md).

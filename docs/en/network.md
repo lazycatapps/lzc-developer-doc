@@ -1,146 +1,146 @@
-# 网络机制与 VPN
+# Network Mechanism and VPN
 
-## 网络数据传输机制
+## Network Data Transmission Mechanism
 
-### 直连模式
+### Direct Connection Mode
 
-当终端设备所在网络环境具备 IPv6/NAT3 时， 懒猫微服将与用户设备建立直接数据传输连接。 此时客户端状态图标将显示为蓝色， 表示处于直连传输状态。 若终端设备所在网络环境不具备公网 IP 地址， 系统将根据 NAT 网络状况自动提供免费的网络穿透服务。
+When the terminal device's network environment has IPv6/NAT3, LCMD MicroServer will establish direct data transmission connections with user devices. At this time, the client status icon will display as blue, indicating it's in direct transmission state. If the terminal device's network environment doesn't have a public IP address, the system will automatically provide free network penetration services based on NAT network conditions.
 
-### 中继服务
+### Relay Service
 
-在网络环境较为恶劣的情况下， 系统会自动切换至免费的中继数据传输服务。 由于采用端到端加密技术（TLS1.3/noise）， 数据传输内容对包括平台运营团队在内的任何第三方均不可见， 确保用户数据安全性。 中继传输状态下， 客户端状态图标将显示为黄色。
+In cases where the network environment is poor, the system will automatically switch to free relay data transmission services. Due to the use of end-to-end encryption technology (TLS1.3/noise), the data transmission content is invisible to any third party including the platform operation team, ensuring user data security. In relay transmission state, the client status icon will display as yellow.
 
-## 网络穿透服务范围
+## Network Penetration Service Scope
 
-懒猫穿透服务属于系统网络层， 包括官方应用在内的所有应用都会自动支持， 范围包括：
+LCMD penetration service belongs to the system network layer, and all applications including official applications will automatically support it, including:
 
-- 平台应用商店上架的所有应用
-- 开发者自主开发的应用程序
-- 开发者搭建的虚拟机
+- All applications listed on the platform app store
+- Applications developed independently by developers
+- Virtual machines built by developers
 
-该服务确保用户能够在全球范围内便捷访问微服云计算服务。
+This service ensures users can conveniently access LCMD cloud computing services globally.
 
-## VPN 共存解决方案 {#two_vpn}
+## VPN Coexistence Solution {#two_vpn}
 
-微服客户端内测版本已经支持`全局模式(VPN Tun)`和`客户端模式(Proxy)`两种运行模式。
-1. 全局模式： 对于非技术用户更友好， 终端中所有应用都可以访问微服资源
-2. 客户端模式： 对于技术用户更加方便， 可以融洽的解决双 VPN 冲突
+The LCMD client internal test version already supports two operation modes: `Global Mode (VPN Tun)` and `Client Mode (Proxy)`.
+1. Global Mode: More friendly for non-technical users, all applications in the terminal can access LCMD resources
+2. Client Mode: More convenient for technical users, can harmoniously resolve dual VPN conflicts
 
-### 安卓平台后台常住
+### Android Platform Background Persistence
 
-安卓平台下， 微服应用与微服客户端不在同一个 apk 内， 因此如果使用`客户端模式(Proxy)`， 需要将微服客户端常驻在后台, 不常驻会导致懒猫微服客户端被手机系统后台结束后引起不必要的网络错误。
+On the Android platform, LCMD applications and LCMD client are not in the same APK, so if using `Client Mode (Proxy)`, the LCMD client needs to be kept in the background. Not keeping it persistent will cause unnecessary network errors when the LCMD MicroServer client is terminated by the phone system background.
 
-安卓系统常住后台的方法， 以 Vivo 手机举例：
-1. 从屏幕底部上滑， 切换到窗口切换界面
-2. 点击懒猫微服客户端窗口顶部的小三角形， 在弹出的菜单中选择 `锁定` 菜单项， 即可将客户端常驻后台
-3. 注意， 懒猫微服客户端和懒猫应用都需要锁定常驻哟， 比如懒猫相册，懒猫网盘等
+Methods for Android system background persistence, using Vivo phone as an example:
+1. Swipe up from the bottom of the screen to switch to the window switching interface
+2. Click the small triangle at the top of the LCMD MicroServer client window, and select the `Lock` menu item from the popup menu to keep the client in the background
+3. Note that both the LCMD MicroServer client and Lazycat applications need to be locked for persistence, such as Lazycat Photos, Lazycat Cloud Storage, etc.
 
-此外， 安卓平台可通过 [Shelter](https://github.com/PeterCxy/Shelter) 方案， 通过双开工作区的原理来实现 VPN 双开。
+Additionally, the Android platform can use the [Shelter](https://github.com/PeterCxy/Shelter) solution to achieve VPN dual-opening through the principle of dual workspace.
 
 
-### 第三方应用访问微服资源
+### Third-party Applications Accessing LCMD Resources
 
-如果您需要在客户端之外访问微服资源， 比如 VidHub 本地客户端， ssh 客户端之类。
+If you need to access LCMD resources outside the client, such as VidHub local client, SSH client, etc.
 
-使用`客户端模式`后， 这些第三方应用无法访问微服资源， 此时需要将`http://127.0.0.1:31085`这个微服客户端提供的本地代理添加到您的代理软件中， 并将`heiyu.space`域名流量转发到此。
+After using `Client Mode`, these third-party applications cannot access LCMD resources. At this time, you need to add the local proxy `http://127.0.0.1:31085` provided by the LCMD client to your proxy software, and forward `heiyu.space` domain traffic to this address.
 
-此外如果您是 iOS 客户端， 则因为微服客户端无法后台常住(切换到后台 10s 内会被断网)， 所以也需要开启微服的后台常住(打开微服客户端->关于->查找设备)
+Additionally, if you are an iOS client, because the LCMD client cannot stay in the background (will be disconnected within 10 seconds after switching to background), you also need to enable LCMD background persistence (Open LCMD client -> About -> Find Device)
 
-(Android 版本目前未提供 http://127.0.0.1:31085， 如果需要请联系客户使用测试版)
+(Android version currently doesn't provide http://127.0.0.1:31085, if needed please contact customer service to use the test version)
 
-## 减少对懒猫微服的网络影响{#vpn_config}
+## Reducing Network Impact on LCMD MicroServer {#vpn_config}
 
-移动端使用`客户端模式(Proxy)`或在PC上运行了其他VPN软件后，会严重干扰懒猫微服客户端的工作， 需要您进一步进行以下配置， 以便将干扰减少到最低：
+After using `Client Mode (Proxy)` on mobile devices or running other VPN software on PC, it will seriously interfere with the LCMD MicroServer client's work. You need to further configure the following to minimize interference:
 
-1. 将"*.heiyu.space"和"*.lazycat.cloud"在DNS上返回真实IP不要进行任何干扰。
-2. 如果第三方VPN属于tun模式(ios/macos均为tun模式，android/linux/windows需要看具体软件)，则需要将`6.6.6.6/32`以及`2000::6666/128`这两个作为TUN旁路由规则中。(部分代理软件无此功能，这条主要影响打洞直连逻辑)
-3. 将`fc03:1136:3800::/40`加入到直连规则中
-4. (非必须)将heiyu.space的dns解析交由fc03:1136:3800::1来解析
+1. Return real IP for "*.heiyu.space" and "*.lazycat.cloud" in DNS without any interference.
+2. If the third-party VPN belongs to tun mode (iOS/macOS are both tun mode, Android/Linux/Windows need to check specific software), then add `6.6.6.6/32` and `2000::6666/128` to the TUN bypass routing rules. (Some proxy software doesn't have this function, this mainly affects hole punching direct connection logic)
+3. Add `fc03:1136:3800::/40` to the direct connection rules
+4. (Optional) Let fc03:1136:3800::1 resolve heiyu.space DNS
 
-配置1和2对应不同软件里的一些关键字:
-- fake-ip-filter、always-real-ip。
-   调整成功后在命令行下
-   - `dig AAAA 微服名.heiyu.space`应该看到的是类似`fc03:1136:38bb:5ee2:44bb:7479:f44e:0`这种输出
-   - `dig A hello.lazycat.cloud`看到的应该是`43.139.3.150`这种正常公网IP。如果是`198.x.x.x`就是还没配正确。
-- tun.route-exclude-address、tun-excluded-routes。
-  调整成功后在命令行下`ip route get 6.6.6.6`看到的应该是正常局域网出口，而非198.18.0.1之类的
+Configurations 1 and 2 correspond to some keywords in different software:
+- fake-ip-filter, always-real-ip.
+   After successful adjustment, in command line:
+   - `dig AAAA LCMD_name.heiyu.space` should see output like `fc03:1136:38bb:5ee2:44bb:7479:f44e:0`
+   - `dig A hello.lazycat.cloud` should see normal public network IP like `43.139.3.150`. If it's `198.x.x.x`, it's not configured correctly yet.
+- tun.route-exclude-address, tun-excluded-routes.
+   After successful adjustment, `ip route get 6.6.6.6` in command line should see normal LAN exit, not 198.18.0.1 etc.
 
 
 ::: tip 6.6.6.6
 
-6.6.6.6以及2000::6666这两个IP并非官方服务器，也不会实际向这两个IP发起任何网络请求。
+6.6.6.6 and 2000::6666 are not official servers, and no actual network requests will be made to these two IPs.
 
-这两个IP仅仅是普通的公网IP，微服客户端会利用`UDP Dial 6.6.6.6`的形式去检测本地网络出口，以最低成本来判断当前是否有局域网。
+These two IPs are just ordinary public network IPs. The LCMD client will use `UDP Dial 6.6.6.6` to detect local network exit, to determine at minimum cost whether there is currently a local area network.
 
-在存在第三方代理软件时，此IP还可以作为桥梁，来让用户有针对性的进行规则配置，以便让微服客户端能正确获取局域网出口IP等，否则会导致所有打洞逻辑全部失效。
+When third-party proxy software exists, this IP can also serve as a bridge to let users make targeted rule configurations, so that the LCMD client can correctly obtain LAN exit IP, etc., otherwise all hole punching logic will fail.
 
 :::
 
 
 
-### 路由器设置{#router_config}
+### Router Settings {#router_config}
 
-- upnp不要开secure相关选项
+- Do not enable secure-related options for upnp
 
-- DMZ不要开，开启后路由器的upnp会自动被禁用
+- Do not enable DMZ, as enabling it will automatically disable the router's upnp
 
-## 客户端代理模式下优化方案{#optimize-proxy-mode}
+## Client Proxy Mode Optimization Solution {#optimize-proxy-mode}
 
-### 保活方案
+### Keep-Alive Solution
 
-在非VPN模式下，操作系统可能会根据资源管理策略自动清理后台应用。为确保客户端稳定运行并避免因系统自动清理而被关闭，请按照以下优化方法进行设置。
+In non-VPN mode, the operating system may automatically clean up background applications according to resource management policies. To ensure stable client operation and avoid being closed due to system automatic cleanup, please configure according to the following optimization methods.
 
-优化教程：
+Optimization tutorials:
 
-[iOS保活图文教程](#iOS)   
+[iOS Keep-Alive Graphic Tutorial](#iOS)   
 
-[Android保活图文教程](#Android)
+[Android Keep-Alive Graphic Tutorial](#Android)
 
-### 开了其他VPN软件，网络感觉变慢了，怎么办
+### After opening other VPN software, the network feels slower, what to do
 
-客户端主页上的黄色小地球图标表示当前网络速度较慢。若想提升网络速度，可以参考以下民间图文教程，确保VPN规则放行懒猫微服，使网络畅通无阻。
+The yellow small globe icon on the client homepage indicates that the current network speed is slow. If you want to improve network speed, you can refer to the following community graphic tutorials to ensure VPN rules allow LCMD MicroServer, making the network smooth and unobstructed.
 
-优化教程：[小猪佩奇](https://github.com/wlabbyflower/peppapigconfigurationguide/tree/main)
+Optimization tutorial: [PeppaPig](https://github.com/wlabbyflower/peppapigconfigurationguide/tree/main)
 
-#### iOS保活图文教程{#iOS}
+#### iOS Keep-Alive Graphic Tutorial {#iOS}
 
 <img src="https://lzc-playground-1301583638.cos.ap-chengdu.myqcloud.com/guidelines/395/20250414140712138.png?imageSlim" alt="image-20250414140711942" style="zoom:50%;" /> 
 
-#### Android保活图文教程{#Android}
+#### Android Keep-Alive Graphic Tutorial {#Android}
 
-由于Android手机厂商繁多，以下未涉及到的手机厂商，烦请移驾到VIP群沟通
+Due to the variety of Android phone manufacturers, for phone manufacturers not covered below, please move to the VIP group for communication
 
-##### 小米手机:
+##### Xiaomi phones:
 
-允许使用后台流量
+Allow background traffic usage
 
-**小米 hyper os** 
+**Xiaomi Hyper OS** 
 
-1. 设置中搜索网络助手 ——> 打开助手后,点击联网管理 ——> 右上角点击后台联网权限  ——> 搜索懒猫微服 ——> 点击右边按钮允许（仅需开启懒猫微服）
+1. Search for Network Assistant in Settings -> Open Assistant, click Network Management -> Click Background Network Permission in the top right -> Search for LCMD MicroServer -> Click the right button to allow (only need to enable LCMD MicroServer)
 
 ![image-20250415145609296](https://lzc-playground-1301583638.cos.ap-chengdu.myqcloud.com/guidelines/395/20250415145609391.png?imageSlim)
 
-**小米 Miui 系统**
+**Xiaomi MIUI System**
 
-2. 长按懒猫微服进入应用详情 ——> 点击月流量消耗  ——>  允许 后台运行时联网
+2. Long press LCMD MicroServer to enter app details -> Click Monthly Traffic Consumption -> Allow background network access
 
 ![image-20250415150948805](https://lzc-playground-1301583638.cos.ap-chengdu.myqcloud.com/guidelines/395/20250415150948932.png?imageSlim)
 
-##### 华为手机/荣耀手机
+##### Huawei phones/Honor phones
 
-打开设置 ——> 应用和服务 ——> 应用启动管理  ——>  搜索懒猫微服后，点击右边的开关 ——> 点击右边按钮： 弹窗手动管理后， 选择下面的三个选项
+Open Settings -> Apps and Services -> App Launch Management -> Search for LCMD MicroServer, click the switch on the right -> Click the button on the right: After popup manual management, select the three options below
 
 ![image-20250415151830868](https://lzc-playground-1301583638.cos.ap-chengdu.myqcloud.com/guidelines/395/20250415151830955.png?imageSlim)
 
-**OPPO/真我手机** 
+**OPPO/Realme phones** 
 
-长按应用打开应用详情 ——> 打开耗电管理 ——> 允许应用后台行为
-长按应用打开应用详情 ——> 打开应用流量 ——> 可在后台使用数据
+Long press app to open app details -> Open Power Management -> Allow app background behavior
+Long press app to open app details -> Open App Traffic -> Can use data in background
 
 ![image-20250415152315761](https://lzc-playground-1301583638.cos.ap-chengdu.myqcloud.com/guidelines/395/20250415152315840.png?imageSlim)
 
 **Other**
 
-上面的都是大多数有2个设置， 1个是允许懒猫微服允许在后台运行，另外一个是允许后台使用流量联网权限。 
+The above all have 2 settings: 1 is to allow LCMD MicroServer to run in the background, and the other is to allow background network access permission.
 
-lzc-apk-shell的应用都依赖于懒猫微服客户端，这个时候客户端在后台,需要使用流量来连接微服，否则在相册，网盘无法连接到微服导致无法使用懒猫微服的应用。 
+lzc-apk-shell applications all depend on the LCMD MicroServer client. At this time, the client is in the background and needs to use traffic to connect to LCMD, otherwise in Photos, Cloud Storage cannot connect to LCMD, causing LCMD MicroServer applications to be unusable. 
