@@ -155,7 +155,7 @@ const zhLocaleThemeConfig = {
 
 const enLocaleThemeConfig = {
   nav: [
-    { text: "指南", link: "/" },
+    // { text: "Guidance", link: "/" },
     // { text: "Deve", link: "https://developer.lazycat.cloud/manage" },
   ],
   sidebar: [
