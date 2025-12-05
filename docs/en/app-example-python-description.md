@@ -118,7 +118,7 @@ The `application` field has the following fields:
 | ingress        | [Configure external ports](./advanced-public-api)                           | Only recommended when providing non-HTTP services       |
 | file_handler    | Declare file types supported by this app, [Application Association](./advanced-mime)            | Tool-type applications are recommended to configure this option so that when opening files in cloud drive, this application can be selected|
 
-::: details 示例
+::: details Example
 
 ```yml
 package: abc.example.com # App's unique id, when listing to store need to ensure no conflicts, try to use developer's own domain as suffix.
