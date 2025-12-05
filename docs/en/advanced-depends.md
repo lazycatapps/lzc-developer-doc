@@ -22,7 +22,7 @@ type HealthCheckConfig struct {
 }
 ```
 
-health_check 示例:
+health_check example:
 ```yml
 services:
   wordpress:
@@ -31,14 +31,14 @@ services:
         test:
             - CMD-SHELL
             - "curl -f http://localhost:80/ || exit 1"
-        # test_url: http://localhost:80 # 进行健康检查的 url，如果返回大于 500 则健康检查失败
+        # test_url: http://localhost:80 # URL for health check, health check fails if status code is greater than 500
         start_period: 190s
         disable: false
 ```
 
 ::: warning
-> 1. lzcapp 中的对应字段为 `health_check` 而非 `healthCheck`
-> 2. 即使 service 中没有填写 `health_check` 也会受 docker image 中对应字段影响
+> 1. The corresponding field in lzcapp is `health_check` instead of `healthCheck`
+> 2. Even if `health_check` is not filled in the service, it will still be affected by the corresponding field in the docker image
 :::
 
 Automatically Injected Health Checks

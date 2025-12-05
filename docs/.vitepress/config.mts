@@ -1,6 +1,33 @@
-import { defineConfig } from "vitepress";
+import { defineConfig, ThemeOptions } from "vitepress";
 
 const zhLocaleThemeConfig = {
+  docFooter: {
+    prev: "上一章",
+    next: "下一章",
+  },
+
+  outlineTitle: "章节导航",
+  outline: {
+    level: [2, 3],
+  },
+
+  sidebarMenuLabel: "目录",
+
+  lastUpdated: {
+    text: "最后更新于",
+    formatOptions: {
+      dateStyle: "full",
+      timeStyle: "medium",
+    },
+  },
+
+  // https://vitepress.dev/reference/default-theme-config
+  nav: [
+    { text: "指南", link: "/" },
+    { text: "开发者中心", link: "https://developer.lazycat.cloud/manage" },
+  ],
+
+  returnToTopLabel: "返回到顶部",
   markdown: {
     lineNumbers: true,
     container: {
@@ -127,6 +154,10 @@ const zhLocaleThemeConfig = {
 };
 
 const enLocaleThemeConfig = {
+  nav: [
+    { text: "指南", link: "/" },
+    // { text: "Deve", link: "https://developer.lazycat.cloud/manage" },
+  ],
   sidebar: [
     {
       text: "Welcome",
@@ -270,25 +301,20 @@ const enLocaleThemeConfig = {
       ],
     },
   ],
-  markdown: {
-    lineNumbers: true,
-    container: {
-      tipLabel: "Tip",
-      warningLabel: "Warning",
-      dangerLabel: "Danger",
-      infoLabel: "INFO",
-      detailsLabel: "Details",
-    },
-  },
 };
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  rewrites: {
+    "/": "zh/",
+  },
+  // i18nRouting: false,
   locales: {
     root: {
       label: "简体中文",
       lang: "zh",
-      dir: "zh",
+      dir: "./",
+      link: "/",
       title: "懒猫微服开发者手册",
       description: "高端私有云， 选懒猫就对了",
       themeConfig: zhLocaleThemeConfig,
@@ -323,21 +349,6 @@ export default defineConfig({
         },
       },
     },
-
-    outlineTitle: "章节导航",
-    outline: {
-      level: [2, 3],
-    },
-
-    docFooter: {
-      prev: "上一章",
-      next: "下一章",
-    },
-
-    sidebarMenuLabel: "目录",
-
-    returnToTopLabel: "返回到顶部",
-
     socialLinks: [
       {
         icon: {
@@ -347,20 +358,6 @@ export default defineConfig({
         link: "https://gitee.com/lazycatcloud",
       },
       { icon: "twitter", link: "https://x.com/manateelazycat" },
-    ],
-
-    lastUpdated: {
-      text: "最后更新于",
-      formatOptions: {
-        dateStyle: "full",
-        timeStyle: "medium",
-      },
-    },
-
-    // https://vitepress.dev/reference/default-theme-config
-    nav: [
-      { text: "指南", link: "/" },
-      { text: "开发者中心", link: "https://developer.lazycat.cloud/manage" },
     ],
   },
 });
