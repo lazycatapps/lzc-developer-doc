@@ -2,7 +2,7 @@
 
 ## How to Enable SSH?
 
-1. Administrator account logs into Lazycat client, go to 'Settings' -> 'Basic Information'
+1. Administrator account logs into Lazycat client, go to 'Settings' -> 'Basic Settings'
 
 2. Scroll down to find **Enable SSHD** 
 
