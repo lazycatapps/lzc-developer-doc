@@ -9,7 +9,7 @@
    Set root user password and enable the option
    
 
-![image.png](https://lzc-playground-1301583638.cos.ap-chengdu.myqcloud.com/guidelines/625/833cf476-1710-4320-a96b-3e780334d81a.png "image.png")
+![image.png](./images/ssh-access.png "image.png")
 
 
 3. Execute `ssh root@{LCMD_name}.heiyu.space` in your preferred terminal
