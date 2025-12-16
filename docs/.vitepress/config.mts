@@ -140,6 +140,7 @@ const zhLocaleThemeConfig = {
     {
       text: "系统变更日志(仅开发者相关)",
       items: [
+        { text: "v1.4.2", link: "/changelogs/v1.4.2.md" },
         { text: "v1.4.1", link: "/changelogs/v1.4.1.md" },
         { text: "v1.3.9", link: "/changelogs/v1.3.9.md" },
         { text: "v1.3.8", link: "/changelogs/v1.3.8.md" },
