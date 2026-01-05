@@ -153,7 +153,7 @@
 | `backend_launch_command` | `string` | 自动启动此字段里的程序 |
 | `trim_url_suffix` | `string` | 自动删除请求后端时url可能携带的指定字符 |
 | `disable_backend_ssl_verify` | `bool` | 请求backend时不进行ssl安全验证 |
-| `disable_auto_health_chekcing` | `bool` | 禁止系统自动针对此条目生成的健康检测 |
+| `disable_auto_health_checking` | `bool` | 禁止系统自动针对此条目生成的健康检测 |
 | `disable_url_raw_path` | `bool` | 如果为true则删除http header中的raw url |
 | `remove_this_request_headers` | `[]string` | 删除这个列表内的http request header， 比如"Origin"、"Referer" |
 | `fix_websocket_header` | `bool` | 自动将Sec-Websocket-xxx替换为Sec-WebSocket-xxx |
