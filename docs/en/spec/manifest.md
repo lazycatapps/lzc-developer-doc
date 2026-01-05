@@ -153,7 +153,7 @@
 | `backend_launch_command` | `string` | Automatically start the program in this field |
 | `trim_url_suffix` | `string` | Automatically delete specified characters that the url may carry when requesting backend |
 | `disable_backend_ssl_verify` | `bool` | Do not perform ssl security verification when requesting backend |
-| `disable_auto_health_chekcing` | `bool` | Disable system automatic health checking generated for this entry |
+| `disable_auto_health_checking` | `bool` | Disable system automatic health checking generated for this entry |
 | `disable_url_raw_path` | `bool` | If true, removes raw URL from HTTP header |
 | `remove_this_request_headers` | `[]string` | Remove HTTP request headers in this list, such as "Origin", "Referer" |
 | `fix_websocket_header` | `bool` | Automatically replace Sec-Websocket-xxx with Sec-WebSocket-xxx |
