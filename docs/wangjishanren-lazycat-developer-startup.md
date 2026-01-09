@@ -27,6 +27,8 @@
 这是目前中文圈对懒猫微服最系统、最深入的实战指南，
 [点击此处获取最新更新。](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI3NTY4MjcxNg==&action=getalbum&album_id=4010832321455538176#wechat_redirect "点击此处获取最新更新")
 
+同时也贴心的为你准备了[网页阅读版本](https://lazycat-docs.netlify.app/)哦。
+
 ---
 
 - [深度长文：NAS 大降价的年代，我为何接受溢价来购买懒猫微服（附送回本攻略）](http://mp.weixin.qq.com/s?__biz=MzI3NTY4MjcxNg==&mid=2247486283&idx=1&sn=af9b72c2bbd456eb16ef3a7f53db5f05&chksm=eb004fb8dc77c6ae20d6486410dbe7a20c5867f002bef5b2d390479f088a695d589d2ea9b4b9#rd)
