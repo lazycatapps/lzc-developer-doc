@@ -49,6 +49,7 @@
 | `image` | `string` | 应用镜像， 若无特殊要求， 请留空使用系统默认镜像(alpine3.21) |
 | `background_task` | `bool` | 若为 `true` 则会自动启动并且不会被自动休眠， 默认为 `true` |
 | `subdomain` | `string` | 本应用的入站子域名，应用打开默认使用此子域名 |
+| `secondary_domains` | `[]string` | 本应用的其他入站子域名 |
 | `multi_instance` | `bool` | 是否以多实例形式部署 |
 | `usb_accel` | `bool` | 挂载相关设备到所有服务容器内的 `/dev/bus/usb` |
 | `gpu_accel` | `bool` | 挂载相关设备到所有服务容器内的 `/dev/dri` |
@@ -59,13 +60,28 @@
 | 字段名 | 类型 | 描述 |
 | ---- | ---- | ---- |
 | `file_handler` | `FileHandlerConfig` | 声明本应用支持的扩展名， 以便其他应用在打开特定文件时可以调用本应用 |
+| `entries` | `[]EntryConfig` | 应用入口声明，用于配置多个入口的名称和地址信息，详见 4.3 |
 | `routes` | `[]string` | 简化版 http 相关路由规则 |
 | `upstreams` | `[]UpstreamConfig` | 高级版本 http 相关路由规则，与routes共存 |
 | `public_path` | `[]string` | 独立鉴权的 http 路径列表 |
 | `workdir` | `string` | `app` 容器启动时的工作目录 |
 | `ingress` | `[]IngressConfig` | TCP/UDP 服务相关 |
-| `environment` | `[]string` | `app` 容器的环境变量 |
+| `environment` | `map[string]string \| []string` | `app` 容器的环境变量，支持 map 或 list 形式 |
 | `health_check` | `AppHealthCheckExt` | `app` 容器的健康检测， 仅建议在开发调试阶段设置 `disable` 字段， 不建议进行替换， 否则系统默认注入的自动依赖检测逻辑会丢失 |
+| `oidc_redirect_path` | `string` | 合法的 OIDC redirect path，完整域名会自动根据 subdomain 进行拼接 |
+
+### 4.3 多入口配置 {#entries}
+
+`entries` 用于声明多个入口，系统可在启动器里展示多个入口。
+
+| 字段名 | 类型 | 描述 |
+| ---- | ---- | ---- |
+| `id` | `string` | 入口的唯一 ID |
+| `title` | `string` | 入口标题 |
+| `path` | `string` | 入口路径，通常以 `/` 开头。支持传递query参数 |
+| `prefix_domain` | `string` | 入口域名前缀，最终域名表现为 `<prefix>-<subdomain>.<rootdomain>` |
+
+入口标题支持通过 `locales` 配置 `entries.<entry_id>.title` 进行多语言本地化。
 
 ## 五、 `HealthCheckConfig` 配置
 ### 5.1 AppHealthCheckExt
@@ -94,10 +110,12 @@
 
 | 字段名 | 类型 | 描述 |
 | ---- | ---- | ---- |
-| `enable_document_access` | `bool` | 如果为true则将document目录挂载到/lzcapp/run/mnt/home |
-| `enable_media_access` | `bool` | 如果为true则将media目录挂载到/lzcapp/run/mnt/media |
+| `enable_document_access` | `bool` | 如果为true则将document目录挂载到/lzcapp/document |
+| `enable_media_access` | `bool` | 如果为true则将media目录挂载到/lzcapp/media |
+| `enable_clientfs_access` | `bool` | 如果为true则将clientfs目录挂载到/lzcapp/clientfs |
 | `disable_grpc_web_on_root` | `bool` | 如果为true则不再劫持应用的grpc-web流量。需要配合新版本lzc-sdk以便系统本身的grpc-web流量可以正常转发|
 | `default_prefix_domain` | string | 会调整启动器中点击应用后打开的[最终域名](../advanced-secondary-domains)，可以写任何不含`.`的字符串 |
+| `enable_bind_mime_globs` | `bool` | 如果为true则绑定系统的 mime globs 到容器内的 `/usr/share/mime/globs2` |
 
 
 
@@ -108,7 +126,7 @@
 | 字段名 | 类型 | 描述 |
 | ---- | ---- | ---- |
 | `image` | `string` | 对应容器的 docker 镜像 |
-| `environment` | `[]string` | 对应容器的环境变量 |
+| `environment` | `map[string]string \| []string` | 对应容器的环境变量，支持 map 或 list 形式 |
 | `entrypoint` | `*string` | 对应容器的 entrypoint， 可选 |
 | `command` | `*string` | 对应容器的 command， 可选 |
 | `tmpfs` | `[]string` | 挂载 tmpfs volume， 可选 |

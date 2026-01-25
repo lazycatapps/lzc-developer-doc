@@ -85,6 +85,7 @@ const zhLocaleThemeConfig = {
         { text: "后台常驻", link: "/advanced-background.md" },
         { text: "GPU 加速", link: "/advanced-gpu.md" },
         { text: "多实例", link: "/advanced-multi-instance.md" },
+        { text: "多入口", link: "/advanced-entries.md" },
         { text: "平台支持", link: "/advanced-platform.md" },
         { text: "错误页面", link: "/advanced-error-template.md" },
         { text: "路由规则", link: "/advanced-route.md" },
@@ -94,6 +95,7 @@ const zhLocaleThemeConfig = {
         { text: "环境变量", link: "/advanced-envs.md" },
         { text: "初始化脚本", link: "/advanced-setupscript.md" },
         { text: "独立鉴权", link: "/advanced-public-api.md" },
+        { text: "API Auth Token", link: "/advanced-api-auth-token.md" },
         { text: "4层转发", link: "/advanced-l4forward.md" },
         { text: "HTTP Headers", link: "/http-request-headers.md" },
         { text: "对接 OIDC ", link: "/advanced-oidc.html" },
@@ -140,6 +142,7 @@ const zhLocaleThemeConfig = {
     {
       text: "系统变更日志(仅开发者相关)",
       items: [
+        { text: "v1.4.3", link: "/changelogs/v1.4.3.md" },
         { text: "v1.4.2", link: "/changelogs/v1.4.2.md" },
         { text: "v1.4.1", link: "/changelogs/v1.4.1.md" },
         { text: "v1.3.9", link: "/changelogs/v1.3.9.md" },
