@@ -224,6 +224,7 @@ const enLocaleThemeConfig = {
         { text: "Background Persistence", link: "/en/advanced-background.md" },
         { text: "GPU Acceleration", link: "/en/advanced-gpu.md" },
         { text: "Multi-Instance", link: "/en/advanced-multi-instance.md" },
+        { text: "Multiple Entrypoints", link: "/en/advanced-entries.md" },
         { text: "Platform Support", link: "/en/advanced-platform.md" },
         { text: "Error Pages", link: "/en/advanced-error-template.md" },
         { text: "Routing Rules", link: "/en/advanced-route.md" },
@@ -239,6 +240,7 @@ const enLocaleThemeConfig = {
           text: "Independent Authentication",
           link: "/en/advanced-public-api.md",
         },
+        { text: "API Auth Token", link: "/en/advanced-api-auth-token.md" },
         { text: "Layer 4 Forwarding", link: "/en/advanced-l4forward.md" },
         { text: "HTTP Headers", link: "/en/http-request-headers.md" },
         { text: "OIDC Integration", link: "/en/advanced-oidc.html" },
@@ -294,6 +296,8 @@ const enLocaleThemeConfig = {
     {
       text: "Changelog (Developer Only)",
       items: [
+        { text: "v1.4.3", link: "/en/changelogs/v1.4.3.md" },
+        { text: "v1.4.2", link: "/en/changelogs/v1.4.2.md" },
         { text: "v1.4.1", link: "/en/changelogs/v1.4.1.md" },
         { text: "v1.3.9", link: "/en/changelogs/v1.3.9.md" },
         { text: "v1.3.8", link: "/en/changelogs/v1.3.8.md" },
