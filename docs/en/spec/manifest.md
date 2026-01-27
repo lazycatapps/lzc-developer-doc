@@ -59,15 +59,30 @@
 | Field Name | Type | Description |
 | ---- | ---- | ---- |
 | `file_handler` | `FileHandlerConfig` | Declare file extensions supported by this application, so other applications can call this application when opening specific files |
+| `entries` | `[]EntryConfig` | Application entry declaration, used to configure multiple entries' names and address information, see 4.3 |
 | `routes` | `[]string` | Simplified HTTP related routing rules |
 | `upstreams` | `[]UpstreamConfig` | Advanced version HTTP related routing rules, coexisting with routes |
-| `public_path` | `[]string` | List of HTTP paths for independent authentication |
+| `public_path` | `[]string` | List of HTTP paths with independent authentication |
 | `workdir` | `string` | Working directory when `app` container starts |
 | `ingress` | `[]IngressConfig` | TCP/UDP service related |
-| `environment` | `[]string` | Environment variables for `app` container |
+| `environment` | `map[string]string \| []string` | Environment variables for `app` container, supports map or list format |
 | `health_check` | `AppHealthCheckExt` | Health check for `app` container, only recommended to set `disable` field during development and debugging, not recommended to replace, otherwise the system's default injected automatic dependency detection logic will be lost |
+| `oidc_redirect_path` | `string` | Valid OIDC redirect path, full domain will be automatically composed based on subdomain |
 
 Note: `routes` trims the path prefix by default when forwarding. If you need to keep the prefix, use `upstreams` and set `disable_trim_location: true` (lzcos v1.3.9+).
+
+### 4.3 Multiple Entry Configuration {#entries}
+
+`entries` is used to declare multiple entries, the system can display multiple entries in the launcher.
+
+| Field Name | Type | Description |
+| ---- | ---- | ---- |
+| `id` | `string` | Unique ID of the entry |
+| `title` | `string` | Entry title |
+| `path` | `string` | Entry path, usually starts with `/`. Supports passing query parameters |
+| `prefix_domain` | `string` | Entry domain prefix, final domain is `<prefix>-<subdomain>.<rootdomain>` |
+
+Entry title supports localization via `locales` with `entries.<entry_id>.title`.
 
 ## 5. `HealthCheckConfig` Configuration
 ### 5.1 AppHealthCheckExt
@@ -96,10 +111,12 @@ Note: `routes` trims the path prefix by default when forwarding. If you need to 
 
 | Field Name | Type | Description |
 | ---- | ---- | ---- |
-| `enable_document_access` | `bool` | If true, mounts document directory to /lzcapp/run/mnt/home |
-| `enable_media_access` | `bool` | If true, mounts media directory to /lzcapp/run/mnt/media |
+| `enable_document_access` | `bool` | If true, mounts document directory to /lzcapp/document |
+| `enable_media_access` | `bool` | If true, mounts media directory to /lzcapp/media |
+| `enable_clientfs_access` | `bool` | If true, mounts clientfs directory to /lzcapp/clientfs |
 | `disable_grpc_web_on_root` | `bool` | If true, no longer hijacks application's grpc-web traffic. Needs to work with new version lzc-sdk so system's own grpc-web traffic can be forwarded normally|
 | `default_prefix_domain` | string | Will adjust the [final domain](../advanced-secondary-domains) opened after clicking the application in the launcher, can write any string without `.` |
+| `enable_bind_mime_globs` | `bool` | If true, bind system mime globs into `/usr/share/mime/globs2` inside the container |
 
 
 
@@ -110,7 +127,7 @@ Note: `routes` trims the path prefix by default when forwarding. If you need to 
 | Field Name | Type | Description |
 | ---- | ---- | ---- |
 | `image` | `string` | Docker image for the corresponding container |
-| `environment` | `[]string` | Environment variables for the corresponding container |
+| `environment` | `map[string]string \| []string` | Environment variables for the corresponding container, supports map or list format |
 | `entrypoint` | `*string` | Entrypoint for the corresponding container, optional |
 | `command` | `*string` | Command for the corresponding container, optional |
 | `tmpfs` | `[]string` | Mount tmpfs volume, optional |
@@ -125,7 +142,7 @@ Note: `routes` trims the path prefix by default when forwarding. If you need to 
 | `netadmin` | `bool` | If `true`, the container has `NET_ADMIN` permissions and can operate network-related system calls, please do not use unless necessary. If using this feature, please be careful not to disturb iptables related rules |
 |`setup_script` | `*string` | Configuration script, script content will be executed with root permissions, then execute original entrypoint content according to OCI specification. This field conflicts with entrypoint and command fields, cannot be set simultaneously, optional |
 | `binds` | `[]string` | lzcapp container rootfs will be lost after restart, only data under `/lzcapp/var`, `/lzcapp/cache` paths will be permanently retained. Therefore, other directories that need to be retained need to be bound under these two directories. This list only supports paths starting with `/lzcapp` |
-| `runtime` | `string` | 	Specify OCI runtime. Supports `runc` and `sysbox-runc`. sysbox-runc has higher isolation, can run complete dockerd, systemd, etc. But does not support namespace sharing related functions like network_mode=host|
+| `runtime` | `string` | Specify OCI runtime. Supports `runc` and `sysbox-runc`. sysbox-runc has higher isolation and can run complete dockerd, systemd, etc. But does not support namespace sharing related features like network_mode=host|
 
 
 ## 8. `FileHandlerConfig` Configuration
@@ -173,14 +190,17 @@ Configure `locales` to make applications support multiple languages. For support
 | `name` | `string` | Application name localization field |
 | `description` | `string` | Application description localization field |
 | `usage` | `string` | Application usage instructions localization field |
+| `entries.<entry_id>.title` | `string` | Entry title localization field, `entry_id` must match the `id` in `application.entries` |
+
+Note: Entry title can be localized via `locales` with `entries.<entry_id>.title`.
 
 ::: details Configuration Example
 ```yml
 lzc-sdk-version: 0.1
 package: cloud.lazycat.app.netatalk
 version: 0.0.1
-name: Apple Time Machine Backup
-description: Netatalk service can be used for Apple Time Machine backup
+name: Apple 时间机器备份
+description: Netatalk 服务可用于 Apple 时间机器备份
 author: Netatalk
 locales:
   zh:

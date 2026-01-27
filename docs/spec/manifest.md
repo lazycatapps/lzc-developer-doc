@@ -49,7 +49,6 @@
 | `image` | `string` | 应用镜像， 若无特殊要求， 请留空使用系统默认镜像(alpine3.21) |
 | `background_task` | `bool` | 若为 `true` 则会自动启动并且不会被自动休眠， 默认为 `true` |
 | `subdomain` | `string` | 本应用的入站子域名，应用打开默认使用此子域名 |
-| `secondary_domains` | `[]string` | 本应用的其他入站子域名 |
 | `multi_instance` | `bool` | 是否以多实例形式部署 |
 | `usb_accel` | `bool` | 挂载相关设备到所有服务容器内的 `/dev/bus/usb` |
 | `gpu_accel` | `bool` | 挂载相关设备到所有服务容器内的 `/dev/dri` |
@@ -191,6 +190,9 @@
 | `name` | `string` | 应用名称本地化字段 |
 | `description` | `string` | 应用描述本地化字段 |
 | `usage` | `string` | 应用的使用须知本地化字段 |
+| `entries.<entry_id>.title` | `string` | 入口标题本地化字段，`entry_id` 需与 `application.entries` 中的 `id` 一致 |
+
+说明：入口标题可通过 `locales` 配置 `entries.<entry_id>.title` 进行多语言本地化。
 
 ::: details 配置示例
 ```yml
