@@ -4,15 +4,8 @@ sidebar: false
 next: false
 prev: false
 ---
-# Public servers
+# 公共服务器访问异常
 
-- 在代理配置中，添加规则绕过懒猫微服公共服务器的域名。
+与微服相关的公共服务访问异常。请确认您当前的网络环境是否存在代理服务。如果存在代理，请参考以下链接进行更详细的设置或联系您的专属客服。
 
-Clash:
-
-```
-rules:
-  - DOMAIN-SUFFIX,lazycat.cloud,DIRECT
-  - DOMAIN-SUFFIX,lazycatcloud.com,DIRECT
-  - DOMAIN-SUFFIX,lazycatmicroserver.com,DIRECT
-```
+[配置指南](https://github.com/wlabbyflower/peppapigconfigurationguide)

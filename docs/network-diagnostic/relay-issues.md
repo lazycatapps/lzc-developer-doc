@@ -5,17 +5,8 @@ next: false
 prev: false
 ---
 
-# Relay
+# 访问微服中继节点异常
 
-- 请检查代理分流规则，确保开启了"绕过中国大陆"选项。并且配置"6.6.6.6"和"2000::6666"绕过代理。
+与访问微服中继节点的检测异常。请确认您当前的网络环境是否存在代理服务。如果存在代理，请参考以下链接进行更详细的设置或联系您的专属客服。
 
-Clash
-
-```
-rules:
-  - GEOIP,CN,DIRECT
-tun:
-  route-exclude-address:
-    - 6.6.6.6/32
-    - 2000::6666/128
-```
+[配置指南](https://github.com/wlabbyflower/peppapigconfigurationguide)
