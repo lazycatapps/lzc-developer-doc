@@ -10,6 +10,14 @@ Rule is declared in the form of `URL_PATH=UPSTREAM`, where `URL_PATH` is the act
 - `exec://$port,$exec_file_path`
 - `http(s)://$hostname/$path`
 
+Note: `application.routes` trims the `URL_PATH` prefix when forwarding. For example, with:
+```
+routes:
+  - /api/=http://backend:80
+```
+a browser request to `/api/v1` will be forwarded to the backend as `/v1`.
+If you need to keep the prefix, use `application.upstreams` and set `disable_trim_location: true` (lzcos v1.3.9+).
+
 HTTP Upstream
 =======
 

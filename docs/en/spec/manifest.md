@@ -67,6 +67,8 @@
 | `environment` | `[]string` | Environment variables for `app` container |
 | `health_check` | `AppHealthCheckExt` | Health check for `app` container, only recommended to set `disable` field during development and debugging, not recommended to replace, otherwise the system's default injected automatic dependency detection logic will be lost |
 
+Note: `routes` trims the path prefix by default when forwarding. If you need to keep the prefix, use `upstreams` and set `disable_trim_location: true` (lzcos v1.3.9+).
+
 ## 5. `HealthCheckConfig` Configuration
 ### 5.1 AppHealthCheckExt
 | Field Name | Type | Description |

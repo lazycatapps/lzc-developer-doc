@@ -10,6 +10,14 @@ Rule按照`URL_PATH=UPSTREAM`的形式声明, 其中`URL_PATH`为浏览器访问
 - `exec://$port,$exec_file_path`
 - `http(s)://$hostname/$path`
 
+注意：`application.routes` 在转发时默认会去掉 `URL_PATH` 前缀。例如下面规则，
+当浏览器请求 `/api/v1` 时，后端实际收到的是 `/v1`。
+```
+routes:
+  - /api/=http://backend:80
+```
+如果需要保留前缀，请改用 `application.upstreams` 并设置 `disable_trim_location: true`（lzcos v1.3.9+）。
+
 http上游
 =======
 
