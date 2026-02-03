@@ -63,6 +63,7 @@
 | `routes` | `[]string` | Simplified HTTP related routing rules |
 | `upstreams` | `[]UpstreamConfig` | Advanced version HTTP related routing rules, coexisting with routes |
 | `public_path` | `[]string` | List of HTTP paths with independent authentication |
+| `injects` | `[]InjectConfig` | Script injection configuration for specific paths (lzcinit) |
 | `workdir` | `string` | Working directory when `app` container starts |
 | `ingress` | `[]IngressConfig` | TCP/UDP service related |
 | `environment` | `map[string]string \| []string` | Environment variables for `app` container, supports map or list format |
@@ -83,6 +84,12 @@ Note: `routes` trims the path prefix by default when forwarding. If you need to 
 | `prefix_domain` | `string` | Entry domain prefix, final domain is `<prefix>-<subdomain>.<rootdomain>` |
 
 Entry title supports localization via `locales` with `entries.<entry_id>.title`.
+
+### 4.4 Script Injection Configuration {#injects}
+
+`injects` is used to inject scripts into HTML pages at specific paths, suitable for minimal adaptation of third-party applications.
+
+For details and built-in scripts, see: [Script Injection (injects)](../advanced-injects.md).
 
 ## 5. `HealthCheckConfig` Configuration
 ### 5.1 AppHealthCheckExt

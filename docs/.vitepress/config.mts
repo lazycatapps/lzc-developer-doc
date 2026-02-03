@@ -94,6 +94,7 @@ const zhLocaleThemeConfig = {
         { text: "应用多域名", link: "/advanced-secondary-domains.md" },
         { text: "环境变量", link: "/advanced-envs.md" },
         { text: "初始化脚本", link: "/advanced-setupscript.md" },
+        { text: "脚本注入", link: "/advanced-injects.md" },
         { text: "独立鉴权", link: "/advanced-public-api.md" },
         { text: "API Auth Token", link: "/advanced-api-auth-token.md" },
         { text: "4层转发", link: "/advanced-l4forward.md" },
@@ -236,6 +237,7 @@ const enLocaleThemeConfig = {
         },
         { text: "Environment Variables", link: "/en/advanced-envs.md" },
         { text: "Initialization Script", link: "/en/advanced-setupscript.md" },
+        { text: "Script Injection", link: "/en/advanced-injects.md" },
         {
           text: "Independent Authentication",
           link: "/en/advanced-public-api.md",

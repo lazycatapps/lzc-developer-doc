@@ -63,6 +63,7 @@
 | `routes` | `[]string` | 简化版 http 相关路由规则 |
 | `upstreams` | `[]UpstreamConfig` | 高级版本 http 相关路由规则，与routes共存 |
 | `public_path` | `[]string` | 独立鉴权的 http 路径列表 |
+| `injects` | `[]InjectConfig` | 脚本注入配置，用于在指定路径注入脚本（lzcinit） |
 | `workdir` | `string` | `app` 容器启动时的工作目录 |
 | `ingress` | `[]IngressConfig` | TCP/UDP 服务相关 |
 | `environment` | `map[string]string \| []string` | `app` 容器的环境变量，支持 map 或 list 形式 |
@@ -83,6 +84,62 @@
 | `prefix_domain` | `string` | 入口域名前缀，最终域名表现为 `<prefix>-<subdomain>.<rootdomain>` |
 
 入口标题支持通过 `locales` 配置 `entries.<entry_id>.title` 进行多语言本地化。
+
+### 4.4 脚本注入配置 {#injects}
+
+`injects` 用于在特定路径对 HTML 页面注入脚本，适合对第三方应用做最小侵入的适配逻辑。
+
+注入匹配规则：
+- `paths` 为空时，表示所有路径都匹配
+- `paths` 不为空时，任意前缀匹配即可
+- 命中后如再匹配 `exclude` 任一前缀，则不注入
+- `prefix_domain` 不为空时，仅匹配域名前缀为 `<prefix>-` 的请求
+
+`injects` 支持多个条目，按声明顺序注入。每个条目内的 `scripts` 也按顺序注入。
+
+#### InjectConfig
+| 字段名 | 类型 | 描述 |
+| ---- | ---- | ---- |
+| `id` | `string` | 注入配置的唯一 ID |
+| `prefix_domain` | `string` | 入口域名前缀（可选），仅对指定前缀域名生效 |
+| `paths` | `[]string` | 需要注入的路径前缀列表 |
+| `exclude` | `[]string` | 排除注入的路径前缀列表 |
+| `scripts` | `[]InjectScriptConfig` | 脚本列表 |
+
+#### InjectScriptConfig
+| 字段名 | 类型 | 描述 |
+| ---- | ---- | ---- |
+| `src` | `string` | 脚本来源，支持 `builtin://name`、`file:///lzcapp/...`、`http(s)://...` |
+| `params` | `map[string]any` | 传递给脚本的参数 |
+
+示例：
+```yml
+application:
+  injects:
+    - id: login-autofill
+      paths:
+        - /login
+        - /signin
+      exclude:
+        - /api
+      scripts:
+        - src: builtin://hello
+          params:
+            message: "hello world"
+        - src: file:///lzcapp/pkg/content/custom_inject.js
+          params:
+            usernameField: "#user"
+            passwordField: "#pass"
+        - src: https://dev.example.com/inject.js
+          params:
+            mode: "debug"
+```
+
+提示：`params` 会通过闭包参数注入脚本，脚本内可直接使用 `__LZC_INJECT_PARAMS__` 读取，避免多脚本全局变量冲突。
+
+提示：若页面存在严格的 CSP 限制，注入脚本可能无法执行。
+
+更多说明与内置脚本详解见：[脚本注入（injects）](../advanced-injects.md)。
 
 ## 五、 `HealthCheckConfig` 配置
 ### 5.1 AppHealthCheckExt
