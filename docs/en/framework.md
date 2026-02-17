@@ -6,3 +6,10 @@
 4. **Developer Mode**: The above are the three design layers of LCMD MicroServer. However, for developers, there is a lot of experimental work in the early stages. To reduce restrictions on developers, our system also supports [KVM](https://developer.lazycat.cloud/kvm.html) and [Dockerd](https://developer.lazycat.cloud/dockerd-support.html). KVM mainly allows SSH access to deploy development environments after installing a virtual machine. Dockerd mainly allows everyone to try Docker software with low barriers. Of course, you can also directly use [PVE](https://appstore.lazycat.cloud/#/shop/detail/in.zhaoj.webvirtcloud) to professionally manage and operate QEMU/KVM virtual machines.
 
 In short, the goal of the underlying system is to ensure upgrade stability, the goal of the business operating system is application resource management, the goal of LPK applications is to ensure user data security, and the goal of developer mode is to lower the threshold for developers to experiment.
+
+## Development Mode
+
+From a developer perspective, there are currently two main development modes:
+
+- **Application Mode (lzcapp)**: Provides an end-to-end workflow for lpk development, debugging, distribution, deployment, runtime, and access. It is more user-friendly for end users, but developers need time to get familiar with the related conventions.
+- **Traditional Mode**: Uses KVM and standalone Dockerd, following a traditional NAS-style deployment approach. It offers more freedom for developers who want to experiment, but it is not suitable as the standard distribution path for general LCMD users.

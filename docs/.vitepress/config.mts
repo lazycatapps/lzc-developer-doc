@@ -43,7 +43,6 @@ const zhLocaleThemeConfig = {
       text: "欢迎",
       items: [
         { text: "欢迎使用懒猫微服", link: "/index.md" },
-        { text: "懒猫微服的理念", link: "/start-from.md" },
         { text: "懒猫微服的架构设计", link: "/framework.md" },
         { text: "社区激励规则", link: "/store-rule.md" },
         { text: "开发者购机优惠", link: "/developer-cyber-discount.md" },
@@ -57,7 +56,6 @@ const zhLocaleThemeConfig = {
     {
       text: "快速入门",
       items: [
-        { text: "开发模式", link: "/develop-mode.md" },
         { text: "开发环境搭建", link: "/lzc-cli.md" },
         { text: "Hello World", link: "/hello-world.md" },
       ],
@@ -168,7 +166,6 @@ const enLocaleThemeConfig = {
       text: "Welcome",
       items: [
         { text: "Welcome to LCMD", link: "/en/index.md" },
-        { text: "LCMD Philosophy", link: "/en/start-from.md" },
         { text: "LCMD Architecture Design", link: "/en/framework.md" },
         { text: "Community Incentive Rules", link: "/en/store-rule.md" },
         {
@@ -188,7 +185,6 @@ const enLocaleThemeConfig = {
     {
       text: "Quick Start",
       items: [
-        { text: "Development Mode", link: "/en/develop-mode.md" },
         { text: "Development Environment Setup", link: "/en/lzc-cli.md" },
         { text: "Hello World", link: "/en/hello-world.md" },
       ],

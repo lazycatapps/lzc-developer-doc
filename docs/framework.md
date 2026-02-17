@@ -6,3 +6,10 @@
 4. **开发者模式**： 上面是懒猫微服的三个设计层， 但是对于开发者来说， 初期有很多实验性的工作， 为了减少对开发者的限制。 我们的系统也支持 [KVM](https://developer.lazycat.cloud/kvm.html)、 [Dockerd](https://developer.lazycat.cloud/dockerd-support.html)。 KVM 主要是安装一个虚拟机后， 可以 SSH 进去任意部署开发环境， Dockerd 主要是让大家低门槛的尝试 Docker 软件。 当然也可以直接用 [PVE](https://appstore.lazycat.cloud/#/shop/detail/in.zhaoj.webvirtcloud)来专业管理和操作 QEMU/KVM 虚拟机。
 
 简而言之， 底层系统的目标是保证升级稳定， 业务操作系统的目标是应用资源管理， LPK 应用的目标是保证用户数据安全， 开发者模式的目标是降低开发者折腾门槛。
+
+## 开发模式
+
+从开发者视角看， 当前主要有两种开发模式：
+
+- **应用模式（lzcapp）**：围绕 lpk 的开发、调试、分发、部署、运行、访问提供完整链路支持。对最终用户更友好，但开发者需要一定时间熟悉相关规范。
+- **传统模式**：基于 KVM 和独立 Dockerd，按传统 NAS 方式部署应用。对开发者折腾更自由，但不适合作为面向普通微服用户的标准分发方式。
