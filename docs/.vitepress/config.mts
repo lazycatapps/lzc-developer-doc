@@ -69,7 +69,6 @@ const zhLocaleThemeConfig = {
         { text: "DevShell开发模式", link: "/devshell-local.md" },
         { text: "开发依赖安装", link: "/devshell-install-and-use.md" },
         { text: "开发测试镜像", link: "/advanced-dev-image.md" },
-        { text: "浏览器插件调试", link: "/advanced-browser-extension.md" },
         { text: "第一个 VNC应用", link: "/app-vnc.md" },
       ],
     },
@@ -93,6 +92,7 @@ const zhLocaleThemeConfig = {
         { text: "环境变量", link: "/advanced-envs.md" },
         { text: "初始化脚本", link: "/advanced-setupscript.md" },
         { text: "脚本注入", link: "/advanced-injects.md" },
+        { text: "浏览器插件调试", link: "/advanced-browser-extension.md" },
         { text: "独立鉴权", link: "/advanced-public-api.md" },
         { text: "API Auth Token", link: "/advanced-api-auth-token.md" },
         { text: "4层转发", link: "/advanced-l4forward.md" },
@@ -204,10 +204,6 @@ const enLocaleThemeConfig = {
           link: "/en/devshell-install-and-use.md",
         },
         { text: "Development Test Images", link: "/en/advanced-dev-image.md" },
-        {
-          text: "Browser Extension Debugging",
-          link: "/en/advanced-browser-extension.md",
-        },
         { text: "First VNC Application", link: "/en/app-vnc.md" },
       ],
     },
@@ -234,6 +230,10 @@ const enLocaleThemeConfig = {
         { text: "Environment Variables", link: "/en/advanced-envs.md" },
         { text: "Initialization Script", link: "/en/advanced-setupscript.md" },
         { text: "Script Injection", link: "/en/advanced-injects.md" },
+        {
+          text: "Browser Extension Debugging",
+          link: "/en/advanced-browser-extension.md",
+        },
         {
           text: "Independent Authentication",
           link: "/en/advanced-public-api.md",
