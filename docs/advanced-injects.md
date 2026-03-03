@@ -5,12 +5,14 @@
 ====
 
 `injects` 用于在指定路径的 HTML 页面中注入脚本，适合第三方应用最小侵入适配。此功能需要 lzcos 1.5.0+。
+完整字段定义可参考 [manifest.md#injects](./spec/manifest.md#injects)。
 
 匹配规则
 ========
 
 - `paths` 为空：匹配所有路径
 - `paths` 不为空：任意前缀匹配即可
+- `paths` 仅基于请求 path 匹配；`#hash` 不属于 path，且浏览器不会将 `#hash` 发送到服务器，因此无法用于规则匹配
 - 命中后如再匹配 `exclude` 任一前缀，则不注入
 - `prefix_domain` 不为空时，仅匹配域名前缀为 `<prefix>-` 的请求
 - `injects` 条目按声明顺序执行；每个条目内 `scripts` 也按顺序注入

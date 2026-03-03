@@ -5,12 +5,14 @@ Overview
 ========
 
 `injects` allows injecting scripts into HTML pages at specific paths. It is designed for minimal adaptation of third-party apps. Requires lzcos 1.5.0+.
+For full field definitions, see [manifest.md#injects](./spec/manifest.md#injects).
 
 Matching Rules
 ==============
 
 - If `paths` is empty: match all paths
 - If `paths` is not empty: any prefix match is enough
+- `paths` matching is based on the request path only; `#hash` is not part of the path, and browsers do not send it to the server, so it cannot be used for rule matching
 - If a matched path also matches any prefix in `exclude`, injection is skipped
 - If `prefix_domain` is set: only match hosts whose prefix is `<prefix>-`
 - `injects` entries run in order; `scripts` inside each entry also run in order
