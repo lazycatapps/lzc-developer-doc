@@ -90,10 +90,13 @@
 `injects` 用于在特定路径对 HTML 页面注入脚本，适合对第三方应用做最小侵入的适配逻辑。
 
 注入匹配规则：
-- `paths` 为空时，表示所有路径都匹配
-- `paths` 不为空时，任意前缀匹配即可
-- 命中后如再匹配 `exclude` 任一前缀，则不注入
+- 使用 `include` 白名单与 `exclude` 黑名单
+- `include` 必填，任意一条命中即可进入候选
+- `exclude` 可选，任意一条命中即排除
+- 最终结果：`matched = includeMatched && !excludeMatched`
 - `prefix_domain` 不为空时，仅匹配域名前缀为 `<prefix>-` 的请求
+- `mode` 支持 `exact`/`prefix`，默认 `exact`，作用于 `path/hash`
+- 仅 HTML 响应会执行注入，非 HTML 响应不会注入脚本
 
 `injects` 支持多个条目，按声明顺序注入。每个条目内的 `scripts` 也按顺序注入。
 
@@ -102,8 +105,9 @@
 | ---- | ---- | ---- |
 | `id` | `string` | 注入配置的唯一 ID |
 | `prefix_domain` | `string` | 入口域名前缀（可选），仅对指定前缀域名生效 |
-| `paths` | `[]string` | 需要注入的路径前缀列表 |
-| `exclude` | `[]string` | 排除注入的路径前缀列表 |
+| `mode` | `string` | 匹配模式，`exact` 或 `prefix`，默认 `exact` |
+| `include` | `[]string` | 注入白名单规则，至少一条 |
+| `exclude` | `[]string` | 注入黑名单规则，可选 |
 | `scripts` | `[]InjectScriptConfig` | 脚本列表 |
 
 #### InjectScriptConfig
@@ -112,16 +116,31 @@
 | `src` | `string` | 脚本来源，支持 `builtin://name`、`file:///lzcapp/...`、`http(s)://...` |
 | `params` | `map[string]any` | 传递给脚本的参数 |
 
+规则语法：
+
+`include/exclude` 单条规则格式为：`<path>[?<query>][#<hash>]`
+
+语义说明：
+
+- `path` 必填，`query/hash` 可选
+- `query` token 支持 `key` 或 `key=value`
+- 单条规则内 query token 为 AND（全部满足）
+- query 匹配为 contains 语义（允许额外 query 参数）
+- `hash` 属于客户端软匹配条件；服务端仅按 `path/query` 决定是否注入 wrapper
+
 示例：
 ```yml
 application:
   injects:
     - id: login-autofill
-      paths:
+      mode: exact
+      include:
         - /login
-        - /signin
+        - /signin?channel=stable
+        - /#login
       exclude:
         - /api
+        - /#debug
       scripts:
         - src: builtin://hello
           params:
@@ -137,9 +156,7 @@ application:
 
 提示：`params` 会通过闭包参数注入脚本，脚本内可直接使用 `__LZC_INJECT_PARAMS__` 读取，避免多脚本全局变量冲突。
 
-提示：若页面存在严格的 CSP 限制，注入脚本可能无法执行。
-
-更多说明与内置脚本详解见：[脚本注入（injects）](../advanced-injects.md)。
+更多说明（运行时行为、hashchange、内置脚本参数、实践建议）见：[脚本注入（injects）](../advanced-injects.md)。
 
 ## 五、 `HealthCheckConfig` 配置
 ### 5.1 AppHealthCheckExt

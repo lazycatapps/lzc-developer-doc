@@ -89,7 +89,74 @@ Entry title supports localization via `locales` with `entries.<entry_id>.title`.
 
 `injects` is used to inject scripts into HTML pages at specific paths, suitable for minimal adaptation of third-party applications.
 
-For details and built-in scripts, see: [Script Injection (injects)](../advanced-injects.md).
+Matching rules:
+- Use `include` as allowlist and `exclude` as denylist
+- `include` is required; matching any rule enters candidate set
+- `exclude` is optional; matching any rule rejects injection
+- Final result: `matched = includeMatched && !excludeMatched`
+- If `prefix_domain` is set, only hosts with `<prefix>-` are matched
+- `mode` supports `exact`/`prefix`, default is `exact`, applied to `path/hash`
+- Injection runs only for HTML responses; non-HTML responses are not injected
+
+`injects` supports multiple entries in declaration order. `scripts` inside each entry are also injected in order.
+
+#### InjectConfig
+| Field Name | Type | Description |
+| ---- | ---- | ---- |
+| `id` | `string` | Unique ID of this inject config |
+| `prefix_domain` | `string` | Optional domain prefix filter, only effective for `<prefix>-*` hosts |
+| `mode` | `string` | Match mode: `exact` or `prefix`, default `exact` |
+| `include` | `[]string` | Allowlist rules, at least one item |
+| `exclude` | `[]string` | Denylist rules, optional |
+| `scripts` | `[]InjectScriptConfig` | Script list |
+
+#### InjectScriptConfig
+| Field Name | Type | Description |
+| ---- | ---- | ---- |
+| `src` | `string` | Script source: `builtin://name`, `file:///lzcapp/...`, or `http(s)://...` |
+| `params` | `map[string]any` | Parameters passed to script |
+
+Rule syntax:
+
+Single `include/exclude` rule format: `<path>[?<query>][#<hash>]`
+
+Semantics:
+
+- `path` is required; `query/hash` are optional
+- query token supports `key` or `key=value`
+- query tokens inside one rule are AND
+- query matching uses contains semantics (extra query params are allowed)
+- `hash` is a client-side soft condition; server decides wrapper injection by `path/query`
+
+Example:
+```yml
+application:
+  injects:
+    - id: login-autofill
+      mode: exact
+      include:
+        - /login
+        - /signin?channel=stable
+        - /#login
+      exclude:
+        - /api
+        - /#debug
+      scripts:
+        - src: builtin://hello
+          params:
+            message: "hello world"
+        - src: file:///lzcapp/pkg/content/custom_inject.js
+          params:
+            usernameField: "#user"
+            passwordField: "#pass"
+        - src: https://dev.example.com/inject.js
+          params:
+            mode: "debug"
+```
+
+Note: `params` is injected via closure parameter. Read it in script by `__LZC_INJECT_PARAMS__`.
+
+For runtime behavior, `hashchange`, built-in script details, and best practices, see: [Script Injection (injects)](../advanced-injects.md).
 
 ## 5. `HealthCheckConfig` Configuration
 ### 5.1 AppHealthCheckExt
