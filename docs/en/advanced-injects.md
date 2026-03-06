@@ -4,189 +4,177 @@ Script Injection (injects)
 Overview
 ========
 
-`injects` injects scripts into HTML pages when URL rules match. It is designed for minimal adaptation of third-party apps. Requires lzcos 1.5.0+.
+`injects` lets you adapt application behavior without changing OCI images or upstream source code, by injecting scripts into browser, request, or response phases.
 For field definitions, see [manifest.md#injects](./spec/manifest.md#injects). This page focuses on runtime behavior and practical usage.
 
-Quick Example
-=============
+Use Cases
+=========
+
+- Password autofill and auto-login: see [Passwordless Login](./advanced-inject-passwordless-login.md).
+- CORS/CSP fine tuning: add/remove response headers on specific routes.
+- Replace browser file dialog with Lazycat storage flow.
+- Hide or modify specific page elements without upstream source changes.
+- Advanced routing: dynamic reverse proxy control via `ctx.proxy`.
+- Request/response compatibility fixes (headers, WebSocket details, etc.).
+- User-scoped persistence with `ctx.persist`.
+- Request-level troubleshooting with `ctx.dump`.
+
+Phase And Runtime
+=================
+
+Each inject belongs to exactly one phase:
+
+- `on=browser`: runs in real browser runtime.
+- `on=request`: runs in lzcinit sandbox before upstream forwarding.
+- `on=response`: runs in lzcinit sandbox after upstream response.
+
+Execution order:
+
+- First by `application.injects` declaration order.
+- Then by `do[]` order inside each inject.
+- Match strategy is `all-match-run` within the same phase.
+
+Short-circuit behavior:
+
+- In `request/response`, once `ctx.response.send(...)` or `ctx.proxy.to(...)` takes effect, remaining scripts in that phase stop.
+- Any script error stops current phase immediately.
+
+Matching Rules
+==============
+
+Matching fields:
+
+- `when`: OR match rules; any matched rule enters candidate set.
+- `unless`: OR exclude rules; any matched rule rejects candidate.
+- `prefix_domain`: host prefix filter (`<prefix>-...`).
+- `auth_required`: default `true`; skip inject when no valid `SAFE_UID`.
+
+Single-rule format:
+
+`<path-pattern>[?<query>][#<hash-pattern>]`
+
+Rule semantics:
+
+- Only suffix `*` is supported (prefix matching); without `*`, match is exact.
+- Query token supports `key` and `key=value`.
+- Query tokens in one rule are AND.
+- `#hash` is supported only in `browser`; not supported in `request/response`.
+
+Examples:
+
+- `"/"`: root only.
+- `"/*"`: any path.
+- `"/api/*?v=2"`: `/api/` prefix + query contains `v=2`.
+- `"/#login"`: hash equals `login` (browser only).
+
+Manifest Example
+================
 
 ```yml
 application:
   injects:
     - id: login-autofill
-      include:
-        - "/"
-        - "/?version=1.2&channel=stable"
-        - "/#login"
-      scripts:
-        - src: builtin://simple-inject-password
+      when:
+        - /#login
+        - /#signin
+      do:
+        - src: builtin://hello
           params:
-            user: "admin"
-            password: "admin123"
+            message: "hello world"
+
+    - id: inject-basic-auth-header
+      auth_required: false
+      on: request
+      when:
+        - /api/*
+      do: |
+        ctx.headers.set("Authorization", "Basic " + ctx.base64.encode("admin:admin123"));
+
+    - id: remove-cors
+      on: response
+      when:
+        - /api/*
+      unless:
+        - /api/admin/*
+      do: |
+        ctx.headers.del("Access-Control-Allow-Origin");
+        ctx.headers.del("Access-Control-Allow-Credentials");
 ```
 
-Rule Model
-==========
-
-- `include`: allowlist rules, any match enters candidate set
-- `exclude`: denylist rules, any match rejects injection
-- `mode`: `exact` or `prefix`, default is `exact`, applied to `path/hash`
-- `prefix_domain`: if set, only hosts with `<prefix>-` are matched
-- `injects` entries run in order; scripts inside each entry also run in order
-
-Rule Syntax
+`do` Syntax
 ===========
 
-Single rule format:
+`do` supports two forms:
 
-`<path>[?<query>][#<hash>]`
+- short syntax: `do` is a script string (single script entry).
+- long syntax: `do` is `[]InjectScriptConfig` (multiple entries with per-script params).
 
-Examples:
-
-- `"/"`
-- `"/?version=1.2"`
-- `"/#login"`
-- `"/app?version=1.2&channel=stable#signin"`
-
-Parsing notes:
-
-- `path` is required and must start with `/`
-- query token supports two forms:
-  - `key`: key must exist
-  - `key=value`: key must contain at least one matching value
-- query tokens in one rule are AND
-- query uses contains semantics: extra params are allowed
-
-Matching Semantics
-==================
-
-Overall logic:
-
-- `include` is OR: any matched rule is enough
-- `exclude` is OR: any matched rule rejects
-- final result: `matched = includeMatched && !excludeMatched`
-
-Single rule logic (AND):
-
-- `path` matches
-- and `query` matches (if declared)
-- and `hash` matches (if declared)
-
-`mode` semantics (`path/hash`):
-
-- `exact`: full equality match
-- `prefix`: prefix match
-
-Hash Behavior (hard/soft)
+Dynamic Params `$persist`
 =========================
 
-- `path/query` are server-visible conditions (hard matching)
-- `hash` is not server-visible and is treated as a client-side soft condition
+`params` supports `$persist` markers, resolved by current request `SAFE_UID`:
 
-This means:
+- `{ $persist: "key" }`
+- `{ $persist: "key", default: <any> }`
 
-- server decides whether to inject wrapper by `path/query`
-- wrapper evaluates full rule (including `hash`) in browser
-- wrapper may be injected while script does not run due to hash mismatch; this is expected
+Behavior:
 
-Execution Timing And Runtime Object
-===================================
+- Use persisted value when key exists.
+- Use `default` when key missing and default is provided.
+- Return `null` when key missing and default is not provided.
 
-Wrapper triggers:
-
-1. run one evaluation after page load (`trigger=load`)
-2. listen `hashchange` and re-evaluate on each change (`trigger=hashchange`)
-3. execute script whenever matched; no built-in deduplication
-
-Runtime objects in script:
-
-- `__LZC_INJECT_PARAMS__`: values from `scripts[].params`
-- `__LZC_INJECT_RUNTIME__`:
-  - `executedBefore`: whether this script has already run in current page lifecycle
-  - `executionCount`: current execution count (starts from `1`)
-  - `trigger`: `load` or `hashchange`
-
-Example (script side):
-
-```js
-(() => {
-  const runtime = __LZC_INJECT_RUNTIME__ || {};
-  if (runtime.executedBefore) {
-    return;
-  }
-  const params = __LZC_INJECT_PARAMS__ || {};
-  console.log("inject params:", params);
-})();
-```
-
-Script Sources
+`ctx` Overview
 ==============
 
-`scripts[].src` supports:
+Common fields for all phases:
 
-- `builtin://name`: built-in scripts from lzcinit
-- `file:///path`: scripts from app filesystem (common path: `/lzcapp/pkg/content/`)
-- `http(s)://...`: remote scripts (debug only recommendation)
+- `ctx.id` / `ctx.src` / `ctx.phase` / `ctx.params` / `ctx.safe_uid`
+- `ctx.request.host` / `ctx.request.path` / `ctx.request.raw_query`
 
-Remote scripts use conditional caching (`ETag`/`Last-Modified`).
+Common browser fields:
+
+- `ctx.request.hash`
+- `ctx.runtime.executedBefore`
+- `ctx.runtime.executionCount`
+- `ctx.runtime.trigger`
+- `ctx.persist` (Promise API)
+
+Common request/response helpers:
+
+- `ctx.headers`
+- `ctx.body`
+- `ctx.flow`
+- `ctx.persist`
+- `ctx.response`
+- `ctx.proxy`
+- `ctx.base64` / `ctx.fs` / `ctx.env` / `ctx.dump`
+
+Full ctx specification:
+
+- [inject.ctx](./spec/inject-ctx.md)
 
 Built-in Scripts
 ================
 
-`builtin://hello`
------------------
+Most commonly used built-in script:
 
-Prints a debug message.
+- `builtin://simple-inject-password`
 
-Params:
+For a complete walkthrough:
 
-- `message`: output content, default `hello world`
+- [Passwordless Login](./advanced-inject-passwordless-login.md)
 
-`builtin://simple-inject-password`
-----------------------------------
+Validation And Troubleshooting
+==============================
 
-Auto-fills username/password and can auto-submit. Use only on explicit login pages.
+Recommended workflow:
 
-Params (`params`):
+1. Start with a minimal short-syntax script (for example `console.log`) to verify matching.
+2. Add one behavior helper (`ctx.headers` or `ctx.body`) for single-point verification.
+3. Then introduce `ctx.flow` + `ctx.persist` for cross-phase coordination.
 
-| Name | Type | Description |
-| ---- | ---- | ---- |
-| `user` | `string` | Username value, default empty |
-| `password` | `string` | Password value, default empty |
-| `requireUser` | `bool` | Require username field; default logic: `false` when `allowPasswordOnly=true`, otherwise `true` if `user` is non-empty |
-| `allowPasswordOnly` | `bool` | Allow password-only fill, default `false` |
-| `autoSubmit` | `bool` | Auto submit, default `true` |
-| `submitMode` | `string` | Submit mode: `auto`/`requestSubmit`/`click`/`enter`, default `auto` |
-| `submitDelayMs` | `int` | Delay before auto-submit (ms), default `50`, minimum `0` |
-| `retryCount` | `int` | Auto-submit retry count, default `10` |
-| `retryIntervalMs` | `int` | Auto-submit retry interval (ms), default `300` |
-| `observerTimeoutMs` | `int` | DOM/state observation timeout (ms), default `8000` |
-| `debug` | `bool` | Enable debug log, default `false` |
-| `userSelector` | `string` | Explicit selector for username input |
-| `passwordSelector` | `string` | Explicit selector for password input |
-| `formSelector` | `string` | Limit search scope to a container |
-| `submitSelector` | `string` | Explicit selector for submit button |
-| `allowHidden` | `bool` | Allow hidden input fields, default `false` |
-| `allowReadOnly` | `bool` | Allow read-only input fields, default `false` |
-| `onlyFillEmpty` | `bool` | Fill only empty fields, default `false` |
-| `allowNewPassword` | `bool` | Allow `autocomplete=new-password` fields, default `false` |
-| `includeShadowDom` | `bool` | Search open Shadow DOM, default `false` |
-| `shadowDomMaxDepth` | `int` | Max Shadow DOM recursion depth, default `2` |
-| `preferSameForm` | `bool` | Prefer username field in same form as password, default `true` |
-| `eventSequence` | `string` or `[]string` | Event sequence after filling, default `input,change,keydown,keyup,blur` |
-| `keyValue` | `string` | Key value for keyboard events, default `a` |
-| `userKeywords` | `string` or `[]string` | Extra username keywords |
-| `userExcludeKeywords` | `string` or `[]string` | Extra username exclude keywords |
-| `passwordKeywords` | `string` or `[]string` | Extra password keywords |
-| `passwordExcludeKeywords` | `string` or `[]string` | Extra password exclude keywords |
-| `submitKeywords` | `string` or `[]string` | Extra submit button keywords |
+Common mistakes:
 
-Best Practices
-==============
-
-- For multiple target pages, add multiple `include` rules instead of loosening one rule
-- For login redirect cases, use query constraints directly, for example `"/?version=1.2&channel=stable"`
-- For hash-routing apps, use `__LZC_INJECT_RUNTIME__.executedBefore` to decide whether to rerun
-- Strongly recommend passing username/password via deployment parameters instead of hardcoding weak credentials in source or manifest
-- Non-HTML responses are never injected; `exclude` is mainly for narrowing HTML page scope further (for example `/admin/debug`)
-- Remote scripts are recommended for debugging only; use `builtin://` or `file://` for release
+- Using `#hash` rule in `on=request/response`.
+- Expecting inject to run without `SAFE_UID` while `auth_required=true`.
+- Calling `ctx.body.getJSON()` on non-JSON payload without error handling.

@@ -102,6 +102,10 @@ const zhLocaleThemeConfig = {
       ],
     },
     {
+      text: "专题",
+      items: [{ text: "免密登录", link: "/advanced-inject-passwordless-login.md" }],
+    },
+    {
       text: "扩展",
       items: [{ text: "官方扩展", link: "/extensions.md" }],
     },
@@ -136,6 +140,7 @@ const zhLocaleThemeConfig = {
       items: [
         { text: "lzc-build.yml", link: "/spec/build.md" },
         { text: "lzc-manifest.yml", link: "/spec/manifest.md" },
+        { text: "inject.ctx", link: "/spec/inject-ctx.md" },
       ],
     },
     {
@@ -249,6 +254,10 @@ const enLocaleThemeConfig = {
       ],
     },
     {
+      text: "Topics",
+      items: [{ text: "Passwordless Login", link: "/en/advanced-inject-passwordless-login.md" }],
+    },
+    {
       text: "Extensions",
       items: [{ text: "Official Extensions", link: "/en/extensions.md" }],
     },
@@ -289,6 +298,7 @@ const enLocaleThemeConfig = {
       items: [
         { text: "lzc-build.yml", link: "/en/spec/build.md" },
         { text: "lzc-manifest.yml", link: "/en/spec/manifest.md" },
+        { text: "inject.ctx", link: "/en/spec/inject-ctx.md" },
       ],
     },
     {

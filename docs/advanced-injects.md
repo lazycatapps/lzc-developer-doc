@@ -4,189 +4,181 @@
 概述
 ====
 
-`injects` 用于在指定 URL 命中的 HTML 页面中注入脚本，适合第三方应用最小侵入适配。此功能需要 lzcos 1.5.0+。
-字段定义请先看 [manifest.md#injects](./spec/manifest.md#injects)；本文聚焦行为细节和实践建议。
+`injects` 用于在不修改 OCI image 或应用源码的前提下，按规则注入脚本，覆盖浏览器行为、请求行为和响应行为。
+字段定义见 [manifest.md#injects](./spec/manifest.md#injects)。本文聚焦运行机制、调试方式和实践建议。
 
-快速示例
+适用场景
+========
+
+- 密码填充与自动登录：见 [免密登录](./advanced-inject-passwordless-login.md)。
+- CORS/CSP 微调：按路径精确增删响应头，适配 iframe、前端调试等场景。
+- 替换浏览器文件对话框到懒猫网盘：拦截前端交互并接入自定义文件选择流程。
+- 隐藏或修改部分页面元素：在不改上游源码的前提下做 UI 适配和运营开关。
+- 高级路由：在 request/response 阶段结合 `ctx.proxy` 做动态反向代理。
+- 请求头/响应头兼容修正：例如补充鉴权头、修正 WebSocket 相关头、清理冲突头。
+- 按用户持久化行为：通过 `ctx.persist` 保存用户侧配置，跨请求复用。
+- 请求级诊断与排障：用 `ctx.dump` 输出关键请求/响应信息，快速定位问题。
+
+阶段与执行环境
+==============
+
+每个 inject 只属于一个阶段：
+
+- `on=browser`：脚本在应用页面真实浏览器环境执行。
+- `on=request`：脚本在 lzcinit 沙盒中执行，时机是请求转发到 upstream 前。
+- `on=response`：脚本在 lzcinit 沙盒中执行，时机是收到 upstream 响应后。
+
+执行顺序：
+
+- 先按 `application.injects` 的声明顺序。
+- 再按同一 inject 的 `do[]` 声明顺序。
+- 命中策略是 `all-match-run`，即同阶段所有命中 inject 都执行。
+
+中断行为：
+
+- `request/response` 阶段里，`ctx.response.send(...)` 或 `ctx.proxy.to(...)` 生效后立即短路，停止当前阶段后续脚本。
+- 任一脚本报错，当前阶段立即终止并返回错误。
+
+匹配规则
+========
+
+匹配字段：
+
+- `when`：命中条件（OR），任意一条命中即可进入候选。
+- `unless`：排除条件（OR），任意一条命中即排除。
+- `prefix_domain`：仅匹配 `<prefix>-` 前缀域名请求。
+- `auth_required`：默认 `true`。请求没有合法 `SAFE_UID` 时跳过当前 inject。
+
+单条规则格式：
+
+`<path-pattern>[?<query>][#<hash-pattern>]`
+
+规则语义：
+
+- 仅支持后缀 `*` 作为前缀匹配；无 `*` 时为精确匹配。
+- `query` token 支持 `key` 或 `key=value`，单条规则内为 AND。
+- `#hash` 仅 browser 阶段支持，request/response 阶段不支持 hash 规则。
+
+示例：
+
+- `"/"`：仅匹配根路径。
+- `"/*"`：匹配任意路径。
+- `"/api/*?v=2"`：匹配 `/api/` 前缀且 query 包含 `v=2`。
+- `"/#login"`：匹配 hash 为 `login`（仅 browser）。
+
+清单示例
 ========
 
 ```yml
 application:
   injects:
     - id: login-autofill
-      include:
-        - "/"
-        - "/?version=1.2&channel=stable"
-        - "/#login"
-      scripts:
-        - src: builtin://simple-inject-password
+      when:
+        - /#login
+        - /#signin
+      do:
+        - src: builtin://hello
           params:
-            user: "admin"
-            password: "admin123"
+            message: "hello world"
+
+    - id: inject-basic-auth-header
+      auth_required: false
+      on: request
+      when:
+        - /api/*
+      do: |
+        ctx.headers.set("Authorization", "Basic " + ctx.base64.encode("admin:admin123"));
+
+    - id: remove-cors
+      on: response
+      when:
+        - /api/*
+      unless:
+        - /api/admin/*
+      do: |
+        ctx.headers.del("Access-Control-Allow-Origin");
+        ctx.headers.del("Access-Control-Allow-Credentials");
 ```
 
-规则模型
-========
+`do` 写法
+=========
 
-- `include`：白名单规则，任一命中即进入候选
-- `exclude`：黑名单规则，任一命中即排除
-- `mode`：`exact` 或 `prefix`，默认 `exact`，作用于 `path/hash`
-- `prefix_domain`：非空时，仅匹配域名前缀为 `<prefix>-` 的请求
-- `injects` 条目按声明顺序注入；每个条目内 `scripts` 也按顺序注入
+`do` 支持两种写法：
 
-规则语法
-========
+- short syntax：`do` 直接写脚本字符串（只对应一条脚本）。
+- long syntax：`do` 写 `[]InjectScriptConfig`（可配置多条脚本与 `params`）。
 
-单条规则格式：
+动态参数 `$persist`
+===================
 
-`<path>[?<query>][#<hash>]`
+`params` 支持用 `$persist` 动态取值，按当前请求的 `SAFE_UID` 解析：
 
-示例：
+- `{ $persist: "key" }`
+- `{ $persist: "key", default: <any> }`
 
-- `"/"`
-- `"/?version=1.2"`
-- `"/#login"`
-- `"/app?version=1.2&channel=stable#signin"`
+行为说明：
 
-解析说明：
+- 命中持久值时使用持久值。
+- 未命中时，若配置 `default` 则返回默认值。
+- 未命中且无默认值时返回 `null`。
 
-- `path` 必填，且必须以 `/` 开头
-- `query` token 支持两种形式：
-  - `key`：要求 key 存在
-  - `key=value`：要求 key 至少有一个 value 等于该值
-- 单条规则内 query token 为 AND（全部满足）
-- query 为 contains 语义：请求允许包含额外参数
+`ctx` 能力概览
+==============
 
-匹配语义
-========
+所有阶段都提供：
 
-整体逻辑：
+- `ctx.id` / `ctx.src` / `ctx.phase` / `ctx.params` / `ctx.safe_uid`
+- `ctx.request.host` / `ctx.request.path` / `ctx.request.raw_query`
 
-- `include` 是 OR：任意一条命中即可进入候选
-- `exclude` 是 OR：任意一条命中即拒绝
-- 最终结果：`matched = includeMatched && !excludeMatched`
+browser 阶段常用：
 
-单条规则逻辑（AND）：
+- `ctx.request.hash`
+- `ctx.runtime.executedBefore`
+- `ctx.runtime.executionCount`
+- `ctx.runtime.trigger`
+- `ctx.persist`（Promise 接口）
 
-- `path` 命中
-- 且 `query` 命中（若声明）
-- 且 `hash` 命中（若声明）
+request/response 阶段常用：
 
-`mode` 语义（作用于 `path/hash`）：
-
-- `exact`：完全匹配
-- `prefix`：前缀匹配
-
-Hash 行为（hard/soft）
-======================
-
-- `path/query` 是服务端可见条件，属于 hard 匹配
-- `hash` 是服务端不可见条件，自动降级为客户端 soft 匹配
-
-这意味着：
-
-- 服务端先根据 `path/query` 判断是否注入 wrapper
-- wrapper 在浏览器端再按完整规则（含 `hash`）决定是否执行脚本
-- 可能出现“注入了 wrapper 但因 hash 不匹配未执行脚本”，这是预期行为
-
-执行时机与运行时参数
-====================
-
-wrapper 的触发时机：
-
-1. 页面加载后执行一次评估（`trigger=load`）
-2. 监听 `hashchange`，每次 hash 变化后再次评估（`trigger=hashchange`）
-3. 只要命中规则就执行脚本，不做内置去重
-
-脚本可读取以下对象：
-
-- `__LZC_INJECT_PARAMS__`：来自 `scripts[].params`
-- `__LZC_INJECT_RUNTIME__`：
-  - `executedBefore`：当前页面生命周期内，该脚本此前是否执行过
-  - `executionCount`：当前是第几次执行（从 `1` 开始）
-  - `trigger`：`load` 或 `hashchange`
-
-示例（脚本侧）：
-
-```js
-(() => {
-  const runtime = __LZC_INJECT_RUNTIME__ || {};
-  if (runtime.executedBefore) {
-    return;
-  }
-  const params = __LZC_INJECT_PARAMS__ || {};
-  console.log("inject params:", params);
-})();
-```
-
-脚本来源
-========
-
-`scripts[].src` 支持：
-
-- `builtin://name`：使用 lzcinit 内置脚本
-- `file:///path`：读取应用文件系统内脚本（常见路径 `/lzcapp/pkg/content/`）
-- `http(s)://...`：远程脚本（建议仅调试使用）
-
-远程脚本加载会使用条件请求缓存（`ETag`/`Last-Modified`）。
+- `ctx.headers`：读写 HTTP 头
+- `ctx.body`：读取与改写 body
+- `ctx.flow`：同一请求内 request -> response 临时共享
+- `ctx.persist`：跨请求持久化
+- `ctx.response`：直接返回响应（短路）
+- `ctx.proxy`：动态改写反代目标
+- `ctx.base64` / `ctx.fs` / `ctx.env` / `ctx.dump`
 
 内置脚本
 ========
 
-`builtin://hello`
------------------
+内置脚本列表和参数说明见：
 
-打印调试信息。
+- [manifest inject 规范](./spec/manifest.md#injects)
 
-参数：
+当前最常用的是：
 
-- `message`：输出内容，默认 `hello world`
+- `builtin://simple-inject-password`
 
-`builtin://simple-inject-password`
-----------------------------------
+完整免密登录专题见：
 
-自动填充账号/密码，并可选自动提交。建议仅在明确登录路径下注入。
+- [免密登录](./advanced-inject-passwordless-login.md)
 
-参数说明（`params`）：
+验证与排错
+==========
 
-| 参数 | 类型 | 说明 |
-| ---- | ---- | ---- |
-| `user` | `string` | 账号值，默认空 |
-| `password` | `string` | 密码值，默认空 |
-| `requireUser` | `bool` | 是否必须找到账号输入框；默认逻辑：若 `allowPasswordOnly=true` 则 `false`，否则当 `user` 非空时为 `true` |
-| `allowPasswordOnly` | `bool` | 允许仅填充密码，默认 `false` |
-| `autoSubmit` | `bool` | 是否自动提交，默认 `true` |
-| `submitMode` | `string` | 提交模式：`auto`/`requestSubmit`/`click`/`enter`，默认 `auto` |
-| `submitDelayMs` | `int` | 自动提交前延迟（毫秒），默认 `50`，最小 `0` |
-| `retryCount` | `int` | 自动提交重试次数，默认 `10` |
-| `retryIntervalMs` | `int` | 自动提交重试间隔（毫秒），默认 `300` |
-| `observerTimeoutMs` | `int` | DOM/状态观察超时（毫秒），默认 `8000` |
-| `debug` | `bool` | 开启调试日志，默认 `false` |
-| `userSelector` | `string` | 显式指定账号输入框选择器 |
-| `passwordSelector` | `string` | 显式指定密码输入框选择器 |
-| `formSelector` | `string` | 限定在指定容器内搜索输入框 |
-| `submitSelector` | `string` | 显式指定提交按钮选择器 |
-| `allowHidden` | `bool` | 允许填充不可见输入框，默认 `false` |
-| `allowReadOnly` | `bool` | 允许填充只读输入框，默认 `false` |
-| `onlyFillEmpty` | `bool` | 仅当输入框为空时才填充，默认 `false` |
-| `allowNewPassword` | `bool` | 允许填充 `autocomplete=new-password` 的密码框，默认 `false` |
-| `includeShadowDom` | `bool` | 是否搜索开放的 Shadow DOM，默认 `false` |
-| `shadowDomMaxDepth` | `int` | Shadow DOM 最大递归深度，默认 `2` |
-| `preferSameForm` | `bool` | 优先选择与密码框同一表单内的账号框，默认 `true` |
-| `eventSequence` | `string` 或 `[]string` | 触发事件序列，默认 `input,change,keydown,keyup,blur` |
-| `keyValue` | `string` | 触发键盘事件时的按键值，默认 `a` |
-| `userKeywords` | `string` 或 `[]string` | 追加账号字段关键词（逗号分隔或数组） |
-| `userExcludeKeywords` | `string` 或 `[]string` | 追加账号字段排除关键词 |
-| `passwordKeywords` | `string` 或 `[]string` | 追加密码字段关键词 |
-| `passwordExcludeKeywords` | `string` 或 `[]string` | 追加密码字段排除关键词 |
-| `submitKeywords` | `string` 或 `[]string` | 追加提交按钮关键词 |
+验证建议：
 
-实践建议
-========
+1. 先用 short syntax 写最小脚本（例如 `console.log`）确认匹配生效。
+2. 再引入 `ctx.headers` 或 `ctx.body` 做单点改写。
+3. 最后再叠加 `ctx.flow` 和 `ctx.persist` 做阶段协作。
 
-- 需要多个页面时，优先增加多条 `include`，而不是放宽规则
-- 登录跳转场景可直接用 query 条件约束，例如 `"/?version=1.2&channel=stable"`
-- hash 路由场景建议在脚本中结合 `__LZC_INJECT_RUNTIME__.executedBefore` 控制是否重跑
-- 强烈建议将用户名、密码改为部署参数注入，避免在代码或 manifest 中写死弱密码
-- 非 HTML 响应天然不会被注入；`exclude` 主要用于进一步限制 HTML 页面范围（例如 `/admin/debug` 这类页面路径）
-- 远程脚本仅建议调试使用，正式发布建议改为 `builtin://` 或 `file://`
+常见错误：
+
+- `when` 写了 `#hash`，但 `on=request/response`：该规则不会生效。
+- 没有 `SAFE_UID` 且 `auth_required=true`：inject 会被跳过。
+- `ctx.body.getJSON()` 直接解析失败：请求体并非合法 JSON，需要先判断或捕获异常。
+
+下一步
+======
+
+- 需要做免密登录流程，请继续阅读：[免密登录](./advanced-inject-passwordless-login.md)
