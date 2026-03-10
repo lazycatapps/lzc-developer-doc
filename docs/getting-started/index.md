@@ -3,7 +3,7 @@
 本栏目面向第一次开发 LPK 的开发者，目标是用最短路径完成一次真实部署：
 
 1. 先部署成功并在多端看到结果。
-2. 再进入新版 dev workflow，理解开发态与发布态的分工。
+2. 再进入开发流程，理解前端开发、后端开发与 release 发布的分工。
 3. 再接入后端与 HTTP 路由。
 4. 最后理解 LPK 运行机制和进阶镜像构建。
 
@@ -19,7 +19,7 @@
 | --- | --- | --- |
 | 1 | [开发者环境搭建](./env-setup.md) | 本机开发环境可用，`lzc-cli` 可连目标微服 |
 | 2 | [5 分钟完成 Hello World 并多端验证](./hello-world-fast.md) | 第一个应用部署成功，可在 Android/iOS/macOS/Windows/Web 查看 |
-| 3 | [新开发模式总览](./dev-workflow.md) | 理解 `lzc-build.dev.yml`、`inject request`、`project sync --watch` 如何组成统一开发流 |
+| 3 | [开发流程总览](./dev-workflow.md) | 理解 `lzc-build.dev.yml`、`inject request`、`project sync --watch` 如何组成统一开发流 |
 | 4 | [有后端时如何通过 HTTP 路由对接](./http-route-backend.md) | 理解 `application.routes` 与后端联调边界 |
 | 5 | [LPK 如何工作：精简机制与最小规范](./lpk-how-it-works.md) | 形成构建、安装、运行的整体心智模型 |
 | 6 | [高级实战：内嵌镜像与上游定制](./advanced-vnc-embed-image.md) | 基于 `gui-vnc` 模板，用 `images` + `embed:<alias>` 做上游镜像定制发布 |

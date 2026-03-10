@@ -167,7 +167,7 @@ envs:
 2. 开发机服务未就绪时，直接返回静态引导内容，不默认 fallback。
 3. release 不携带这些开发态行为。
 
-更完整的说明见：[新开发模式总览](./getting-started/dev-workflow.md)
+更完整的说明见：[开发流程总览](./getting-started/dev-workflow.md)
 
 ## 下一步
 

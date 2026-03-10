@@ -3,7 +3,7 @@
 This section is for developers building their first LPK. The goal is to complete one real deployment as quickly as possible:
 
 1. Deploy successfully and verify it from multiple clients.
-2. Understand the new dev workflow and the split between development and release.
+2. Understand the dev workflow and the split between frontend development, backend development, and release.
 3. Add backend logic and HTTP routing.
 4. Understand the LPK mechanism and embedded image workflow.
 
@@ -19,7 +19,7 @@ This section is for developers building their first LPK. The goal is to complete
 | --- | --- | --- |
 | 1 | [Environment Setup](./env-setup.md) | Local environment works and `lzc-cli` can reach your target microservice |
 | 2 | [Hello World in 5 Minutes](./hello-world-fast.md) | First app is deployed and visible on Android/iOS/macOS/Windows/Web |
-| 3 | [New Dev Workflow Overview](./dev-workflow.md) | Understand how `lzc-build.dev.yml`, `request` inject, and `project sync --watch` form one development workflow |
+| 3 | [Dev Workflow Overview](./dev-workflow.md) | Understand how `lzc-build.dev.yml`, `request` inject, and `project sync --watch` form one development workflow |
 | 4 | [HTTP Routing with Backend](./http-route-backend.md) | Understand `application.routes` and the boundary of frontend/backend integration |
 | 5 | [How LPK Works](./lpk-how-it-works.md) | Build a complete mental model of build/package/install flow |
 | 6 | [Advanced Embedded Image Practice](./advanced-vnc-embed-image.md) | Use `images` + `embed:<alias>` with `gui-vnc` for upstream image customization |

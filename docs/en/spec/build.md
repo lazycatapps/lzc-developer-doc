@@ -160,4 +160,4 @@ The key of `images` is the alias referenced by `embed:<alias>` in `lzc-manifest.
 1. `compose_override` is supported by `lzc-cli >= 1.2.61`.
 2. It is intended for runtime permissions or compose fields that are not yet covered by the current LPK spec.
 
-See [compose override](./advanced-compose-override.md).
+See [compose override](../advanced-compose-override.md).

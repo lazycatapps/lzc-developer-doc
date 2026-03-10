@@ -1,6 +1,6 @@
 # request inject Dev Cookbook
 
-This page does not repeat basic inject syntax. It focuses directly on the most common request inject patterns used in the new `lzc-cli` dev workflow.
+This page does not repeat basic inject syntax. It focuses directly on the most common request inject patterns used in the current `lzc-cli` dev workflow.
 
 Target scenarios:
 
@@ -10,7 +10,7 @@ Target scenarios:
 
 Related docs:
 
-1. [New Dev Workflow Overview](./getting-started/dev-workflow.md)
+1. [Dev Workflow Overview](./getting-started/dev-workflow.md)
 2. [inject.ctx spec](./spec/inject-ctx.md)
 3. [Script Injection (injects)](./advanced-injects.md)
 
@@ -264,5 +264,5 @@ These helpers work best together:
 ## Next {#next}
 
 1. For API reference: continue with [inject.ctx spec](./spec/inject-ctx.md)
-2. For the full workflow: continue with [New Dev Workflow Overview](./getting-started/dev-workflow.md)
+2. For the full workflow: continue with [Dev Workflow Overview](./getting-started/dev-workflow.md)
 3. For inject matching and built-in scripts: continue with [Script Injection (injects)](./advanced-injects.md)

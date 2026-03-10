@@ -60,6 +60,7 @@ const zhLocaleThemeConfig = {
         { text: "路线总览", link: "/getting-started/index.md" },
         { text: "环境搭建", link: "/getting-started/env-setup.md" },
         { text: "Hello World", link: "/getting-started/hello-world-fast.md" },
+        { text: "开发流程", link: "/getting-started/dev-workflow.md" },
         { text: "HTTP 路由", link: "/getting-started/http-route-backend.md" },
         { text: "LPK 机制", link: "/getting-started/lpk-how-it-works.md" },
         { text: "内嵌镜像进阶", link: "/getting-started/advanced-vnc-embed-image.md" },
@@ -197,6 +198,10 @@ const enLocaleThemeConfig = {
         {
           text: "Hello World",
           link: "/en/getting-started/hello-world-fast.md",
+        },
+        {
+          text: "Dev Workflow",
+          link: "/en/getting-started/dev-workflow.md",
         },
         {
           text: "HTTP Routing",

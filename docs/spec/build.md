@@ -171,4 +171,4 @@ application:
 1. compose override 是 lzc-cli@1.2.61 及以上版本支持的特性，用于在构建时指定 compose override 的配置。
 2. compose override 属于 lzcos v1.3.0+ 后，针对一些 lpk 规范目前无法覆盖到的运行权限需求的配置。
 
-详情见 [compose override](./advanced-compose-override.md)
+详情见 [compose override](../advanced-compose-override.md)

@@ -150,4 +150,4 @@ lzc-cli project info
 
 ## 下一步 {#next}
 
-继续阅读：[新开发模式总览](./dev-workflow.md)
+继续阅读：[开发流程总览](./dev-workflow.md)

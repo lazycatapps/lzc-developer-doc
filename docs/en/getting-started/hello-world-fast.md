@@ -60,7 +60,7 @@ Notes:
 2. macOS/Windows: open the desktop client and click the app icon in launcher.
 3. Web: open the `Target URL` from `project info` in your browser.
 
-For the `hello-vue` template, the first visit usually shows a frontend dev guide page. This is the expected behavior in the new dev workflow, which means:
+For the `hello-vue` template, the first visit usually shows a frontend dev guide page. This is the expected behavior in the dev workflow, which means:
 
 1. The entry flow is already controlled by request inject.
 2. The page tells you the actual local port expected by the inject script.
@@ -152,4 +152,4 @@ Check in order:
 
 ## Next {#next}
 
-Continue with: [New Dev Workflow Overview](./dev-workflow.md)
+Continue with: [Dev Workflow Overview](./dev-workflow.md)
