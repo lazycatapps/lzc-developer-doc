@@ -24,5 +24,5 @@ cd .. # Return to project root directory
 lzc-cli project build -o release.lpk
 
 # Install lpk
-lzc-cli app install release.lpk
+lzc-cli lpk install release.lpk
 ```

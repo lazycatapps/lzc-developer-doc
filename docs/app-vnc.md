@@ -133,7 +133,7 @@ lzc-docker images | grep dev.微服名.heiyu
 ```
 ![image-20250612180605983](https://lzc-playground-1301583638.cos.ap-chengdu.myqcloud.com/guidelines/439/image-20250612180605983.png?imageSlim)
 
-> 1. 如果是构建测试镜像一定需要把镜像的 tag 标记为 `dev.$BOXNAME.heiyu.space`地址，`$BOXNAME` 为目标微服名。具体请看[懒猫开发者手册-开发测试镜像](https://developer.lazycat.cloud/advanced-dev-image.html)
+> 1. 如果是手动构建测试镜像，一定需要把镜像的 tag 标记为 `dev.$BOXNAME.heiyu.space` 地址，`$BOXNAME` 为目标微服名。推荐优先使用 `lzc-build.yml` 的 `images` 机制，详见 [lzc-build.yml 镜像构建](./build.md#images)。
 >
 > 2. 为什么用lzc-docker，请看[微服一台机器跑三套 Docker？](https://mp.weixin.qq.com/s/_dXE0CxWvLgA5EX1sIft8Q)
 
@@ -145,17 +145,22 @@ lzc-docker push 镜像名
 
 ![image-20250612180825422](https://lzc-playground-1301583638.cos.ap-chengdu.myqcloud.com/guidelines/439/image-20250612180825422.png?imageSlim)
 
-当完成上传之后，就可以将 `lzc-manifest`里面的image地址换成刚push的镜像了，下面是`lzc-vcn-sample`中的`lzc-manifest.yml`
+当完成上传之后，就可以将 `lzc-manifest` 里面的 image 地址换成刚 push 的镜像了。静态元数据放在 `package.yml`，下面展示 `lzc-vcn-sample` 的配置：
 
 ```yml
-lzc-sdk-version: 0.1
-name: lzc-vnc-test
+# package.yml
 package: ltp.lzcapp.vnc
 version: 0.0.1
+name: lzc-vnc-test
 description:
 license: https://choosealicense.com/licenses/mit/
 homepage:
 author:
+```
+
+```yml
+# lzc-manifest.yml
+lzc-sdk-version: 0.1
 application:
   subdomain: im2
   routes:
@@ -170,7 +175,7 @@ services:
     image: 替换为刚push的镜像
 ```
 
-通过`lzc-cli project build`构建lpk包 ，`lzc-cli app install xxx.lpk`安装镜像
+通过`lzc-cli project build`构建lpk包 ，`lzc-cli lpk install xxx.lpk`安装镜像
 
 > 如果对构建lpk包不熟悉的，请看开发者手册 [开发自己的第一个lpk应用](https://developer.lazycat.cloud/app-example-go.html)
 

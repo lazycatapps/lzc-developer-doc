@@ -11,9 +11,9 @@
 
     根据 buildscript 定义的脚本， 把 contentdir 下面的所有文件打包成一个 lpk 压缩包， 最后安装到微服中。
 
-- `manifest`: 指定 lpk 包的 manifest.yml 文件路径
+- `manifest`: 指定 lpk 包的 `lzc-manifest.yml` 文件路径
 
-    此处的 manifest 文件是应用的元信息， 比如应用的名称， 版本， 描述等。
+    此处的 manifest 文件只描述运行结构，例如 `application.routes`、`services` 等；应用名称、版本、描述等静态元数据应写入 `package.yml`。
 
 - `contentdir`: 指定打包的内容，将会打包到 lpk 中
 
@@ -27,14 +27,9 @@
 
     icon 仅仅允许 png 后缀的文件，应用icon.png 宽高比需要为1:1 建议宽高大于等于 512*512 个像素
 
-- `devshell`: 指定开发依赖的情况
-
-    此处的 devshell 是开发依赖的情况， 比如开发依赖的依赖， 开发依赖的脚本等。
-
 
 ::: details 示例
 ```shell
-# 整个文件中，可以通过 ${var} 的方式，使用 manifest 字段指定的文件定义的值
 
 # buildscript
 # - 可以为构建脚本的路径地址
@@ -53,38 +48,23 @@ pkgout: ./
 # icon 指定 lpk 包 icon 的路径路径，如果不指定将会警告
 # icon 仅仅允许 png 后缀的文件
 icon: ./lzc-icon.png
-
-# dvshell 指定开发依赖的情况
-# 这种情况下，选用 alpine:latest 作为基础镜像，在 dependencies 中添加所需要的开发依赖即可
-# 如果 dependencies 和 build 同时存在，将会优先使用 dependencies
-devshell:
-  routes:
-    - /=http://127.0.0.1:5173
-  dependencies:
-    - nodejs
-    - npm
-    - python3
-    - py3-pip
-  setupscript: |
-    export npm_config_registry=https://registry.npmmirror.com
-    export PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 :::
 
-## lzc-manifest.yml
+## package.yml 与 lzc-manifest.yml
 
-[lzc-manifest.yml](./spec/manifest) 是控制应用 Meta 信息的配置文件。
+从 LPK v2 开始，静态包信息放在 `package.yml`，运行结构放在 [lzc-manifest.yml](./spec/manifest)。
 
-先介绍一下这个配置文件基本的关键字和用处：
+`package.yml` 常见字段包括：
 - `name`: 应用名称
-- `package`: 应用的子域名， 如果不上架懒猫微服应用商店， 这个名字可以随便取
+- `package`: 应用唯一包 ID
 - `version`: 版本号
 - `description`: 应用描述
-- `license`: 应用的发行许可证
+- `license`: 应用发行许可证
 - `homepage`: 项目主页
 - `author`: 作者信息
 
-这个文件最重要的是 [application.routes](./advanced-route)：
+`lzc-manifest.yml` 最重要的是 [application.routes](./advanced-route)：
 
 ```shell
 application:
@@ -96,7 +76,7 @@ application:
 
 - `subdomain: todolistpy`
 
-  应用子域名， 和上面的 `package` 字段的域名相关联。
+  应用默认访问域名前缀。它通常会和 `package.yml` 里的 `package` 配套命名，但两者语义不同：`package` 是唯一包 ID，`subdomain` 是默认访问域名。
 
 - `/=file:///lzcapp/pkg/content/web`
 
@@ -121,26 +101,26 @@ application:
 ::: details 示例
 
 ```yml
-package: abc.example.com # app 的唯一 id,上架到商店需要保证不要冲突,尽量使用开发者自己的域名作为后缀.
-version: 2.0.2           #app 的版本
-
-name: 测试abc   #软件名称,会显示在启动器之类的地方
+# package.yml
+package: abc.example.com # app 的唯一 id, 上架到商店需要保证不要冲突, 尽量使用开发者自己的域名作为后缀
+version: 2.0.2           # app 的版本
+name: 测试abc            # 软件名称, 会显示在启动器之类的地方
 description: 简单易用的英语学习软件
-
-license: https://choosealicense.com/licen ses/mit/  #软件本身的 license
-homepage: http://github.com/snyh/abc #软件的主页,会在商店等地方体现
-author: snyh@snyh.org #lpk 的作者,会在商店等地方体现
-
-unsupported_platforms: # 不支持的平 台, 不写则表示全平台支持. lpk 本身是可以被安装的,但下面列表中的平台无法打开此软件
+license: https://choosealicense.com/licenses/mit/  # 软件本身的 license
+homepage: http://github.com/snyh/abc               # 软件的主页, 会在商店等地方体现
+author: snyh@snyh.org                              # lpk 的作者, 会在商店等地方体现
+unsupported_platforms: # 不支持的平台, 不写则表示全平台支持. lpk 本身是可以被安装的, 但下面列表中的平台无法打开此软件
   - linux
   - macos
   - windows
   - android
   - ios
   - tvos
+```
 
-
- #application 作为一个特殊的 container 运行， 对应的 service 名称为固定的` app`， 其他 service 可以通过此名称与 app 进行通讯
+```yml
+# lzc-manifest.yml
+# application 作为一个特殊的 container 运行， 对应的 service 名称为固定的 `app`，其他 service 可以通过此名称与 app 进行通讯
 application:
   background_task: false #是否存在后台任务， 若存在则系统不会对此 app 进行主动休眠等操作
 
@@ -221,12 +201,12 @@ services: #传统 docker 镜像启动方式， 如果需要数据库等配套容
 
     # 仅支持以下挂载点:
     # - /lzcapp/run
-    # - /lzcapp/run/mnt/home
+    # - /lzcapp/documents
     # - /lzcapp/var
     # - /lzcapp/cache
     # - /lzcapp/pkg
     binds:
-      - /lzcapp/run/mnt/home:/home  #将/lzcapp/run/mnt/home(即用户文稿)目录挂在到容器内的/home 目录
+      - /lzcapp/documents:/home  #将/lzcapp/documents(即用户文稿)目录挂在到容器内的/home 目录
       - /lzcapp/var/db:/data
       - /lzcapp/cache/db:/cache
       - /lzcapp/pkg/content/entrypoint.sh:/entrypoint.sh # 挂载 lpk 包内的文件

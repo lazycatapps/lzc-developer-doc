@@ -11,7 +11,7 @@ services:
     environment:
       - ENV1=123
     binds:
-      - /lzcapp/run/mnt/home:/home
+      - /lzcapp/documents:/home
 ```
 
 ## 从Docker镜像转换成懒猫微服应用
@@ -58,13 +58,18 @@ services:
       - GITLAB_OMNIBUS_CONFIG=external_url 'http://gitlab.example.com'
 ```
 
-结合[应用配置详解](./app-example-python-description.html#lzc-build-yml)中的那些必填字段，把routes或者ingress配置到docker提供的端口（在这个例子中，routes需要填写80端口，ingress需要配置一下22端口，就形成了完整的`lzc-manifest.yml`：
+结合[应用配置详解](./app-example-python-description.html#lzc-build-yml)中的那些必填字段，把静态元数据写入 `package.yml`，再把 `routes` 或 `ingress` 配置到 docker 提供的端口（在这个例子中，`routes` 需要填写 80 端口，`ingress` 需要配置一下 22 端口），就形成了完整的应用配置：
 
 ```yaml
-lzc-sdk-version: '0.1'
-name: GitLab
+# package.yml
 package: cloud.lazycat.app.gitlab
 version: 17.2.8-patch1
+name: GitLab
+```
+
+```yaml
+# lzc-manifest.yml
+lzc-sdk-version: '0.1'
 application:
   routes:
     - /=http://gitlab.cloud.lazycat.app.gitlab.lzcapp:80 # gitlab是services中的名字，.lzcapp是固定后缀，中间的是上面的package字段
@@ -99,12 +104,13 @@ icon: ./icon.png   # 图标文件的位置
 ```
 .
 ├── lzc-build.yml     // 懒猫应用构建脚本
-├── lzc-manifest.yml  // 懒猫应用 Meta 信息配置
+├── lzc-manifest.yml  // 懒猫应用运行结构配置
+├── package.yml       // 懒猫应用静态元数据
 └── icon.png          // 懒猫应用图标
 ```
 
 在命令行中，进入这个目录，执行`lzc-cli project build`，执行完成后，目录下会多一个文件：
-`cloud.lazycat.app.gitlab-v17.2.8-patch1.lpk`, 最后执行`lzc-cli app install ./cloud.lazycat.app.gitlab-v17.2.8-patch1.lpk`来安装刚刚的lpk包，即可完成安装。
+`cloud.lazycat.app.gitlab-v17.2.8-patch1.lpk`, 最后执行`lzc-cli lpk install ./cloud.lazycat.app.gitlab-v17.2.8-patch1.lpk`来安装刚刚的lpk包，即可完成安装。
 
 ## 从docker-compose转换成懒猫微服应用
 
@@ -141,7 +147,7 @@ services:
 
 ### image拉不下来怎么办
 
-由于一些原因，可能docker image不能成功拉下来。如果只是自己用，可以考虑参考[开发测试镜像](./advanced-dev-image.md)中的**重新tag镜像**步骤和**推送镜像**步骤。如果考虑公用，则需要自行建立registry。
+由于一些原因，可能 docker image 不能成功拉下来。如果只是自己用，可以考虑使用 `lzc-build.yml` 的 `images` 构建机制将镜像内嵌到 LPK，详见 [lzc-build.yml 镜像构建](./build.md#images)。如果考虑公用，则需要自行建立 registry。
 
 
 ## 社区移植工具

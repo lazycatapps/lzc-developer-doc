@@ -17,10 +17,6 @@
 
 如果资源文件比较小(<200M)， 也可以将资源文件打包到 lpk 中去， 在应用运行的时候， 通过访问 `/lzcapp/pkg/content` 目录读取.
 
-## `devshell` 模式下, 将不会打包 `lzc-build.yml` 中指定的 `contentdir`
-
-如果您需要打包 contentdir 中的内容， 您可以使用 `lzc-cli project devshell --contentdir`.
-
 ## 由于 `/lzcapp/pkg/content` 目录为只读的， 会导致打包进去的脚本在当前目录下创建文件失败
 
 `/lzcapp/pkg/content` 这个目录为 lpk 打包进去的资源文件， 是不允许修改的。  有两种解决方法:

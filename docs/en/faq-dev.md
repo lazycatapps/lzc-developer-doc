@@ -17,10 +17,6 @@ Resource files copied to the image cannot be placed under the `/lzcapp/` directo
 
 If resource files are small (<200M), you can also package resource files into lpk, and when the application runs, read them by accessing the `/lzcapp/pkg/content` directory.
 
-## In `devshell` mode, the `contentdir` specified in `lzc-build.yml` will not be packaged
-
-If you need to package the content in contentdir, you can use `lzc-cli project devshell --contentdir`.
-
 ## Since the `/lzcapp/pkg/content` directory is read-only, scripts packaged in it will fail to create files in the current directory
 
 The `/lzcapp/pkg/content` directory contains resource files packaged into lpk and is not allowed to be modified. There are two solutions:

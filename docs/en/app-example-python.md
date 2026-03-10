@@ -28,8 +28,10 @@ Based on the knowledge we learned earlier, let's quickly start this application:
 Start the first terminal and start the frontend service:
 
 ```shell
-# Enter the remote application container's shell
-lzc-cli project devshell
+# Deploy and enter the remote application container shell
+lzc-cli project deploy
+lzc-cli project info
+lzc-cli project exec /bin/sh
 
 # After entering container shell
 cd ui
@@ -37,12 +39,14 @@ npm install
 npm run dev
 ```
 
+By default, `project` commands prefer `lzc-build.dev.yml` and print the active `Build config`; use `--release` if you want to operate on `lzc-build.yml`.
+
 2. Build Backend
 
 Start the second terminal and start the backend service:
 
 ```shell
-lzc-cli project devshell
+lzc-cli project exec /bin/sh
 
 # After entering container shell
 cd backend
@@ -83,7 +87,7 @@ lzc-cli project build -o release.lpk
 
 Install to LCMD MicroServer with the following command:
 ```shell
-lzc-cli app install release.lpk
+lzc-cli lpk install release.lpk
 ```
 
 ::: info

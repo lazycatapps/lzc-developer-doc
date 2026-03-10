@@ -28,8 +28,10 @@ https://gitee.com/lazycatcloud/todolist-py-lzcapp-demo.git
 启动第一个终端， 启动前端服务:
 
 ```shell
-# 进入远程应用容器的 shell
-lzc-cli project devshell
+# 部署并进入远程应用容器的 shell
+lzc-cli project deploy
+lzc-cli project info
+lzc-cli project exec /bin/sh
 
 # 进入容器 shell 后
 cd ui
@@ -37,12 +39,14 @@ npm install
 npm run dev
 ```
 
+默认情况下，`project` 命令会优先使用 `lzc-build.dev.yml`，并打印实际命中的 `Build config`；如果你要操作 release 配置，请显式加上 `--release`。
+
 2. 构建后端
 
 启动第二个终端， 启动后端服务：
 
 ```shell
-lzc-cli project devshell
+lzc-cli project exec /bin/sh
 
 # 进入容器 shell 后
 cd backend
@@ -83,7 +87,7 @@ lzc-cli project build -o release.lpk
 
 通过下面命令安装到懒猫微服中
 ```shell
-lzc-cli app install release.lpk
+lzc-cli lpk install release.lpk
 ```
 
 ::: info

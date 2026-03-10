@@ -11,9 +11,9 @@ First, let's introduce the basic keywords and uses of this configuration file:
 
     According to the script defined by buildscript, all files under contentdir are packaged into an lpk compressed package, and finally installed into LCMD.
 
-- `manifest`: Specify the manifest.yml file path of the lpk package
+- `manifest`: Specify the `lzc-manifest.yml` file path of the lpk package
 
-    The manifest file here is the application's meta information, such as application name, version, description, etc.
+    This manifest only describes runtime structure, such as `application.routes` and `services`; static metadata like application name, version, and description belongs in `package.yml`.
 
 - `contentdir`: Specify the content to be packaged, which will be packaged into lpk
 
@@ -26,10 +26,6 @@ First, let's introduce the basic keywords and uses of this configuration file:
 - `icon`: Path of the lpk package icon. If not specified, a warning will be issued
 
     icon only allows files with png suffix. The application icon.png aspect ratio needs to be 1:1, and it is recommended that the width and height be greater than or equal to 512*512 pixels
-
-- `devshell`: Specify development dependency situation
-
-    The devshell here is the development dependency situation, such as development dependency dependencies, development dependency scripts, etc.
 
 
 ::: details Example
@@ -53,38 +49,23 @@ pkgout: ./
 # icon specifies the path of the lpk package icon. If not specified, a warning will be issued
 # icon only allows files with png suffix
 icon: ./lzc-icon.png
-
-# devshell specifies the development dependency situation
-# In this case, use alpine:latest as the base image and add the required development dependencies in dependencies
-# If dependencies and build exist at the same time, dependencies will be used first
-devshell:
-  routes:
-    - /=http://127.0.0.1:5173
-  dependencies:
-    - nodejs
-    - npm
-    - python3
-    - py3-pip
-  setupscript: |
-    export npm_config_registry=https://registry.npmmirror.com
-    export PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 :::
 
-## lzc-manifest.yml
+## package.yml and lzc-manifest.yml
 
-[lzc-manifest.yml](./spec/manifest) is the configuration file that controls application Meta information.
+Starting from LPK v2, static package metadata lives in `package.yml`, while runtime structure lives in [lzc-manifest.yml](./spec/manifest).
 
-First, let's introduce the basic keywords and uses of this configuration file:
-- `name`: Application name
-- `package`: Application subdomain. If not listed in LCMD MicroServer app store, this name can be arbitrary
-- `version`: Version number
-- `description`: Application description
-- `license`: Application distribution license
-- `homepage`: Project homepage
-- `author`: Author information
+Common fields in `package.yml` include:
+- `name`: application name
+- `package`: unique package ID
+- `version`: version number
+- `description`: application description
+- `license`: distribution license
+- `homepage`: project homepage
+- `author`: author information
 
-The most important part of this file is [application.routes](./advanced-route):
+The most important part of `lzc-manifest.yml` is [application.routes](./advanced-route):
 
 ```shell
 application:
@@ -96,7 +77,7 @@ application:
 
 - `subdomain: todolistpy`
 
-  Application subdomain, associated with the domain name in the `package` field above.
+  Default access domain prefix of the application. It is often named together with the `package` field in `package.yml`, but the semantics differ: `package` is the unique package ID, while `subdomain` is the default access domain.
 
 - `/=file:///lzcapp/pkg/content/web`
 
@@ -121,26 +102,26 @@ The `application` field has the following fields:
 ::: details Example
 
 ```yml
-package: abc.example.com # App's unique id, when listing to store need to ensure no conflicts, try to use developer's own domain as suffix.
+# package.yml
+package: abc.example.com # App's unique id. When publishing to a store, keep it globally unique and prefer your own domain as the suffix.
 version: 2.0.2           # App version
-
-name: Test abc   # Software name, will be displayed in launcher and similar places
+name: Test abc           # Software name shown in the launcher and similar places
 description: Simple and easy-to-use English learning software
-
-license: https://choosealicense.com/licen ses/mit/  # Software's own license
-homepage: http://github.com/snyh/abc # Software homepage, will be reflected in store and other places
-author: snyh@snyh.org # lpk author, will be reflected in store and other places
-
-unsupported_platforms: # Unsupported platforms, if not written means full platform support. lpk itself can be installed, but platforms in the list below cannot open this software
+license: https://choosealicense.com/licenses/mit/  # Software license
+homepage: http://github.com/snyh/abc               # Project homepage
+author: snyh@snyh.org                              # LPK author
+unsupported_platforms: # Unsupported platforms. If omitted, the package is available on all platforms.
   - linux
   - macos
   - windows
   - android
   - ios
   - tvos
+```
 
-
- # application runs as a special container, the corresponding service name is fixed `app`, other services can communicate with app through this name
+```yml
+# lzc-manifest.yml
+# application runs as a special container. The corresponding service name is fixed as `app`, and other services can communicate with app through this name.
 application:
   background_task: false # Whether there are background tasks, if yes, the system will not actively hibernate this app
 
@@ -221,12 +202,12 @@ services: # Traditional docker image startup method, if you need database and ot
 
     # Only the following mount points are supported:
     # - /lzcapp/run
-    # - /lzcapp/run/mnt/home
+    # - /lzcapp/documents
     # - /lzcapp/var
     # - /lzcapp/cache
     # - /lzcapp/pkg
     binds:
-      - /lzcapp/run/mnt/home:/home  # Mount /lzcapp/run/mnt/home (i.e., user documents) directory to /home directory in container
+      - /lzcapp/documents:/home  # Mount /lzcapp/documents (i.e., user documents) directory to /home directory in container
       - /lzcapp/var/db:/data
       - /lzcapp/cache/db:/cache
       - /lzcapp/pkg/content/entrypoint.sh:/entrypoint.sh # Mount files within lpk package

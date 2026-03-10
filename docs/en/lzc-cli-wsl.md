@@ -53,7 +53,7 @@ npm install -g lzc-cli
 6. Use lzc-cli to build lpk applications and install lpk
 ```
 lzc-cli project build
-lzc-cli app install cloud.lazycat.app.demo-v0.0.2.lpk
+lzc-cli lpk install cloud.lazycat.app.demo-v0.0.2.lpk
 ```
 
 7. Have fun! For publishing lpk applications, you can check [Publish Your First Application](./publish-app.md)

@@ -24,5 +24,5 @@ cd .. # 返回项目根目录
 lzc-cli project build -o release.lpk
 
 # 安装 lpk
-lzc-cli app install release.lpk
+lzc-cli lpk install release.lpk
 ```

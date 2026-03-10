@@ -54,7 +54,7 @@ npm install -g lzc-cli
 6. 使用 lzc-cli 构建 lpk 应用以及安装 lpk
 ```
 lzc-cli project build
-lzc-cli app install cloud.lazycat.app.demo-v0.0.2.lpk
+lzc-cli lpk install cloud.lazycat.app.demo-v0.0.2.lpk
 ```
 
 7. 尽情玩耍吧，上架 lpk 应用可以查看 [发布自己的第一个应用](./publish-app.md)

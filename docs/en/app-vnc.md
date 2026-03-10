@@ -133,7 +133,7 @@ lzc-docker images | grep dev.BOXNAME.heiyu
 ```
 ![image-20250612180605983](https://lzc-playground-1301583638.cos.ap-chengdu.myqcloud.com/guidelines/439/image-20250612180605983.png?imageSlim)
 
-> 1. If building a test image, you must tag the image as `dev.$BOXNAME.heiyu.space` address, where `$BOXNAME` is the target LCMD name. For details, see [LCMD Developer Manual - Development Test Images](https://developer.lazycat.cloud/advanced-dev-image.html)
+> 1. If building a test image manually, you must tag the image as `dev.$BOXNAME.heiyu.space`, where `$BOXNAME` is the target LCMD name. We recommend using the `images` mechanism in `lzc-build.yml` first. See [lzc-build.yml Image Build](./build.md#images).
 >
 > 2. Why use lzc-docker, see [LCMD Running Three Sets of Docker on One Machine?](https://mp.weixin.qq.com/s/_dXE0CxWvLgA5EX1sIft8Q)
 
@@ -170,7 +170,7 @@ services:
     image: Replace with the image just pushed
 ```
 
-Build lpk package through `lzc-cli project build`, install image with `lzc-cli app install xxx.lpk`
+Build lpk package through `lzc-cli project build`, install image with `lzc-cli lpk install xxx.lpk`
 
 > If you are not familiar with building lpk packages, please see the developer manual [Develop Your First lpk Application](https://developer.lazycat.cloud/app-example-go.html)
 

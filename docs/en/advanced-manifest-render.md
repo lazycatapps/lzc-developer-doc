@@ -59,18 +59,18 @@ application:
     route:
         - /m=file:///lzcapp/run/manifest.yml
 ```
-Or directly use devshell and then `cat /lzcapp/run/manifest.yml`
+Or run `cat /lzcapp/run/manifest.yml` inside the app container
 :::
 
 ## Examples
 
 Complete demo examples can be found [here](https://gitee.com/lazycatcloud/netmap)
 
+The manifest snippets below omit static package metadata on purpose. For LPK v2, put fields such as `package`, `version`, and `name` into `package.yml`.
+
 ### More Secure Internal Passwords
 
 ```yml
-package: cloud.lazycat.app.redmine
-name: Redmine
 services:
   mysql:
     binds:
@@ -85,12 +85,10 @@ services:
     - DB_PASSWORD={{ stable_secret "root_password" }}
 ```
 
-### Multi-Instance/Single-Instance Different Configurations
+### Unified Configuration for Single/Multi Instance
 
-If it is a single-instance application, put data in each user's document directory
-
-If it is a multi-instance application, put user data inside the application
-
+Use the same document path configuration for both single-instance and multi-instance apps by binding to `/lzcapp/documents`.
+The only difference is the visible directory scope: single-instance apps usually see multiple user directories, while multi-instance apps usually see only the current deploy user directory.
 
 ```yml
 #lzc-manifest.yml
@@ -98,11 +96,7 @@ If it is a multi-instance application, put user data inside the application
 services:
   some_service_name:
     binds:
-    {{ if .S.IsMultiInstance }}
-      - /lzcapp/run/mnt/home:/home/
-    {{ else }}
-      - /lzcapp/run/mnt/home/{{ .S.DeployUID }}/the_name:/home/
-    {{ end }}
+      - /lzcapp/documents:/home/
 ```
 
 
@@ -124,10 +118,7 @@ params:
 ```
 
 ```yml
-#lzc-manifest.yml
-package: org.snyh.netmap
-version: 0.0.1
-name: netmap
+# lzc-manifest.yml
 application:
   subdomain: netmap
 

@@ -11,7 +11,7 @@ services:
     environment:
       - ENV1=123
     binds:
-      - /lzcapp/run/mnt/home:/home
+      - /lzcapp/documents:/home
 ```
 
 ## Converting Docker Image to LCMD MicroServer Application
@@ -61,10 +61,15 @@ services:
 Combined with the required fields in [Application Configuration Details](./app-example-python-description.html#lzc-build-yml), configure routes or ingress to the ports provided by docker (in this example, routes need to fill in port 80, ingress needs to configure port 22), forming a complete `lzc-manifest.yml`:
 
 ```yaml
-lzc-sdk-version: '0.1'
-name: GitLab
+# package.yml
 package: cloud.lazycat.app.gitlab
 version: 17.2.8-patch1
+name: GitLab
+```
+
+```yaml
+# lzc-manifest.yml
+lzc-sdk-version: '0.1'
 application:
   routes:
     - /=http://gitlab.cloud.lazycat.app.gitlab.lzcapp:80 # gitlab is the name in services, .lzcapp is a fixed suffix, the middle part is the package field above
@@ -104,7 +109,7 @@ The required files are ready. Put these files in a folder, and the file director
 ```
 
 In the command line, enter this directory and execute `lzc-cli project build`. After execution, there will be one more file in the directory:
-`cloud.lazycat.app.gitlab-v17.2.8-patch1.lpk`, finally execute `lzc-cli app install ./cloud.lazycat.app.gitlab-v17.2.8-patch1.lpk` to install the lpk package just created, and the installation is complete.
+`cloud.lazycat.app.gitlab-v17.2.8-patch1.lpk`, finally execute `lzc-cli lpk install ./cloud.lazycat.app.gitlab-v17.2.8-patch1.lpk` to install the lpk package just created, and the installation is complete.
 
 ## Converting docker-compose to LCMD MicroServer Application
 
@@ -141,7 +146,7 @@ There are many configurations here. The hierarchical structure of services here 
 
 ### What to do if image cannot be pulled
 
-Due to some reasons, the docker image may not be successfully pulled. If it's just for personal use, you can consider referring to the **Re-tag Image** step and **Push Image** step in [Development Test Images](./advanced-dev-image.md). If considering public use, you need to establish your own registry.
+Due to some reasons, the docker image may not be successfully pulled. If it is only for personal use, you can use the `images` build mechanism in `lzc-build.yml` to embed images into LPK. See [lzc-build.yml Image Build](./build.md#images). If considering public use, you need to establish your own registry.
 
 
 ## Community Porting Tools
