@@ -6,6 +6,7 @@
 
 `injects` 用于在不修改 OCI image 或应用源码的前提下，按规则注入脚本，覆盖浏览器行为、请求行为和响应行为。
 字段定义见 [manifest.md#injects](./spec/manifest.md#injects)。本文聚焦运行机制、调试方式和实践建议。
+如果你要直接落地新版开发态 request inject 模板，继续看 [inject request 开发态 Cookbook](./advanced-inject-request-dev-cookbook.md)。
 
 适用场景
 ========
@@ -146,7 +147,7 @@ request/response 阶段常用：
 - `ctx.persist`：跨请求持久化
 - `ctx.response`：直接返回响应（短路）
 - `ctx.proxy`：动态改写反代目标
-- `ctx.base64` / `ctx.fs` / `ctx.env` / `ctx.dump`
+- `ctx.base64` / `ctx.fs` / `ctx.dump`
 
 内置脚本
 ========

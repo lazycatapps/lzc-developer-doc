@@ -104,7 +104,9 @@ Helper Matrix
 | `ctx.body` | No | Yes | Yes |
 | `ctx.flow` | No | Yes | Yes |
 | `ctx.fs` | No | Yes | Yes |
-| `ctx.env` | No | Yes | Yes |
+| `ctx.client` | No | Yes | Yes |
+| `ctx.dev` | No | Yes | Yes |
+| `ctx.net` | No | Yes | Yes |
 | `ctx.dump` | No | Yes | Yes |
 | `ctx.response` | No | Yes | Yes |
 | `ctx.proxy` | No | Yes | Yes |
@@ -185,11 +187,39 @@ Notes:
 - `ctx.fs.stat(path) -> object`
 - `ctx.fs.list(path) -> string[]`
 
-`ctx.env` (`request/response`)
-==============================
+`ctx.client` (`request/response`)
+=================================
 
-- `ctx.env.get(name) -> string | undefined`
-- `ctx.env.list(prefix?) -> Record<string, string>`
+- `ctx.client.id -> string`
+- `ctx.client.id` comes from the current client identity injected by ingress. It may be empty when no client context is attached.
+
+`ctx.dev` (`request/response`)
+===============================
+
+- `ctx.dev.id -> string`
+- `ctx.dev.online() -> bool`
+
+Notes:
+
+- `ctx.dev.id` is currently read from `/lzcapp/var/_lzc_ext/dev.id`.
+- `ctx.dev.online()` reads cached status only. The cache is refreshed in background by lzcinit for the current request UID.
+
+`ctx.net` (`request/response`)
+===============================
+
+- `ctx.net.joinHost(host, port) -> string`
+- `ctx.net.via.host() -> object`
+- `ctx.net.via.client(id) -> object`
+- `ctx.net.reachable(protocol, host, port, via?) -> bool`
+
+Notes:
+
+- `protocol` currently supports `tcp`, `tcp4`, and `tcp6`.
+- `host` accepts either a container-reachable hostname or an IP literal.
+- `ctx.net.via.host()` means accessing the lzcos host network through remotesocket.
+- `ctx.net.via.client(id)` means accessing a specific client node network through remotesocket.
+- `reachable(...)` performs a live network probe with a default timeout of about `1200ms`.
+- `via` is optional; when omitted, the current container network is used.
 
 `ctx.dump` (`request/response`)
 ===============================
@@ -230,6 +260,7 @@ Notes:
 | `timeout_ms` | `int` | Per-request proxy timeout |
 | `path` | `string` | Optional path rewrite |
 | `query` | `string` | Optional query rewrite without `?` |
+| `via` | `object` | Optional network path object, usually from `ctx.net.via.host()` or `ctx.net.via.client(id)` |
 | `on_fail` | `string` | Failure policy: `keep_original` or `error` |
 
 Execution Model Constraints

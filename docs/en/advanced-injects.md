@@ -6,6 +6,7 @@ Overview
 
 `injects` lets you adapt application behavior without changing OCI images or upstream source code, by injecting scripts into browser, request, or response phases.
 For field definitions, see [manifest.md#injects](./spec/manifest.md#injects). This page focuses on runtime behavior and practical usage.
+If you want ready-to-use request inject patterns for the new dev workflow, continue with [Request Inject Dev Cookbook](./advanced-inject-request-dev-cookbook.md).
 
 Use Cases
 =========
@@ -147,7 +148,7 @@ Common request/response helpers:
 - `ctx.persist`
 - `ctx.response`
 - `ctx.proxy`
-- `ctx.base64` / `ctx.fs` / `ctx.env` / `ctx.dump`
+- `ctx.base64` / `ctx.fs` / `ctx.dump`
 
 Full ctx specification:
 

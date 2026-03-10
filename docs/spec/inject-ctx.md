@@ -101,7 +101,9 @@ helper 概览
 | `ctx.body` | 否 | 是 | 是 |
 | `ctx.flow` | 否 | 是 | 是 |
 | `ctx.fs` | 否 | 是 | 是 |
-| `ctx.env` | 否 | 是 | 是 |
+| `ctx.client` | 否 | 是 | 是 |
+| `ctx.dev` | 否 | 是 | 是 |
+| `ctx.net` | 否 | 是 | 是 |
 | `ctx.dump` | 否 | 是 | 是 |
 | `ctx.response` | 否 | 是 | 是 |
 | `ctx.proxy` | 否 | 是 | 是 |
@@ -194,13 +196,44 @@ browser（异步）
 - `ctx.fs.stat(path) -> object`
 - `ctx.fs.list(path) -> string[]`
 
-`ctx.env`（request/response）
-=============================
+`ctx.client`（request/response）
+===============================
 
-用于读取环境变量。
+用于读取当前访问客户端上下文。
 
-- `ctx.env.get(name) -> string | undefined`
-- `ctx.env.list(prefix?) -> Record<string, string>`
+- `ctx.client.id -> string`
+- `ctx.client.id` 来源于 Ingress 注入的当前客户端标识；请求不带客户端上下文时可能为空字符串。
+
+`ctx.dev`（request/response）
+==============================
+
+用于读取开发机标识与 lzcinit 维护的缓存在线状态。
+
+- `ctx.dev.id -> string`
+- `ctx.dev.online() -> bool`
+
+补充：
+
+- `ctx.dev.id` 当前从 `/lzcapp/var/_lzc_ext/dev.id` 读取。
+- `ctx.dev.online()` 只读取缓存状态；缓存由 lzcinit 按当前请求 UID 在后台刷新。
+
+`ctx.net`（request/response）
+==============================
+
+用于拼接网络地址、描述网络路径与实时探测 TCP 可达性。
+
+- `ctx.net.joinHost(host, port) -> string`
+- `ctx.net.via.host() -> object`
+- `ctx.net.via.client(id) -> object`
+- `ctx.net.reachable(protocol, host, port, via?) -> bool`
+
+补充：
+
+- `protocol` 当前支持 `tcp`、`tcp4`、`tcp6`。
+- `ctx.net.via.host()` 表示通过 remotesocket 访问 lzcos host network。
+- `ctx.net.via.client(id)` 表示通过 remotesocket 访问指定客户端节点 network。
+- `reachable(...)` 为实时网络探测，默认超时约 `1200ms`。
+- `via` 可省略；省略时沿用当前容器内默认网络拨号。
 
 `ctx.dump`（request/response）
 ==============================
@@ -247,6 +280,7 @@ browser（异步）
 | `timeout_ms` | `int` | 本次代理超时 |
 | `path` | `string` | 可选重写 path |
 | `query` | `string` | 可选重写 query（不带 `?`） |
+| `via` | `object` | 可选网络路径对象，通常来自 `ctx.net.via.host()` 或 `ctx.net.via.client(id)` |
 | `on_fail` | `string` | 失败策略：`keep_original` 或 `error` |
 
 执行模型约束
