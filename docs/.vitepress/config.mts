@@ -1,4 +1,5 @@
 import { defineConfig, ThemeOptions } from "vitepress";
+import { withMermaid } from "vitepress-plugin-mermaid";
 
 const zhLocaleThemeConfig = {
   docFooter: {
@@ -56,31 +57,28 @@ const zhLocaleThemeConfig = {
     {
       text: "快速入门",
       items: [
-        { text: "开发环境搭建", link: "/lzc-cli.md" },
-        { text: "Hello World", link: "/hello-world.md" },
+        { text: "路线总览", link: "/getting-started/index.md" },
+        { text: "环境搭建", link: "/getting-started/env-setup.md" },
+        { text: "Hello World", link: "/getting-started/hello-world-fast.md" },
+        { text: "HTTP 路由", link: "/getting-started/http-route-backend.md" },
+        { text: "LPK 机制", link: "/getting-started/lpk-how-it-works.md" },
+        { text: "内嵌镜像进阶", link: "/getting-started/advanced-vnc-embed-image.md" },
       ],
     },
     {
-      text: "开发应用",
+      text: "发布应用",
       items: [
-        { text: "第一个 Python 应用", link: "/app-example-python.md" },
-        { text: "应用配置详解", link: "/app-example-python-description.md" },
-        { text: "第一个 Golang 应用", link: "/app-example-go.md" },
-        { text: "DevShell开发模式", link: "/devshell-local.md" },
-        { text: "开发依赖安装", link: "/devshell-install-and-use.md" },
-        { text: "开发测试镜像", link: "/advanced-dev-image.md" },
-        { text: "第一个 VNC应用", link: "/app-vnc.md" },
+        { text: "发布自己的第一个应用", link: "/publish-app.md" },
+        { text: "移植第一个应用", link: "/app-example-porting.md" },
       ],
     },
     {
-      text: "高级技巧",
+      text: "进阶主题",
       items: [
         { text: "路由规则", link: "/advanced-route.md" },
-        { text: "高级路由", link: "/advanced-routes.md" },
         { text: "应用域名规则", link: "/advanced-domain.md" },
         { text: "应用多域名", link: "/advanced-secondary-domains.md" },
         { text: "独立鉴权", link: "/advanced-public-api.md" },
-        { text: "API Auth Token", link: "/advanced-api-auth-token.md" },
         { text: "HTTP Headers", link: "/http-request-headers.md" },
         { text: "对接 OIDC ", link: "/advanced-oidc.html" },
         { text: "4层转发", link: "/advanced-l4forward.md" },
@@ -91,13 +89,21 @@ const zhLocaleThemeConfig = {
         { text: "初始化脚本", link: "/advanced-setupscript.md" },
         { text: "环境变量", link: "/advanced-envs.md" },
         { text: "脚本注入", link: "/advanced-injects.md" },
-        { text: "文件访问", link: "/advanced-file.md" },
-        { text: "数据库服务", link: "/advanced-db.md" },
         { text: "应用关联", link: "/advanced-mime.md" },
-        { text: "后台常驻", link: "/advanced-background.md" },
         { text: "错误页面", link: "/advanced-error-template.md" },
         { text: "平台支持", link: "/advanced-platform.md" },
         { text: "GPU 加速", link: "/advanced-gpu.md" },
+        { text: "后台常驻", link: "/advanced-background.md" },
+      ],
+    },
+    {
+      text: "最佳实践",
+      items: [
+        { text: "高级路由", link: "/advanced-routes.md" },
+        { text: "API Auth Token", link: "/advanced-api-auth-token.md" },
+        { text: "文件访问", link: "/advanced-file.md" },
+        { text: "数据库服务", link: "/advanced-db.md" },
+        { text: "LightOS 场景", link: "/advanced-lightos.md" },
         { text: "浏览器插件调试", link: "/advanced-browser-extension.md" },
       ],
     },
@@ -106,23 +112,16 @@ const zhLocaleThemeConfig = {
       items: [{ text: "免密登录", link: "/advanced-inject-passwordless-login.md" }],
     },
     {
-      text: "扩展",
-      items: [{ text: "官方扩展", link: "/extensions.md" }],
-    },
-    {
-      text: "发布应用",
-      items: [
-        { text: "发布自己的第一个应用", link: "/publish-app.md" },
-        { text: "移植第一个应用", link: "/app-example-porting.md" },
-      ],
-    },
-    {
       text: "传统模式",
       items: [
         { text: "开通 SSH 访问", link: "/ssh.md" },
         { text: "KVM 模式", link: "/kvm.md" },
         { text: "Dockerd 模式", link: "/dockerd-support.md" },
       ],
+    },
+    {
+      text: "懒猫生态",
+      items: [{ text: "官方扩展", link: "/extensions.md" }],
     },
     {
       text: "常见问题",
@@ -141,21 +140,24 @@ const zhLocaleThemeConfig = {
         { text: "lzc-build.yml", link: "/spec/build.md" },
         { text: "lzc-manifest.yml", link: "/spec/manifest.md" },
         { text: "inject.ctx", link: "/spec/inject-ctx.md" },
+        { text: "lzc-deploy-params.yml", link: "/spec/deploy-params.md" },
+        { text: "lpk format", link: "/spec/lpk-format.md" },
       ],
     },
     {
       text: "系统变更日志(仅开发者相关)",
       items: [
-        { text: "v1.4.3", link: "/changelogs/v1.4.3.md" },
-        { text: "v1.4.2", link: "/changelogs/v1.4.2.md" },
-        { text: "v1.4.1", link: "/changelogs/v1.4.1.md" },
-        { text: "v1.3.9", link: "/changelogs/v1.3.9.md" },
-        { text: "v1.3.8", link: "/changelogs/v1.3.8.md" },
-        { text: "v1.3.7", link: "/changelogs/v1.3.7.md" },
-        { text: "v1.3.6", link: "/changelogs/v1.3.6.md" },
-        { text: "v1.3.4", link: "/changelogs/v1.3.4.md" },
-        { text: "v1.3.0", link: "/changelogs/v1.3.0.md" },
-        { text: "v1.2.0", link: "/changelogs/v1.2.0.md" },
+        { text: "v1.5.0 (未发布)", link: "/changelogs/v1.5.0.md" },
+        { text: "v1.4.3 (2026-02-04)", link: "/changelogs/v1.4.3.md" },
+        { text: "v1.4.2 (2025-12-10)", link: "/changelogs/v1.4.2.md" },
+        { text: "v1.4.1 (2025-11-19)", link: "/changelogs/v1.4.1.md" },
+        { text: "v1.3.9 (2025-08-07)", link: "/changelogs/v1.3.9.md" },
+        { text: "v1.3.8 (2025-07-04)", link: "/changelogs/v1.3.8.md" },
+        { text: "v1.3.7 (2025-05-28)", link: "/changelogs/v1.3.7.md" },
+        { text: "v1.3.6 (2025-05-09)", link: "/changelogs/v1.3.6.md" },
+        { text: "v1.3.4 (2025-02-24)", link: "/changelogs/v1.3.4.md" },
+        { text: "v1.3.0 (2025-02-17)", link: "/changelogs/v1.3.0.md" },
+        { text: "v1.2.0 (2025-01-06)", link: "/changelogs/v1.2.0.md" },
       ],
     },
   ],
@@ -190,33 +192,35 @@ const enLocaleThemeConfig = {
     {
       text: "Quick Start",
       items: [
-        { text: "Development Environment Setup", link: "/en/lzc-cli.md" },
-        { text: "Hello World", link: "/en/hello-world.md" },
+        { text: "Overview", link: "/en/getting-started/index.md" },
+        { text: "Environment Setup", link: "/en/getting-started/env-setup.md" },
+        {
+          text: "Hello World",
+          link: "/en/getting-started/hello-world-fast.md",
+        },
+        {
+          text: "HTTP Routing",
+          link: "/en/getting-started/http-route-backend.md",
+        },
+        { text: "LPK Basics", link: "/en/getting-started/lpk-how-it-works.md" },
+        {
+          text: "Embedded Image",
+          link: "/en/getting-started/advanced-vnc-embed-image.md",
+        },
+
       ],
     },
     {
-      text: "Developing Applications",
+      text: "Publishing Applications",
       items: [
-        { text: "First Python Application", link: "/en/app-example-python.md" },
-        {
-          text: "Application Configuration Details",
-          link: "/en/app-example-python-description.md",
-        },
-        { text: "First Golang Application", link: "/en/app-example-go.md" },
-        { text: "DevShell Development Mode", link: "/en/devshell-local.md" },
-        {
-          text: "Development Dependency Installation",
-          link: "/en/devshell-install-and-use.md",
-        },
-        { text: "Development Test Images", link: "/en/advanced-dev-image.md" },
-        { text: "First VNC Application", link: "/en/app-vnc.md" },
+        { text: "Publish Your First Application", link: "/en/publish-app.md" },
+        { text: "Porting an Application", link: "/en/app-example-porting.md" },
       ],
     },
     {
-      text: "Advanced Techniques",
+      text: "Advanced Topics",
       items: [
         { text: "Routing Rules", link: "/en/advanced-route.md" },
-        { text: "Advanced Routing", link: "/en/advanced-routes.md" },
         { text: "Application Domain Rules", link: "/en/advanced-domain.md" },
         {
           text: "Application Multi-Domain",
@@ -226,7 +230,6 @@ const enLocaleThemeConfig = {
           text: "Independent Authentication",
           link: "/en/advanced-public-api.md",
         },
-        { text: "API Auth Token", link: "/en/advanced-api-auth-token.md" },
         { text: "HTTP Headers", link: "/en/http-request-headers.md" },
         { text: "OIDC Integration", link: "/en/advanced-oidc.html" },
         { text: "Layer 4 Forwarding", link: "/en/advanced-l4forward.md" },
@@ -240,13 +243,21 @@ const enLocaleThemeConfig = {
         { text: "Initialization Script", link: "/en/advanced-setupscript.md" },
         { text: "Environment Variables", link: "/en/advanced-envs.md" },
         { text: "Script Injection", link: "/en/advanced-injects.md" },
-        { text: "File Access", link: "/en/advanced-file.md" },
-        { text: "Database Service", link: "/en/advanced-db.md" },
         { text: "Application Association", link: "/en/advanced-mime.md" },
-        { text: "Background Persistence", link: "/en/advanced-background.md" },
         { text: "Error Pages", link: "/en/advanced-error-template.md" },
         { text: "Platform Support", link: "/en/advanced-platform.md" },
         { text: "GPU Acceleration", link: "/en/advanced-gpu.md" },
+        { text: "Background Persistence", link: "/en/advanced-background.md" },
+      ],
+    },
+    {
+      text: "Best Practices",
+      items: [
+        { text: "Advanced Routing", link: "/en/advanced-routes.md" },
+        { text: "API Auth Token", link: "/en/advanced-api-auth-token.md" },
+        { text: "File Access", link: "/en/advanced-file.md" },
+        { text: "Database Service", link: "/en/advanced-db.md" },
+        { text: "LightOS Scenarios", link: "/en/advanced-lightos.md" },
         {
           text: "Browser Extension Debugging",
           link: "/en/advanced-browser-extension.md",
@@ -258,23 +269,16 @@ const enLocaleThemeConfig = {
       items: [{ text: "Passwordless Login", link: "/en/advanced-inject-passwordless-login.md" }],
     },
     {
-      text: "Extensions",
-      items: [{ text: "Official Extensions", link: "/en/extensions.md" }],
-    },
-    {
-      text: "Publishing Applications",
-      items: [
-        { text: "Publish Your First Application", link: "/en/publish-app.md" },
-        { text: "Porting an Application", link: "/en/app-example-porting.md" },
-      ],
-    },
-    {
       text: "Traditional Mode",
       items: [
         { text: "Enable SSH Access", link: "/en/ssh.md" },
         { text: "KVM Mode", link: "/en/kvm.md" },
         { text: "Dockerd Mode", link: "/en/dockerd-support.md" },
       ],
+    },
+    {
+      text: "Lazycat Ecosystem",
+      items: [{ text: "Official Extensions", link: "/en/extensions.md" }],
     },
     {
       text: "FAQ",
@@ -299,6 +303,8 @@ const enLocaleThemeConfig = {
         { text: "lzc-build.yml", link: "/en/spec/build.md" },
         { text: "lzc-manifest.yml", link: "/en/spec/manifest.md" },
         { text: "inject.ctx", link: "/en/spec/inject-ctx.md" },
+        { text: "lzc-deploy-params.yml", link: "/en/spec/deploy-params.md" },
+        { text: "lpk format", link: "/en/spec/lpk-format.md" },
       ],
     },
     {
@@ -320,7 +326,8 @@ const enLocaleThemeConfig = {
 };
 
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
+export default withMermaid(defineConfig({
+  mermaid: {},
   rewrites: {
     "/": "zh/",
   },
@@ -376,4 +383,4 @@ export default defineConfig({
       { icon: "twitter", link: "https://x.com/manateelazycat" },
     ],
   },
-});
+}));

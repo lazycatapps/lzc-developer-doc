@@ -47,6 +47,6 @@
     PasswordAuthentication yes # 允许使用密码登陆
  ```
  - 使用`sudo systemctl restart sshd`重启`sshd`服务
- - 在本地计算机上执行`ssh -N -L <端口>:localhost:<端口> forward@ubuntu.<盒子名称>.heiyu.space`即可将虚拟机中端口转发到本地计算机上。
+ - 在本地计算机上执行`ssh -N -L <端口>:localhost:<端口> forward@ubuntu.<微服名称>.heiyu.space`即可将虚拟机中端口转发到本地计算机上。
 ## 外网服务连接方式
 ArchLinux 应用的子域名是 archlinux， 假设您的设备名为 devicename, 对外的 TCP 端口为 10086， 您就可以通过访问 archlinux.devicename.heiyu.space:10086 来访问对外提供的 TCP 服务啦。

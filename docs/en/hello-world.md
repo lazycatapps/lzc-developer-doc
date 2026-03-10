@@ -1,62 +1,100 @@
 # Hello World
-Please follow the steps below to build our first application together.
 
-First, use lzc-cli to create a project named `helloworld`:
+Use the shortest path to build your first deployable app.
+
+## 1. Create project
 
 ```bash
 lzc-cli project create helloworld
 ```
 
-After completing initialization according to the prompts, the terminal will output the following:
+In the interactive prompt:
+
+1. Choose `hello-vue`.
+2. Keep the default app id `helloworld`, or type your own.
+
+After creation, you should see a message like this:
 
 ```bash
-? Select project build template vue3
-? Please enter application ID, such as (helloworld) helloworld
-✨ Initializing project helloworld
-✨ Initializing LCMD Cloud application
-✨ LCMD MicroServer application created successfully!
-✨ After the following steps, you can enter container development
+✨ Initialize project helloworld
+✨ Lazycat app initialized
+✨ First deploy and open the app once
    cd helloworld
-   lzc-cli project devshell
-⚙️  After entering the application container, execute the following commands:
-   npm install
-   npm run dev
-🚀 Start application:
-   Enter the LCMD client launcher page and click the application icon to test the application
+   lzc-cli project deploy
+   lzc-cli project info
 ```
 
-Then execute the following command to enter the container development environment:
+Inside the project directory, the key files are:
+
+1. `lzc-manifest.yml`: runtime structure and routes.
+2. `package.yml`: static package metadata such as `package`, `version`, `author`, and `license`.
+3. `lzc-build.yml`: default build config and also the release config.
+4. `lzc-build.dev.yml`: dev override config, usually containing `pkg_id_suffix: dev` and build-time `envs`.
+
+In daily development, `project deploy`, `project info`, `project exec`, and other `project` commands prefer `lzc-build.dev.yml` by default, so they operate on an isolated dev package instead of overwriting release.
+Each command prints the active `Build config`. Use `--release` when you explicitly want `lzc-build.yml`.
+
+## 2. Deploy first, then open the app
 
 ```bash
 cd helloworld
-lzc-cli project devshell
+lzc-cli project deploy
+lzc-cli project info
 ```
 
-After successfully entering the container, the terminal will display the following information:
+Notes:
+
+1. If the first deployment asks for authorization, open the URL printed by CLI and finish authorization in the browser.
+2. `project` commands prefer `lzc-build.dev.yml` when it exists, and each command prints the active `Build config`.
+3. `project deploy` runs the configured `buildscript`, so you do not need to run `npm install` separately first.
+4. `project info` prints `Target URL` when the app is running.
+5. Use `--release` if you want to inspect or operate on release config.
+6. If the app is not running yet, run:
 
 ```bash
-[info] Starting application deployment
-[info] Installation successful!
-[info] 👉 Please access https://helloworld.178me.heiyu.space in your browser
-[info] 👉 Login with LCMD username and password
+lzc-cli project start
+lzc-cli project info
 ```
 
-Execute the following commands in the container to start the application:
+Then open the app directly:
+
+1. Click the app icon from the Lazycat client launcher.
+2. Or open the `Target URL` in your browser.
+
+For the `hello-vue` template, the app page usually enters the dev-mode entry first:
+
+1. If the local frontend dev server is not started yet, the page tells you the next step directly.
+2. The page shows the exact local port expected by the inject script.
+3. You do not need to guess commands or edit manifest first.
+
+## 3. Start frontend development from the page hint
+
+After opening the app page, run:
 
 ```bash
-npm install
 npm run dev
 ```
 
-The frontend service will run on port 3000 of the container:
+Then refresh the app page.
+
+From then on, changes to files such as `src/App.vue` are still reached through the official LPK domain, and request inject proxies traffic to your local dev server.
+
+For troubleshooting:
 
 ```bash
-Local:   http://localhost:3000/
-Network: http://172.31.0.36:3000/
+lzc-cli project log -f
 ```
 
-At this point, the application service has started. You can click the "helloworld" icon on PC or mobile to see the application's effect on each terminal platform.
+## 4. Build release package
 
-A major advantage of LCMD MicroServer is that you only need to write JavaScript once, and we automatically solve the problem of cross-platform operation of applications on 6 operating system platforms: Windows/Linux/macOS/Android/iOS/HarmonyOS, saving developers a lot of time on platform adaptation.
+```bash
+lzc-cli project release -o helloworld.lpk
+```
 
-If you want to deploy this Hello World to LCMD MicroServer, you can refer to [Building Application](https://developer.lazycat.cloud/app-example-python.html#构建应用).
+Install the release package:
+
+```bash
+lzc-cli lpk install helloworld.lpk
+```
+
+`project release` always uses `lzc-build.yml`, without dev-only package suffix or dev-only `#@build` branches.

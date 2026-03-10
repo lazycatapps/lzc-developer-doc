@@ -1,62 +1,101 @@
 # Hello World
-下面请随我们下面的步骤， 一起来构建我们第一个应用吧。
 
-首先， 使用 lzc-cli 来创建一个名为 `helloworld` 的项目：
+下面用最短路径完成第一个可部署应用。
+
+## 1. 创建项目
 
 ```bash
 lzc-cli project create helloworld
 ```
 
-按提示完成初始化后， 终端会输出如下内容：
+在交互提示中：
+
+1. 模板选择 `hello-vue (Vue基础模板)`。
+2. 应用 ID 可使用默认值 `helloworld`。
+
+创建完成后，会看到类似提示：
 
 ```bash
-? 选择项目构建模板 vue3
-? 请输入应用 ID, 如(helloworld) helloworld
 ✨ 初始化项目 helloworld
 ✨ 初始化懒猫云应用
 ✨ 懒猫微服应用已创建成功 !
-✨ 进行下面步骤后即可进入容器开发
+✨ First deploy and open the app once
    cd helloworld
-   lzc-cli project devshell
-⚙️  进入应用容器后执行下面命令:
-   npm install
-   npm run dev
-🚀 启动应用:
-   进入微服客户端启动器页面点击应用图标来测试应用
+   lzc-cli project deploy
+   lzc-cli project info
 ```
 
-然后执行以下命令进入容器开发环境：
+进入项目后，你会看到这几类核心文件：
+
+1. `lzc-manifest.yml`：应用运行结构与路由。
+2. `package.yml`：静态包元数据，例如 `package`、`version`、`name`、`description`、`locales`、`author`、`license`。
+3. `lzc-build.yml`：默认构建配置，也是 release 配置。
+4. `lzc-build.dev.yml`：开发态覆盖配置，默认包含 `pkg_id_suffix: dev` 与构建期变量 `envs`。
+
+这样日常开发时，`project deploy`、`project info`、`project exec` 等 `project` 命令默认都会优先使用 `lzc-build.dev.yml`，从而落到独立的 dev 包名，不会影响 release 版本。
+每个命令都会打印实际使用的 `Build config`；如果你要操作 `lzc-build.yml`，请显式加上 `--release`。
+
+## 2. 先部署，再打开应用
 
 ```bash
 cd helloworld
-lzc-cli project devshell
+lzc-cli project deploy
+lzc-cli project info
 ```
 
-成功进入容器后， 终端将显示如下信息：
+说明：
+
+1. 首次部署若提示授权，按 CLI 提示打开浏览器完成授权即可。
+2. `project` 命令默认会优先读取 `lzc-build.dev.yml`；命令输出里会打印实际使用的 `Build config`。
+3. `project deploy` 会按 `buildscript` 自动安装依赖并构建前端，不需要额外先执行 `npm install`。
+4. `project info` 运行中会输出 `Target URL`。
+5. 如果你要查看或操作 release 配置，请显式使用 `--release`。
+6. 如果应用尚未运行，可再执行：
 
 ```bash
-[info] 开始部署应用
-[info] 安装成功！
-[info] 👉 请在浏览器中访问 https://helloworld.178me.heiyu.space
-[info] 👉 使用微服的用户名和密码登录
+lzc-cli project start
+lzc-cli project info
 ```
 
-在容器中执行以下命令启动应用：
+然后直接打开应用：
+
+1. 在微服客户端启动器点击应用图标。
+2. 或在浏览器访问 `Target URL`。
+
+对于 `hello-vue` 模板，应用页面会先进入 dev 模式入口：
+
+1. 如果本地前端 dev server 还没启动，页面会直接提示下一步操作。
+2. 页面会显示 inject 脚本实际等待的本地端口。
+3. 你不需要先猜命令或先改 manifest。
+
+## 3. 按页面提示启动前端开发
+
+看到应用页面后，再执行：
 
 ```bash
-npm install
 npm run dev
 ```
 
-前端服务将运行在容器的 3000 端口：
+然后刷新应用页面。
+
+这样后续改动 `src/App.vue` 等前端文件时，LPK 会继续通过 request inject 把流量转到你本机的 dev server。
+
+排查问题可用：
 
 ```bash
-Local:   http://localhost:3000/
-Network: http://172.31.0.36:3000/
+lzc-cli project log -f
 ```
 
-此时， 应用服务已经启动， 您可以在 PC 或者手机端点击 "helloworld" 图标， 查看应用在每个终端平台的效果。
+## 4. 产出发布包
 
-懒猫微服的一大优势是， 您只需要编写一次 JavaScript, 我们自动解决应用在 Windows/Linux/macOS/Android/iOS/鸿蒙 6 个操作系统平台上跨平台运行的问题， 为开发者节省了大量平台适配的时间。
+```bash
+lzc-cli project release -o helloworld.lpk
+```
 
-如果想要部署这个 Hello World 到懒猫微服中，可以参考 [构建应用](https://developer.lazycat.cloud/app-example-python.html#构建应用)。
+安装发布包：
+
+```bash
+lzc-cli lpk install helloworld.lpk
+```
+
+`project release` 始终使用 `lzc-build.yml`，不会带上开发态的包名后缀和 dev-only `#@build` 分支。
