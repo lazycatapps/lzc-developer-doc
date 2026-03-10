@@ -30,11 +30,8 @@ For example, the OIDC adaptation of the outline application. According to [outli
 * `OIDC_TOKEN_URI`
 * `OIDC_USERINFO_URI`
 
-In manifest.yml, you can fill it like this:
+After putting the static metadata into `package.yml`, `lzc-manifest.yml` can look like this:
 ```yml
-name: Outline
-package: cloud.lazycat.app.outline
-version: 0.0.1
 application:
   subdomain: outline
   #outline official documentation does not provide this information, but this address can be obtained through error messages

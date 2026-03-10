@@ -23,10 +23,6 @@ For example, the effect of the following configuration is:
 
 
 ```yaml
-
-package: org.snyh.debug.whoami
-name: whoami-lazycatmicroserver
-
 application:
   subdomain: whoami
   routes:

@@ -33,11 +33,9 @@ routes:
 绝大部分情况下,lzcapp的http路由是转发到应用内某个service的http端口上, 比如`bitwarden`这个密码管理lzcapp, 就是将整个lzcapp的
 http服务转发到bitwarden这个service的80端口上.
 
-```
-package: cloud.lazycat.app.bitwarden
-description: 一款自由且开源的密码管理服务
-name: Bitwarden
+以下代码块仅展示 `lzc-manifest.yml` 片段；`package`、`name`、`description` 等静态字段请写在 `package.yml`。
 
+```
 application:
   routes:
   - /=http://bitwarden.cloud.lazycat.app.bitwarden.lazcapp:80
@@ -68,9 +66,6 @@ file上游
 file路由用来加载静态html文件, 比如pptist这个lzcapp是一个纯前端应用,因此仅使用了一条静态file路由规则,没有运行任何其他service
 
 ```
-package: cloud.lazycat.app.pptist
-name: PPTist
-description: 一个基于 Vue3.x + TypeScript 的在线演示文稿（幻灯片）应用
 application:
   subdomain: pptist
   routes:

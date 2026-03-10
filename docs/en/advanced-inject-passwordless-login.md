@@ -121,10 +121,6 @@ Complete `lzc-manifest.yml` example
 -----------------------------------
 
 ```yml
-package: org.snyh.debug.jellyfininject
-name: Jellyfin Inject Test
-version: 10.10.22
-
 application:
   subdomain: jellyfininject
   public_path:

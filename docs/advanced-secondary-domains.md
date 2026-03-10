@@ -16,6 +16,8 @@ v1.3.8已支持[基于域名的流量转发](./advanced-route#upstreamconfig)
 可以添加一条特殊route规则，`- /=http://nginx.$appid.lzcapp`。
 注意这里一定要用`$service.$appid.lzcapp`的形式，否则nginx无法收到完整的域名信息，[原因见](advanced-route.html#p2)
 
+以下代码块仅展示 `lzc-manifest.yml`，对应的 `package.yml` 请自行补充静态元数据。
+
 比如，下面这个配置的效果是
 1. 应用列表里打开默认是`whoami.xx.heiyu.space`(假设实际分配到的`subdomain`是`whoami`)
 2. `nginx-whoami.xx.heiyu.space`流量会返回默认的nginx静态hello world
@@ -23,10 +25,6 @@ v1.3.8已支持[基于域名的流量转发](./advanced-route#upstreamconfig)
 
 
 ```yaml
-
-package: org.snyh.debug.whoami
-name: whoami-lazycatmicroserver
-
 application:
   subdomain: whoami
   routes:

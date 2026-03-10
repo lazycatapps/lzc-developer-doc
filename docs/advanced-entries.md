@@ -5,6 +5,7 @@
 需要 lzcos v1.4.3+。
 
 ```yml
+# lzc-manifest.yml
 application:
   subdomain: demoapp
   entries:
@@ -15,6 +16,10 @@ application:
       title: "Admin"
       path: /admin
       prefix_domain: admin
+```
+
+```yml
+# package.yml
 locales:
   en:
     entries.main.title: "Main"

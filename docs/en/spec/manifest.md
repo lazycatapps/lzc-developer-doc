@@ -1,7 +1,9 @@
 # lzc-manifest.yml Specification Document
 
 ## 1. Overview
-`lzc-manifest.yml` is a file used to define application deployment-related configurations. This document will describe its structure and the meaning of each field in detail.
+`lzc-manifest.yml` defines runtime structure and deployment-related behavior for an application. This document describes its structure and each field.
+
+Note: since LPK v2, static package metadata is stored in `package.yml`, including `package`, `version`, `name`, `description`, `locales`, `author`, `license`, `homepage`, `min_os_version`, and `unsupported_platforms`. `lzc-manifest.yml` keeps runtime-structure fields only.
 
 ## 2. Top-level Data Structure `ManifestConfig`
 
@@ -9,24 +11,14 @@
 
 | Field Name | Type | Description |
 | ---- | ---- | ---- |
-| `package` | `string` | Application's unique ID, must be globally unique, recommended to start with personal domain |
-| `version` | `string` | Application version number, X, Y and Z are non-negative integers, X is the major version number, Y is the minor version number, and Z is the revision number, format: `X.Y.Z`, [Read detailed specification](https://semver.org/)|
-| `name` | `string` | Application name |
-| `description` | `string` | Application description |
-| `usage` | `string` | Application usage instructions, if not empty, will be automatically rendered when each user in LCMD first accesses this application |
-| `license` | `string` | Application license description |
-| `homepage` | `string` | Application homepage |
-| `author` | `string` | Author name, if through store channel then store account has higher priority |
-| `min_os_version` | `string` | Minimum system version required by this application, if not met the application installation will fail, and the app store will refuse to install this application |
+| `usage` | `string` | Application usage instructions. If not empty, it is rendered the first time each user opens the app |
 
 ### 2.2 Other Configurations
 | Field Name | Type | Description |
 | ---- | ---- | ---- |
 | `ext_config` | `ExtConfig` | Experimental properties, not publicly available yet |
-| `unsupported_platforms` | `[]string` | Platforms not supported by the application, valid fields are: "ios", "android", "windows", "macos", "linux", "tvos" |
 | `application` | `ApplicationConfig` | lzcapp core service configuration |
 | `services` | `map[string]ServiceConfig` | Traditional docker container related service configuration |
-| `locales` | `map[string]I10nConfigItem` | Application localization configuration (optional configuration item), **requires lzc-os version >= v1.3.0** |
 
 
 ## 3. `IngressConfig` Configuration
@@ -133,7 +125,7 @@ For runtime behavior, phase model, and best practices, see: [Script Injection (i
 
 | Field Name | Type | Description |
 | ---- | ---- | ---- |
-| `enable_document_access` | `bool` | If true, mounts document directory to /lzcapp/document |
+| `enable_document_access` | `bool` | If true, mounts user documents to `/lzcapp/documents` |
 | `enable_media_access` | `bool` | If true, mounts media directory to /lzcapp/media |
 | `enable_clientfs_access` | `bool` | If true, mounts clientfs directory to /lzcapp/clientfs |
 | `disable_grpc_web_on_root` | `bool` | If true, no longer hijacks application's grpc-web traffic. Needs to work with new version lzc-sdk so system's own grpc-web traffic can be forwarded normally|
@@ -205,20 +197,20 @@ For runtime behavior, phase model, and best practices, see: [Script Injection (i
 
 ## 11. Localization `I10nConfigItem` Application Configuration {#i18n}
 
-Configure `locales` to make applications support multiple languages. For supported language key specifications, refer to [BCP 47 standard](https://en.wikipedia.org/wiki/IETF_language_tag)
+`locales` enables multi-language metadata. For supported language keys, refer to the [BCP 47 standard](https://en.wikipedia.org/wiki/IETF_language_tag). Since LPK v2, `locales` is defined in `package.yml`, while its meaning stays unchanged.
 
 | Field Name | Type | Description |
 | ---- | ---- | ---- |
 | `name` | `string` | Application name localization field |
 | `description` | `string` | Application description localization field |
 | `usage` | `string` | Application usage instructions localization field |
-| `entries.<entry_id>.title` | `string` | Entry title localization field, `entry_id` must match the `id` in `application.entries` |
+| `entries.<entry_id>.title` | `string` | Entry title localization field. `entry_id` must match `application.entries[].id` |
 
 Note: Entry title can be localized via `locales` with `entries.<entry_id>.title`.
 
 ::: details Configuration Example
 ```yml
-lzc-sdk-version: 0.1
+# package.yml
 package: cloud.lazycat.app.netatalk
 version: 0.0.1
 name: Apple 时间机器备份
@@ -237,6 +229,10 @@ locales:
   ja:
     name: "タイムマシンサーバー"
     description: "Netatalk サービスは Apple Time Machine のバックアップに使用できます"
+```
+
+```yml
+# lzc-manifest.yml
 application:
   subdomain: netatalk3
 ```

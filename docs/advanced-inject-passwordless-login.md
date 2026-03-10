@@ -123,13 +123,11 @@ application:
 3. browser 阶段：登录页从 `ctx.persist` 读取并自动填充；改密页自动填充“当前密码”。
 
 配置示例（Jellyfin 三阶段示例）
+
+以下仅展示 `lzc-manifest.yml`；包名、版本等静态信息请写在 `package.yml`。
 -----------------------------
 
 ```yml
-package: org.snyh.debug.jellyfininject
-name: Jellyfin Inject Test
-version: 10.10.22
-
 application:
   subdomain: jellyfininject
   public_path:

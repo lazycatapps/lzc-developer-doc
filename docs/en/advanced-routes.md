@@ -15,6 +15,8 @@ There are currently two usage modes:
 
 Below is a detailed introduction to the usage of each mode.
 
+The following examples show `lzc-manifest.yml` only. Put static package metadata in `package.yml`.
+
 ### Environment Variables
 APP Proxy abstracts some specific functions, allowing developers unfamiliar with Nginx/Openresty configuration to quickly configure through environment variables. Currently supported environment variables:
 
@@ -32,10 +34,6 @@ You can directly override Openresty's configuration file in setup_script, and ev
 Here is a simple example:
 
 ```yaml
-lzc-sdk-version: '0.1'
-name: APP Proxy Test
-package: cloud.lazycat.app.app-proxy-test
-version: 0.0.1
 application:
   routes:
     # Forward requests to APP Proxy (app-proxy service)
@@ -62,10 +60,6 @@ services:
 As long as APP Proxy is used, you can view request logs through `lzc-cli docker logs -f`.
 For example, in the following example, you can view request logs through `lzc-cli docker logs -f cloudlazycatappapp-proxy-test-app-proxy-1`.
 ```yaml
-lzc-sdk-version: '0.1'
-name: APP Proxy Test
-package: cloud.lazycat.app.app-proxy-test
-version: 0.0.1
 application:
   routes:
     - /=http://app-proxy:80
@@ -85,10 +79,6 @@ By setting the `BASIC_AUTH_HEADER` environment variable, you can inject the `Aut
 The value of `BASIC_AUTH_HEADER` is `Basic base64(username:password)`. In the following example, assuming the username is `user` and the password is `password`, the base64 encoding obtained by `echo -n "user:password" | base64` is `dXNlcjpwYXNzd29yZA==`.
 
 ```yaml
-lzc-sdk-version: '0.1'
-name: APP Proxy Test
-package: cloud.lazycat.app.app-proxy-test
-version: 0.0.1
 application:
   routes:
     - /=http://app-proxy:80
@@ -109,10 +99,6 @@ By setting the `REMOVE_REQUEST_HEADERS` environment variable, you can remove spe
 For example, if we want to remove the Origin request header, we can set `REMOVE_REQUEST_HEADERS="Origin"`, and then the `Origin` request header will be removed.
 
 ```yaml
-lzc-sdk-version: '0.1'
-name: APP Proxy Test
-package: cloud.lazycat.app.app-proxy-test
-version: 0.0.1
 application:
   routes:
     - /=http://app-proxy:80
@@ -139,10 +125,6 @@ In the following example, different domains will be forwarded to different backe
 
 
 ```yaml
-lzc-sdk-version: '0.1'
-name: APP Proxy Test
-package: cloud.lazycat.app.app-proxy-test
-version: 0.0.1
 application:
   routes:
     - /=http://app-proxy.cloud.lazycat.app.app-proxy-test.lzcapp:80

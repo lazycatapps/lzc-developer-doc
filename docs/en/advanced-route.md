@@ -33,11 +33,9 @@ case, the js code in the page can still use the functions of `lzc-sdk/js`. The a
 In most cases, lzcapp's http routing forwards to a certain service's http port within the application. For example, the `bitwarden` password management lzcapp forwards the entire lzcapp's
 http service to bitwarden service's port 80.
 
-```
-package: cloud.lazycat.app.bitwarden
-description: A free and open source password management service
-name: Bitwarden
+The following snippets show `lzc-manifest.yml` only. Static fields such as `package`, `name`, and `description` belong in `package.yml`.
 
+```
 application:
   routes:
   - /=http://bitwarden.cloud.lazycat.app.bitwarden.lazcapp:80
@@ -68,9 +66,6 @@ File Upstream
 File routing is used to load static html files. For example, pptist lzcapp is a pure frontend application, so it only uses one static file routing rule and does not run any other services
 
 ```
-package: cloud.lazycat.app.pptist
-name: PPTist
-description: An online presentation (slides) application based on Vue3.x + TypeScript
 application:
   subdomain: pptist
   routes:

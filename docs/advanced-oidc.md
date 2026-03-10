@@ -30,11 +30,8 @@ v1.3.5+提供了统一的oidc的支持，lzcapp适配oidc后即可自动获取ui
 * `OIDC_TOKEN_URI`
 * `OIDC_USERINFO_URI`
 
-在manifest.yml中可以这样填写
+在 `package.yml` 中填写静态元数据后，`lzc-manifest.yml` 可以这样写
 ```yml
-name: Outline
-package: cloud.lazycat.app.outline
-version: 0.0.1
 application:
   subdomain: outline
   #outline官方文档没有提供这个信息，但通过报错信息可以得到这个地址
