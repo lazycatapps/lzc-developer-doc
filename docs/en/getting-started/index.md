@@ -1,6 +1,6 @@
 # Getting Started Path {#getting-started-overview}
 
-This section is for developers building their first LPK. The goal is to complete one real deployment as quickly as possible:
+This section is for developers building their first Lazycat app package. The goal is to complete one real deployment as quickly as possible:
 
 1. Deploy successfully and verify it from multiple clients.
 2. Understand the split between frontend development, backend development, and release.
@@ -19,8 +19,8 @@ This section is for developers building their first LPK. The goal is to complete
 | --- | --- | --- |
 | 1 | [Environment Setup](./env-setup.md) | Local environment works and `lzc-cli` can reach your target microservice |
 | 2 | [Hello World in 5 Minutes](./hello-world-fast.md) | First app is deployed and visible on Android/iOS/macOS/Windows/Web |
-| 3 | [Dev Workflow Overview](./dev-workflow.md) | Understand how `lzc-build.dev.yml`, `request` inject, and `project sync --watch` form one development workflow |
-| 4 | [HTTP Routing with Backend](./http-route-backend.md) | Understand `application.routes` and the boundary of frontend/backend integration |
+| 3 | [Dev Workflow Overview](./dev-workflow.md) | Understand how `lzc-build.dev.yml`, the request routing script (`request inject`), and `project sync --watch` form one development workflow |
+| 4 | [HTTP Routing with Backend](./http-route-backend.md) | Understand `application.routes` (where each request should go) and the boundary of frontend/backend integration |
 | 5 | [How LPK Works](./lpk-how-it-works.md) | Build a complete mental model of build/package/install flow |
 | 6 | [Advanced Embedded Image Practice](./advanced-vnc-embed-image.md) | Use `images` + `embed:<alias>` with `gui-vnc` for upstream image customization |
 
@@ -35,8 +35,8 @@ This section is for developers building their first LPK. The goal is to complete
 After this section, you should be able to:
 
 1. Create and deploy an LPK project independently.
-2. Understand that `project` commands prefer `lzc-build.dev.yml` by default and confirm the target with the printed `Build config` line.
-3. Understand how frontend development proxies to the dev machine through `request` inject, and how backend development lands in the real runtime through `project sync --watch`.
+2. Understand that `project` commands prefer `lzc-build.dev.yml` by default and confirm which build config is actually in use from the printed `Build config` line.
+3. Understand how frontend development proxies to the dev machine through the request routing script (`request inject`), and how backend development lands in the real runtime through `project sync --watch`.
 4. Verify app availability both in client apps and browser.
 5. Configure HTTP routes correctly when backend is needed.
 6. Use embedded image workflow for image customization.

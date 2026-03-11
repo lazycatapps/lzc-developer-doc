@@ -23,14 +23,14 @@ After this guide, you can verify these 5 points:
 2. `lzc-build.yml` is build-stage only. After package is produced and installed, runtime flow does not read your local `lzc-build.yml`.
 3. You can build a valid LPK even without `lzc-cli`.
 4. Compose solves part of orchestration, while LPK further solves microservice delivery and operation-role separation.
-5. Understand two traffic paths for lzcapp: HTTPS/HTTP path and TCP/UDP L4 forwarding path.
+5. Understand the two traffic paths for an app in Lazycat: the default HTTPS/HTTP path and the TCP/UDP L4 forwarding path. The runtime term for this app instance is `lzcapp`.
 
 ## Prerequisites {#prerequisites}
 
 1. You completed [HTTP Routing with Backend](./http-route-backend.md).
 2. You have run `lzc-cli project deploy` at least once.
 
-## lzcapp Traffic Map {#lzcapp-traffic-map}
+## App Traffic Map (runtime term: `lzcapp`) {#lzcapp-traffic-map}
 
 ```mermaid
 flowchart TB
@@ -61,13 +61,13 @@ flowchart TB
 Legend:
 
 1. Blue nodes (`1~4`): platform-level security mechanism, app-agnostic.
-2. Orange nodes (`6B`, `9A`): primary developer touch points (`application.ingress` / `manifest.yml`).
+2. Orange nodes (`6B`, `9A`): the main places app developers need to care about, technically `application.ingress` and `manifest.yml`.
 
 ### Code-level mapping (summary) {#code-level-mapping}
 
 1. ingress extracts subdomain from `Host` and resolves target app instance (supports multi-instance mapping).
 2. HTTPS/HTTP path checks login state; unauthenticated and non-`public_path` requests are redirected to login.
-3. After checks, request is forwarded to target lzcapp; then `lzcinit` routes by `manifest.yml` (`routes/upstreams`).
+3. After checks, the request is forwarded to the target app; then `lzcinit` routes it by `manifest.yml` (`routes/upstreams`).
 4. TCP/UDP path uses `application.ingress` for L4 matching/forwarding and does not parse HTTP semantics.
 5. For L4 ingress, system allocates/maintains dedicated virtual IP mapping; domain access resolves to that virtual IP.
 
@@ -96,9 +96,9 @@ Default behavior:
 
 1. New projects normally contain `lzc-manifest.yml`, `package.yml`, and `lzc-build.yml`.
 2. `project` commands prefer `lzc-build.dev.yml` when it exists.
-3. Each command prints the active `Build config`.
+3. Each command prints the active `Build config` line.
 4. `package.yml` is where static package metadata now lives, instead of the top level of `lzc-manifest.yml`.
-5. Use `--release` if you want to operate on `lzc-build.yml`.
+5. Use `--release` if you want to operate on the release build config `lzc-build.yml`.
 
 ### Scenario B: CI release {#scenario-b-ci-release}
 
@@ -127,7 +127,7 @@ lzc-cli lpk info release.lpk
 
 Typical contents:
 
-1. `manifest.yml`: runtime metadata.
+1. `manifest.yml`: the app runtime description.
 2. `content.tar` or `content.tar.gz`: static app content.
 3. `images/`: optional embedded OCI image layout.
 4. `images.lock`: optional layer source metadata (`embed` / `upstream`).
@@ -186,7 +186,7 @@ lzc-cli lpk install hello-manual.lpk
 ## 5. Where to check first when things fail {#where-to-check-first}
 
 1. Build failed: check `lzc-build.yml` and build logs.
-2. Installed but inaccessible: check `application.routes` in `lzc-manifest.yml`.
+2. Installed but inaccessible: check `application.routes` in `lzc-manifest.yml`, which defines where requests should go.
 3. Version not updated: check `Current version deployed` in `lzc-cli project info`.
 4. Service errors: check `lzc-cli project log -f`.
 
@@ -209,7 +209,7 @@ You should be able to answer:
 
 ### 1. `Build config file not found` {#error-build-config-not-found}
 
-Fix: ensure you are in project root and `lzc-build.yml` or `lzc-build.dev.yml` exists. The printed `Build config` line helps confirm which file the command is actually using.
+Fix: ensure you are in project root and `lzc-build.yml` or `lzc-build.dev.yml` exists. The printed `Build config` line tells you which file the command is actually using.
 
 ### 2. Manifest changed but behavior unchanged {#error-manifest-changed-no-effect}
 

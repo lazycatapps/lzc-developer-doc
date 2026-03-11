@@ -105,7 +105,7 @@ If `lzc-build.dev.yml` exists, these commands prefer it by default:
 6. `lzc-cli project sync`
 7. `lzc-cli project log`
 
-Every command prints the active `Build config`.
+Every command prints the active `Build config` line, which tells you which build config file is actually in use.
 
 If you want the release config explicitly, add `--release`:
 
@@ -118,7 +118,7 @@ lzc-cli project info --release
 
 ## Why Dev Logic Belongs to Request Inject {#why-request-inject}
 
-The core of this workflow is not `devshell`. It is `request inject`.
+The core of this workflow is [`request inject`](../advanced-inject-request-dev-cookbook.md).
 
 The reason is straightforward:
 

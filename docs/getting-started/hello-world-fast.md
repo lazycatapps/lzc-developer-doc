@@ -4,9 +4,9 @@
 
 完成本篇后，你可以明确区分并验证这 3 件事：
 
-1. 你创建并部署的 lzcapp，背后主要是一个通过 HTTPS 访问的 Web App。
-2. lpk 是 lzcapp 的交付包格式：代码与运行声明被打包为一个 `.lpk` 后安装到目标微服运行。
-3. 同一份 lpk 部署后，可在 Android、iOS、macOS、Windows、Web（浏览器）等多端一致访问，体现懒猫微服的跨平台能力。
+1. 你创建并部署的应用，用户侧看到的主要是一个通过 HTTPS 访问的 Web App。
+2. LPK 是应用最终交付和安装的包格式：代码与运行声明会被打成一个 `.lpk`，再安装到目标微服运行。
+3. 同一份 `.lpk` 部署后，可在 Android、iOS、macOS、Windows、Web（浏览器）等多端一致访问，体现懒猫微服的跨平台能力。
 
 ## 前置条件 {#prerequisites}
 
@@ -31,11 +31,11 @@ cd hello-lpk
 
 模板默认会生成：
 
-1. `lzc-build.yml`：默认构建配置，也是 release 配置。
+1. `lzc-build.yml`：默认构建配置，也是发布配置。
 2. `lzc-build.dev.yml`：开发态覆盖配置，默认包含 `pkg_id_suffix: dev` 和 `DEV_MODE=1`。
 
-这意味着 `project deploy`、`project info`、`project exec` 等 `project` 命令默认都会落到独立的 dev 包名，不会覆盖 release 包。
-命令输出里会打印实际使用的 `Build config`；如需操作 release，请显式加上 `--release`。
+这意味着 `project deploy`、`project info`、`project exec` 等 `project` 命令默认都会落到独立的 dev 包名，不会覆盖正式发布包。
+命令输出里会打印一行 `Build config`，就是在告诉你“这次实际用了哪个构建配置文件”；如需操作发布配置，请显式加上 `--release`。
 
 ### 2. 先部署并确认访问入口 {#step-first-deploy}
 
@@ -48,7 +48,7 @@ lzc-cli project info
 
 1. 首次部署如果出现授权提示，按 CLI 输出打开浏览器完成授权即可。
 2. `project` 命令默认会优先使用 `lzc-build.dev.yml`。
-3. 每个命令都会打印实际使用的 `Build config`。
+3. 每个命令都会打印 `Build config` 这一行。
 4. `project deploy` 会按 `buildscript` 自动安装依赖并构建前端，不需要额外先执行 `npm install`。
 5. `project info` 在应用已运行时会输出 `Target URL`。
 
@@ -60,8 +60,8 @@ lzc-cli project info
 
 对于 `hello-vue` 模板，第一次打开应用时通常会先看到一个前端开发引导页。这是开发流程中的正常行为，表示：
 
-1. 当前入口已经进入 request inject 控制。
-2. 页面会告诉你 inject 正在等待的本地端口。
+1. 当前入口已经进入请求分流脚本（`request inject`）控制。
+2. 页面会告诉你这个分流脚本正在等待的本地端口。
 3. 如果 dev server 还没启动，页面会直接告诉你下一步该做什么。
 
 ### 4. 启动前端 dev server {#step-start-dev-server}
@@ -74,7 +74,7 @@ npm run dev
 
 然后刷新应用页面。
 
-此时入口流量会继续通过 LPK 域名进入，再由 request inject 代理到你开发机上的前端 dev server。
+此时入口流量会继续通过应用域名进入，再由请求分流脚本代理到你开发机上的前端 dev server。
 
 ### 5. 修改源码并立即验证 {#step-modify-source}
 
@@ -106,7 +106,7 @@ lzc-cli lpk info hello.lpk
 ```
 
 你会看到 `format`、`package`、`version` 等信息。
-这一步用于确认：`lpk` 是 lzcapp 的交付包格式。
+这一步用于确认：`.lpk` 就是这个应用最终交付和安装时使用的包。
 
 ## 验证 {#verification}
 

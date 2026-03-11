@@ -4,9 +4,9 @@
 
 After this guide, you can clearly verify these 3 points:
 
-1. A deployed lzcapp is mainly a Web App accessed over HTTPS.
-2. lpk is the delivery package format for lzcapp: code and runtime declarations are packed into `.lpk` and installed to target microservice.
-3. The same lpk can be accessed consistently on Android, iOS, macOS, Windows, and Web browser.
+1. A deployed app is mainly a Web App accessed over HTTPS.
+2. `lpk` is the delivery and install package format for the app: code and runtime declarations are packed into `.lpk` and installed to the target microservice.
+3. The same `.lpk` can be accessed consistently on Android, iOS, macOS, Windows, and Web browser.
 
 ## Prerequisites {#prerequisites}
 
@@ -31,13 +31,13 @@ cd hello-lpk
 
 The template generates these core files by default:
 
-1. `lzc-manifest.yml`: app runtime structure and routes.
+1. `lzc-manifest.yml`: the app runtime description, including routes and entry behavior.
 2. `package.yml`: static package metadata such as `package`, `version`, `author`, and `license`.
 3. `lzc-build.yml`: the default build config and also the release config.
 4. `lzc-build.dev.yml`: the dev override config, containing `pkg_id_suffix: dev` and `DEV_MODE=1` by default.
 
 This means `project deploy`, `project info`, `project exec`, and other `project` commands will target an isolated dev package by default, instead of overwriting the release package.
-Each command prints the active `Build config`; use `--release` when you want to operate on release explicitly.
+Each command prints the active `Build config` line, which tells you which build config file is actually in use; use `--release` when you want to operate on release explicitly.
 
 ### 2. Deploy first and confirm the entry URL {#step-first-deploy}
 
@@ -50,7 +50,7 @@ Notes:
 
 1. On first deployment, if authorization is requested, open the URL printed by CLI in your browser.
 2. `project` commands prefer `lzc-build.dev.yml` when it exists.
-3. Each command prints the active `Build config`.
+3. Each command prints the active `Build config` line.
 4. `project deploy` runs the configured `buildscript`, so you do not need to run `npm install` separately first.
 5. `project info` prints `Target URL` once the app is running.
 
@@ -62,7 +62,7 @@ Notes:
 
 For the `hello-vue` template, the first visit usually shows a frontend dev guide page. This is the expected behavior in this workflow, which means:
 
-1. The entry flow is already controlled by request inject.
+1. The entry flow is already controlled by the request routing script (`request inject`).
 2. The page tells you the actual local port expected by the inject script.
 3. If the dev server is not started yet, the page tells you the next step directly.
 
@@ -76,7 +76,7 @@ npm run dev
 
 Then refresh the app page.
 
-Traffic will still enter through the official LPK domain, and request inject will proxy it to your dev machine frontend server.
+Traffic will still enter through the app URL, and the request routing script will proxy it to your dev machine frontend server.
 
 ### 5. Modify source and verify immediately {#step-modify-source}
 
@@ -108,7 +108,7 @@ lzc-cli lpk info hello.lpk
 ```
 
 You should see fields like `format`, `package`, and `version`.
-This helps confirm that `lpk` is the delivery package format.
+This helps confirm that `.lpk` is the package you finally deliver and install.
 
 ## Verification {#verification}
 

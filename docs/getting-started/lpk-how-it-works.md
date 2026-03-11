@@ -23,14 +23,14 @@
 2. `lzc-build.yml` 只在构建阶段生效；生成 LPK 后进入安装/运行流程时，系统不再读取你本地的构建配置文件。
 3. 不依赖 `lzc-cli`，你同样可以按 LPK 规范手工产出一个可安装包。
 4. Docker Compose 解决了部分编排问题，但 LPK 在微服场景下进一步解决了交付与 IT 维护职责下沉的问题。
-5. 理解 lzcapp 在微服中的两条流量路径：默认 HTTPS/HTTP 路径与 TCP/UDP 4 层转发路径。
+5. 理解应用在微服中的两条流量路径：默认 HTTPS/HTTP 路径与 TCP/UDP 4 层转发路径。技术上它对应运行中的 lzcapp。
 
 ## 前置条件 {#prerequisites}
 
 1. 你已完成 [有后端时如何通过 HTTP 路由对接](./http-route-backend.md)。
 2. 你已经至少执行过一次 `lzc-cli project deploy`。
 
-## lzcapp 流量总路线图 {#lzcapp-traffic-map}
+## 应用流量总路线图（技术上对应 lzcapp） {#lzcapp-traffic-map}
 
 ```mermaid
 flowchart TB
@@ -61,13 +61,13 @@ flowchart TB
 图例：
 
 1. 蓝色节点（`1~4`）：微服平台通用安全防护机制，与具体应用无关。
-2. 橙色节点（`6B`、`9A`）：lzcapp 开发者主要涉及点（`application.ingress` / `manifest.yml`）。
+2. 橙色节点（`6B`、`9A`）：应用开发者主要需要关注的位置，技术上对应 `application.ingress` 和 `manifest.yml`。
 
 ### 代码里对应的关键动作（精简版） {#code-level-mapping}
 
 1. ingress 先按 `Host` 提取子域名，再找对应应用实例（支持多实例映射）。
 2. HTTPS/HTTP 路径会做登录态检查；未登录且不在 `public_path` 的请求会被重定向到登录页。
-3. 通过检查后，请求会转发到目标 lzcapp；lzcapp 内的 `lzcinit` 再按 `manifest.yml` 的 `routes/upstreams` 做最终分流。
+3. 通过检查后，请求会转发到目标应用；应用内的 `lzcinit` 再按 `manifest.yml` 的 `routes/upstreams` 做最终分流。
 4. TCP/UDP 路径使用 `application.ingress` 规则做 4 层匹配与转发，不做域名和 HTTP 语义解析。
 5. 配置了 4 层入口时，系统会为该应用分配并维护独立虚拟 IP 映射规则；域名访问本质上是把域名解析到该虚拟 IP。
 
@@ -96,9 +96,9 @@ lzc-cli project info
 
 1. 项目根目录默认会有 `lzc-manifest.yml`、`package.yml`、`lzc-build.yml`。
 2. 如果存在 `lzc-build.dev.yml`，`project deploy`、`project info`、`project exec` 等 `project` 命令默认都会在开发态使用它。
-3. 每个 `project` 命令都会打印实际使用的 `Build config`。
-4. `package.yml` 用来维护静态包元数据，不再建议把这些字段写回 manifest 顶层。
-5. 如果要操作 release 配置，请显式加上 `--release`。
+3. 每个 `project` 命令都会打印 `Build config` 这一行。
+4. `package.yml` 用来维护静态包元数据，不再建议把这些字段写回应用运行说明文件（manifest）顶层。
+5. 如果要显式操作发布配置，请加上 `--release`。
 6. `lzc-build.dev.yml` 只建议写开发态差异，例如 `pkg_id_suffix: dev`。
 
 ### 场景 B：CI 发布（产出可分发包） {#scenario-b-ci-release}
@@ -133,7 +133,7 @@ lzc-cli lpk info release.lpk
 
 你通常会看到这几类内容：
 
-1. `manifest.yml`：运行元信息。
+1. `manifest.yml`：应用运行说明文件。
 2. `content.tar` 或 `content.tar.gz`：应用静态内容。
 3. `images/`：可选，内嵌镜像 OCI layout。
 4. `images.lock`：可选，记录镜像层来自 `embed` 或 `upstream`。
@@ -217,7 +217,7 @@ lzc-cli lpk install hello-manual.lpk
 ## 5. 出问题时优先看哪里 {#where-to-check-first}
 
 1. 构建失败：先看构建配置文件与构建日志。
-2. 安装成功但打不开：先看 `lzc-manifest.yml` 的 `application.routes`。
+2. 安装成功但打不开：先看 `lzc-manifest.yml` 的 `application.routes`，也就是“请求该转到哪里”的规则。
 3. 版本未更新：看 `lzc-cli project info` 的 `Current version deployed`。
 4. 服务报错：看 `lzc-cli project log -f`。
 

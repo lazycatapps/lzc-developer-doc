@@ -6,7 +6,7 @@
 
 1. 前端开发：先 `project deploy`，再打开应用，再启动本机 dev server。
 2. 后端开发：先 `project deploy`，再打开应用，再把代码同步进真实运行环境并手动启动进程。
-3. 发布：始终用 `lzc-build.yml` 和最终产物构建 release 包。
+3. 发布：始终用 `lzc-build.yml` 和最终产物构建发布包。
 
 ## 目标 {#goal}
 
@@ -64,11 +64,11 @@ flowchart TB
 建议先按下面三层理解整个开发流程：
 
 1. `lzc-build.yml`
-   作用：release 构建配置。
+   作用：发布包构建配置。
 2. `lzc-build.dev.yml`
    作用：dev 构建覆盖配置，只保存开发态差异。
 3. `lzc-manifest.yml`
-   作用：应用运行结构本身；其中 dev 专属逻辑通过 `#@build` 预处理块决定是否进入最终包。
+   作用：应用运行结构本身；其中 dev 专属逻辑通过 `#@build` 预处理块决定是否进入最终包。这里可以先把它理解成“应用运行说明文件”。
 
 典型项目通常只维护这四类文件：
 
@@ -105,9 +105,9 @@ envs:
 6. `lzc-cli project sync`
 7. `lzc-cli project log`
 
-每个命令都会打印当前实际使用的 `Build config`。
+每个命令都会打印一行 `Build config`，就是在告诉你“这次实际用了哪个构建配置文件”。
 
-如果你要显式操作 release 配置，直接加 `--release`：
+如果你要显式操作发布配置，直接加 `--release`：
 
 ```bash
 lzc-cli project deploy --release
@@ -118,7 +118,7 @@ lzc-cli project info --release
 
 ## 为什么 dev 逻辑要放到 request inject 里 {#why-request-inject}
 
-开发流程的核心不是 `devshell`，而是 `request inject`。
+开发流程的核心是请求分流脚本（[`request inject`](../advanced-inject-request-dev-cookbook.md)）。
 
 原因很简单：
 
@@ -128,9 +128,9 @@ lzc-cli project info --release
 
 推荐模式是：
 
-1. release 路由保持稳定。
+1. 发布包里的路由保持稳定。
 2. dev 专属 inject 只放在 `#@build if env.DEV_MODE=1` 里。
-3. 这样 release 包里物理上不会带任何开发态分流逻辑。
+3. 这样最终发布包里物理上不会带任何开发态分流逻辑。
 
 最小示例：
 
@@ -194,7 +194,7 @@ npm run dev
 这样做有三个直接好处：
 
 1. 你能立即看到当前实例是否已经关联到开发机。
-2. 页面可以明确告诉你 inject 正在等待哪个端口。
+2. 页面可以明确告诉你请求分流脚本正在等待哪个端口。
 3. 如果开发机未在线，或实例还没同步“开发机关联标识”，页面会直接给出下一步引导，而不是只看到 502 或空白页。
 
 ### 典型请求流
@@ -317,10 +317,10 @@ lzc-cli project release -o app.lpk
 
 至少检查下面几项：
 
-1. release 包名没有 `.dev` 之类的后缀。
-2. 包内 manifest 不包含开发态 inject。
-3. release 镜像不是 `Dockerfile.dev` 或开发态 alias。
-4. 安装 release 包后，不需要开发机在线也能正常访问。
+1. 发布包名没有 `.dev` 之类的后缀。
+2. 包内运行说明文件不包含开发态 inject。
+3. 发布镜像不是 `Dockerfile.dev` 或开发态 alias。
+4. 安装发布包后，不需要开发机在线也能正常访问。
 
 ## 一个最实用的判断表 {#decision-table}
 
@@ -328,9 +328,9 @@ lzc-cli project release -o app.lpk
 
 | 你的目标 | 该用什么 | 不该先做什么 |
 | --- | --- | --- |
-| 改页面、看热更新 | `project deploy` + 打开应用 + `npm run dev` | 不要先纠结 release 包 |
+| 改页面、看热更新 | `project deploy` + 打开应用 + `npm run dev` | 不要先纠结发布包 |
 | 改后端、依赖真实 `/lzcapp/*` 环境 | `project deploy` + `project sync --watch` + `project exec` | 不要优先在开发机模拟整套运行环境 |
-| 产出安装包给别人用 | `project release` | 不要直接拿 dev 部署结果当 release |
+| 产出安装包给别人用 | `project release` | 不要直接拿 dev 部署结果当正式发布包 |
 
 ## 常见错误 {#common-errors}
 
