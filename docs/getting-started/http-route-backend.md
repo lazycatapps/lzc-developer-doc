@@ -6,7 +6,7 @@
 
 1. `exec://...` handler 会“启动进程 + 转发流量”，适合单容器后端快速起步。
 2. `http://...` handler 只负责转发，不会帮你启动进程；更适合接入已经存在的独立 service。
-3. 你会理解默认鉴权、`application.public_path` 最小放开规则，以及后端数据应写入 `/lzcapp/var`。
+3. 你会理解默认鉴权、`application.public_path`（哪些路径允许未登录访问）最小放开规则，以及后端数据应写入 `/lzcapp/var`。
 
 ## 前置条件 {#prerequisites}
 
@@ -37,8 +37,8 @@ lzc-cli project deploy
 lzc-cli project info
 ```
 
-默认情况下，`project` 命令会优先使用 `lzc-build.dev.yml`，并打印实际的 `Build config`。
-如果你要操作 release 配置，请显式加上 `--release`。
+默认情况下，`project` 命令会优先使用 `lzc-build.dev.yml`，并打印实际的 `Build config`，也就是“当前实际命中的构建配置文件”。
+如果你要操作发布配置，请显式加上 `--release`。
 
 继续后续步骤前，请先确认 `lzc-cli project info` 输出里出现 `Project app is running.`。  
 如果还在启动中，等待几秒后再次执行 `lzc-cli project info`。
@@ -57,7 +57,7 @@ fetch('/api/todos').then((r) => r.json()).then(console.log);
 
 说明：
 
-1. 模板默认路由是 `/=exec://3000,/app/run.sh`。
+1. 模板默认路由是 `/=exec://3000,/app/run.sh`。这里的路由规则可以先理解成“某个请求该转给谁处理”。
 2. 这条规则会执行 `/app/run.sh` 并把流量转发到 `127.0.0.1:3000`。
 3. 这就是 `exec` handler 的核心：启动进程 + 转发请求。
 

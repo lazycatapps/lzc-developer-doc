@@ -43,7 +43,7 @@
 
 - [懒猫微服开发篇（一）：懒猫微服全栈上架指南，一步打包，一键发布](http://mp.weixin.qq.com/s?__biz=MzI3NTY4MjcxNg==&mid=2247487023&idx=1&sn=2b40ee494b6e1ffe09473df5362eb21b&chksm=eb004adcdc77c3ca8204cdc4f9cff5854c756de6c33468dd5f26c35d735dcb57e6de0c381908#rd)
 
-- [懒猫微服开发篇（二）：远程调试之 Devshell](https://mp.weixin.qq.com/s?__biz=MzI3NTY4MjcxNg==&mid=2247487135&idx=1&sn=b20e60e851c85c8937446fd914123ca4&chksm=eb004a6cdc77c37ac68e6b98cb2ee15c6dc80281adde72d09b77fcbc318181d4f92bd0e04e1f&scene=178&cur_album_id=4010832321455538176&search_click_id=#rd)
+- [懒猫微服开发篇（二）：远程调试（旧方案）](https://mp.weixin.qq.com/s?__biz=MzI3NTY4MjcxNg==&mid=2247487135&idx=1&sn=b20e60e851c85c8937446fd914123ca4&chksm=eb004a6cdc77c37ac68e6b98cb2ee15c6dc80281adde72d09b77fcbc318181d4f92bd0e04e1f&scene=178&cur_album_id=4010832321455538176&search_click_id=#rd)
 
 - [懒猫微服开发篇（三）：如何将已有 Docker Compose 应用移植到懒猫微服](https://mp.weixin.qq.com/s?__biz=MzI3NTY4MjcxNg==&mid=2247487140&idx=1&sn=9ed3819605cd7fe553c42a88b53197b3&chksm=eb004a57dc77c341e1fdb8d87f6d97a7a799c8597b403b79076ba600447e1732f6df69e6e46c&scene=178&cur_album_id=4010832321455538176&search_click_id=#rd)
 
