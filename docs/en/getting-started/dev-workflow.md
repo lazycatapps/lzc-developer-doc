@@ -17,6 +17,39 @@ After this page, you should be clear about:
 3. Why backend code is expected to run inside the real microservice runtime.
 4. When to use `project deploy`, `project sync --watch`, and `project release`.
 
+## Workflow Map At A Glance {#workflow-map}
+
+```mermaid
+flowchart TB
+    A[Developer changes code] --> B{Current goal}
+    B -->|Frontend development| C[project deploy]
+    C --> D[Open the app]
+    D --> E[Start frontend dev server]
+    E --> F[Requests go to dev machine]
+
+    B -->|Backend development| G[project deploy]
+    G --> H[Open the app]
+    H --> I[project sync --watch]
+    I --> J[project exec]
+    J --> K[Start backend in real runtime]
+
+    B -->|Release| L[project release]
+    L --> M[Produce a clean release LPK]
+
+    classDef dev fill:#eef7ff,stroke:#3b82f6,stroke-width:1px,color:#102a43
+    classDef backend fill:#f8f5ff,stroke:#7c3aed,stroke-width:1px,color:#2e1065
+    classDef release fill:#fff7ed,stroke:#ea580c,stroke-width:1px,color:#431407
+    class C,D,E,F dev
+    class G,H,I,J,K backend
+    class L,M release
+```
+
+The core decision is simple:
+
+1. If you are changing frontend code, redirect traffic to the dev machine.
+2. If you are changing backend code, move the code into the real microservice runtime.
+3. If you are publishing, keep only release artifacts.
+
 ## Prerequisites {#prerequisites}
 
 Before starting, assume you have already done the following:
@@ -118,6 +151,25 @@ application:
 ```
 
 ## Frontend Development Path {#frontend-dev}
+### Frontend Flow Diagram {#frontend-dev-diagram}
+
+```mermaid
+flowchart TB
+    U[Open app] --> I[request inject]
+    I --> C{Linked to a dev machine}
+    C -->|No| G[Return guide page]
+    C -->|Yes| O{Dev machine online}
+    O -->|No| G
+    O -->|Yes| V[Forward through client tunnel]
+    V --> S[Frontend dev server on dev machine]
+    S --> R[Return dev page and hot reload results]
+
+    classDef state fill:#eef7ff,stroke:#2563eb,stroke-width:1px,color:#102a43
+    classDef guide fill:#fff7ed,stroke:#ea580c,stroke-width:1px,color:#431407
+    class I,C,O,V,S,R state
+    class G guide
+```
+
 
 ### When To Use It
 
@@ -143,13 +195,13 @@ This gives you three immediate benefits:
 
 1. You can confirm whether the instance is already linked to the dev machine.
 2. The page tells you which port the inject script is actually waiting for.
-3. If the dev machine is offline or `dev.id` has not been synced yet, the page gives explicit guidance instead of showing only a blank page or a generic proxy error.
+3. If the dev machine is offline, or the instance has not synced its dev-machine link yet, the page gives explicit guidance instead of showing only a blank page or a generic proxy error.
 
 ### Typical Request Flow
 
 1. The browser opens the app domain on the microservice.
-2. Request inject checks `ctx.dev.id`.
-3. It uses `ctx.net.via.client(ctx.dev.id)` to forward the request to the dev machine.
+2. Request inject first checks whether this instance is already linked to a dev machine.
+3. If it is linked, the request is forwarded to that machine through the client tunnel.
 4. The frontend dev server returns the page and hot-reload results.
 
 ### How To Verify Success
@@ -160,7 +212,32 @@ Any of the following means the frontend flow is working:
 2. Changes in files like `src/App.vue` appear after refresh.
 3. `project log -f` no longer reports that the dev machine is offline or unavailable.
 
+### Terminology Note
+
+In implementation terms, this dev-machine link maps to `ctx.dev.id` in the inject context.
+At the getting-started level, you only need to understand it as: the app instance knows which dev machine should receive development traffic.
+
 ## Backend Development Path {#backend-dev}
+### Backend Flow Diagram {#backend-dev-diagram}
+
+```mermaid
+flowchart TB
+    A[Developer edits backend code] --> B[project sync --watch]
+    B --> C[Code syncs into container]
+    C --> D[project exec]
+    D --> E[Start backend process manually]
+    E --> F[Backend service in real runtime]
+    F --> G{Service ready}
+    G -->|No| H[request inject returns guide page]
+    G -->|Yes| I[request inject proxies to backend]
+    I --> J[Return real business response]
+
+    classDef runtime fill:#f5f3ff,stroke:#7c3aed,stroke-width:1px,color:#2e1065
+    classDef guide fill:#fff7ed,stroke:#ea580c,stroke-width:1px,color:#431407
+    class B,C,D,E,F,G,I,J runtime
+    class H guide
+```
+
 
 ### When To Use It
 
@@ -275,7 +352,7 @@ Fix:
 This usually means:
 
 1. The frontend dev server is not started.
-2. `ctx.dev.id` has not been synced to the instance.
+2. The instance has not synced its dev-machine link yet.
 3. The dev machine is offline.
 
 Fix:

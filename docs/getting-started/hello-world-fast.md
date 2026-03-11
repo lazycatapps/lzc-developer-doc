@@ -58,7 +58,7 @@ lzc-cli project info
 2. macOS/Windows：打开桌面客户端，在启动器中点击应用图标。
 3. Web：复制 `project info` 输出里的 `Target URL`，在浏览器直接访问。
 
-对于 `hello-vue` 模板，第一次打开应用时通常会先看到一个前端开发引导页。这是新版开发流的正常行为，表示：
+对于 `hello-vue` 模板，第一次打开应用时通常会先看到一个前端开发引导页。这是开发流程中的正常行为，表示：
 
 1. 当前入口已经进入 request inject 控制。
 2. 页面会告诉你 inject 正在等待的本地端口。

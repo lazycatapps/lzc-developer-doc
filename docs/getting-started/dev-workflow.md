@@ -17,6 +17,39 @@
 3. 后端开发时为什么推荐在真实微服环境里运行代码。
 4. 什么时候用 `project deploy`，什么时候用 `project sync --watch`，什么时候用 `project release`。
 
+## 一图看懂三条主线 {#workflow-map}
+
+```mermaid
+flowchart TB
+    A[开发者修改代码] --> B{当前目标}
+    B -->|前端开发| C[project deploy]
+    C --> D[打开应用]
+    D --> E[启动前端 dev server]
+    E --> F[请求转到开发机]
+
+    B -->|后端开发| G[project deploy]
+    G --> H[打开应用]
+    H --> I[project sync --watch]
+    I --> J[project exec]
+    J --> K[在真实环境启动后端]
+
+    B -->|发布| L[project release]
+    L --> M[生成干净的 release LPK]
+
+    classDef dev fill:#eef7ff,stroke:#3b82f6,stroke-width:1px,color:#102a43
+    classDef backend fill:#f8f5ff,stroke:#7c3aed,stroke-width:1px,color:#2e1065
+    classDef release fill:#fff7ed,stroke:#ea580c,stroke-width:1px,color:#431407
+    class C,D,E,F dev
+    class G,H,I,J,K backend
+    class L,M release
+```
+
+图里最重要的判断只有一个：
+
+1. 改前端，就把请求转到开发机。
+2. 改后端，就把代码放进真实微服运行环境。
+3. 做发布，就只保留 release 所需产物。
+
 ## 前置条件 {#prerequisites}
 
 开始前，默认你已经满足下面条件：
@@ -28,7 +61,7 @@
 
 ## 先建立一个统一心智模型 {#mental-model}
 
-新版开发流程建议统一按下面三层理解：
+建议先按下面三层理解整个开发流程：
 
 1. `lzc-build.yml`
    作用：release 构建配置。
@@ -85,7 +118,7 @@ lzc-cli project info --release
 
 ## 为什么 dev 逻辑要放到 request inject 里 {#why-request-inject}
 
-新版开发流程的核心不是 `devshell`，而是 `request inject`。
+开发流程的核心不是 `devshell`，而是 `request inject`。
 
 原因很简单：
 
@@ -118,6 +151,25 @@ application:
 ```
 
 ## 前端开发主线 {#frontend-dev}
+### 前端开发示意图 {#frontend-dev-diagram}
+
+```mermaid
+flowchart TB
+    U[打开应用] --> I[request inject]
+    I --> C{已关联开发机吗}
+    C -->|否| G[返回引导页]
+    C -->|是| O{开发机在线吗}
+    O -->|否| G
+    O -->|是| V[通过客户端隧道转发]
+    V --> S[开发机前端 dev server]
+    S --> R[返回 dev 页面与热更新结果]
+
+    classDef state fill:#eef7ff,stroke:#2563eb,stroke-width:1px,color:#102a43
+    classDef guide fill:#fff7ed,stroke:#ea580c,stroke-width:1px,color:#431407
+    class I,C,O,V,S,R state
+    class G guide
+```
+
 
 ### 适用场景
 
@@ -143,13 +195,13 @@ npm run dev
 
 1. 你能立即看到当前实例是否已经关联到开发机。
 2. 页面可以明确告诉你 inject 正在等待哪个端口。
-3. 如果开发机未在线或 `dev.id` 还没同步，页面会直接给出下一步引导，而不是只看到 502 或空白页。
+3. 如果开发机未在线，或实例还没同步“开发机关联标识”，页面会直接给出下一步引导，而不是只看到 502 或空白页。
 
 ### 典型请求流
 
 1. 浏览器访问微服里的应用域名。
-2. request inject 检查 `ctx.dev.id`。
-3. inject 再通过 `ctx.net.via.client(ctx.dev.id)` 把请求转到开发机。
+2. request inject 先检查当前实例是否已经关联到某台开发机。
+3. 如果已关联，再通过客户端隧道把请求转到那台开发机。
 4. 开发机上的 `npm run dev` 返回页面与热更新结果。
 
 ### 你应该如何验证成功
@@ -160,7 +212,32 @@ npm run dev
 2. 修改 `src/App.vue` 后，浏览器刷新立即生效。
 3. `project log -f` 中不再看到“开发机未就绪”这类提示。
 
+### 术语说明
+
+这一页里提到的“开发机关联标识”，技术上对应 inject 上下文里的 `ctx.dev.id`。
+你在入门阶段只需要把它理解成：当前应用实例知道应该把开发流量转发到哪一台开发机。
+
 ## 后端开发主线 {#backend-dev}
+### 后端开发示意图 {#backend-dev-diagram}
+
+```mermaid
+flowchart TB
+    A[本机修改后端代码] --> B[project sync --watch]
+    B --> C[代码同步到容器]
+    C --> D[project exec]
+    D --> E[手动启动后端进程]
+    E --> F[真实微服环境里的 backend service]
+    F --> G{服务 ready 吗}
+    G -->|否| H[request inject 返回引导页]
+    G -->|是| I[request inject 代理到 backend]
+    I --> J[返回真实业务响应]
+
+    classDef runtime fill:#f5f3ff,stroke:#7c3aed,stroke-width:1px,color:#2e1065
+    classDef guide fill:#fff7ed,stroke:#ea580c,stroke-width:1px,color:#431407
+    class B,C,D,E,F,G,I,J runtime
+    class H guide
+```
+
 
 ### 适用场景
 
@@ -275,7 +352,7 @@ lzc-cli project release -o app.lpk
 原因通常是：
 
 1. 开发机 dev server 还没启动。
-2. `ctx.dev.id` 没同步到实例。
+2. 实例还没同步开发机关联标识。
 3. 开发机当前不在线。
 
 处理：

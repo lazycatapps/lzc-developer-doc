@@ -1,6 +1,6 @@
 # request inject Dev Cookbook
 
-This page does not repeat basic inject syntax. It focuses directly on the most common request inject patterns used in the current `lzc-cli` dev workflow.
+This page does not repeat basic inject syntax. It focuses directly on the most common request inject patterns used in the current `lzc-cli` workflow.
 
 Target scenarios:
 

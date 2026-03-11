@@ -138,7 +138,7 @@ envs:
 
 ## 9. 统一开发模型
 
-新版开发流建议统一按下面的模型理解：
+建议按下面的模型理解开发流程：
 
 1. 前端开发：`lzc-build.dev.yml + request inject + 开发机 dev server`
 2. 后端开发：`lzc-build.dev.yml + request inject + project sync --watch`

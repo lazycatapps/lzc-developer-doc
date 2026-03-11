@@ -1,6 +1,6 @@
 # inject request 开发态 Cookbook
 
-本文不重复解释 inject 的基础语法，而是直接给出新版 `lzc-cli` 开发模式里最常用的 request inject 写法。
+本文不重复解释 inject 的基础语法，而是直接给出当前 `lzc-cli` 开发流程里最常用的 request inject 写法。
 
 适用目标：
 

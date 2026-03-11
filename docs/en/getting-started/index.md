@@ -1,9 +1,9 @@
-# New Getting Started Path {#getting-started-overview}
+# Getting Started Path {#getting-started-overview}
 
 This section is for developers building their first LPK. The goal is to complete one real deployment as quickly as possible:
 
 1. Deploy successfully and verify it from multiple clients.
-2. Understand the dev workflow and the split between frontend development, backend development, and release.
+2. Understand the split between frontend development, backend development, and release.
 3. Add backend logic and HTTP routing.
 4. Understand the LPK mechanism and embedded image workflow.
 
