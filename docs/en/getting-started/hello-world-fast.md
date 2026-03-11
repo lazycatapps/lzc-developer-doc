@@ -83,7 +83,7 @@ Traffic will still enter through the app URL, and the request routing script wil
 Edit `src/App.vue` and change the title, for example:
 
 ```text
-Welcome to Lazycat Microservice
+Welcome to Lazycat Microserver
 ```
 
 to:

@@ -81,7 +81,7 @@ npm run dev
 打开 `src/App.vue`，把标题改成你自己的文案，例如把：
 
 ```text
-Welcome to Lazycat Microservice
+Welcome to Lazycat Microserver
 ```
 
 改为：
