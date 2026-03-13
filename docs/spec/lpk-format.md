@@ -59,6 +59,8 @@
 
 `package.yml` 承载静态包元数据。
 
+字段定义与约束见 [package.yml 规范](./package.md)。
+
 当前字段如下：
 
 ```yml
@@ -89,7 +91,7 @@ unsupported_platforms:
 
 规则：
 
-1. 只有配置了 `contentdir`，或构建 hook 实际写入内容时，才会生成内容归档。
+1. 只有配置了非空 `contentdir`，或构建 hook 实际写入内容时，才会生成内容归档。
 2. 如果 release 是 image-only 包，可以完全不带 `content.tar*`。
 3. tar-based LPK v2 若同时存在 `images/`，内容归档可能被压缩为 `content.tar.gz`。
 

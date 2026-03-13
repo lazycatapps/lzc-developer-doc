@@ -139,6 +139,7 @@ const zhLocaleThemeConfig = {
       text: "规范列表",
       items: [
         { text: "lzc-build.yml", link: "/spec/build.md" },
+        { text: "package.yml", link: "/spec/package.md" },
         { text: "lzc-manifest.yml", link: "/spec/manifest.md" },
         { text: "inject.ctx", link: "/spec/inject-ctx.md" },
         { text: "lzc-deploy-params.yml", link: "/spec/deploy-params.md" },

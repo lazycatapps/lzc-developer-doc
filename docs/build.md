@@ -25,10 +25,11 @@
 | ---- | ---- | ---- |
 | `buildscript` | `string` | 可以为构建脚本的路径地址或者 sh 的命令 |
 | `manifest` | `string` | 指定 lpk 包的 `lzc-manifest.yml` 文件路径 |
-| `contentdir` | `string` | 可选；指定打包的内容目录。未配置时不会生成 `content.tar` / `content.tar.gz` |
+| `contentdir` | `string` | 可选；指定打包的内容目录。未配置或显式写空值时不会生成 `content.tar` / `content.tar.gz` |
 | `pkgout` | `string` | 指定 lpk 包的输出路径 |
 | `icon` | `string` | 指定 lpk 包 icon 的路径，如果不指定将会警告，目前仅允许 png 后缀的文件 |
-| `pkg_id_suffix` | `string` | 可选；在构建阶段追加到最终包名末尾，例如 `org.example.demo` + `dev` => `org.example.demo.dev` |
+| `pkg_id` | `string` | 可选；构建阶段覆盖最终 `package.yml.package` 的值，并参与最终 LPK 文件名与包名校验 |
+| `pkg_name` | `string` | 可选；构建阶段覆盖最终 `package.yml.name` 的值 |
 | `envs` | `[]string` | 可选；构建期变量列表，支持 `KEY=VALUE` 字符串数组 |
 | `images` | `map[string]ImageBuildConfig` | Dockerfile 镜像构建配置，用于产出 `embed:<alias>` 镜像引用 |
 | `compose_override` | `ComposeOverrideConfig` | 高级 compose override 配置，**需要更新 lzc-os 版本 >= v1.3.0** |
@@ -49,7 +50,8 @@
 
 1. `lzc-build.yml` 保存默认构建配置，也就是正式发布时使用的配置。
 2. `lzc-build.dev.yml` 只保存开发态差异，例如：
-   - `pkg_id_suffix: dev`
+   - `pkg_id: cloud.lazycat.app.demo-app.dev`
+   - 若 release 配置了 `contentdir`，dev 可显式写 `contentdir:` 空值覆盖
    - 开发态专用 `buildscript`
    - 开发态专用 `envs`
 3. image-only release 场景可以完全省略 `contentdir`；此时最终 LPK 不会生成 `content.tar` / `content.tar.gz`。
@@ -72,7 +74,8 @@
 
 ```yml
 # lzc-build.dev.yml
-pkg_id_suffix: dev
+pkg_id: cloud.lazycat.app.demo-app.dev
+contentdir:
 envs:
   - DEV_MODE=1
   - FRONTEND_PORT=3000

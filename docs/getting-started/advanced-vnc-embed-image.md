@@ -31,7 +31,7 @@ cd embed-demo
 模板默认会生成：
 
 1. `lzc-build.yml`：默认构建配置，也是 release 配置。
-2. `lzc-build.dev.yml`：开发态覆盖配置，默认包含 `pkg_id_suffix: dev`。
+2. `lzc-build.dev.yml`：开发态覆盖配置，默认包含独立的 dev 包名（例如 `pkg_id: cloud.lazycat.app.embed-demo.dev`）。
 
 ### 2. 查看模板关键配置 {#step-check-template-config}
 
