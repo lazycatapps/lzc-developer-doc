@@ -26,7 +26,7 @@ Recommended command defaults:
 | `contentdir` | `string` | Optional content directory. If omitted, no `content.tar` / `content.tar.gz` is generated |
 | `pkgout` | `string` | Output directory for the built LPK |
 | `icon` | `string` | Icon path. PNG only |
-| `pkg_id_suffix` | `string` | Optional package suffix added at build time, such as `org.example.demo.dev` |
+| `pkg_id` | `string` | Optional package ID override applied at build time, such as `org.example.demo.dev` |
 | `envs` | `[]string` | Optional build-time variable list using `KEY=VALUE` strings |
 | `images` | `map[string]ImageBuildConfig` | Dockerfile-based image build config for `embed:<alias>` |
 | `compose_override` | `ComposeOverrideConfig` | Advanced compose override config, requires `lzc-os >= v1.3.0` |
@@ -45,7 +45,7 @@ Guidelines:
 
 1. `lzc-build.yml` stores the default and release build config.
 2. `lzc-build.dev.yml` stores dev-only diffs, such as:
-   - `pkg_id_suffix: dev`
+   - `pkg_id: org.example.demo.dev`
    - dev-only `buildscript`
    - dev-only `envs`
 3. For image-only release packages, `contentdir` can be omitted entirely.
@@ -68,7 +68,7 @@ Example:
 
 ```yml
 # lzc-build.dev.yml
-pkg_id_suffix: dev
+pkg_id: org.example.demo.dev
 envs:
   - DEV_MODE=1
   - FRONTEND_PORT=3000

@@ -13,9 +13,10 @@
 5. `author`
 6. `license`
 7. `homepage`
-8. `min_os_version`
-9. `unsupported_platforms`
-10. `locales`
+8. `admin_only`
+9. `min_os_version`
+10. `unsupported_platforms`
+11. `locales`
 
 ## 二、顶层数据结构 `PackageConfig`
 
@@ -28,6 +29,7 @@
 | `author` | `string` | 可选；作者或维护者 |
 | `license` | `string` | 可选；许可证标识或链接 |
 | `homepage` | `string` | 可选；主页或反馈地址 |
+| `admin_only` | `bool` | 可选；是否仅管理员可见 |
 | `min_os_version` | `string` | 可选；要求的最低系统版本 |
 | `unsupported_platforms` | `[]string` | 可选；不支持的平台列表 |
 | `locales` | `map[string]PackageLocaleConfig` | 可选；多语言元数据 |
