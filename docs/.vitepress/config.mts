@@ -25,6 +25,7 @@ const zhLocaleThemeConfig = {
   // https://vitepress.dev/reference/default-theme-config
   nav: [
     { text: "指南", link: "/" },
+    { text: "系统变更日志", link: "/changelog.md" },
     { text: "开发者中心", link: "https://developer.lazycat.cloud/manage" },
   ],
 
@@ -77,7 +78,6 @@ const zhLocaleThemeConfig = {
       text: "进阶主题",
       items: [
         { text: "路由规则", link: "/advanced-route.md" },
-        { text: "应用域名规则", link: "/advanced-domain.md" },
         { text: "应用多域名", link: "/advanced-secondary-domains.md" },
         { text: "独立鉴权", link: "/advanced-public-api.md" },
         { text: "HTTP Headers", link: "/http-request-headers.md" },
@@ -94,7 +94,6 @@ const zhLocaleThemeConfig = {
         { text: "错误页面", link: "/advanced-error-template.md" },
         { text: "平台支持", link: "/advanced-platform.md" },
         { text: "GPU 加速", link: "/advanced-gpu.md" },
-        { text: "后台常驻", link: "/advanced-background.md" },
       ],
     },
     {
@@ -146,19 +145,12 @@ const zhLocaleThemeConfig = {
         { text: "lpk format", link: "/spec/lpk-format.md" },
       ],
     },
-    {
-      text: "系统变更日志(仅开发者相关)",
-      items: [
-        { text: "版本汇总", link: "/changelog.md" },
-      ],
-    },
   ],
 };
 
 const enLocaleThemeConfig = {
   nav: [
-    // { text: "Guidance", link: "/" },
-    // { text: "Deve", link: "https://developer.lazycat.cloud/manage" },
+    { text: "Changelog", link: "/en/changelog.md" },
   ],
   sidebar: [
     {
@@ -217,7 +209,6 @@ const enLocaleThemeConfig = {
       text: "Advanced Topics",
       items: [
         { text: "Routing Rules", link: "/en/advanced-route.md" },
-        { text: "Application Domain Rules", link: "/en/advanced-domain.md" },
         {
           text: "Application Multi-Domain",
           link: "/en/advanced-secondary-domains.md",
@@ -243,7 +234,6 @@ const enLocaleThemeConfig = {
         { text: "Error Pages", link: "/en/advanced-error-template.md" },
         { text: "Platform Support", link: "/en/advanced-platform.md" },
         { text: "GPU Acceleration", link: "/en/advanced-gpu.md" },
-        { text: "Background Persistence", link: "/en/advanced-background.md" },
       ],
     },
     {
@@ -301,12 +291,6 @@ const enLocaleThemeConfig = {
         { text: "inject.ctx", link: "/en/spec/inject-ctx.md" },
         { text: "lzc-deploy-params.yml", link: "/en/spec/deploy-params.md" },
         { text: "lpk format", link: "/en/spec/lpk-format.md" },
-      ],
-    },
-    {
-      text: "Changelog (Developer Only)",
-      items: [
-        { text: "Version Summary", link: "/en/changelog.md" },
       ],
     },
   ],

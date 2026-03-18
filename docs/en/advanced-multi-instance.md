@@ -15,11 +15,9 @@ application:
 ```
 
 ::: warning
-When LCMD applications are configured with different running modes of **single-instance** and **multi-instance**, there will be certain differences in [file services](./advanced-file.md) and [service domain construction rules](./advanced-domain.md). For details, please refer to the following documents.
+When LCMD applications are configured with different running modes of **single-instance** and **multi-instance**, there will be certain differences in [file services](./advanced-file.md). For details, please refer to the following documents.
 
 1. [After configuring multi-instance, the application cannot mount files to the user document directory (LCMD Cloud Drive defaults to showing the main directory)?](./advanced-file.md#mount-point-list)
 
-2. [What are the domain construction rules between container services after the application is configured with multi-instance?](./advanced-domain.md#multi-instance-multi-user-application)
-
-3. In multi-instance mode, each user accesses a different application domain
+2. In multi-instance mode, each user accesses a different application domain
 :::

@@ -4,6 +4,11 @@
 
 `package.yml` 用于定义 LPK 的静态包元数据。
 
+说明：
+
+1. 本文描述的 `package.yml` 新流程以 `lzcos v1.5.0+` 为前提。
+2. 如需实际构建对应的 `LPK v2` 包，请配合 `lzc-cli v2.0.0+`。
+
 自 LPK v2 起，以下字段应统一放在 `package.yml`，不再写到 `lzc-manifest.yml` 顶层：
 
 1. `package`
