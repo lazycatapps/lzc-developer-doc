@@ -9,7 +9,7 @@
 - 新增[脚本注入](./advanced-injects.md)机制，支持在 browser / request / response 三个阶段按规则注入脚本
 - 新增[inject request 开发态 Cookbook](./advanced-inject-request-dev-cookbook.md)，方便前端 dev server 转发与后端开发态请求分流
 - 新增基于 [lzc-cli project](./lzc-cli.md) 的统一开发工作流，覆盖 `project deploy`、`project info`、`project start`、`project exec`、`project cp`、`project log`、`project sync` 与 `project release`
-- 新增[LPK v2](./spec/lpk-format.md) 格式说明，统一 tar-based LPK 的文件组织、`images/`、`images.lock` 与 `package.yml`，需配合 `lzc-cli v2.0.0+`
+- 新增[LPK v2](./spec/lpk-format.md) 格式说明，统一 tar-based LPK 的文件组织、`images/`、`images.lock` 与 `package.yml`，需配合 `lzc-cli v2.0.0+` (npm install -g @lazycatcloud/lzc-cli@2.0.0-pre.5)
 - 新增[package.yml 规范](./spec/package.md)，将静态包元数据从 `lzc-manifest.yml` 顶层拆分出来单独维护
 - 新增[lzc-deploy-params.yml](./spec/deploy-params.md) 的随机默认值能力，`default_value` 支持 `$random(len=...)`（需 `lzcos v1.5.0+`）
 - 新增[LightOS 场景](./advanced-lightos.md)，需通过应用商店下载对应入口 LPK；LightOS 拥有最高权限，切勿向非信任人员开放
