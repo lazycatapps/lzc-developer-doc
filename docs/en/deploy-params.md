@@ -1,5 +1,4 @@
-deploy-params
-=============
+# deploy-params
 
 `lzc-deploy-params.yml` is a configuration file for developers to define installation parameters. This document will describe its structure and the meaning of each field in detail.
 

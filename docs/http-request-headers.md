@@ -1,5 +1,4 @@
-http headers
-==============
+# http headers
 
 所有从客户端发起的https/http的流量会先进入`lzc-ingress`这个组件进行分流。
 

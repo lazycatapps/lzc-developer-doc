@@ -1,5 +1,4 @@
-One Application Using Multiple Domains
-===================
+# One Application Using Multiple Domains
 
 `lzc-manifest.yml:application.subdomain` is the domain name expected by developers, but the LCMD system (after v1.3.6+) will make certain adjustments
 

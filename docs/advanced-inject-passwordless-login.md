@@ -1,15 +1,13 @@
 # 免密登录
 
-目标
-====
+## 目标
 
 本文完成后，你可以实现两类常见场景：
 
 1. 简单场景：使用 `builtin://simple-inject-password` + 部署参数，自动填充半固定账号密码。
 2. 高级场景：三阶段联动（request/response/browser），自动记录用户设置的新密码，并在登录页和修改密码页自动填充。
 
-常见方式
-========
+## 常见方式
 
 在微服应用里，常见的“免密/弱感知登录”大致有以下几种方式：
 
@@ -19,16 +17,14 @@
 4. 自动注入 Basic Auth Header（见 [示例一：自动注入 Basic Auth Header](#example-1-basic-auth-header)）。
 5. 基于 inject 在不修改上游源码的前提下进行行为改写（本文重点）。
 
-前置条件
-========
+## 前置条件
 
 1. lzcos 版本满足 inject 功能要求。
 2. 已阅读 [脚本注入（injects）](./advanced-injects.md) 和 [manifest inject 规范](./spec/manifest.md#injects)。
 3. 已掌握部署参数渲染（见 [manifest.yml渲染](./advanced-manifest-render.md)）。
 
 <a id="example-1-basic-auth-header"></a>
-示例一：自动注入 Basic Auth Header
-=================================
+## 示例一：自动注入 Basic Auth Header
 
 适用场景：
 
@@ -50,8 +46,7 @@ application:
 ```
 
 <a id="example-2-deploy-params-simple-inject-password"></a>
-示例二：部署参数 + simple-inject-password
-========================================
+## 示例二：部署参数 + simple-inject-password
 
 适用场景：
 
@@ -107,8 +102,7 @@ application:
 3. 账号和密码输入框被自动填充。
 
 <a id="example-3-jellyfin-three-phase"></a>
-示例三：三阶段联动（Jellyfin）
-=============================
+## 示例三：三阶段联动（Jellyfin）
 
 适用场景：
 
@@ -238,21 +232,18 @@ services:
 2. 进入用户资料页修改密码，验证“当前密码”输入框自动填充旧密码。
 3. 改密成功后退出登录，验证下次登录页自动填充为新密码。
 
-常见错误
-========
+## 常见错误
 
 1. `on=request/response` 时写了 hash 规则（`#...`），导致规则不生效。
 2. request 阶段直接把密码写入 `persist`，未在 response 成功后再提交，导致失败请求污染数据。
 3. `simple-inject-password` 未指定选择器，页面字段命名特殊时可能只填充部分输入框。
 
-下一步
-======
+## 下一步
 
 1. 需要跨页面复用更多状态时，可继续引入 `ctx.persist.list(prefix)` 做批量管理。
 2. 需要请求级调试时，可在 request/response 阶段使用 `ctx.dump.request()` 与 `ctx.dump.response()` 输出排障日志。
 
-附录：`builtin://simple-inject-password` 参数说明
-===============================================
+## 附录：`builtin://simple-inject-password` 参数说明
 
 | 参数 | 类型 | 说明 |
 | ---- | ---- | ---- |

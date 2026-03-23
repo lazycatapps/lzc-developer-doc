@@ -1,5 +1,4 @@
-路由规则
-=========
+# 路由规则
 
 `application.routes`字段为 `[]Rule`类型
 
@@ -18,8 +17,7 @@ routes:
 ```
 如果需要保留前缀，请改用 `application.upstreams` 并设置 `disable_trim_location: true`（lzcos v1.3.9+）。
 
-http上游
-=======
+## http上游
 
 `http/https`支持内网或外网服务. 比如内置的应用商店这个lzcapp只有一行代码.
 
@@ -60,8 +58,7 @@ services:
       此限制是因为上游服务也可能是一个公网服务，此时host必须原封不动传递给上游否则大概率会出现跨域之类的问题。
       如果有相关需求，建议使用`upstreams.[].use_backend_host=true`明确指定此行为。
 
-file上游
-=========
+## file上游
 
 file路由用来加载静态html文件, 比如pptist这个lzcapp是一个纯前端应用,因此仅使用了一条静态file路由规则,没有运行任何其他service
 
@@ -81,8 +78,7 @@ application:
 一般静态资源是通过lpk文件打包时引入的,lpk对应的contentdir内容最终会在运行时原封不动的以readonly的形式存放在`/lzcapp/pkg/content/`目录
 
 
-exec上游
-=========
+## exec上游
 
 `exec://$port,$exec_file_path`路由稍微特殊一点,由两部分组成
 
@@ -110,8 +106,7 @@ application:
 
 
 
-UpstreamConfig
-===============
+## UpstreamConfig
 除此外还(v1.3.8+)可以使用[applications.upstreams](./spec/manifest.md)字段配置更细致的路由规则，
 
 比如,

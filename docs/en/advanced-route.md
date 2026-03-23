@@ -1,5 +1,4 @@
-Routing Rules
-=========
+# Routing Rules
 
 The `application.routes` field is of type `[]Rule`
 
@@ -18,8 +17,7 @@ routes:
 a browser request to `/api/v1` will be forwarded to the backend as `/v1`.
 If you need to keep the prefix, use `application.upstreams` and set `disable_trim_location: true` (lzcos v1.3.9+).
 
-HTTP Upstream
-=======
+## HTTP Upstream
 
 `http/https` supports internal or external services. For example, the built-in app store lzcapp only has one line of code.
 
@@ -60,8 +58,7 @@ Notes
       This limitation is because the upstream service may also be a public network service. In this case, the host must be passed to the upstream unchanged, otherwise cross-origin and other problems are likely to occur.
       If you have related needs, it is recommended to use `upstreams.[].use_backend_host=true` to explicitly specify this behavior.
 
-File Upstream
-=========
+## File Upstream
 
 File routing is used to load static html files. For example, pptist lzcapp is a pure frontend application, so it only uses one static file routing rule and does not run any other services
 
@@ -81,8 +78,7 @@ application:
 Generally, static resources are introduced when the lpk file is packaged. The contentdir content corresponding to lpk will eventually be stored in the `/lzcapp/pkg/content/` directory in readonly form unchanged at runtime
 
 
-Exec Upstream
-=========
+## Exec Upstream
 
 `exec://$port,$exec_file_path` routing is slightly special, consisting of two parts
 
@@ -110,8 +106,7 @@ and all paths starting with `/files/` are also forwarded to `http://127.0.0.1:30
 
 
 
-UpstreamConfig
-===============
+## UpstreamConfig
 In addition (v1.3.8+), you can use the [applications.upstreams](./spec/manifest.md) field to configure more detailed routing rules,
 
 For example,

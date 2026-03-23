@@ -1,5 +1,4 @@
-lzcapp对接微服的OIDC
-====================
+# lzcapp对接微服的OIDC
 
 v1.3.5+提供了统一的oidc的支持，lzcapp适配oidc后即可自动获取uid和对应权限组(`ADMIN`代表管理员)
 
@@ -50,8 +49,7 @@ services:
 ```
 
 
-oidc issuer info
-===============
+## oidc issuer info
 
 访问`https://$微服名称.heiyu.space/sys/oauth/.well-known/openid-configuration#/`可以获取完整的issuer信息。
 

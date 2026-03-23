@@ -1,5 +1,4 @@
-http headers
-==============
+# http headers
 
 All https/http traffic initiated from the client will first enter the `lzc-ingress` component for traffic distribution.
 

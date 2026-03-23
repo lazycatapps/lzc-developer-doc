@@ -1,15 +1,12 @@
-Script Injection (injects)
-=========================
+# Script Injection (injects)
 
-Overview
-========
+## Overview
 
 `injects` lets you adapt application behavior without changing OCI images or upstream source code, by injecting scripts into browser, request, or response phases.
 For field definitions, see [manifest.md#injects](./spec/manifest.md#injects). This page focuses on runtime behavior and practical usage.
 If you want ready-to-use request inject patterns for development, continue with [Request Inject Dev Cookbook](./advanced-inject-request-dev-cookbook.md).
 
-Use Cases
-=========
+## Use Cases
 
 - Password autofill and auto-login: see [Passwordless Login](./advanced-inject-passwordless-login.md).
 - CORS/CSP fine tuning: add/remove response headers on specific routes.
@@ -20,8 +17,7 @@ Use Cases
 - User-scoped persistence with `ctx.persist`.
 - Request-level troubleshooting with `ctx.dump`.
 
-Phase And Runtime
-=================
+## Phase And Runtime
 
 Each inject belongs to exactly one phase:
 
@@ -40,8 +36,7 @@ Short-circuit behavior:
 - In `request/response`, once `ctx.response.send(...)` or `ctx.proxy.to(...)` takes effect, remaining scripts in that phase stop.
 - Any script error stops current phase immediately.
 
-Matching Rules
-==============
+## Matching Rules
 
 Matching fields:
 
@@ -68,8 +63,7 @@ Examples:
 - `"/api/*?v=2"`: `/api/` prefix + query contains `v=2`.
 - `"/#login"`: hash equals `login` (browser only).
 
-Manifest Example
-================
+## Manifest Example
 
 ```yml
 application:
@@ -102,16 +96,14 @@ application:
         ctx.headers.del("Access-Control-Allow-Credentials");
 ```
 
-`do` Syntax
-===========
+## `do` Syntax
 
 `do` supports two forms:
 
 - short syntax: `do` is a script string (single script entry).
 - long syntax: `do` is `[]InjectScriptConfig` (multiple entries with per-script params).
 
-Dynamic Params `$persist`
-=========================
+## Dynamic Params `$persist`
 
 `params` supports `$persist` markers, resolved by current request `SAFE_UID`:
 
@@ -124,8 +116,7 @@ Behavior:
 - Use `default` when key missing and default is provided.
 - Return `null` when key missing and default is not provided.
 
-`ctx` Overview
-==============
+## `ctx` Overview
 
 Common fields for all phases:
 
@@ -154,8 +145,7 @@ Full ctx specification:
 
 - [inject.ctx](./spec/inject-ctx.md)
 
-Built-in Scripts
-================
+## Built-in Scripts
 
 Most commonly used built-in script:
 
@@ -165,8 +155,7 @@ For a complete walkthrough:
 
 - [Passwordless Login](./advanced-inject-passwordless-login.md)
 
-Validation And Troubleshooting
-==============================
+## Validation And Troubleshooting
 
 Recommended workflow:
 

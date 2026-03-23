@@ -1,19 +1,16 @@
-inject.ctx
-==========
+# inject.ctx
 
 `inject.ctx` defines runtime context fields and helper APIs available to inject scripts.
 
 This page describes interface-level specifications only.
 
-Applicable Phases
-=================
+## Applicable Phases
 
 - `browser`: script runs in browser runtime.
 - `request`: script runs before upstream forwarding.
 - `response`: script runs after upstream response.
 
-Common Fields (All Phases)
-==========================
+## Common Fields (All Phases)
 
 | Field | Type | Description |
 | ---- | ---- | ---- |
@@ -30,8 +27,7 @@ Notes:
 
 - When `auth_required=false` and no valid login exists, `ctx.safe_uid` can be empty string.
 
-`ctx.params` Resolution Rules
-=============================
+## `ctx.params` Resolution Rules
 
 Source:
 
@@ -59,8 +55,7 @@ Fallback:
 
 - If resolved params is not an object, `ctx.params` becomes `{}`.
 
-`ctx.request` Field Semantics
-=============================
+## `ctx.request` Field Semantics
 
 Common fields:
 
@@ -77,8 +72,7 @@ Phase-specific fields:
 | `ctx.request.hash` | `browser` | `string` | URL hash without `#` |
 | `ctx.request.method` | `request/response` | `string` | HTTP method in uppercase |
 
-`ctx.runtime` Fields (`browser`)
-================================
+## `ctx.runtime` Fields (`browser`)
 
 | Field | Type | Description |
 | ---- | ---- | ---- |
@@ -86,15 +80,13 @@ Phase-specific fields:
 | `ctx.runtime.executionCount` | `int` | Execution count in current page lifecycle (starts from `1`) |
 | `ctx.runtime.trigger` | `string` | Trigger source (for example `load`, `hashchange`) |
 
-`ctx.status` Field
-==================
+## `ctx.status` Field
 
 | Field | Phase | Type | Description |
 | ---- | ---- | ---- | ---- |
 | `ctx.status` | `response` | `int` | Current response status code |
 
-Helper Matrix
-=============
+## Helper Matrix
 
 | Helper | browser | request | response |
 | ---- | ---- | ---- | ---- |
@@ -111,14 +103,12 @@ Helper Matrix
 | `ctx.response` | No | Yes | Yes |
 | `ctx.proxy` | No | Yes | Yes |
 
-`ctx.base64`
-============
+## `ctx.base64`
 
 - `ctx.base64.encode(text) -> string`
 - `ctx.base64.decode(text) -> string`
 
-`ctx.persist`
-=============
+## `ctx.persist`
 
 Persisted key/value storage isolated by `SAFE_UID`.
 
@@ -141,8 +131,7 @@ Constraints:
 - `list` returns full results sorted by key (ascending).
 - No extra app-layer encryption is provided.
 
-`ctx.headers` (`request/response`)
-==================================
+## `ctx.headers` (`request/response`)
 
 - `ctx.headers.get(name) -> string`
 - `ctx.headers.getValues(name) -> string[]`
@@ -151,8 +140,7 @@ Constraints:
 - `ctx.headers.add(name, value) -> void`
 - `ctx.headers.del(name) -> void`
 
-`ctx.body` (`request/response`)
-===============================
+## `ctx.body` (`request/response`)
 
 - `ctx.body.getText(opts?) -> string`
 - `ctx.body.getJSON(opts?) -> any`
@@ -170,16 +158,14 @@ Notes:
 
 - `ctx.body.set(...)` updates `Content-Length` and clears `Content-Encoding` and `ETag`.
 
-`ctx.flow` (`request/response`)
-===============================
+## `ctx.flow` (`request/response`)
 
 - `ctx.flow.get(key) -> any`
 - `ctx.flow.set(key, value) -> void`
 - `ctx.flow.del(key) -> void`
 - `ctx.flow.list(prefix?) -> Array<{key: string, value: any}>`
 
-`ctx.fs` (`request/response`)
-=============================
+## `ctx.fs` (`request/response`)
 
 - `ctx.fs.exists(path) -> bool`
 - `ctx.fs.readText(path, opts?) -> string`
@@ -187,14 +173,12 @@ Notes:
 - `ctx.fs.stat(path) -> object`
 - `ctx.fs.list(path) -> string[]`
 
-`ctx.client` (`request/response`)
-=================================
+## `ctx.client` (`request/response`)
 
 - `ctx.client.id -> string`
 - `ctx.client.id` comes from the current client identity injected by ingress. It may be empty when no client context is attached.
 
-`ctx.dev` (`request/response`)
-===============================
+## `ctx.dev` (`request/response`)
 
 - `ctx.dev.id -> string`
 - `ctx.dev.online() -> bool`
@@ -204,8 +188,7 @@ Notes:
 - `ctx.dev.id` is currently read from `/lzcapp/var/_lzc_ext/dev.id`.
 - `ctx.dev.online()` reads cached status only. The cache is refreshed in background by lzcinit for the current request UID.
 
-`ctx.net` (`request/response`)
-===============================
+## `ctx.net` (`request/response`)
 
 - `ctx.net.joinHost(host, port) -> string`
 - `ctx.net.via.host() -> object`
@@ -221,8 +204,7 @@ Notes:
 - `reachable(...)` performs a live network probe with a default timeout of about `1200ms`.
 - `via` is optional; when omitted, the current container network is used.
 
-`ctx.dump` (`request/response`)
-===============================
+## `ctx.dump` (`request/response`)
 
 - `ctx.dump.request(opts?) -> string`
 - `ctx.dump.response(opts?) -> string`
@@ -234,8 +216,7 @@ Notes:
 | `include_body` | `bool` | `false` | Include body text |
 | `max_body_bytes` | `int` | `4096` | Max bytes for dumped body |
 
-`ctx.response` (`request/response`)
-===================================
+## `ctx.response` (`request/response`)
 
 - `ctx.response.send(status, body?, opts?) -> void`
 
@@ -247,8 +228,7 @@ Notes:
 | `content_type` | `string` | `Content-Type` override |
 | `location` | `string` | Redirect location (required for `301/302/303/307/308`) |
 
-`ctx.proxy` (`request/response`)
-================================
+## `ctx.proxy` (`request/response`)
 
 - `ctx.proxy.to(url, opts?) -> void`
 
@@ -263,8 +243,7 @@ Notes:
 | `via` | `object` | Optional network path object, usually from `ctx.net.via.host()` or `ctx.net.via.client(id)` |
 | `on_fail` | `string` | Failure policy: `keep_original` or `error` |
 
-Execution Model Constraints
-===========================
+## Execution Model Constraints
 
 - `request/response` phases are synchronous (no `Promise` / `async` support).
 - `browser` can use async APIs (for example `ctx.persist` Promise methods).

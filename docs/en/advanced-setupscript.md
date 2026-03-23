@@ -1,5 +1,4 @@
-setup_script
-============
+# setup_script
 
 When porting applications, you may occasionally encounter situations where process permissions are inconsistent with lzcapp's default permissions (root), or need to perform some initialization operations before container startup.
 

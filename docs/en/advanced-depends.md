@@ -5,8 +5,7 @@ lzcapp provides two fields related to service dependencies to handle timing issu
 1. Simplified `depends_on` field
 2. Health check mechanism automatically injected based on `application.routes` field
 
-depends_on
-===========
+## depends_on
 
 In most cases, `depends_on` only needs to be used under the `services.$service_name` field, type is `[]string`
 Each entry fills in a `$service_name`, the current service will wait for all services in `depends_on` to have container status as `healthy` when starting
@@ -41,8 +40,7 @@ services:
 > 2. Even if `health_check` is not filled in the service, it will still be affected by the corresponding field in the docker image
 :::
 
-Automatically Injected Health Checks
-===============
+## Automatically Injected Health Checks
 
 lzcapp mainly provides services externally through `application.routes`, so the system will automatically perform intelligent detection based on the upstream state in routes.
 Therefore, in most cases, there is no need to manually handle dependencies. The specific rules are as follows:

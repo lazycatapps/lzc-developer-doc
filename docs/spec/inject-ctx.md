@@ -1,19 +1,16 @@
-inject.ctx
-==========
+# inject.ctx
 
 `inject.ctx` 定义了 inject 脚本运行时可访问的上下文字段和 helper API。
 
 本文档只描述接口规范，不讨论设计动机和实践策略。
 
-适用阶段
-========
+## 适用阶段
 
 - `browser`：脚本在浏览器环境执行。
 - `request`：脚本在请求转发到 upstream 前执行。
 - `response`：脚本在收到 upstream 响应后执行。
 
-通用字段（所有阶段）
-===================
+## 通用字段（所有阶段）
 
 | 字段 | 类型 | 说明 |
 | ---- | ---- | ---- |
@@ -30,8 +27,7 @@ inject.ctx
 
 - 当 `auth_required=false` 且请求没有合法登录态时，`ctx.safe_uid` 可能为空字符串。
 
-`ctx.params` 解析规则
-====================
+## `ctx.params` 解析规则
 
 `ctx.params` 的源是 `inject.do[].params`，解析结果始终为对象。
 
@@ -56,8 +52,7 @@ inject.ctx
 
 - 解析后若结果不是对象，`ctx.params` 按空对象 `{}` 处理。
 
-`ctx.request` 字段语义
-=====================
+## `ctx.request` 字段语义
 
 通用字段（所有阶段）：
 
@@ -74,8 +69,7 @@ inject.ctx
 | `ctx.request.hash` | `browser` | `string` | URL hash（不带 `#`） |
 | `ctx.request.method` | `request/response` | `string` | 请求方法（大写） |
 
-`ctx.runtime` 字段语义（browser）
-===============================
+## `ctx.runtime` 字段语义（browser）
 
 | 字段 | 类型 | 说明 |
 | ---- | ---- | ---- |
@@ -83,15 +77,13 @@ inject.ctx
 | `ctx.runtime.executionCount` | `int` | 当前页面生命周期内执行次数（从 `1` 开始） |
 | `ctx.runtime.trigger` | `string` | 本次触发来源（例如 `load`、`hashchange`） |
 
-`ctx.status` 字段语义
-====================
+## `ctx.status` 字段语义
 
 | 字段 | 阶段 | 类型 | 说明 |
 | ---- | ---- | ---- | ---- |
 | `ctx.status` | `response` | `int` | 当前响应状态码 |
 
-helper 概览
-===========
+## helper 概览
 
 | helper | browser | request | response |
 | ---- | ---- | ---- | ---- |
@@ -108,16 +100,14 @@ helper 概览
 | `ctx.response` | 否 | 是 | 是 |
 | `ctx.proxy` | 否 | 是 | 是 |
 
-`ctx.base64`
-============
+## `ctx.base64`
 
 用于 Base64 编码/解码。
 
 - `ctx.base64.encode(text) -> string`
 - `ctx.base64.decode(text) -> string`
 
-`ctx.persist`
-=============
+## `ctx.persist`
 
 用于跨请求持久化数据，按 `SAFE_UID` 隔离。
 
@@ -142,8 +132,7 @@ browser（异步）
 - `list` 返回全量结果，按 key 字典序升序。
 - 不提供额外应用层加密能力（依赖系统已有加密隧道 + HTTPS）。
 
-`ctx.headers`（request/response）
-=================================
+## `ctx.headers`（request/response）
 
 用于读取与改写 HTTP 头。
 
@@ -154,8 +143,7 @@ browser（异步）
 - `ctx.headers.add(name, value) -> void`
 - `ctx.headers.del(name) -> void`
 
-`ctx.body`（request/response）
-==============================
+## `ctx.body`（request/response）
 
 用于读取与改写请求/响应 body。
 
@@ -175,8 +163,7 @@ browser（异步）
 
 - `ctx.body.set(...)` 会同步更新 `Content-Length`，并清理 `Content-Encoding` 与 `ETag`。
 
-`ctx.flow`（request/response）
-==============================
+## `ctx.flow`（request/response）
 
 用于同一请求内的 request -> response 临时共享状态。
 
@@ -185,8 +172,7 @@ browser（异步）
 - `ctx.flow.del(key) -> void`
 - `ctx.flow.list(prefix?) -> Array<{key: string, value: any}>`
 
-`ctx.fs`（request/response）
-============================
+## `ctx.fs`（request/response）
 
 用于读取容器文件系统状态。
 
@@ -196,16 +182,14 @@ browser（异步）
 - `ctx.fs.stat(path) -> object`
 - `ctx.fs.list(path) -> string[]`
 
-`ctx.client`（request/response）
-===============================
+## `ctx.client`（request/response）
 
 用于读取当前访问客户端上下文。
 
 - `ctx.client.id -> string`
 - `ctx.client.id` 来源于 Ingress 注入的当前客户端标识；请求不带客户端上下文时可能为空字符串。
 
-`ctx.dev`（request/response）
-==============================
+## `ctx.dev`（request/response）
 
 用于读取开发机标识与 lzcinit 维护的缓存在线状态。
 
@@ -217,8 +201,7 @@ browser（异步）
 - `ctx.dev.id` 当前从 `/lzcapp/var/_lzc_ext/dev.id` 读取。
 - `ctx.dev.online()` 只读取缓存状态；缓存由 lzcinit 按当前请求 UID 在后台刷新。
 
-`ctx.net`（request/response）
-==============================
+## `ctx.net`（request/response）
 
 用于拼接网络地址、描述网络路径与实时探测 TCP 可达性。
 
@@ -235,8 +218,7 @@ browser（异步）
 - `reachable(...)` 为实时网络探测，默认超时约 `1200ms`。
 - `via` 可省略；省略时沿用当前容器内默认网络拨号。
 
-`ctx.dump`（request/response）
-==============================
+## `ctx.dump`（request/response）
 
 用于输出当前请求/响应内容（调试与排障）。
 
@@ -250,8 +232,7 @@ browser（异步）
 | `include_body` | `bool` | `false` | 是否包含 body |
 | `max_body_bytes` | `int` | `4096` | body dump 的最大字节数 |
 
-`ctx.response`（request/response）
-==================================
+## `ctx.response`（request/response）
 
 用于直接构造/覆盖响应（短路返回）。
 
@@ -265,8 +246,7 @@ browser（异步）
 | `content_type` | `string` | 设置 `Content-Type` |
 | `location` | `string` | 重定向地址（`301/302/303/307/308` 必须提供） |
 
-`ctx.proxy`（request/response）
-===============================
+## `ctx.proxy`（request/response）
 
 用于按请求级别改写反代目标。
 
@@ -283,8 +263,7 @@ browser（异步）
 | `via` | `object` | 可选网络路径对象，通常来自 `ctx.net.via.host()` 或 `ctx.net.via.client(id)` |
 | `on_fail` | `string` | 失败策略：`keep_original` 或 `error` |
 
-执行模型约束
-============
+## 执行模型约束
 
 - `request/response` 阶段为同步执行模型，不支持 `Promise` / `async`。
 - `browser` 阶段允许异步（例如 `ctx.persist` Promise 调用）。

@@ -1,5 +1,4 @@
-Browser Extension
-========
+# Browser Extension
 
 If your application supports browser extension access, you need to configure `public_path` so that the extension can access normally.
 

@@ -1,5 +1,4 @@
-lzcapp Integration with LCMD's OIDC
-====================
+# lzcapp Integration with LCMD's OIDC
 
 v1.3.5+ provides unified oidc support. After lzcapp adapts to oidc, it can automatically obtain uid and corresponding permission groups (`ADMIN` represents administrator)
 
@@ -50,8 +49,7 @@ services:
 ```
 
 
-oidc issuer info
-===============
+## oidc issuer info
 
 Access `https://$LCMD_NAME.heiyu.space/sys/oauth/.well-known/openid-configuration#/` to get complete issuer information.
 

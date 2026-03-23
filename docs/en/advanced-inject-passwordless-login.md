@@ -1,15 +1,13 @@
 # Passwordless Login
 
-Goal
-====
+## Goal
 
 After this page, you can implement:
 
 1. Simple flow: `builtin://simple-inject-password` + deploy params for semi-fixed credentials.
 2. Advanced flow: request/response/browser coordination to persist updated password and auto-fill both login page and password-change page.
 
-Common Approaches
-=================
+## Common Approaches
 
 In LCMD apps, common “passwordless / low-friction login” approaches are:
 
@@ -19,15 +17,13 @@ In LCMD apps, common “passwordless / low-friction login” approaches are:
 4. Inject Basic Auth headers automatically (see [Example 1: Inject Basic Auth Header](#example-1-inject-basic-auth-header)).
 5. Rewrite behavior via inject without changing upstream source code (focus of this page).
 
-Prerequisites
-=============
+## Prerequisites
 
 1. Your lzcos version supports inject.
 2. You have read [Script Injection (injects)](./advanced-injects.md) and [manifest inject spec](./spec/manifest.md#injects).
 3. You understand deploy-param rendering (see [manifest.yml Rendering](./advanced-manifest-render.md)).
 
-Example 1: Inject Basic Auth Header
-===================================
+## Example 1: Inject Basic Auth Header
 
 Use when:
 
@@ -46,8 +42,7 @@ application:
         ctx.headers.set("Authorization", "Basic " + ctx.base64.encode("admin:admin123"));
 ```
 
-Example 2: Deploy Params + simple-inject-password
-==================================================
+## Example 2: Deploy Params + simple-inject-password
 
 Use when:
 
@@ -102,8 +97,7 @@ Verification
 2. Open login page that matches `when`.
 3. Verify username/password are auto-filled.
 
-Example 3: Three-Phase Coordination (Jellyfin)
-===============================================
+## Example 3: Three-Phase Coordination (Jellyfin)
 
 Use when:
 
@@ -231,15 +225,13 @@ Verification
 2. Change password on profile page. Verify current-password field is auto-filled with old password.
 3. Log out after successful password change. Verify next login page autofills the new password.
 
-Common Mistakes
-===============
+## Common Mistakes
 
 1. Using hash rules (`#...`) in `on=request/response` injects.
 2. Writing directly to `persist` in request phase, without response success gating.
 3. Not setting selectors for non-standard pages, causing partial autofill.
 
-Appendix: `builtin://simple-inject-password` Parameters
-========================================================
+## Appendix: `builtin://simple-inject-password` Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ---- |
