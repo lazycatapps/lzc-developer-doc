@@ -1,5 +1,6 @@
 import { defineConfig, ThemeOptions } from "vitepress";
 import { withMermaid } from "vitepress-plugin-mermaid";
+import llmstxt from 'vitepress-plugin-llms';
 
 const zhLocaleThemeConfig = {
   docFooter: {
@@ -298,6 +299,13 @@ const enLocaleThemeConfig = {
 
 // https://vitepress.dev/reference/site-config
 export default withMermaid(defineConfig({
+  vite: {
+    plugins: [llmstxt({
+        ignoreFiles: [
+            "images/**/*"
+        ],
+    })]
+  },
   mermaid: {},
   rewrites: {
     "/": "zh/",

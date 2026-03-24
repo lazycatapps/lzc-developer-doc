@@ -17,3 +17,119 @@
 .vp-doc .mermaid .cluster-label {
   line-height: 1.3;
 }
+
+.markdown-action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1rem 0 0;
+}
+
+.markdown-action-buttons .markdown-copy-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.markdown-action-buttons .markdown-copy-buttons-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  margin: 0.25em !important;
+}
+
+.markdown-action-buttons .dropdown-trigger {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--vp-c-bg-soft) 0%, var(--vp-c-bg-alt) 100%);
+  overflow: hidden;
+}
+
+.markdown-action-buttons .dropdown-container {
+  position: relative;
+}
+
+.markdown-action-buttons .dropdown-container,
+.markdown-action-buttons .markdown-copy-buttons-inner {
+  overflow: visible;
+}
+
+.markdown-action-buttons .dropdown-container > :not(.dropdown-trigger) {
+  left: auto !important;
+  right: 0;
+  max-width: min(320px, calc(100vw - 24px));
+  box-sizing: border-box;
+  transform-origin: top right;
+}
+
+.markdown-action-buttons .copy-page,
+.markdown-action-buttons .chevron-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  border: 0;
+  background: transparent;
+  color: var(--vp-c-text-1);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.markdown-action-buttons .copy-page {
+  gap: 8px;
+  padding: 0 16px;
+  font-weight: 600;
+}
+
+.markdown-action-buttons .copy-page .icon,
+.markdown-action-buttons .chevron-wrapper .icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.markdown-action-buttons .copy-page svg,
+.markdown-action-buttons .chevron-wrapper svg {
+  width: 16px;
+  height: 16px;
+}
+
+.markdown-action-buttons .divider {
+  width: 1px;
+  margin: 8px 0;
+  background: var(--vp-c-divider);
+}
+
+.markdown-action-buttons .chevron-wrapper {
+  width: 40px;
+}
+
+.markdown-action-buttons .copy-page:hover,
+.markdown-action-buttons .chevron-wrapper:hover {
+  background: color-mix(in srgb, var(--vp-c-brand-1) 10%, transparent);
+  color: var(--vp-c-brand-1);
+}
+
+.markdown-action-buttons .copy-page:focus-visible,
+.markdown-action-buttons .chevron-wrapper:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: -2px;
+}
+
+.markdown-action-buttons .download-btn {
+  display: none !important;
+}
+
+@media (max-width: 640px) {
+  .markdown-action-buttons {
+    margin: 24px 0 16px;
+  }
+
+  .markdown-action-buttons .copy-page {
+    padding: 0 14px;
+  }
+
+  .markdown-action-buttons .copy-page .label {
+    font-size: 13px;
+  }
+}

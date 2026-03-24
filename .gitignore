@@ -4,3 +4,6 @@
 bun.lockb
 /.idea
 *.timestamp
+
+.DS_Store
+
