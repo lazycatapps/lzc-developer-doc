@@ -1,6 +1,6 @@
 import { defineConfig, ThemeOptions } from "vitepress";
 import { withMermaid } from "vitepress-plugin-mermaid";
-import llmstxt from 'vitepress-plugin-llms';
+import llmstxt from "vitepress-plugin-llms";
 
 const zhLocaleThemeConfig = {
   docFooter: {
@@ -28,6 +28,10 @@ const zhLocaleThemeConfig = {
     { text: "指南", link: "/" },
     { text: "系统变更日志", link: "/changelog.md" },
     { text: "开发者中心", link: "https://developer.lazycat.cloud/manage" },
+    {
+      text: "懒猫 AI Skills",
+      link: "https://github.com/whoamihappyhacking/lazycat-skills",
+    },
   ],
 
   returnToTopLabel: "返回到顶部",
@@ -65,7 +69,10 @@ const zhLocaleThemeConfig = {
         { text: "开发流程", link: "/getting-started/dev-workflow.md" },
         { text: "HTTP 路由", link: "/getting-started/http-route-backend.md" },
         { text: "LPK 机制", link: "/getting-started/lpk-how-it-works.md" },
-        { text: "内嵌镜像进阶", link: "/getting-started/advanced-vnc-embed-image.md" },
+        {
+          text: "内嵌镜像进阶",
+          link: "/getting-started/advanced-vnc-embed-image.md",
+        },
       ],
     },
     {
@@ -110,7 +117,9 @@ const zhLocaleThemeConfig = {
     },
     {
       text: "专题",
-      items: [{ text: "免密登录", link: "/advanced-inject-passwordless-login.md" }],
+      items: [
+        { text: "免密登录", link: "/advanced-inject-passwordless-login.md" },
+      ],
     },
     {
       text: "传统模式",
@@ -122,7 +131,10 @@ const zhLocaleThemeConfig = {
     },
     {
       text: "懒猫生态",
-      items: [{ text: "官方扩展", link: "/extensions.md" }],
+      items: [
+        { text: "官方扩展", link: "/extensions.md" },
+        { text: "应用接入客户端能力", link: "/advanced-frontend-app-dev.md" },
+      ],
     },
     {
       text: "常见问题",
@@ -150,9 +162,7 @@ const zhLocaleThemeConfig = {
 };
 
 const enLocaleThemeConfig = {
-  nav: [
-    { text: "Changelog", link: "/en/changelog.md" },
-  ],
+  nav: [{ text: "Changelog", link: "/en/changelog.md" }],
   sidebar: [
     {
       text: "Welcome",
@@ -196,7 +206,6 @@ const enLocaleThemeConfig = {
           text: "Embedded Image",
           link: "/en/getting-started/advanced-vnc-embed-image.md",
         },
-
       ],
     },
     {
@@ -253,7 +262,12 @@ const enLocaleThemeConfig = {
     },
     {
       text: "Topics",
-      items: [{ text: "Passwordless Login", link: "/en/advanced-inject-passwordless-login.md" }],
+      items: [
+        {
+          text: "Passwordless Login",
+          link: "/en/advanced-inject-passwordless-login.md",
+        },
+      ],
     },
     {
       text: "Traditional Mode",
@@ -298,68 +312,70 @@ const enLocaleThemeConfig = {
 };
 
 // https://vitepress.dev/reference/site-config
-export default withMermaid(defineConfig({
-  vite: {
-    plugins: [llmstxt({
-        ignoreFiles: [
-            "images/**/*"
-        ],
-    })]
-  },
-  mermaid: {},
-  rewrites: {
-    "/": "zh/",
-  },
-  // i18nRouting: false,
-  locales: {
-    root: {
-      label: "简体中文",
-      lang: "zh",
-      dir: "./",
-      link: "/",
-      title: "懒猫微服开发者手册",
-      description: "高端私有云， 选懒猫就对了",
-      themeConfig: zhLocaleThemeConfig,
+export default withMermaid(
+  defineConfig({
+    vite: {
+      plugins: [
+        llmstxt({
+          ignoreFiles: ["images/**/*"],
+        }),
+      ],
     },
-    en: {
-      label: "English",
-      lang: "en",
-      themeConfig: enLocaleThemeConfig,
+    mermaid: {},
+    rewrites: {
+      "/": "zh/",
     },
-  },
-  themeConfig: {
-    search: {
-      provider: "local",
-      options: {
-        locales: {
-          zh: {
-            translations: {
-              button: {
-                buttonText: "搜索文档",
-                buttonAriaLabel: "搜索文档",
-              },
-              modal: {
-                noResultsText: "无法找到相关结果",
-                resetButtonTitle: "清除查询条件",
-                footer: {
-                  selectText: "选择",
-                  navigateText: "切换",
+    // i18nRouting: false,
+    locales: {
+      root: {
+        label: "简体中文",
+        lang: "zh",
+        dir: "./",
+        link: "/",
+        title: "懒猫微服开发者手册",
+        description: "高端私有云， 选懒猫就对了",
+        themeConfig: zhLocaleThemeConfig,
+      },
+      en: {
+        label: "English",
+        lang: "en",
+        themeConfig: enLocaleThemeConfig,
+      },
+    },
+    themeConfig: {
+      search: {
+        provider: "local",
+        options: {
+          locales: {
+            zh: {
+              translations: {
+                button: {
+                  buttonText: "搜索文档",
+                  buttonAriaLabel: "搜索文档",
+                },
+                modal: {
+                  noResultsText: "无法找到相关结果",
+                  resetButtonTitle: "清除查询条件",
+                  footer: {
+                    selectText: "选择",
+                    navigateText: "切换",
+                  },
                 },
               },
             },
           },
         },
       },
-    },
-    socialLinks: [
-      {
-        icon: {
-          svg: '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M11.984 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12a12 12 0 0 0 12-12A12 12 0 0 0 12 0zm6.09 5.333c.328 0 .593.266.592.593v1.482a.594.594 0 0 1-.593.592H9.777c-.982 0-1.778.796-1.778 1.778v5.63c0 .327.266.592.593.592h5.63c.982 0 1.778-.796 1.778-1.778v-.296a.593.593 0 0 0-.592-.593h-4.15a.59.59 0 0 1-.592-.592v-1.482a.593.593 0 0 1 .593-.592h6.815c.327 0 .593.265.593.592v3.408a4 4 0 0 1-4 4H5.926a.593.593 0 0 1-.593-.593V9.778a4.444 4.444 0 0 1 4.445-4.444h8.296Z"/></svg>',
+      socialLinks: [
+        {
+          icon: {
+            svg: '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M11.984 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12a12 12 0 0 0 12-12A12 12 0 0 0 12 0zm6.09 5.333c.328 0 .593.266.592.593v1.482a.594.594 0 0 1-.593.592H9.777c-.982 0-1.778.796-1.778 1.778v5.63c0 .327.266.592.593.592h5.63c.982 0 1.778-.796 1.778-1.778v-.296a.593.593 0 0 0-.592-.593h-4.15a.59.59 0 0 1-.592-.592v-1.482a.593.593 0 0 1 .593-.592h6.815c.327 0 .593.265.593.592v3.408a4 4 0 0 1-4 4H5.926a.593.593 0 0 1-.593-.593V9.778a4.444 4.444 0 0 1 4.445-4.444h8.296Z"/></svg>',
+          },
+          ariaLabel: "gitee",
+          link: "https://gitee.com/lazycatcloud",
         },
-        ariaLabel: "gitee",
-        link: "https://gitee.com/lazycatcloud",
-      },
-      { icon: "twitter", link: "https://x.com/manateelazycat" },
-    ],
-  },
-}));
+        { icon: "twitter", link: "https://x.com/manateelazycat" },
+      ],
+    },
+  }),
+);
