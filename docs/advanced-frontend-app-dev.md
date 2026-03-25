@@ -38,13 +38,18 @@ export function safeCall(fn, fallback) {
 | 打开轻应用 | iOS / Android | `AppCommon.LaunchApp` |
 | 页面禁用暗黑模式 | iOS / Android | `meta[name="lzcapp-disable-dark"]` |
 | 轻应用全屏控制 | iOS / Android | `AppCommon.SetFullScreen` / `CancelFullScreen` / `GetFullScreenStatus` |
+| 文件分享 | iOS / Android | `AppCommon.ShareWithFiles` |
+| 媒体分享 | iOS / Android | `AppCommon.ShareMedia` |
+| 文件打开方式 | iOS / Android | `AppCommon.OpenWith` |
 | 轻应用临时窗口打开 | iOS | `AppCommon.OpenAppTemporaryWindow` |
 | 轻应用关闭按钮显示控制 | iOS | `window.webkit.messageHandlers.SetCloseBtnShowStatus` |
 | 轻应用关闭按钮布局 CSS 变量 | iOS | 宿主注入的 CSS 变量 |
 | 轻应用导航栏 / 状态栏 meta | iOS | `lzcapp-navigation-bar-scheme` 等 meta |
 | 打开客户端主题模式页 | iOS | `client_OPENThemeMode` |
+| 通用系统分享 | iOS | `SystemShare` |
 | 音量 / 亮度控制 | iOS | `AppCommon.GetDeviceVolume` 等 |
 | 锁屏音乐控制 | Android | `MediaSession.*` |
+| 图片原生分享 | Android | `AppCommon.ShareImage` |
 | 状态栏颜色 | Android | `lzc_window.SetStatusBarColor` |
 | 控制栏显隐 | Android | `lzc_tab.SetControlViewVisibility` |
 | 获取控制栏状态 | Android | `lzc_tab.GetControlViewVisibility` |
@@ -192,6 +197,131 @@ AppCommon.GetFullScreenStatus().then(function (value) {
 
 - 这是宿主容器级全屏，不是 DOM `requestFullscreen()`
 - 更适合轻应用页面整体进入全屏展示
+
+### 3.4 文件分享
+
+推荐入口：
+
+- `AppCommon.ShareWithFiles(path?, paths?, mediaIds?)`
+
+支持平台：
+
+- iOS
+- Android
+
+适用场景：
+
+- 分享单个离线文件
+- 分享多个离线文件
+- 分享媒体资源
+- 文件和媒体资源混合分享
+
+单文件示例：
+
+```js
+import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
+
+await AppCommon.ShareWithFiles("/private/path/to/report.pdf")
+```
+
+多文件示例：
+
+```js
+import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
+
+await AppCommon.ShareWithFiles(
+  undefined,
+  [
+    "/private/path/to/a.pdf",
+    "/private/path/to/b.docx",
+  ]
+)
+```
+
+混合分享示例：
+
+```js
+import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
+
+await AppCommon.ShareWithFiles(
+  undefined,
+  ["/private/path/to/a.pdf"],
+  ["media-id-1", "media-id-2"]
+)
+```
+
+真实项目参考：
+
+- `lzc-files/ui/src/mobile/store/sharewith.ts`
+
+说明：
+
+- 三个参数 `path`、`paths`、`mediaIds` 不能同时为空
+- 移动端优先用这个接口，不建议再接旧的 `ShareWith`
+
+### 3.5 媒体分享
+
+推荐入口：
+
+- `AppCommon.ShareMedia({ actionName?, ids?, id? })`
+
+支持平台：
+
+- iOS
+- Android
+
+平台差异：
+
+- iOS
+  - 只需要传 `id` 或 `ids`
+- Android
+  - 需要传 `actionName`
+  - `actionName` 由包名和类名组成
+
+iOS 示例：
+
+```js
+import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
+
+await AppCommon.ShareMedia({
+  ids: ["media-id-1", "media-id-2"],
+})
+```
+
+Android 示例：
+
+```js
+import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
+
+await AppCommon.ShareMedia({
+  actionName: "com.example.app:com.example.app.ShareActivity",
+  ids: ["media-id-1"],
+})
+```
+
+### 3.6 文件打开方式
+
+推荐入口：
+
+- `AppCommon.OpenWith(boxName, path, appid)`
+
+支持平台：
+
+- iOS
+- Android
+
+说明：
+
+- 这是“用其他应用打开文件”能力
+- 经常和分享一起使用，但语义上更接近系统“打开方式”
+
+示例：
+
+```js
+import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
+
+await AppCommon.OpenWith("", "/private/path/to/demo.pdf", "")
+```
 
 ## 4. 仅 iOS 支持
 
@@ -374,7 +504,49 @@ document.getElementById("close-preview").addEventListener("click", function () {
 - 推荐把这些 meta 放在页面初始 HTML 中
 - 如果页面会运行时动态改 meta，iOS 当前实现支持宿主监听刷新
 
-### 4.5 音量 / 亮度控制
+### 4.5 通用系统分享
+
+推荐入口：
+
+- `SystemShare(contentOrPath)`
+
+支持平台：
+
+- iOS
+
+适用场景：
+
+- 分享一段文本
+- 分享一个本地文件路径
+- 分享 `file://` 文件 URL
+
+分享文本示例：
+
+```js
+const sdk = window.lzcSDK || window.sdk
+
+if (sdk && typeof sdk.call === "function") {
+  sdk.call("SystemShare", "https://lazycat.cloud")
+}
+```
+
+分享文件示例：
+
+```js
+const sdk = window.lzcSDK || window.sdk
+
+if (sdk && typeof sdk.call === "function") {
+  sdk.call("SystemShare", "/private/path/to/report.pdf")
+}
+```
+
+说明：
+
+- 这是当前 iOS 已明确实现的原生系统分享面板能力
+- 传入本地路径时会走文件分享
+- 传入普通字符串时会走文本分享
+
+### 4.6 音量 / 亮度控制
 
 推荐入口：
 
@@ -406,7 +578,7 @@ export async function readDeviceState() {
 }
 ```
 
-### 4.6 监听音量键
+### 4.7 监听音量键
 
 推荐入口：
 
@@ -524,7 +696,39 @@ bindMediaSession()
 - `setPositionState`
 - `setActionHandler(nexttrack / previoustrack / play / pause / seekto / stop / seekforward / seekbackward)`
 
-### 5.2 状态栏颜色
+### 5.2 图片原生分享
+
+推荐入口：
+
+- `AppCommon.ShareImage(data)`
+
+支持平台：
+
+- Android
+
+适用场景：
+
+- Android WebView 中无法直接用 `navigator.share` 分享图片
+- 你已经拿到了图片二进制数据
+
+示例：
+
+```js
+import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
+
+async function shareCanvasImage(canvas) {
+  const blob = await new Promise(function (resolve) {
+    canvas.toBlob(resolve, "image/png")
+  })
+
+  const arrayBuffer = await blob.arrayBuffer()
+  const data = new Uint8Array(arrayBuffer)
+
+  await AppCommon.ShareImage(data)
+}
+```
+
+### 5.3 状态栏颜色
 
 Android 客户端通常会注入 `lzc_window` namespace。
 
@@ -555,7 +759,7 @@ setAndroidStatusBarColor("#D6E7EE")
 - 颜色必须是 `#` 开头的字符串
 - 建议仅在 Android 客户端环境下调用
 
-### 5.3 控制栏显隐
+### 5.4 控制栏显隐
 
 建议封装：
 
@@ -588,7 +792,7 @@ console.log("control view visible:", oldVisible)
 - `lzc-client-android/ui/src/widget/actionsheet/index.tsx`
 - `lzc-client-android/ui/src/pages/home/helper.ts`
 
-### 5.4 WebView 跟随键盘 resize
+### 5.5 WebView 跟随键盘 resize
 
 建议封装：
 
@@ -611,7 +815,7 @@ enableAndroidWebviewResize(true)
 - 输入框聚焦时，希望页面跟随键盘压缩布局
 - 聊天页、表单页、编辑器页
 
-### 5.5 客户端主题模式
+### 5.6 客户端主题模式
 
 建议封装：
 
@@ -656,10 +860,11 @@ setAndroidThemeMode(ThemeMode.FOLLOW_SYSTEM, applyMode ?? 0)
 
 1. 先加平台判断
 2. 再加 `lzcapp-disable-dark`
-3. 如果是 iOS 轻应用，再补导航栏 / 状态栏 meta
-4. 如果页面需要沉浸展示，再接全屏接口
-5. 如果页面是播放器，再接 Android `MediaSession`
-6. 如果页面是 Android 宿主内页面，再按需接状态栏颜色、控制栏显隐、主题模式
+3. 如果页面有分享诉求，优先接 `ShareWithFiles`
+4. 如果是 iOS 轻应用，再补导航栏 / 状态栏 meta
+5. 如果页面需要沉浸展示，再接全屏接口
+6. 如果页面是播放器，再接 Android `MediaSession`
+7. 如果页面是 Android 宿主内页面，再按需接状态栏颜色、控制栏显隐、主题模式
 
 ## 7. 常见组合示例
 
