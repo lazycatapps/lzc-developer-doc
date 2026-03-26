@@ -107,7 +107,6 @@ const zhLocaleThemeConfig = {
     {
       text: "最佳实践",
       items: [
-        { text: "高级路由", link: "/advanced-routes.md" },
         { text: "API Auth Token", link: "/advanced-api-auth-token.md" },
         { text: "文件访问", link: "/advanced-file.md" },
         { text: "数据库服务", link: "/advanced-db.md" },
@@ -249,7 +248,6 @@ const enLocaleThemeConfig = {
     {
       text: "Best Practices",
       items: [
-        { text: "Advanced Routing", link: "/en/advanced-routes.md" },
         { text: "API Auth Token", link: "/en/advanced-api-auth-token.md" },
         { text: "File Access", link: "/en/advanced-file.md" },
         { text: "Database Service", link: "/en/advanced-db.md" },
