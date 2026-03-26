@@ -10,8 +10,6 @@ services:
     image: xxx/yyy:123
     environment:
       - ENV1=123
-    binds:
-      - /lzcapp/documents:/home
 ```
 
 ## 从Docker镜像转换成懒猫微服应用

@@ -10,8 +10,6 @@ services:
     image: xxx/yyy:123
     environment:
       - ENV1=123
-    binds:
-      - /lzcapp/documents:/home
 ```
 
 ## Converting Docker Image to LCMD MicroServer Application

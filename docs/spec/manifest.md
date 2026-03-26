@@ -125,7 +125,7 @@
 
 | 字段名 | 类型 | 描述 |
 | ---- | ---- | ---- |
-| `enable_document_access` | `bool` | 如果为true则挂载用户文稿目录到`/lzcapp/documents` |
+| `enable_document_access` | `bool` | 如果为true则启用旧的用户文稿兼容路径`/lzcapp/run/mnt/home`（`v1.7.0` 起需管理员明确授权后才能访问） |
 | `enable_media_access` | `bool` | 如果为true则将media目录挂载到/lzcapp/media |
 | `enable_clientfs_access` | `bool` | 如果为true则将clientfs目录挂载到/lzcapp/clientfs |
 | `disable_grpc_web_on_root` | `bool` | 如果为true则不再劫持应用的grpc-web流量。需要配合新版本lzc-sdk以便系统本身的grpc-web流量可以正常转发|

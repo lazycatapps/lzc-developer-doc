@@ -5,7 +5,7 @@
 完成本篇后，你可以明确区分并验证这 3 件事：
 
 1. 理解持久化边界：`/lzcapp/var` 会在重启后保留；运行态目录（例如 `/home/lazycat`）的手工改动会丢失，需要通过镜像/启动脚本固化。
-2. `/lzcapp/documents` 用于访问用户文稿数据，不等同于应用私有持久化目录。
+2. 区分被废弃的旧路径 `/lzcapp/run/mnt/home` 与 `/lzcapp/documents`：前者保持原有用户文稿语义，且从 `v1.7.0` 开始只有在管理员明确授权后应用才能访问；后者是当前应用自己的应用文稿根目录，实际数据路径为 `/lzcapp/documents/<uid>`，只有在 `package.yml.permissions` 中声明了 `document.private` 后系统才会提供，且不会因此获得其他应用的应用文稿目录。
 3. 掌握 LPK v2 embed image 的基本流程：基于上游镜像做小改动并发布。
 
 ## 前置条件 {#prerequisites}
@@ -68,7 +68,7 @@ lzc-cli project info
 
 记录 `project info` 输出中的 `Target URL`，在浏览器打开确认可进入桌面页面。
 
-### 4. 先把文稿目录挂到桌面（手动验证） {#step-manual-link-documents}
+### 4. 先把兼容文稿目录挂到桌面（手动验证） {#step-manual-link-documents}
 
 先进入容器：
 
@@ -80,16 +80,16 @@ lzc-cli project exec -s desktop /bin/sh
 
 ```bash
 mkdir -p /home/lazycat/Desktop
-ln -svfn /lzcapp/documents "/home/lazycat/Desktop/Documents (ReadWrite)"
+ln -svfn /lzcapp/run/mnt/home "/home/lazycat/Desktop/Documents (ReadWrite)"
 ls -la /home/lazycat/Desktop
-ls -la /lzcapp/documents
+ls -la /lzcapp/run/mnt/home
 exit
 ```
 
 完成后在 VNC 页面刷新桌面，你应能看到：
 
 1. `Documents (ReadWrite)` 入口。
-2. 打开后可以访问 `/lzcapp/documents` 对应的文稿数据。
+2. 打开后可以访问 `/lzcapp/run/mnt/home` 对应的文稿数据。
 
 ### 5. 重启应用，观察软链接丢失 {#step-restart-and-observe-link-loss}
 
@@ -105,7 +105,7 @@ lzc-cli project start --restart
 
 延伸阅读：
 
-1. [文件访问（`/lzcapp/var` 与 `/lzcapp/documents`）](../advanced-file.md)
+1. [文件访问（`/lzcapp/var`、`/lzcapp/run/mnt/home` 与 `/lzcapp/documents`）](../advanced-file.md)
 
 ### 6. 用 Dockerfile 把软链接逻辑固化到镜像 {#step-persist-link-via-dockerfile}
 
@@ -115,7 +115,7 @@ lzc-cli project start --restart
 
 ```bash
 mkdir -p /home/lazycat/Desktop
-ln -svfn /lzcapp/documents "/home/lazycat/Desktop/Documents (ReadWrite)"
+ln -svfn /lzcapp/run/mnt/home "/home/lazycat/Desktop/Documents (ReadWrite)"
 ```
 
 并确认 `images/Dockerfile` 中复制了启动脚本；`startup-script.desktop` 这一行默认是注释状态，你需要手动反注释后再部署：
@@ -203,5 +203,5 @@ lzc-cli lpk info embed-demo.lpk
 
 1. [lzc-build.yml 规范](../spec/build.md)
 2. [lzc-manifest.yml 规范](../spec/manifest.md)
-3. [文件访问（`/lzcapp/var` 与 `/lzcapp/documents`）](../advanced-file.md)
+3. [文件访问（`/lzcapp/var`、`/lzcapp/run/mnt/home` 与 `/lzcapp/documents`）](../advanced-file.md)
 4. [LightOS 场景（占位）](../advanced-lightos.md)

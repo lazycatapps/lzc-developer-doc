@@ -17,7 +17,7 @@
 ### 兼容性调整
 
 - 新增文稿访问路径 `/lzcapp/documents`
-- `/lzcapp/run/mnt/home` 和 `/lzcapp/document/` 已标记为废弃（deprecated），后续仅保持兼容；新代码请统一使用 `/lzcapp/documents`
+- 旧的用户文稿访问路径已标记为废弃（deprecated），后续仅保持兼容；新代码请统一使用 `/lzcapp/documents`
 
 ## v1.4.3（2026-02-04） {#v1-4-3}
 
