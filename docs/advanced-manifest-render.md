@@ -32,7 +32,7 @@
 ## 3. 内置模板函数
 
 1. [sprig](https://masterminds.github.io/sprig/) 提供的函数（不含 `env` / `expandenv`）。
-2. `stable_secrt "seed"`
+2. `stable_secret "seed"`
    - 用于生成稳定密码。
    - 同一个 seed 在同一台微服、同一个应用内保持稳定。
    - 不同应用或不同微服的结果不同。
@@ -67,11 +67,11 @@ cat /lzcapp/run/manifest.yml
 services:
   mysql:
     environment:
-      - MYSQL_ROOT_PASSWORD={{ stable_secrt "root_password" }}
-      - MYSQL_PASSWORD={{ stable_secrt "admin_password" | substr 0 6 }}
+      - MYSQL_ROOT_PASSWORD={{ stable_secret "root_password" }}
+      - MYSQL_PASSWORD={{ stable_secret "admin_password" | substr 0 6 }}
   redmine:
     environment:
-      - DB_PASSWORD={{ stable_secrt "root_password" }}
+      - DB_PASSWORD={{ stable_secret "root_password" }}
 ```
 
 ### 5.2 启动参数由用户配置
