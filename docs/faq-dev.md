@@ -22,7 +22,7 @@
 `/lzcapp/pkg/content` 这个目录为 lpk 打包进去的资源文件， 是不允许修改的。  有两种解决方法:
 
 1. 更改脚本中的创建目录， 如 `/lzcapp/cache` 或者 `/lzcapp/var`。 详细信息请看 [访问微服数据](./advanced-file)
-2. 更改应用的执行目录, 通过 `application.workdir` 的字段指定当前的运行目录。 详细信息请看 [application 字段](./app-example-python-description)
+2. 更改应用的执行目录, 通过 `application.workdir` 的字段指定当前的运行目录。 详细信息请看 [lzc-manifest.yml 规范文档](./spec/manifest.md)
 
 ## 上架应用的介绍文档在哪里写？
 

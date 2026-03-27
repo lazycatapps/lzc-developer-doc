@@ -2,7 +2,7 @@
 
 Sometimes we just want to deploy an existing docker, or the application we develop depends on someone else's docker, and we need to run a database, message communication and other components first. Next, we will use gitlab as an example to guide you step by step to port the docker image to LCMD MicroServer.
 
-Before this, you need to briefly understand the meaning of each configuration item in `lzc-build.yml` and `lzc-manifest.yml`. This is explained in [Application Configuration Details](./app-example-python-description#lzc-build-yml), and the existing content will not be repeated here. Here is a brief introduction to the `services` configuration item. In `services`, we can specify multiple services, each service has a name, and under each service, we can specify a docker image. For this image, we can configure environment variables, storage location, startup commands, etc. A well-configured services for an application looks roughly like this:
+Before this, you need to briefly understand the meaning of each configuration item in `lzc-build.yml` and `lzc-manifest.yml`. This is explained in the [lzc-build.yml Specification](./spec/build.md) and [lzc-manifest.yml Specification](./spec/manifest.md), and the existing content will not be repeated here. Here is a brief introduction to the `services` configuration item. In `services`, we can specify multiple services, each service has a name, and under each service, we can specify a docker image. For this image, we can configure environment variables, storage location, startup commands, etc. A well-configured services for an application looks roughly like this:
 
 ```yaml
 services:
@@ -56,7 +56,7 @@ services:
       - GITLAB_OMNIBUS_CONFIG=external_url 'http://gitlab.example.com'
 ```
 
-Combined with the required fields in [Application Configuration Details](./app-example-python-description.html#lzc-build-yml), configure routes or ingress to the ports provided by docker (in this example, routes need to fill in port 80, ingress needs to configure port 22), forming a complete `lzc-manifest.yml`:
+Combined with the required fields in `package.yml` and the [lzc-manifest.yml Specification](./spec/manifest.md), configure routes or ingress to the ports provided by docker (in this example, routes need to fill in port 80, ingress needs to configure port 22), forming a complete `lzc-manifest.yml`:
 
 ```yaml
 # package.yml

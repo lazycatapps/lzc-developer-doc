@@ -22,7 +22,7 @@ If resource files are small (<200M), you can also package resource files into lp
 The `/lzcapp/pkg/content` directory contains resource files packaged into lpk and is not allowed to be modified. There are two solutions:
 
 1. Change the creation directory in the script, such as `/lzcapp/cache` or `/lzcapp/var`. For detailed information, see [Access LCMD Data](./advanced-file)
-2. Change the application execution directory by specifying the current running directory through the `application.workdir` field. For detailed information, see [application field](./app-example-python-description)
+2. Change the application execution directory by specifying the current running directory through the `application.workdir` field. For detailed information, see the [lzc-manifest.yml Specification](./spec/manifest.md)
 
 ## Where to write the introduction document for listing applications?
 

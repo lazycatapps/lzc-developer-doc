@@ -2,7 +2,7 @@
 
 有时候我们只想部署一个已经存在的docker，或者说开发的应用依赖别人的docker，需要先运行一个数据库、消息通信等组件，接下来我们将以 gitlab 为例带您一步步把docker镜像移植到懒猫微服上运行。
 
-在此之前，您需要简单了解一下`lzc-build.yml`和`lzc-manifest.yml`的各个配置项的含义。这个在[应用配置详解](./app-example-python-description#lzc-build-yml)中有讲解，已经有的内容这里不再赘述。这里简单介绍一下`services`这个配置项，在`services`中，我们可以指定多个服务，每个服务有一个名字，每一个服务底下可以指定一个docker镜像，针对这个镜像，可以配置环境变量，存储位置、启动命令等。一个应用的services配好大致长这样：
+在此之前，您需要简单了解一下`lzc-build.yml`和`lzc-manifest.yml`的各个配置项的含义。这个在 [lzc-build.yml 规范文档](./spec/build.md) 和 [lzc-manifest.yml 规范文档](./spec/manifest.md) 中有讲解，已经有的内容这里不再赘述。这里简单介绍一下`services`这个配置项，在`services`中，我们可以指定多个服务，每个服务有一个名字，每一个服务底下可以指定一个docker镜像，针对这个镜像，可以配置环境变量，存储位置、启动命令等。一个应用的services配好大致长这样：
 
 ```yaml
 services:
@@ -56,7 +56,7 @@ services:
       - GITLAB_OMNIBUS_CONFIG=external_url 'http://gitlab.example.com'
 ```
 
-结合[应用配置详解](./app-example-python-description.html#lzc-build-yml)中的那些必填字段，把静态元数据写入 `package.yml`，再把 `routes` 或 `ingress` 配置到 docker 提供的端口（在这个例子中，`routes` 需要填写 80 端口，`ingress` 需要配置一下 22 端口），就形成了完整的应用配置：
+结合 [package.yml 规范文档](./spec/package.md) 和 [lzc-manifest.yml 规范文档](./spec/manifest.md) 中的那些必填字段，把静态元数据写入 `package.yml`，再把 `routes` 或 `ingress` 配置到 docker 提供的端口（在这个例子中，`routes` 需要填写 80 端口，`ingress` 需要配置一下 22 端口），就形成了完整的应用配置：
 
 ```yaml
 # package.yml
