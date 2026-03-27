@@ -8,6 +8,7 @@ type LocaleLlmsConfig = {
   outputFile: string;
   fullOutputFile?: string;
   linkPrefix: string;
+  generatePageMarkdown?: boolean;
   description?: string;
   fallbackTitle?: string;
   sidebar: DefaultTheme.Sidebar;
@@ -93,6 +94,10 @@ function buildLink(linkPrefix: string, relativePath: string) {
   return `${prefix}/${relativePath}`;
 }
 
+function buildOutputRelativePath(linkPrefix: string, relativePath: string) {
+  return buildLink(linkPrefix, relativePath).replace(/^\//, "");
+}
+
 function buildFrontmatterBlock(entry: LocaleEntry, linkPrefix: string, body: string) {
   const lines = [
     "---",
@@ -104,6 +109,29 @@ function buildFrontmatterBlock(entry: LocaleEntry, linkPrefix: string, body: str
   ];
 
   return lines.join("\n");
+}
+
+async function writePageMarkdownFiles(
+  distDir: string,
+  linkPrefix: string,
+  localeDocsDir: string,
+  entries: LocaleEntry[],
+) {
+  await Promise.all(
+    entries.map(async (entry) => {
+      const sourcePath = path.join(localeDocsDir, entry.path);
+      const targetPath = path.join(
+        distDir,
+        buildOutputRelativePath(linkPrefix, entry.path),
+      );
+      const rawContent = await fs.readFile(sourcePath, "utf-8");
+      const body = stripFrontmatter(rawContent);
+      const pageContent = `${buildFrontmatterBlock(entry, linkPrefix, body)}\n`;
+
+      await fs.mkdir(path.dirname(targetPath), { recursive: true });
+      await fs.writeFile(targetPath, pageContent, "utf-8");
+    }),
+  );
 }
 
 export function generateLocaleLlmsIndex(config: LocaleLlmsConfig): PluginOption {
@@ -168,13 +196,23 @@ export function generateLocaleLlmsIndex(config: LocaleLlmsConfig): PluginOption 
         const description =
           config.description ?? "This file contains links to all documentation sections.";
         const content = `# ${title}\n\n${description}\n\n## Table of Contents\n\n${toc}\n`;
+        const allEntries = [...orderedEntries, ...extraEntries];
 
         await fs.writeFile(targetPath, content, "utf-8");
+
+        if (config.generatePageMarkdown !== false) {
+          await writePageMarkdownFiles(
+            distDir,
+            config.linkPrefix,
+            localeDocsDir,
+            allEntries,
+          );
+        }
 
         if (config.fullOutputFile) {
           const fullTargetPath = path.join(distDir, config.fullOutputFile);
           const fullSections = await Promise.all(
-            [...orderedEntries, ...extraEntries].map(async (entry) => {
+            allEntries.map(async (entry) => {
               const filePath = path.join(localeDocsDir, entry.path);
               const rawContent = await fs.readFile(filePath, "utf-8");
               const body = stripFrontmatter(rawContent);

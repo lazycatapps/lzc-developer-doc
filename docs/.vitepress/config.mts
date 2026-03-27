@@ -323,6 +323,7 @@ export default withMermaid(
           outputFile: "llms.en.txt",
           fullOutputFile: "llms-full.en.txt",
           linkPrefix: "/en",
+          generatePageMarkdown: true,
           description: "This file contains links to all English documentation sections.",
           fallbackTitle: "English LLM Documentation",
           sidebar: enLocaleThemeConfig.sidebar,
