@@ -168,7 +168,6 @@ application:
   depends_on:
     - imallinone
   multi_instance: true # 是否启用多实例
-  background_task: true #是否存在后台任务，若存在则系统不会对此app进行主动休眠等操作
 
 services:
   imallinone:

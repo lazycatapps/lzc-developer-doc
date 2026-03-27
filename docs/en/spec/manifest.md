@@ -39,7 +39,6 @@ Note: since LPK v2, static package metadata is stored in `package.yml`, includin
 | Field Name | Type | Description |
 | ---- | ---- | ---- |
 | `image` | `string` | Application image, if no special requirements, leave empty to use system default image (alpine3.21) |
-| `background_task` | `bool` | If `true`, will automatically start and not be automatically hibernated, defaults to `true` |
 | `subdomain` | `string` | Inbound subdomain for this application, application opens using this subdomain by default |
 | `multi_instance` | `bool` | Whether to deploy in multi-instance form |
 | `usb_accel` | `bool` | Mount related devices to `/dev/bus/usb` in all service containers |

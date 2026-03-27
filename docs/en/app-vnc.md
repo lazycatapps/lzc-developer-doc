@@ -163,7 +163,6 @@ application:
   depends_on:
     - imallinone
   multi_instance: true # Whether to enable multi-instance
-  background_task: true # Whether there are background tasks. If yes, the system will not actively hibernate this app
 
 services:
   imallinone:
