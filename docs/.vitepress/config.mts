@@ -1,6 +1,7 @@
-import { defineConfig, ThemeOptions } from "vitepress";
+import { defineConfig } from "vitepress";
 import { withMermaid } from "vitepress-plugin-mermaid";
 import llmstxt from "vitepress-plugin-llms";
+import { generateLocaleLlmsIndex } from "./plugins/generateLocaleLlmsIndex.mts";
 
 const zhLocaleThemeConfig = {
   docFooter: {
@@ -315,7 +316,16 @@ export default withMermaid(
     vite: {
       plugins: [
         llmstxt({
-          ignoreFiles: ["images/**/*"],
+          ignoreFiles: ["images/**/*", "en/**/*"],
+        }),
+        generateLocaleLlmsIndex({
+          docsSubDir: "en",
+          outputFile: "llms.en.txt",
+          fullOutputFile: "llms-full.en.txt",
+          linkPrefix: "/en",
+          description: "This file contains links to all English documentation sections.",
+          fallbackTitle: "English LLM Documentation",
+          sidebar: enLocaleThemeConfig.sidebar,
         }),
       ],
     },
@@ -332,7 +342,7 @@ export default withMermaid(
         link: "/",
         title: "懒猫微服开发者手册",
         description: "高端私有云， 选懒猫就对了",
-        themeConfig: zhLocaleThemeConfig,
+        themeConfig: zhLocaleThemeConfig as any,
       },
       en: {
         label: "English",
