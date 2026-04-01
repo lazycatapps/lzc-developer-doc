@@ -35,7 +35,7 @@
 | `author` | `string` | 可选；作者或维护者 |
 | `license` | `string` | 可选；许可证标识或链接 |
 | `homepage` | `string` | 可选；主页或反馈地址 |
-| `admin_only` | `bool` | 可选；是否仅管理员可见。若为 `true`，则不允许同时声明非空 `application.public_path`；`public_path` 也不会绕过该限制 |
+| `admin_only` | `bool` | 可选；是否仅管理员可见 |
 | `min_os_version` | `string` | 可选；要求的最低系统版本 |
 | `unsupported_platforms` | `[]string` | 可选；不支持的平台列表 |
 | `locales` | `map[string]PackageLocaleConfig` | 可选；多语言元数据 |
