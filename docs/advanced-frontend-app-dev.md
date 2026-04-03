@@ -83,10 +83,6 @@ export async function openPhotoApp(boxDomain: string) {
 }
 ```
 
-参考用法：
-
-- `lzc-files/ui/src/shared/utils/lzcApplist.ts`
-
 说明：
 
 - `forcedRefresh: true` 适合你希望宿主强制刷新目标应用页面的场景
@@ -355,10 +351,6 @@ export async function openAppStoreDetail(pkgId) {
 }
 ```
 
-参考用法：
-
-- `lzc-files/ui/src/shared/extension/utils/index.ts`
-
 ### 4.2 轻应用关闭按钮显示控制
 
 当前没有统一 SDK 包装，直接通过 iOS JSBridge 调用。
@@ -396,11 +388,6 @@ document.getElementById("close-preview").addEventListener("click", function () {
   setIosCloseButtonVisible(true)
 })
 ```
-
-参考用法：
-
-- `lzc-files/ui/src/mobile/use/useIosCloseButton.ts`
-- `lzc-files/ui/src/shared/view/FilePicker/FilePickerMobile.vue`
 
 说明：
 
@@ -685,10 +672,6 @@ async function bindMediaSession() {
 bindMediaSession()
 ```
 
-更完整的参考用法：
-
-- `lzc-files/ui/src/mobile/components/MobileAudio/AudioBox.vue`
-
 该示例里实际使用了：
 
 - `setMetadata`
@@ -749,11 +732,6 @@ setAndroidStatusBarColor("#FFFFFF")
 setAndroidStatusBarColor("#D6E7EE")
 ```
 
-参考用法：
-
-- `lzc-client-android/ui/src/pages/navigation/index.vue`
-- `lzc-client-android/ui/src/pages/home/use/usePageScrollStyle.ts`
-
 说明：
 
 - 颜色必须是 `#` 开头的字符串
@@ -785,12 +763,6 @@ await setAndroidControlViewVisible(false)
 const oldVisible = await getAndroidControlViewVisible()
 console.log("control view visible:", oldVisible)
 ```
-
-参考用法：
-
-- `lzc-client-android/ui/src/pages/navigation/index.vue`
-- `lzc-client-android/ui/src/widget/actionsheet/index.tsx`
-- `lzc-client-android/ui/src/pages/home/helper.ts`
 
 ### 5.5 WebView 跟随键盘 resize
 
@@ -849,10 +821,6 @@ console.log({ mode, applyMode })
 
 setAndroidThemeMode(ThemeMode.FOLLOW_SYSTEM, applyMode ?? 0)
 ```
-
-参考用法：
-
-- `lzc-client-android/ui/src/pages/setting/about/useThemeMode.tsx`
 
 ## 6. 推荐接入顺序
 
