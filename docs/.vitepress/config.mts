@@ -162,6 +162,7 @@ const zhLocaleThemeConfig = {
 };
 
 const enLocaleThemeConfig = {
+  siteTitle: "LCMD Developer Manual",
   nav: [{ text: "Changelog", link: "/en/changelog.md" }],
   sidebar: [
     {
@@ -348,6 +349,8 @@ export default withMermaid(
       en: {
         label: "English",
         lang: "en",
+        title: "LCMD Developer Manual",
+        description: "Developer documentation for LCMD.",
         themeConfig: enLocaleThemeConfig,
       },
     },
