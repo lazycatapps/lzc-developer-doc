@@ -46,8 +46,8 @@
 
 上架应用必须支持免密登录机制，以提供无缝的用户体验。开发者可通过以下两种方式实现：
 
-- **OIDC 标准登录流**：对接懒猫微服的身份认证体系，实现基于 ingress 注入的用户身份自动识别（详见 [[对接OIDC](https://developer.lazycat.cloud/advanced-oidc.html)](/advanced-oidc-integration.html)）。
-- **Inject 自动注入**：使用 `builtin://simple-inject-password` 或自定义 inject 脚本，实现登录凭据的自动填充与学习（详见 [免密登录](https://developer.lazycat.cloud/advanced-inject-passwordless-login.html)）。
+- **OIDC 标准登录流**：对接懒猫微服的身份认证体系，实现基于 ingress 注入的用户身份自动识别（详见 [对接OIDC](./advanced-oidc.md)）。
+- **Inject 自动注入**：使用 `builtin://simple-inject-password` 或自定义 inject 脚本，实现登录凭据的自动填充与学习（详见 [免密登录](./advanced-inject-passwordless-login.md)）。
 
 应用需确保用户在安装后无需手动输入账号密码即可完成首次登录，或在后续访问中保持弱感知登录状态。
 
