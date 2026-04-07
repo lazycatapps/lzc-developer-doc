@@ -46,7 +46,7 @@ For applications that need persistent data, it is necessary to test whether the 
 
 The applications on the store must support the password-free login mechanism to provide a seamless user experience. Developers can achieve this through the following two methods:
 
-- **OIDC Standard Login Flow**: Integrating with LazyCat Microservice's identity authentication system to achieve automatic user identity recognition through ingress injection (refer to [](/advanced-oidc-integration.html)[Integration with OIDC](https://developer.lazycat.cloud/advanced-oidc.html)).
+- **OIDC Standard Login Flow**: Integrating with LazyCat Microservice's identity authentication system to achieve automatic user identity recognition through ingress injection (refer to [Integration with OIDC](https://developer.lazycat.cloud/advanced-oidc.html)).
 - **Inject Automatic Injection**: Utilizing `builtin://simple-inject-password` or custom inject scripts to automatically fill in and learn login credentials (refer to [Passwordless Login](https://developer.lazycat.cloud/advanced-inject-passwordless-login.html)). 
   The application must ensure that users can complete the first login without having to manually enter their account and password after installation, or maintain a low-perception login state during subsequent visits.
   
