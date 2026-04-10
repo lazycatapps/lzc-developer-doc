@@ -46,8 +46,6 @@ After using `Client Mode`, these third-party applications cannot access LCMD res
 
 Additionally, if you are an iOS client, because the LCMD client cannot stay in the background (will be disconnected within 10 seconds after switching to background), you also need to enable LCMD background persistence (Open LCMD client -> About -> Find Device)
 
-(Android version currently doesn't provide http://127.0.0.1:31085, if needed please contact customer service to use the test version)
-
 ## Reducing Network Impact on LCMD MicroServer {#vpn_config}
 
 After using `Client Mode (Proxy)` on mobile devices or running other VPN software on PC, it will seriously interfere with the LCMD MicroServer client's work. You need to further configure the following to minimize interference:
