@@ -34,7 +34,7 @@ The template generates these core files by default:
 1. `lzc-manifest.yml`: the app runtime description, including routes and entry behavior.
 2. `package.yml`: static package metadata such as `package`, `version`, `author`, and `license`.
 3. `lzc-build.yml`: the default build config and also the release config.
-4. `lzc-build.dev.yml`: the dev override config, containing a dedicated dev package ID such as `pkg_id: cloud.lazycat.app.helloworld.dev` and `DEV_MODE=1` by default.
+4. `lzc-build.dev.yml`: the dev override config, containing a dedicated dev package override such as `package_override.package: cloud.lazycat.app.helloworld.dev` and `DEV_MODE=1` by default.
 
 This means `project deploy`, `project info`, `project exec`, and other `project` commands will target an isolated dev package by default, instead of overwriting the release package.
 Each command prints the active `Build config` line, which tells you which build config file is actually in use; use `--release` when you want to operate on release explicitly.

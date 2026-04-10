@@ -9,6 +9,13 @@
 
 推荐项目仅保留这两个文件。
 
+`package_override` 的语义如下：
+
+1. 只覆盖最终产物里的 `package.yml`。
+2. 同名字段按顶层整体覆盖，不做递归 merge。
+3. 顶层写空值表示清空对应字段。
+4. 若 `lzc-build.dev.yml` 里也定义了 `package_override`，它会整体覆盖 `lzc-build.yml` 里的 `package_override`。
+
 默认命令约定：
 
 1. `lzc-cli project deploy`：优先读取 `lzc-build.dev.yml`，不存在时读取 `lzc-build.yml`。
@@ -28,8 +35,7 @@
 | `contentdir` | `string` | 可选；指定打包的内容目录。未配置或显式写空值时不会生成 `content.tar` / `content.tar.gz` |
 | `pkgout` | `string` | 指定 lpk 包的输出路径 |
 | `icon` | `string` | 指定 lpk 包 icon 的路径，如果不指定将会警告，目前仅允许 png 后缀的文件 |
-| `pkg_id` | `string` | 可选；构建阶段覆盖最终 `package.yml.package` 的值，并参与最终 LPK 文件名与包名校验 |
-| `pkg_name` | `string` | 可选；构建阶段覆盖最终 `package.yml.name` 的值 |
+| `package_override` | `map[string]any` | 可选；按顶层字段整体覆盖最终 `package.yml`，不做递归 merge；顶层写空值表示清空对应字段；其中 `package_override.package` 会参与最终 LPK 文件名与包名校验 |
 | `envs` | `[]string` | 可选；构建期变量列表，支持 `KEY=VALUE` 字符串数组 |
 | `images` | `map[string]ImageBuildConfig` | Dockerfile 镜像构建配置，用于产出 `embed:<alias>` 镜像引用 |
 | `compose_override` | `ComposeOverrideConfig` | 高级 compose override 配置，**需要更新 lzc-os 版本 >= v1.3.0** |
@@ -50,7 +56,7 @@
 
 1. `lzc-build.yml` 保存默认构建配置，也就是正式发布时使用的配置。
 2. `lzc-build.dev.yml` 只保存开发态差异，例如：
-   - `pkg_id: cloud.lazycat.app.demo-app.dev`
+   - `package_override.package: cloud.lazycat.app.demo-app.dev`
    - 若 release 配置了 `contentdir`，dev 可显式写 `contentdir:` 空值覆盖
    - 开发态专用 `buildscript`
    - 开发态专用 `envs`
@@ -74,7 +80,8 @@
 
 ```yml
 # lzc-build.dev.yml
-pkg_id: cloud.lazycat.app.demo-app.dev
+package_override:
+  package: cloud.lazycat.app.demo-app.dev
 contentdir:
 envs:
   - DEV_MODE=1

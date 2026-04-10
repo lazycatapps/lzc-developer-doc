@@ -7,6 +7,13 @@ Build config is split into only two layers:
 1. `lzc-build.yml`: the default build config and also the release config.
 2. `lzc-build.dev.yml`: an optional dev override file that only keeps diffs relative to release.
 
+`package_override` follows these rules:
+
+1. It only overrides the final `package.yml` in the output package.
+2. Matching fields are replaced at the top level; no recursive merge is performed.
+3. An empty top-level value clears that field.
+4. If `lzc-build.dev.yml` also defines `package_override`, it replaces the parent `package_override` as a whole.
+
 Recommended command defaults:
 
 1. `lzc-cli project deploy`: prefers `lzc-build.dev.yml`, otherwise falls back to `lzc-build.yml`.
@@ -26,7 +33,7 @@ Recommended command defaults:
 | `contentdir` | `string` | Optional content directory. If omitted, no `content.tar` / `content.tar.gz` is generated |
 | `pkgout` | `string` | Output directory for the built LPK |
 | `icon` | `string` | Icon path. PNG only |
-| `pkg_id` | `string` | Optional package ID override applied at build time, such as `org.example.demo.dev` |
+| `package_override` | `map[string]any` | Optional top-level override for the final `package.yml`; no recursive merge; an empty top-level value clears that field; `package_override.package` affects the final LPK file name and package-name validation |
 | `envs` | `[]string` | Optional build-time variable list using `KEY=VALUE` strings |
 | `images` | `map[string]ImageBuildConfig` | Dockerfile-based image build config for `embed:<alias>` |
 | `compose_override` | `ComposeOverrideConfig` | Advanced compose override config, requires `lzc-os >= v1.3.0` |
@@ -45,7 +52,7 @@ Guidelines:
 
 1. `lzc-build.yml` stores the default and release build config.
 2. `lzc-build.dev.yml` stores dev-only diffs, such as:
-   - `pkg_id: org.example.demo.dev`
+   - `package_override.package: org.example.demo.dev`
    - dev-only `buildscript`
    - dev-only `envs`
 3. For image-only release packages, `contentdir` can be omitted entirely.
@@ -68,7 +75,8 @@ Example:
 
 ```yml
 # lzc-build.dev.yml
-pkg_id: org.example.demo.dev
+package_override:
+  package: org.example.demo.dev
 envs:
   - DEV_MODE=1
   - FRONTEND_PORT=3000

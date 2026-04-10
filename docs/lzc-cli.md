@@ -122,7 +122,8 @@ lzc-cli project --help
 
 ```yml
 # lzc-build.dev.yml
-pkg_id: cloud.lazycat.app.helloworld.dev
+package_override:
+  package: cloud.lazycat.app.helloworld.dev
 contentdir:
 envs:
   - DEV_MODE=1

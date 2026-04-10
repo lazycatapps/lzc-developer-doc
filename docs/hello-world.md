@@ -30,7 +30,7 @@ lzc-cli project create helloworld
 1. `lzc-manifest.yml`：应用运行结构与路由。
 2. `package.yml`：静态包元数据，例如 `package`、`version`、`name`、`description`、`locales`、`author`、`license`。
 3. `lzc-build.yml`：默认构建配置，也是 release 配置。
-4. `lzc-build.dev.yml`：开发态覆盖配置，默认包含独立的 dev 包名（例如 `pkg_id: cloud.lazycat.app.helloworld.dev`）、空 `contentdir` 覆盖，与构建期变量 `envs`。
+4. `lzc-build.dev.yml`：开发态覆盖配置，默认包含独立的 dev 包名覆盖（例如 `package_override.package: cloud.lazycat.app.helloworld.dev`）、空 `contentdir` 覆盖，与构建期变量 `envs`。
 
 这样日常开发时，`project deploy`、`project info`、`project exec` 等 `project` 命令默认都会优先使用 `lzc-build.dev.yml`，从而落到独立的 dev 包名，不会影响 release 版本。
 每个命令都会打印实际使用的 `Build config`；如果你要操作 `lzc-build.yml`，请显式加上 `--release`。

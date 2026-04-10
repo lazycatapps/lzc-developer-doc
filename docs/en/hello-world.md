@@ -29,7 +29,7 @@ Inside the project directory, the key files are:
 1. `lzc-manifest.yml`: runtime structure and routes.
 2. `package.yml`: static package metadata such as `package`, `version`, `author`, and `license`.
 3. `lzc-build.yml`: default build config and also the release config.
-4. `lzc-build.dev.yml`: dev override config, usually containing a dedicated dev package ID such as `pkg_id: cloud.lazycat.app.helloworld.dev` and build-time `envs`.
+4. `lzc-build.dev.yml`: dev override config, usually containing a dedicated dev package override such as `package_override.package: cloud.lazycat.app.helloworld.dev` and build-time `envs`.
 
 In daily development, `project deploy`, `project info`, `project exec`, and other `project` commands prefer `lzc-build.dev.yml` by default, so they operate on an isolated dev package instead of overwriting release.
 Each command prints the active `Build config`. Use `--release` when you explicitly want `lzc-build.yml`.

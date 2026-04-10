@@ -45,7 +45,7 @@
 
 1. `package` 与 `version` 是最小必填字段。
 2. `package` 是唯一包 ID，`application.subdomain` 是默认访问域名，两者语义不同。
-3. 构建阶段若在 `lzc-build.yml` 里设置 `pkg_id` / `pkg_name`，会覆盖最终写入 `package.yml` 的 `package` / `name`。
+3. 构建阶段可在 `lzc-build.yml` 里使用 `package_override` 覆盖最终写入 `package.yml` 的顶层字段；同名字段按顶层整体覆盖，不做递归 merge；顶层写空值表示清空对应字段。
 
 ## 三、`locales`
 

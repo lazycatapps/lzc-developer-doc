@@ -99,7 +99,7 @@ lzc-cli project info
 3. 每个 `project` 命令都会打印 `Build config` 这一行。
 4. `package.yml` 用来维护静态包元数据，不再建议把这些字段写回应用运行说明文件（manifest）顶层。
 5. 如果要显式操作发布配置，请加上 `--release`。
-6. `lzc-build.dev.yml` 只建议写开发态差异，例如直接写独立的 dev 包名 `pkg_id: org.example.todo.dev`，以及用空 `contentdir:` 覆盖 release 里的静态目录配置。
+6. `lzc-build.dev.yml` 只建议写开发态差异，例如通过 `package_override.package: org.example.todo.dev` 写独立的 dev 包名，以及用空 `contentdir:` 覆盖 release 里的静态目录配置。
 
 ### 场景 B：CI 发布（产出可分发包） {#scenario-b-ci-release}
 
@@ -150,7 +150,7 @@ lzc-cli lpk info release.lpk
 1. 执行哪个 `buildscript`。
 2. 从哪个 `contentdir` 收集内容。
 3. 如何构建 `images`（embed image）。
-4. 是否通过 `pkg_id` 产出独立的 dev 包名。
+4. 是否通过 `package_override.package` 产出独立的 dev 包名。
 
 安装/运行流程读取的是 LPK 内部的产物（`manifest.yml`、`content.tar`、`images.lock` 等），不是你工作目录里的构建配置文件。
 
@@ -165,7 +165,8 @@ lzc-cli lpk info release.lpk
 
 ```yml
 # lzc-build.dev.yml
-pkg_id: org.example.todo.dev
+package_override:
+  package: org.example.todo.dev
 contentdir:
 ```
 

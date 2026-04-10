@@ -66,7 +66,7 @@ flowchart TB
 1. `lzc-build.yml`
    作用：发布包构建配置。
 2. `lzc-build.dev.yml`
-   作用：dev 构建覆盖配置，只保存开发态差异。
+   作用：dev 构建覆盖配置，只保存开发态差异；其中 `package_override` 用于覆盖最终产物里的 `package.yml`。
 3. `lzc-manifest.yml`
    作用：应用运行结构本身；其中 dev 专属逻辑通过 `#@build` 预处理块决定是否进入最终包。这里可以先把它理解成“应用运行说明文件”。
 
@@ -80,7 +80,8 @@ flowchart TB
 推荐的 dev 配置通常长这样：
 
 ```yml
-pkg_id: org.example.todo.dev
+package_override:
+  package: org.example.todo.dev
 contentdir:
 
 envs:
@@ -89,7 +90,7 @@ envs:
 
 这里最重要的是三点：
 
-1. `pkg_id: org.example.todo.dev`
+1. `package_override.package: org.example.todo.dev`
    作用：保证开发部署不会覆盖正式安装包。
 2. `contentdir:`
    作用：若 release 配置了静态目录，dev 可用空值覆盖它，避免误打包本地未构建产物。
@@ -305,7 +306,7 @@ release 阶段的目标只有一个：产出一个干净、稳定、没有开发
 ### release 包应满足什么要求
 
 1. 使用 `lzc-build.yml`。
-2. 不带开发态的 `pkg_id` 覆盖。
+2. 不带开发态的 `package_override.package` 覆盖。
 3. 不启用 dev-only `#@build` 分支。
 4. 镜像只包含最终产物，而不是开发工具链。
 5. 如果 release 不需要静态文件目录，可以不配置 `contentdir`。
@@ -342,13 +343,14 @@ lzc-cli project release -o app.lpk
 原因通常是：
 
 1. 项目里没有 `lzc-build.dev.yml`。
-2. 或者没有配置单独的 `pkg_id`。
+2. 或者没有配置单独的 `package_override.package`。
 
 处理：
 
 1. 检查 `lzc-build.dev.yml` 是否存在。
 2. 检查命令输出里的 `Build config`。
-3. 检查 dev 配置里是否有 `pkg_id: org.example.todo.dev` 这类独立包名覆盖。
+3. 检查 dev 配置里是否有 `package_override:
+   package: org.example.todo.dev` 这类独立包名覆盖。
 
 ### 2. 页面一直显示等待开发环境
 

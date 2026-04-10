@@ -99,6 +99,7 @@ Default behavior:
 3. Each command prints the active `Build config` line.
 4. `package.yml` is where static package metadata now lives, instead of the top level of `lzc-manifest.yml`.
 5. Use `--release` if you want to operate on the release build config `lzc-build.yml`.
+6. `lzc-build.dev.yml` should keep dev-only diffs, for example `package_override.package: org.example.todo.dev` and an empty `contentdir:` when you want to suppress release static content in dev.
 
 ### Scenario B: CI release {#scenario-b-ci-release}
 
@@ -144,6 +145,7 @@ Notes:
 1. Which `buildscript` to run.
 2. Which `contentdir` to collect.
 3. How `images` are built (embedded image workflow).
+4. Whether `package_override.package` produces an isolated dev package ID.
 
 Install/runtime flow consumes artifacts inside LPK (`manifest.yml`, `content.tar`, `images.lock`, etc.), not your local `lzc-build.yml` file.
 

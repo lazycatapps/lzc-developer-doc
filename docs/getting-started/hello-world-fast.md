@@ -32,7 +32,7 @@ cd hello-lpk
 模板默认会生成：
 
 1. `lzc-build.yml`：默认构建配置，也是发布配置。
-2. `lzc-build.dev.yml`：开发态覆盖配置，默认包含独立的 dev 包名（例如 `pkg_id: cloud.lazycat.app.helloworld.dev`）、空 `contentdir` 覆盖，以及 `DEV_MODE=1`。
+2. `lzc-build.dev.yml`：开发态覆盖配置，默认包含独立的 dev 包名覆盖（例如 `package_override.package: cloud.lazycat.app.helloworld.dev`）、空 `contentdir` 覆盖，以及 `DEV_MODE=1`。
 
 这意味着 `project deploy`、`project info`、`project exec` 等 `project` 命令默认都会落到独立的 dev 包名，不会覆盖正式发布包。
 命令输出里会打印一行 `Build config`，就是在告诉你“这次实际用了哪个构建配置文件”；如需操作发布配置，请显式加上 `--release`。

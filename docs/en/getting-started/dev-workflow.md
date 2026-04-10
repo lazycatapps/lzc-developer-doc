@@ -66,7 +66,7 @@ The recommended workflow is easiest to understand with these three layers:
 1. `lzc-build.yml`
    Purpose: the release build config.
 2. `lzc-build.dev.yml`
-   Purpose: the development override config that only stores dev-specific differences.
+   Purpose: the development override config that only stores dev-specific differences; `package_override` is used to override the final `package.yml`.
 3. `lzc-manifest.yml`
    Purpose: the stable app runtime structure; dev-only logic is enabled or removed by `#@build` preprocessing.
 
@@ -80,7 +80,8 @@ A typical project usually keeps these four files:
 A minimal dev config often looks like this:
 
 ```yml
-pkg_id: org.example.todo.dev
+package_override:
+  package: org.example.todo.dev
 
 envs:
   - DEV_MODE=1
@@ -88,7 +89,7 @@ envs:
 
 The important parts are:
 
-1. `pkg_id: org.example.todo.dev`
+1. `package_override.package: org.example.todo.dev`
    Purpose: prevent dev deployment from overwriting the release app.
 2. `DEV_MODE=1`
    Purpose: make dev-only `#@build` blocks in `lzc-manifest.yml` active only in development.
@@ -302,7 +303,7 @@ The goal of release is simple: produce a clean, stable LPK without development-s
 ### What A Release Package Should Look Like
 
 1. It uses `lzc-build.yml`.
-2. It does not carry the dev-only `pkg_id` override.
+2. It does not carry the dev-only `package_override.package` override.
 3. It does not include dev-only `#@build` branches.
 4. The image contains only final artifacts, not dev toolchains.
 5. If release does not need static content, `contentdir` can be omitted.
@@ -339,13 +340,13 @@ When you are unsure which path to use, decide from this table:
 This usually means:
 
 1. The project does not have `lzc-build.dev.yml`.
-2. Or it exists but does not contain a dedicated dev `pkg_id`.
+2. Or it exists but does not contain a dedicated dev `package_override.package`.
 
 Fix:
 
 1. Check whether `lzc-build.dev.yml` exists.
 2. Check the printed `Build config` line in command output.
-3. Check whether a dedicated dev `pkg_id` such as `pkg_id: org.example.todo.dev` is present.
+3. Check whether a dedicated dev package override such as `package_override.package: org.example.todo.dev` is present.
 
 ### 2. The page keeps showing a waiting-for-development guide
 
