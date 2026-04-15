@@ -2,6 +2,10 @@
   display: none !important;
 }
 
+.hide-nav .VPLocalNav {
+  display: none !important;
+}
+
 /* 修复 Mermaid 节点标签在 VitePress 下被段落样式污染导致的底部裁切 */
 .vp-doc .mermaid .label p,
 .vp-doc .mermaid .nodeLabel p,
