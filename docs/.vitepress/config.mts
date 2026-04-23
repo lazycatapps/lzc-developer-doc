@@ -88,6 +88,7 @@ const zhLocaleThemeConfig = {
       items: [
         { text: "路由规则", link: "/advanced-route.md" },
         { text: "应用多域名", link: "/advanced-secondary-domains.md" },
+        { text: "应用间访问", link: "/advanced-app-interconnect.md" },
         { text: "独立鉴权", link: "/advanced-public-api.md" },
         { text: "HTTP Headers", link: "/http-request-headers.md" },
         { text: "对接 OIDC ", link: "/advanced-oidc.html" },
