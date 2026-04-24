@@ -18,6 +18,7 @@
 ├── content.tar | content.tar.gz
 ├── images/
 ├── images.lock
+├── exports/
 └── META/
 ```
 
@@ -31,7 +32,9 @@
    - 可选的内容归档；如果未配置 `contentdir`，可以不存在。
 4. `images/` 与 `images.lock`
    - LPK v2 的 embed image 数据。
-5. `META/`
+5. `exports/`
+   - 可选；LPK 导出的静态资源。
+6. `META/`
    - 归档元信息。
 
 ## 2. `manifest.yml`
@@ -83,6 +86,8 @@ homepage: https://example.com
 min_os_version: 1.0.0
 unsupported_platforms:
   - ios
+import_resources:
+  - kind: skills
 ```
 
 规则：
@@ -91,6 +96,7 @@ unsupported_platforms:
 2. LPK v1（zip 格式）仍兼容旧布局，允许这些静态字段继续留在 `manifest.yml`。
 3. 新项目应统一把静态字段放在 `package.yml`。
 4. `locales` 语义不变，只是从 `manifest.yml` 迁移到 `package.yml`。
+5. `import_resources` 用于声明当前 LPK 希望在运行时导入的资源类型。
 
 ## 4. `content.tar` / `content.tar.gz`
 
@@ -117,3 +123,22 @@ unsupported_platforms:
 3. `lzc-os/pkgm` 安装 V1/V2 后，运行目录 `/lzcsys/data/system/pkgm/run/<deploy_id>/pkg/` 会统一按 V2 结构落盘：
    - `manifest.yml` 只保留运行结构
    - `package.yml` 保存静态元数据
+
+## 7. Resource Export
+
+LPK 可以通过固定路径导出静态资源：
+
+```text
+exports/<kind>/<resource-id>/...
+```
+
+规则：
+
+1. `exports/` 是 LPK 内唯一的资源导出根目录。
+2. `exports/<kind>/<resource-id>/` 整个目录就是该资源的 `payload`。
+3. 系统只感知 `kind`、`resource-id` 与 `payload`。
+4. 当前 LPK 需要消费哪些资源类型，由 `package.yml` 中的 `import_resources` 声明。
+5. 运行时导入目录固定为 `/lzcapp/run/resources/<kind>/<package-id>/<resource-id>/...`。
+6. 对应的 digest 元数据固定为 `/lzcapp/run/resources/.digest/<kind>/...`。
+
+详细规则见 [LPK Resource Export 规范](./resource-export.md)。

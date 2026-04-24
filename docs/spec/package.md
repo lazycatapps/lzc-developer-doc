@@ -40,6 +40,7 @@
 | `unsupported_platforms` | `[]string` | 可选；不支持的平台列表 |
 | `locales` | `map[string]PackageLocaleConfig` | 可选；多语言元数据 |
 | `permissions` | `PermissionsConfig` | 可选；开发者声明的权限需求范围 |
+| `import_resources` | `[]ImportResourceConfig` | 可选；声明当前 LPK 需要导入的资源类型 |
 
 说明：
 
@@ -174,6 +175,9 @@ locales:
   en-US:
     name: Demo App
     description: Demo application
+import_resources:
+  - kind: skills
+  - kind: mcp-providers
 permissions:
   required:
     - net.internet
@@ -184,3 +188,32 @@ permissions:
     - device.dri.render
     - power.shutdown.inhibit
 ```
+
+## 八、`import_resources`
+
+`import_resources` 用于声明当前 LPK 希望在运行时导入哪些资源类型。
+
+结构如下：
+
+```yml
+import_resources:
+  - kind: skills
+  - kind: mcp-providers
+```
+
+当前 `ImportResourceConfig` 字段如下：
+
+| 字段名 | 类型 | 描述 |
+| ---- | ---- | ---- |
+| `kind` | `string` | 必填；资源类型 |
+
+规则：
+
+1. `import_resources` 是可选字段。
+2. 当前每个列表项只定义 `kind`。
+3. 同一个 `kind` 只能声明一次。
+4. 系统将已安装 LPK 中对应 `kind` 的资源只读投影到：
+   - `/lzcapp/run/resources/<kind>/<package-id>/<resource-id>/...`
+5. 当前版本不定义过滤条件、自定义路径或自定义投影格式。
+
+详细规则见 [LPK Resource Export 规范](./resource-export.md)。
