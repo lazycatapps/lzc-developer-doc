@@ -39,6 +39,7 @@
 | `envs` | `[]string` | 可选；构建期变量列表，支持 `KEY=VALUE` 字符串数组 |
 | `images` | `map[string]ImageBuildConfig` | Dockerfile 镜像构建配置，用于产出 `embed:<alias>` 镜像引用 |
 | `compose_override` | `ComposeOverrideConfig` | 高级 compose override 配置，**需要更新 lzc-os 版本 >= v1.3.0** |
+| `resource_exports` | `[]ResourceExportConfig` | 可选；资源导出配置，详见 [资源导出配置 `ResourceExportConfig`](#resource-exports) |
 
 ### 2.2 文件组织约定 {#file-layout}
 
@@ -182,3 +183,79 @@ application:
 2. compose override 属于 lzcos v1.3.0+ 后，针对一些 lpk 规范目前无法覆盖到的运行权限需求的配置。
 
 详情见 [compose override](../advanced-compose-override.md)
+
+## 七、资源导出配置 `ResourceExportConfig` {#resource-exports}
+
+`resource_exports` 用于声明应用在构建时需要导出的资源类别。配置项包含 `kind` 与本地源目录，`lzc-cli` 会在构建时自动把源目录展开到 LPK 内部标准布局 `exports/<kind>/<resource-id>/...`。
+
+### 7.1 字段说明
+
+| 字段名 | 类型 | 描述 |
+| ---- | ---- | ---- |
+| `kind` | `string` | 必填。资源类别名称，例如 `skills`、`mcp` |
+| `source` | `string` | 必填。资源源目录路径 |
+
+### 7.2 展开规则
+
+1. `source` 必须指向一个目录。
+2. `source` 下的每个一级子目录都会被视为一个 `resource-id`。
+3. 每个 `resource-id` 目录中的全部内容都会被原样打包到 LPK 内。
+4. 最终打包布局固定为 `exports/<kind>/<resource-id>/...`。
+
+例如：
+
+```yml
+resource_exports:
+  - kind: skills
+    source: ./resources/skills
+  - kind: mcp
+    source: ./resources/mcp
+```
+
+如果项目目录为：
+
+```text
+resources/
+  skills/
+    summarize/
+      skill.yaml
+      prompt.txt
+    translate/
+      skill.yaml
+  mcp/
+    filesystem/
+      manifest.json
+```
+
+则构建进入 LPK 后的布局为：
+
+```text
+exports/
+  skills/
+    summarize/
+      skill.yaml
+      prompt.txt
+    translate/
+      skill.yaml
+  mcp/
+    filesystem/
+      manifest.json
+```
+
+### 7.3 校验规则
+
+构建时需要执行以下校验，任一失败都应直接报错并中止构建：
+
+1. `kind` 必须是合法资源名称。
+2. `source` 必须存在且必须是目录。
+3. 同一个 `lzc-build.yml` 中不允许重复声明同一个 `kind`。
+4. `source` 下不能直接存在文件，一级子项必须全部为目录。
+5. `source` 下每个一级子目录名都必须是合法 `resource-id`。
+6. 每个一级子目录中必须至少包含一个实际 payload 文件。
+7. 单个 LPK 最多允许声明 100 个 `kind`。
+
+### 7.4 设计说明
+
+1. `kind` 表示资源类别，例如 consumer 通过 [package.yml 的 `import_resources`](./package.md#import_resources) 导入 `skills` 或 `mcp`。
+2. `resource-id` 不需要在 `lzc-build.yml` 中显式声明，而是从 `source` 下的一级子目录名自动推导。
+3. 最终产物布局仍然是 `exports/<kind>/<resource-id>/...`。

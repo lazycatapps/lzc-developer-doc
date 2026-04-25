@@ -189,7 +189,7 @@ permissions:
     - power.shutdown.inhibit
 ```
 
-## 八、`import_resources`
+## 八、`import_resources` {#import_resources}
 
 `import_resources` 用于声明当前 LPK 希望在运行时导入哪些资源类型。
 
@@ -214,6 +214,8 @@ import_resources:
 3. 同一个 `kind` 只能声明一次。
 4. 系统将已安装 LPK 中对应 `kind` 的资源只读投影到：
    - `/lzcapp/run/resources/<kind>/<package-id>/<resource-id>/...`
-5. 当前版本不定义过滤条件、自定义路径或自定义投影格式。
+5. 对应的 digest 元数据固定暴露到：
+   - `/lzcapp/run/resources/.digest/<kind>/summary`
+   - `/lzcapp/run/resources/.digest/<kind>/<package-id>/<resource-id>/digest`
 
 详细规则见 [LPK Resource Export 规范](./resource-export.md)。

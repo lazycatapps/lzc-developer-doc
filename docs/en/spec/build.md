@@ -37,6 +37,7 @@ Recommended command defaults:
 | `envs` | `[]string` | Optional build-time variable list using `KEY=VALUE` strings |
 | `images` | `map[string]ImageBuildConfig` | Dockerfile-based image build config for `embed:<alias>` |
 | `compose_override` | `ComposeOverrideConfig` | Advanced compose override config, requires `lzc-os >= v1.3.0` |
+| `resource_exports` | `[]ResourceExportConfig` | Optional resource export config. See [Resource export `ResourceExportConfig`](#resource-exports) |
 
 ### 2.2 Recommended file layout {#file-layout}
 
@@ -169,3 +170,79 @@ The key of `images` is the alias referenced by `embed:<alias>` in `lzc-manifest.
 2. It is intended for runtime permissions or compose fields that are not yet covered by the current LPK spec.
 
 See [compose override](../advanced-compose-override.md).
+
+## 7. Resource export `ResourceExportConfig` {#resource-exports}
+
+`resource_exports` declares resource categories that should be exported during build. The config contains `kind` and the local source directory. `lzc-cli` expands the source directory into the standard LPK layout `exports/<kind>/<resource-id>/...` during build.
+
+### 7.1 Fields
+
+| Field | Type | Description |
+| ---- | ---- | ---- |
+| `kind` | `string` | Required resource category name, for example `skills` or `mcp` |
+| `source` | `string` | Required path to the resource source directory |
+
+### 7.2 Expansion rules
+
+1. `source` must point to a directory.
+2. Each first-level subdirectory under `source` is treated as one `resource-id`.
+3. All contents inside each `resource-id` directory are packaged as-is into the LPK.
+4. The final package layout is always `exports/<kind>/<resource-id>/...`.
+
+Example:
+
+```yml
+resource_exports:
+  - kind: skills
+    source: ./resources/skills
+  - kind: mcp
+    source: ./resources/mcp
+```
+
+If the project directory is:
+
+```text
+resources/
+  skills/
+    summarize/
+      skill.yaml
+      prompt.txt
+    translate/
+      skill.yaml
+  mcp/
+    filesystem/
+      manifest.json
+```
+
+Then the resulting LPK layout becomes:
+
+```text
+exports/
+  skills/
+    summarize/
+      skill.yaml
+      prompt.txt
+    translate/
+      skill.yaml
+  mcp/
+    filesystem/
+      manifest.json
+```
+
+### 7.3 Validation rules
+
+The build process must run the following validations. Any failure should stop the build immediately with an error:
+
+1. `kind` must be a valid resource name.
+2. `source` must exist and must be a directory.
+3. The same `kind` must not be declared more than once in one `lzc-build.yml`.
+4. Files must not exist directly under `source`; all first-level entries must be directories.
+5. Every first-level subdirectory name under `source` must be a valid `resource-id`.
+6. Every first-level subdirectory must contain at least one actual payload file.
+7. A single LPK can declare at most 100 `kind` values.
+
+### 7.4 Design notes
+
+1. `kind` represents the resource category, for example a consumer imports `skills` or `mcp` through `import_resources` in `package.yml`.
+2. `resource-id` does not need to be declared explicitly in `lzc-build.yml`; it is inferred from the first-level subdirectory names under `source`.
+3. The final package layout remains `exports/<kind>/<resource-id>/...`.
