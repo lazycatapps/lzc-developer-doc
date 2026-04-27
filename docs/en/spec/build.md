@@ -179,7 +179,7 @@ See [compose override](../advanced-compose-override.md).
 
 | Field | Type | Description |
 | ---- | ---- | ---- |
-| `kind` | `string` | Required resource category name, for example `skills` or `mcp` |
+| `kind` | `string` | Required resource category name, for example `skills` or `mcp-providers` |
 | `source` | `string` | Required path to the resource source directory |
 
 ### 7.2 Expansion rules
@@ -195,8 +195,8 @@ Example:
 resource_exports:
   - kind: skills
     source: ./resources/skills
-  - kind: mcp
-    source: ./resources/mcp
+  - kind: mcp-providers
+    source: ./resources/mcp-providers
 ```
 
 If the project directory is:
@@ -209,7 +209,7 @@ resources/
       prompt.txt
     translate/
       skill.yaml
-  mcp/
+  mcp-providers/
     filesystem/
       manifest.json
 ```
@@ -224,7 +224,7 @@ exports/
       prompt.txt
     translate/
       skill.yaml
-  mcp/
+  mcp-providers/
     filesystem/
       manifest.json
 ```
@@ -243,6 +243,6 @@ The build process must run the following validations. Any failure should stop th
 
 ### 7.4 Design notes
 
-1. `kind` represents the resource category, for example a consumer imports `skills` or `mcp` through `import_resources` in `package.yml`.
+1. `kind` represents the resource category, for example a consumer imports `skills` or `mcp-providers` through `import_resources` in `package.yml`.
 2. `resource-id` does not need to be declared explicitly in `lzc-build.yml`; it is inferred from the first-level subdirectory names under `source`.
 3. The final package layout remains `exports/<kind>/<resource-id>/...`.

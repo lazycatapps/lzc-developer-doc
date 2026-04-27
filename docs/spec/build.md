@@ -192,7 +192,7 @@ application:
 
 | 字段名 | 类型 | 描述 |
 | ---- | ---- | ---- |
-| `kind` | `string` | 必填。资源类别名称，例如 `skills`、`mcp` |
+| `kind` | `string` | 必填。资源类别名称，例如 `skills`、`mcp-providers` |
 | `source` | `string` | 必填。资源源目录路径 |
 
 ### 7.2 展开规则
@@ -208,8 +208,8 @@ application:
 resource_exports:
   - kind: skills
     source: ./resources/skills
-  - kind: mcp
-    source: ./resources/mcp
+  - kind: mcp-providers
+    source: ./resources/mcp-providers
 ```
 
 如果项目目录为：
@@ -222,7 +222,7 @@ resources/
       prompt.txt
     translate/
       skill.yaml
-  mcp/
+  mcp-providers/
     filesystem/
       manifest.json
 ```
@@ -237,7 +237,7 @@ exports/
       prompt.txt
     translate/
       skill.yaml
-  mcp/
+  mcp-providers/
     filesystem/
       manifest.json
 ```
@@ -256,6 +256,6 @@ exports/
 
 ### 7.4 设计说明
 
-1. `kind` 表示资源类别，例如 consumer 通过 [package.yml 的 `import_resources`](./package.md#import_resources) 导入 `skills` 或 `mcp`。
+1. `kind` 表示资源类别，例如 consumer 通过 [package.yml 的 `import_resources`](./package.md#import_resources) 导入 `skills` 或 `mcp-providers`。
 2. `resource-id` 不需要在 `lzc-build.yml` 中显式声明，而是从 `source` 下的一级子目录名自动推导。
 3. 最终产物布局仍然是 `exports/<kind>/<resource-id>/...`。
