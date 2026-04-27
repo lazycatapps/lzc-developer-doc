@@ -37,7 +37,7 @@ Recommended command defaults:
 | `envs` | `[]string` | Optional build-time variable list using `KEY=VALUE` strings |
 | `images` | `map[string]ImageBuildConfig` | Dockerfile-based image build config for `embed:<alias>` |
 | `compose_override` | `ComposeOverrideConfig` | Advanced compose override config, requires `lzc-os >= v1.3.0` |
-| `resource_exports` | `[]ResourceExportConfig` | Optional resource export config. See [Resource export `ResourceExportConfig`](#resource-exports) |
+| `resource_exports` | `[]ResourceExportConfig` | Optional resource export config. Requires `lzcos >= v1.5.2`. See [Resource export `ResourceExportConfig`](#resource-exports) |
 
 ### 2.2 Recommended file layout {#file-layout}
 
@@ -175,6 +175,8 @@ See [compose override](../advanced-compose-override.md).
 
 `resource_exports` declares resource categories that should be exported during build. The config contains `kind` and the local source directory. `lzc-cli` expands the source directory into the standard LPK layout `exports/<kind>/<resource-id>/...` during build.
 
+This feature requires `lzcos >= v1.5.2`.
+
 ### 7.1 Fields
 
 | Field | Type | Description |
@@ -205,13 +207,12 @@ If the project directory is:
 resources/
   skills/
     summarize/
-      skill.yaml
-      prompt.txt
+      SKILL.md
     translate/
-      skill.yaml
+      SKILL.md
   mcp-providers/
     filesystem/
-      manifest.json
+      mcp.yml
 ```
 
 Then the resulting LPK layout becomes:
@@ -220,13 +221,12 @@ Then the resulting LPK layout becomes:
 exports/
   skills/
     summarize/
-      skill.yaml
-      prompt.txt
+      SKILL.md
     translate/
-      skill.yaml
+      SKILL.md
   mcp-providers/
     filesystem/
-      manifest.json
+      mcp.yml
 ```
 
 ### 7.3 Validation rules

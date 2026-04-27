@@ -7,6 +7,8 @@
 
 ## 给 agent 接入 Skill / MCP
 
+该能力要求 `lzcos >= v1.5.2`。
+
 应用要读取微服里的 Skill / MCP，先在 [`package.yml#import_resources`](./spec/package.md#import_resources) 中导入这两类资源：
 
 ```yml

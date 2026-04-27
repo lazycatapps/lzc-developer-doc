@@ -6,7 +6,8 @@
 
 1. 本文只定义静态资源的发现、聚合与运行时投影。
 2. 本文不定义应用间访问、鉴权、授权、网络路由或资源内容本身的业务语义。
-3. LZCOS 在该机制中只感知 `kind`、`resource id` 与 `payload`，不感知具体资源类型的业务字段。
+3. 本机制要求 `lzcos >= v1.5.2`。
+4. LZCOS 在该机制中只感知 `kind`、`resource id` 与 `payload`，不感知具体资源类型的业务字段。
 
 ## 1. 基本概念
 
@@ -46,7 +47,7 @@ LPK 内所有可导出资源统一放在 `exports/` 下：
 
 ```text
 exports/skills/todo-assistant/SKILL.md
-exports/mcp-providers/default/provider.yml
+exports/mcp-providers/default/mcp.yml
 exports/browser-extensions/ublock-origin/manifest.json
 ```
 
@@ -65,10 +66,9 @@ exports/browser-extensions/ublock-origin/manifest.json
 
 规则：
 
-1. 只能使用小写字母、数字和中划线。
-2. 必须以小写字母开头。
-3. 必须以小写字母或数字结尾。
-4. 长度应为 1 到 32 个字符。
+1. 不能为空。
+2. 不能以 `.` 开头。
+3. 只能使用小写字母、数字、点号、下划线和中划线。
 
 示例：
 
@@ -84,11 +84,9 @@ browser-extensions
 
 规则：
 
-1. 只能使用小写字母、数字、点号、下划线和中划线。
-2. 必须以小写字母或数字开头。
-3. 必须以小写字母或数字结尾。
-4. 长度应为 1 到 64 个字符。
-5. `.` 与 `..` 是保留名称，不可使用。
+1. 不能为空。
+2. 不能以 `.` 开头。
+3. 只能使用小写字母、数字、点号、下划线和中划线。
 
 ## 5. `import_resources`
 
@@ -146,7 +144,7 @@ import_resources:
 /lzcapp/run/resources/skills/cloud.lazycat.app.todo/todo-assistant/SKILL.md
 /lzcapp/run/resources/.digest/mcp-providers/summary
 /lzcapp/run/resources/.digest/mcp-providers/cloud.lazycat.app.todo/default/digest
-/lzcapp/run/resources/mcp-providers/cloud.lazycat.app.todo/default/provider.yml
+/lzcapp/run/resources/mcp-providers/cloud.lazycat.app.todo/default/mcp.yml
 /lzcapp/run/resources/.digest/browser-extensions/summary
 /lzcapp/run/resources/.digest/browser-extensions/cloud.lazycat.browser.adblock/ublock-origin/digest
 /lzcapp/run/resources/browser-extensions/cloud.lazycat.browser.adblock/ublock-origin/manifest.json

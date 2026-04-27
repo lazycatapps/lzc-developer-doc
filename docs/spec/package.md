@@ -7,8 +7,9 @@
 说明：
 
 1. 本文描述的 `package.yml` 新流程以 `lzcos v1.5.0+` 为前提。
-2. 如需实际构建对应的 `LPK v2` 包，请配合 `lzc-cli v2.0.0+`。
-3. 当前 `permissions` 只定义微服侧权限，不包含客户端权限，也不包含资源配额。
+2. `import_resources` 要求 `lzcos >= v1.5.2`。
+3. 如需实际构建对应的 `LPK v2` 包，请配合 `lzc-cli v2.0.0+`。
+4. 当前 `permissions` 只定义微服侧权限，不包含客户端权限，也不包含资源配额。
 
 自 LPK v2 起，以下静态字段应统一放在 `package.yml`，不再写到 `lzc-manifest.yml` 顶层：
 

@@ -39,7 +39,7 @@
 | `envs` | `[]string` | 可选；构建期变量列表，支持 `KEY=VALUE` 字符串数组 |
 | `images` | `map[string]ImageBuildConfig` | Dockerfile 镜像构建配置，用于产出 `embed:<alias>` 镜像引用 |
 | `compose_override` | `ComposeOverrideConfig` | 高级 compose override 配置，**需要更新 lzc-os 版本 >= v1.3.0** |
-| `resource_exports` | `[]ResourceExportConfig` | 可选；资源导出配置，详见 [资源导出配置 `ResourceExportConfig`](#resource-exports) |
+| `resource_exports` | `[]ResourceExportConfig` | 可选；资源导出配置，要求 `lzcos >= v1.5.2`，详见 [资源导出配置 `ResourceExportConfig`](#resource-exports) |
 
 ### 2.2 文件组织约定 {#file-layout}
 
@@ -188,6 +188,8 @@ application:
 
 `resource_exports` 用于声明应用在构建时需要导出的资源类别。配置项包含 `kind` 与本地源目录，`lzc-cli` 会在构建时自动把源目录展开到 LPK 内部标准布局 `exports/<kind>/<resource-id>/...`。
 
+该能力要求 `lzcos >= v1.5.2`。
+
 ### 7.1 字段说明
 
 | 字段名 | 类型 | 描述 |
@@ -218,13 +220,12 @@ resource_exports:
 resources/
   skills/
     summarize/
-      skill.yaml
-      prompt.txt
+      SKILL.md
     translate/
-      skill.yaml
+      SKILL.md
   mcp-providers/
     filesystem/
-      manifest.json
+      mcp.yml
 ```
 
 则构建进入 LPK 后的布局为：
@@ -233,13 +234,12 @@ resources/
 exports/
   skills/
     summarize/
-      skill.yaml
-      prompt.txt
+      SKILL.md
     translate/
-      skill.yaml
+      SKILL.md
   mcp-providers/
     filesystem/
-      manifest.json
+      mcp.yml
 ```
 
 ### 7.3 校验规则

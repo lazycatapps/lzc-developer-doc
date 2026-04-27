@@ -120,6 +120,7 @@ const zhLocaleThemeConfig = {
       text: "专题",
       items: [
         { text: "免密登录", link: "/advanced-inject-passwordless-login.md" },
+        { text: "Skill / MCP 规范", link: "/resource-skill-mcp.md" },
       ],
     },
     {
