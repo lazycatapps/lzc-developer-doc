@@ -27,16 +27,10 @@ import_resources:
 在微服里，agent 接入 Skill / MCP 的起点是系统内置的：
 
 ```text
-lazycat-local-resource.skill
+/lzcsys/run/pkgm/resources/skills/system/lazycat-local-resource.skill/SKILL.md
 ```
 
-它会和其他 Skill 一样，出现在：
-
-```text
-/lzcapp/run/resources/skills/*/lazycat-local-resource.skill/SKILL.md
-```
-
-agent 只需要在 `skills` 目录里找到这份 `SKILL.md` 并优先读取它。
+agent 只需要优先读取这份 `SKILL.md`。
 
 这份 Skill 负责告诉 agent：
 
@@ -137,10 +131,10 @@ demo-app/
   lzc-build.yml
   resources/
     skills/
-      todo-assistant/
+      <resource-id>/
         SKILL.md
     mcp-providers/
-      default/
+      <resource-id>/
         mcp.yml
 ```
 
@@ -160,6 +154,20 @@ resource_exports:
     source: ./resources/skills
   - kind: mcp-providers
     source: ./resources/mcp-providers
+```
+
+这里 `source` 指向的是资源类别目录。构建时，`source` 下的每个一级子目录都会作为一个 `resource-id`，`SKILL.md` 应放在 `resources/skills/<resource-id>/` 下，`mcp.yml` 应放在 `resources/mcp-providers/<resource-id>/` 下。
+
+例如：
+
+```text
+resources/
+  skills/
+    todo-assistant/
+      SKILL.md
+  mcp-providers/
+    default/
+      mcp.yml
 ```
 
 ### 提供 Skill
