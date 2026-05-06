@@ -60,6 +60,8 @@
 | `environment` | `map[string]string \| []string` | `app` 容器的环境变量，支持 map 或 list 形式 |
 | `health_check` | `AppHealthCheckExt` | `app` 容器的健康检测， 仅建议在开发调试阶段设置 `disable` 字段， 不建议进行替换， 否则系统默认注入的自动依赖检测逻辑会丢失 |
 | `oidc_redirect_path` | `string` | 合法的 OIDC redirect path，完整域名会自动根据 subdomain 进行拼接 |
+| `user` | `string` | `app` 容器运行用户，语法与 Docker Compose `user` 一致，可使用 UID、UID:GID、用户名或用户名:组名 |
+| `run_as` | `string \| int` | `app` 容器运行的数字 UID/GID，同时启用 `/lzcapp` 持久目录的 owner 映射。格式见 4.5 |
 
 提示：`routes` 在转发时默认会去掉路径前缀。如需保留前缀，请使用 `upstreams` 并设置 `disable_trim_location: true`（lzcos v1.3.9+）。
 
@@ -96,6 +98,43 @@
 | `params` | `map[string]any` | 传递给脚本的参数 |
 
 更多说明（阶段执行环境、`ctx` helper、内置脚本、排查与实践）见：[脚本注入（injects）](../advanced-injects.md)。
+
+### 4.5 `run_as` 配置 {#run_as}
+
+说明：`run_as` 需要 `lzcos v1.6.0+`。
+
+`run_as` 用于声明容器内主进程使用的数字 UID/GID，并让系统按同一身份映射 `/lzcapp` 下的持久目录 owner。
+
+支持格式：
+
+| 写法 | 含义 |
+| ---- | ---- |
+| `1000` | 使用 UID `1000`，GID 同样为 `1000` |
+| `"1000:1000"` | 使用 UID `1000`、GID `1000` |
+
+规则：
+
+1. `run_as` 只接受数字 UID/GID，不接受用户名或组名。
+2. `application.run_as` 不得与 `application.user` 同时使用。
+3. `services.<name>.run_as` 不得与同一 service 的 `user` 或 `setup_script` 同时使用。
+4. `application.run_as` 只作用于内置 `app` service；不会自动作用到 `services` 中未声明 `run_as` 的其他 service。
+5. 每个 service 可以单独声明自己的 `run_as`。不同 service 声明不同 UID/GID 时，会分别获得与自身身份一致的 `/lzcapp` 持久目录视图。
+6. 使用 `run_as` 后，容器内看到的 `/lzcapp/document`、`/lzcapp/documents/<uid>`、`/lzcapp/var`、`/lzcapp/cache` 会按声明的 UID/GID 暴露 owner。容器内该 UID/GID 创建的新文件也会保持同一 owner 语义。
+7. `/lzcapp/run` 是运行态目录，系统保证声明了 `run_as` 的容器仍可写入该目录。
+8. 如果继续使用 `user` 字段，则只调整容器进程用户，不启用上述 `/lzcapp` 持久目录 owner 映射。
+
+示例：
+
+```yml
+application:
+  subdomain: demo
+  run_as: "1000:1000"
+
+services:
+  worker:
+    image: registry.lazycat.cloud/lzc/lzcapp:3.20.3
+    run_as: "2000:2000"
+```
 
 ## 五、 `HealthCheckConfig` 配置
 ### 5.1 AppHealthCheckExt
@@ -147,6 +186,7 @@
 | `depends_on` | `[]string` | 依赖的其他容器服务(app这个名字除外)， 仅支持本应用内的其他服务， 且强制检测类型为 `healthly` 可选 |
 | `healthcheck` | `*HealthCheckConfig` | 容器的健康检测策略, 老版本`health_check`已被废弃 |
 | `user` | `*string` | 容器运行的 UID 或 username， 可选 |
+| `run_as` | `string \| int` | 容器运行的数字 UID/GID，同时启用 `/lzcapp` 持久目录的 owner 映射。格式见 4.5 |
 | `cpu_shares` | `int64` | CPU 份额 |
 | `cpus` | `float32` | CPU 核心数 |
 | `mem_limit`| `string\|int` | 容器的内存上限 |
