@@ -85,9 +85,9 @@ application:
         - src: builtin://simple-inject-password
           params:
             # Fixed username from deploy params
-            user: "{{ index .U \"login_user\" }}"
+            user: '{{ index .U "login_user" }}'
             # Initial random password from deploy params
-            password: "{{ index .U \"login_password\" }}"
+            password: '{{ index .U "login_password" }}'
 ```
 
 Verification

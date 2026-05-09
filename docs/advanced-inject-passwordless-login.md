@@ -89,9 +89,9 @@ application:
         - src: builtin://simple-inject-password
           params:
             # 从部署参数渲染得到固定用户名
-            user: "{{ index .U \"login_user\" }}"
+            user: '{{ index .U "login_user" }}'
             # 从部署参数渲染得到随机初始密码
-            password: "{{ index .U \"login_password\" }}"
+            password: '{{ index .U "login_password" }}'
 ```
 
 验证
