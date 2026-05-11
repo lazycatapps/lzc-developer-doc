@@ -46,7 +46,11 @@ Please note that even if guides are not eligible for rewards, as long as the con
 Of course, some types of applications are temporarily not within the reward scope, such as pure web games, pure book pages, pure tutorial websites, web offline applications, different mods of game servers, or pure database software.
 If developers feel these applications are necessary, everyone is welcome to upload them to the app store.
 
-#### 6. Application Types That Cannot Be Listed in the App Store
+
+#### 6. Totoro Skill Launch
+To ensure the quality and security of Little Totoro Skills (many Skills online are known to steal user data), the Skill review process will be exceptionally strict. Skills that are not high enough in quality or lack sufficient utility will not pass review. There will be no incentives at the time of Skill launch. The official team will provide retroactive incentives for reviewed and approved Skills based on download numbers at a later stage.
+
+#### 7. Application Types That Cannot Be Listed in the App Store
 Currently, pornography, gambling, drugs, airdrops, cracked software, or software that violates Chinese laws cannot be listed in the app store.
 
 ::: warning
