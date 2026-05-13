@@ -73,10 +73,10 @@ lzc-cli box default
 3. 如果你在 WSL/LightOS 等环境中开发，可使用 SSH 方式添加目标微服：
 
 ```bash
-lzc-cli box add-by-ssh <loginUser> <address>
+lzc-cli box add-by-ssh root <微服局域网IP>
 ```
 
-该方案需要目标微服已开通 SSH 功能。
+该方案需要目标微服已开通 SSH 功能。`<微服局域网IP>` 必须填写微服的局域网 IP 地址，不要填写域名。
 
 ## 6. 上传公钥到开发者工具（仅首次）
 

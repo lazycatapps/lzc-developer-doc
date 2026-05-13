@@ -52,10 +52,10 @@ Notes:
 3. In WSL/LightOS-like environments, you can add target via SSH:
 
 ```bash
-lzc-cli box add-by-ssh <loginUser> <address>
+lzc-cli box add-by-ssh root <Lazycat Microserver LAN IP>
 ```
 
-This requires SSH to be enabled on target microservice.
+This requires SSH to be enabled on target Lazycat Microserver. `<Lazycat Microserver LAN IP>` must be the LAN IP address. Do not use a domain name.
 
 ### 5. Upload public key to Developer Tool (first time for hclient mode only) {#step-upload-public-key}
 
@@ -67,7 +67,7 @@ lzc-cli box add-public-key
 
 The command prints an authorization URL. Open it in browser and finish authorization.
 
-If your target is added with `lzc-cli box add-by-ssh <loginUser> <address>`, skip this step.  
+If your target is added with `lzc-cli box add-by-ssh root <Lazycat Microserver LAN IP>`, skip this step.  
 `add-by-ssh` mode does not need and cannot use `lzc-cli box add-public-key`.
 
 ### 6. Create local workspace directory {#step-create-workspace}

@@ -52,10 +52,10 @@ lzc-cli box default
 3. 如果你在 WSL/LightOS 等环境中开发，可使用 SSH 方式添加目标微服：
 
 ```bash
-lzc-cli box add-by-ssh <loginUser> <address>
+lzc-cli box add-by-ssh root <微服局域网IP>
 ```
 
-该方案需要目标微服已开通 SSH 功能。
+该方案需要目标微服已开通 SSH 功能。`<微服局域网IP>` 必须填写微服的局域网 IP 地址，不要填写域名。
 
 ### 5. 上传公钥到开发者工具（仅 hclient 接入模式首次） {#step-upload-public-key}
 
@@ -67,7 +67,7 @@ lzc-cli box add-public-key
 
 执行后会输出一个授权链接，使用浏览器打开并完成授权。
 
-如果你是通过 `lzc-cli box add-by-ssh <loginUser> <address>` 添加的目标微服，请跳过这一步。  
+如果你是通过 `lzc-cli box add-by-ssh root <微服局域网IP>` 添加的目标微服，请跳过这一步。  
 `add-by-ssh` 模式不需要、也无法成功执行 `lzc-cli box add-public-key`。
 
 ### 6. 创建本地工作目录 {#step-create-workspace}
