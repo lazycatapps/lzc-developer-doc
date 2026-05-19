@@ -8,9 +8,10 @@
 
 1. 本文描述的 `package.yml` 新流程以 `lzcos v1.5.0+` 为前提。
 2. `import_resources` 要求 `lzcos >= v1.5.2`。
-3. `user.notify` 要求 `lzcos >= v1.6.0`。
-4. 如需实际构建对应的 `LPK v2` 包，请配合 `lzc-cli v2.0.0+`。
-5. 当前 `permissions` 只定义微服侧权限，不包含客户端权限，也不包含资源配额。
+3. `hidden_from_launcher` 要求 `lzcos >= v1.5.3`。
+4. `user.notify` 要求 `lzcos >= v1.6.0`。
+5. 如需实际构建对应的 `LPK v2` 包，请配合 `lzc-cli v2.0.0+`。
+6. 当前 `permissions` 只定义微服侧权限，不包含客户端权限，也不包含资源配额。
 
 自 LPK v2 起，以下静态字段应统一放在 `package.yml`，不再写到 `lzc-manifest.yml` 顶层：
 
@@ -22,9 +23,10 @@
 6. `license`
 7. `homepage`
 8. `admin_only`
-9. `min_os_version`
-10. `unsupported_platforms`
-11. `locales`
+9. `hidden_from_launcher`
+10. `min_os_version`
+11. `unsupported_platforms`
+12. `locales`
 
 ## 二、顶层数据结构 `PackageConfig`
 
@@ -38,6 +40,7 @@
 | `license` | `string` | 可选；许可证标识或链接 |
 | `homepage` | `string` | 可选；主页或反馈地址 |
 | `admin_only` | `bool` | 可选；是否仅管理员可见 |
+| `hidden_from_launcher` | `bool` | 可选；是否从启动器隐藏应用入口，要求 `lzcos >= v1.5.3`。该字段只影响启动器展示，不改变应用访问地址、权限或部署行为 |
 | `min_os_version` | `string` | 可选；要求的最低系统版本 |
 | `unsupported_platforms` | `[]string` | 可选；不支持的平台列表 |
 | `locales` | `map[string]PackageLocaleConfig` | 可选；多语言元数据 |
@@ -174,6 +177,7 @@ description: Demo application
 author: Demo Team
 license: MIT
 homepage: https://example.com
+hidden_from_launcher: true
 min_os_version: 1.2.3
 unsupported_platforms:
   - linux/386
