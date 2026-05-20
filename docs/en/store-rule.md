@@ -43,7 +43,7 @@ The following types of guides may pass review and be listed, but do not have suf
 Please note that even if guides are not eligible for rewards, as long as the content is accurate and meets basic standards, they can still be reviewed and listed. We encourage everyone to create high-quality content to receive rewards and help more users!
 
 #### 5. Application Types Not Eligible for Red Envelopes
-Of course, some types of applications are temporarily not within the reward scope, such as pure web games, pure book pages, pure tutorial websites, web offline applications, different mods of game servers, or pure database software.
+Of course, some types of applications are temporarily not within the reward scope, such as pure web games, pure book pages, pure tutorial websites, web offline applications, image hosting, navigation sites, bookmark managers, note-taking apps, online video streaming (MoonTV-derived), to-do list apps, URL shorteners, self-destructing message apps, MyTube-type apps (pulling YouTube content), VPN apps, expense trackers, different mods of game servers, or pure database software.
 If developers feel these applications are necessary, everyone is welcome to upload them to the app store.
 
 
@@ -52,6 +52,19 @@ To ensure the quality and security of Little Totoro Skills (many Skills online a
 
 #### 7. Application Types That Cannot Be Listed in the App Store
 Currently, pornography, gambling, drugs, airdrops, cracked software, or software that violates Chinese laws cannot be listed in the app store.
+
+#### 8. Subjective Standards for Application Review
+To build a high-quality app store, the subjective review standards for developer-submitted applications are clarified as follows:
+
+**Similar Application Review**: If a submitted application has a high degree of similarity with an application already listed in the store, the subjective review will adopt a more cautious approach and will in principle not approve it for listing; however, if the application has significant innovative features, or can effectively address needs that existing applications cannot meet, it may be approved on a case-by-case basis.
+
+**Feature and Interface Quality Review**: Applications with overly simplistic features, no practical utility, or a rough frontend interface will not pass subjective review and will not be listed, as the overall quality does not meet the standard.
+
+**Localization Requirements**: Applications that provide only a pure English interface or English documentation without necessary localization support will not be listed.
+
+**Complex Feature Application Review**: For applications with complex features but lacking detailed guides or documentation, developers must supplement complete user guides or operational walkthroughs before they can be listed after re-review.
+
+**Other unclarified situations**: The final interpretation of review results belongs to the Lazycat MicroServer team.
 
 ::: warning
 Additional note: For applications that require usernames and passwords, if regular users cannot obtain corresponding credentials in the Lazycat store, they cannot be listed in the Lazycat store.
