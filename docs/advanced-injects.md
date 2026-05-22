@@ -10,7 +10,7 @@
 
 - 密码填充与自动登录：见 [免密登录](./advanced-inject-passwordless-login.md)。
 - CORS/CSP 微调：按路径精确增删响应头，适配 iframe、前端调试等场景。
-- 替换浏览器文件对话框到懒猫网盘：拦截前端交互并接入自定义文件选择流程。
+- 替换浏览器文件对话框到懒猫网盘：见 [自动拦截文件选择器](./lazycat-file-picker-auto-intercept.md)。
 - 隐藏或修改部分页面元素：在不改上游源码的前提下做 UI 适配和运营开关。
 - 高级路由：在 request/response 阶段结合 `ctx.proxy` 做动态反向代理。
 - 请求头/响应头兼容修正：例如补充鉴权头、修正 WebSocket 相关头、清理冲突头。

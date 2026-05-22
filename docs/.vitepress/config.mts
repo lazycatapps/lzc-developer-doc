@@ -120,6 +120,10 @@ const zhLocaleThemeConfig = {
       text: "专题",
       items: [
         { text: "免密登录", link: "/advanced-inject-passwordless-login.md" },
+        {
+          text: "自动拦截文件选择器",
+          link: "/lazycat-file-picker-auto-intercept.md",
+        },
         { text: "Skill / MCP 规范", link: "/resource-skill-mcp.md" },
       ],
     },
@@ -268,6 +272,10 @@ const enLocaleThemeConfig = {
         {
           text: "Passwordless Login",
           link: "/en/advanced-inject-passwordless-login.md",
+        },
+        {
+          text: "Auto Intercept With FilePicker",
+          link: "/en/lazycat-file-picker-auto-intercept.md",
         },
       ],
     },

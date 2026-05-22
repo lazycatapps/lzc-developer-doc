@@ -10,7 +10,7 @@ If you want ready-to-use request inject patterns for development, continue with 
 
 - Password autofill and auto-login: see [Passwordless Login](./advanced-inject-passwordless-login.md).
 - CORS/CSP fine tuning: add/remove response headers on specific routes.
-- Replace browser file dialog with Lazycat storage flow.
+- Replace browser file dialog with LazyCat storage flow: see [Auto Intercept With FilePicker](./lazycat-file-picker-auto-intercept.md).
 - Hide or modify specific page elements without upstream source changes.
 - Advanced routing: dynamic reverse proxy control via `ctx.proxy`.
 - Request/response compatibility fixes (headers, WebSocket details, etc.).
