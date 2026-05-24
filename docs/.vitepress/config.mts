@@ -289,7 +289,13 @@ const enLocaleThemeConfig = {
     },
     {
       text: "Lazycat Ecosystem",
-      items: [{ text: "Official Extensions", link: "/en/extensions.md" }],
+      items: [
+        { text: "Official Extensions", link: "/en/extensions.md" },
+        {
+          text: "Application Client Capabilities",
+          link: "/en/advanced-frontend-app-dev.md",
+        },
+      ],
     },
     {
       text: "FAQ",
