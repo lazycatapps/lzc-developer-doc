@@ -1,10 +1,10 @@
-# 客户端能力前端接入文档
+# Application Client Capability Integration Guide
 
-## 1. 接入前准备
+## 1. Before You Start
 
-### 1.1 推荐的环境判断方式
+### 1.1 Recommended environment check
 
-推荐先判断当前页面是否运行在客户端 WebShell 中，再决定是否调用宿主能力。
+Check whether the current page is running inside the client WebShell before calling host capabilities.
 
 ```js
 import base from "@lazycatcloud/sdk/dist/extentions/base"
@@ -14,11 +14,11 @@ export const isAndroidWebShell = () => base.isAndroidWebShell()
 export const isClientWebShell = () => isIosWebShell() || isAndroidWebShell()
 ```
 
-### 1.2 推荐的调用原则
+### 1.2 Recommended calling principles
 
-- 有 SDK 封装的能力，优先用 SDK
-- 没有 SDK 封装的能力，再直接调用宿主注入对象
-- 所有宿主调用都要先做能力存在性判断
+- Prefer SDK wrappers when a capability has one
+- Call host-injected objects directly only when there is no SDK wrapper
+- Always check whether a host capability exists before calling it
 
 ```js
 export function safeCall(fn, fallback) {
@@ -31,42 +31,42 @@ export function safeCall(fn, fallback) {
 }
 ```
 
-## 2. 能力矩阵
+## 2. Capability Matrix
 
-| 功能 | 支持平台 | 推荐入口 |
+| Capability | Supported platforms | Recommended entry |
 | --- | --- | --- |
-| 系统通知 | Android / iOS / macOS / Windows / Linux | `currentDevice.notification.Notify` / `getDeviceProxy(...).notification.Notify` |
-| 打开轻应用 | iOS / Android | `AppCommon.LaunchApp` |
-| 页面禁用暗黑模式 | iOS / Android | `meta[name="lzcapp-disable-dark"]` |
-| 轻应用全屏控制 | iOS / Android | `AppCommon.SetFullScreen` / `CancelFullScreen` / `GetFullScreenStatus` |
-| 文件分享 | iOS / Android | `AppCommon.ShareWithFiles` |
-| 媒体分享 | iOS / Android | `AppCommon.ShareMedia` |
-| 文件打开方式 | iOS / Android | `AppCommon.OpenWith` |
-| 轻应用临时窗口打开 | iOS | `AppCommon.OpenAppTemporaryWindow` |
-| 轻应用关闭按钮显示控制 | iOS | `window.webkit.messageHandlers.SetCloseBtnShowStatus` |
-| 轻应用关闭按钮布局 CSS 变量 | iOS | 宿主注入的 CSS 变量 |
-| 轻应用导航栏 / 状态栏 meta | iOS | `lzcapp-navigation-bar-scheme` 等 meta |
-| 打开客户端主题模式页 | iOS | `client_OPENThemeMode` |
-| 通用系统分享 | iOS | `SystemShare` |
-| 音量 / 亮度控制 | iOS | `AppCommon.GetDeviceVolume` 等 |
-| 锁屏音乐控制 | Android | `MediaSession.*` |
-| 图片原生分享 | Android | `AppCommon.ShareImage` |
-| 状态栏颜色 | Android | `lzc_window.SetStatusBarColor` |
-| 控制栏显隐 | Android | `lzc_tab.SetControlViewVisibility` |
-| 获取控制栏状态 | Android | `lzc_tab.GetControlViewVisibility` |
-| WebView 跟随键盘 resize | Android | `lzc_window.EnableWebviewResize` |
-| 客户端主题模式 | Android | `lzc_theme.getThemeMode` / `setThemeMode` |
+| System notifications | Android / iOS / macOS / Windows / Linux | `currentDevice.notification.Notify` / `getDeviceProxy(...).notification.Notify` |
+| Launch a lightweight app | iOS / Android | `AppCommon.LaunchApp` |
+| Disable dark mode for a page | iOS / Android | `meta[name="lzcapp-disable-dark"]` |
+| Lightweight app fullscreen control | iOS / Android | `AppCommon.SetFullScreen` / `CancelFullScreen` / `GetFullScreenStatus` |
+| File sharing | iOS / Android | `AppCommon.ShareWithFiles` |
+| Media sharing | iOS / Android | `AppCommon.ShareMedia` |
+| Open with another app | iOS / Android | `AppCommon.OpenWith` |
+| Open lightweight app in a temporary window | iOS | `AppCommon.OpenAppTemporaryWindow` |
+| Close button visibility control | iOS | `window.webkit.messageHandlers.SetCloseBtnShowStatus` |
+| Close button layout CSS variables | iOS | Host-injected CSS variables |
+| Navigation bar / status bar meta tags | iOS | `lzcapp-navigation-bar-scheme` and related meta tags |
+| Open client theme mode page | iOS | `client_OPENThemeMode` |
+| Generic system share | iOS | `SystemShare` |
+| Volume / brightness control | iOS | `AppCommon.GetDeviceVolume` and related APIs |
+| Lock screen music control | Android | `MediaSession.*` |
+| Native image sharing | Android | `AppCommon.ShareImage` |
+| Status bar color | Android | `lzc_window.SetStatusBarColor` |
+| Control bar visibility | Android | `lzc_tab.SetControlViewVisibility` |
+| Read control bar state | Android | `lzc_tab.GetControlViewVisibility` |
+| Resize WebView with keyboard | Android | `lzc_window.EnableWebviewResize` |
+| Client theme mode | Android | `lzc_theme.getThemeMode` / `setThemeMode` |
 
-## 3. 全平台 / iOS / Android 都支持
+## 3. All Platforms / iOS / Android
 
-### 3.1 系统通知（全平台适配）
+### 3.1 System notifications
 
-推荐入口：
+Recommended entries:
 
-- JS 当前客户端：`currentDevice.notification.Notify(request)`
-- JS 指定客户端：`getDeviceProxy(uniqueDeivceId).notification.Notify(request)`
+- Current client in JS: `currentDevice.notification.Notify(request)`
+- Specific client in JS: `getDeviceProxy(uniqueDeivceId).notification.Notify(request)`
 
-支持平台：
+Supported platforms:
 
 - Android
 - iOS
@@ -74,19 +74,19 @@ export function safeCall(fn, fallback) {
 - Windows
 - Linux
 
-请求字段：
+Request fields:
 
-- `title`：通知标题
-- `body`：通知正文
-- `deeplinkUrl`：可选，用户点击通知后打开的 deeplink URL；为空时只展示通知，不指定跳转目标
+- `title`: notification title
+- `body`: notification body
+- `deeplinkUrl`: optional deeplink URL opened when the user clicks the notification; leave it empty to only display the notification without a click target
 
-说明：
+Notes:
 
-- 该接口只抽象各平台通知能力的最小公共集合
-- 通知权限、展示样式、折叠策略等平台差异由客户端系统实现决定
-- 如果需要向当前客户端以外的设备发送通知，先通过 `ListEndDevices` 获取设备列表，再对目标设备建立客户端 API 连接
+- This API abstracts only the minimum common notification semantics across platforms
+- Notification permissions, visual style, grouping, and display policy are implemented by each client platform
+- To notify a device other than the current client, call `ListEndDevices` first, then create a client API connection to the target device
 
-向当前客户端发送通知：
+Notify the current client:
 
 ```js
 import { lzcAPIGateway } from "@lazycatcloud/sdk"
@@ -97,14 +97,14 @@ export async function notifyCurrentDevice() {
   const device = await lzcapi.currentDevice
 
   await device.notification.Notify({
-    title: "任务完成",
-    body: "导入任务已经处理完成",
+    title: "Task completed",
+    body: "The import task has finished",
     deeplinkUrl: "lzc://app/cloud.lazycat.app.demo",
   })
 }
 ```
 
-获取设备列表并定向发送通知：
+List devices and notify a specific device:
 
 ```js
 import { lzcAPIGateway } from "@lazycatcloud/sdk"
@@ -130,25 +130,25 @@ export async function notifyDevice(uniqueDeviceId) {
   const device = await lzcapi.getDeviceProxy(target.uniqueDeivceId)
 
   await device.notification.Notify({
-    title: "新消息",
-    body: "你有一条来自轻应用的新消息",
+    title: "New message",
+    body: "You have a new message from the lightweight app",
   })
 }
 ```
 
-### 3.2 打开轻应用
+### 3.2 Launch a lightweight app
 
-推荐入口：
+Recommended entry:
 
 - `AppCommon.LaunchApp(url, appid, options?)`
 
-推荐场景：
+Recommended scenarios:
 
-- 从一个页面跳转到另一个轻应用
-- 打开文件处理应用
-- 打开应用商店中的应用页面
+- Navigate from one page to another lightweight app
+- Open a file handling app
+- Open an app page in the app store
 
-示例：
+Example:
 
 ```js
 import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
@@ -161,38 +161,38 @@ export async function openPhotoApp(boxDomain: string) {
 }
 ```
 
-说明：
+Notes:
 
-- `forcedRefresh: true` 适合你希望宿主强制刷新目标应用页面的场景
-- 如果当前不在客户端环境，SDK 会按浏览器逻辑兜底
+- `forcedRefresh: true` is useful when the host should force refresh the target app page
+- When the page is not running in the client environment, the SDK falls back to browser behavior
 
-### 3.3 页面禁用暗黑模式
+### 3.3 Disable dark mode for a page
 
-支持平台：
+Supported platforms:
 
 - iOS
 - Android
 
-接入方式：
+Integration:
 
-在页面 `<head>` 中声明：
+Declare this in the page `<head>`:
 
 ```html
 <meta name="lzcapp-disable-dark" content="true">
 ```
 
-推荐真值：
+Recommended truthy values:
 
 - `true`
 - `1`
 - `yes`
 - `on`
 
-完整示例：
+Complete example:
 
 ```html
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -205,21 +205,21 @@ export async function openPhotoApp(boxDomain: string) {
 </html>
 ```
 
-说明：
+Notes:
 
-- 该 meta 适合在你的页面本身已经有完整亮色设计时使用
-- 推荐在首屏 HTML 里直接声明
-- iOS 当前代码支持在页面运行时更新该 meta 后自动生效；Android 侧文档按已支持记录
+- Use this meta tag when your page already has a complete light theme design
+- Declare it in the initial HTML whenever possible
+- iOS currently supports applying runtime updates to this meta tag; Android is documented as supported
 
-### 3.4 轻应用全屏控制
+### 3.4 Lightweight app fullscreen control
 
-推荐入口：
+Recommended entries:
 
 - `AppCommon.SetFullScreen()`
 - `AppCommon.CancelFullScreen()`
 - `AppCommon.GetFullScreenStatus()`
 
-示例：
+Example:
 
 ```js
 import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
@@ -242,7 +242,7 @@ export async function toggleFullScreen() {
 }
 ```
 
-浏览器原生事件示例：
+Browser event example:
 
 ```js
 import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
@@ -253,44 +253,44 @@ document.getElementById("fullscreen-btn").addEventListener("click", async functi
   if (isFull) {
     await AppCommon.CancelFullScreen()
     isFull = false
-    this.textContent = "进入全屏"
+    this.textContent = "Enter fullscreen"
   } else {
     await AppCommon.SetFullScreen()
     isFull = true
-    this.textContent = "退出全屏"
+    this.textContent = "Exit fullscreen"
   }
 })
 
 AppCommon.GetFullScreenStatus().then(function (value) {
   isFull = !!value
-  document.getElementById("fullscreen-btn").textContent = isFull ? "退出全屏" : "进入全屏"
+  document.getElementById("fullscreen-btn").textContent = isFull ? "Exit fullscreen" : "Enter fullscreen"
 })
 ```
 
-说明：
+Notes:
 
-- 这是宿主容器级全屏，不是 DOM `requestFullscreen()`
-- 更适合轻应用页面整体进入全屏展示
+- This controls fullscreen at the host container level, not DOM `requestFullscreen()`
+- It is better suited for making the whole lightweight app page fullscreen
 
-### 3.5 文件分享
+### 3.5 File sharing
 
-推荐入口：
+Recommended entry:
 
 - `AppCommon.ShareWithFiles(path?, paths?, mediaIds?)`
 
-支持平台：
+Supported platforms:
 
 - iOS
 - Android
 
-适用场景：
+Use cases:
 
-- 分享单个离线文件
-- 分享多个离线文件
-- 分享媒体资源
-- 文件和媒体资源混合分享
+- Share one offline file
+- Share multiple offline files
+- Share media assets
+- Share files and media assets together
 
-单文件示例：
+Single file example:
 
 ```js
 import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
@@ -298,7 +298,7 @@ import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
 await AppCommon.ShareWithFiles("/private/path/to/report.pdf")
 ```
 
-多文件示例：
+Multiple files example:
 
 ```js
 import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
@@ -312,7 +312,7 @@ await AppCommon.ShareWithFiles(
 )
 ```
 
-混合分享示例：
+Mixed sharing example:
 
 ```js
 import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
@@ -324,35 +324,35 @@ await AppCommon.ShareWithFiles(
 )
 ```
 
-真实项目参考：
+Real project reference:
 
 - `lzc-files/ui/src/mobile/store/sharewith.ts`
 
-说明：
+Notes:
 
-- 三个参数 `path`、`paths`、`mediaIds` 不能同时为空
-- 移动端优先用这个接口，不建议再接旧的 `ShareWith`
+- `path`, `paths`, and `mediaIds` cannot all be empty
+- Prefer this API on mobile instead of the legacy `ShareWith`
 
-### 3.6 媒体分享
+### 3.6 Media sharing
 
-推荐入口：
+Recommended entry:
 
 - `AppCommon.ShareMedia({ actionName?, ids?, id? })`
 
-支持平台：
+Supported platforms:
 
 - iOS
 - Android
 
-平台差异：
+Platform differences:
 
 - iOS
-  - 只需要传 `id` 或 `ids`
+  - Only `id` or `ids` is required
 - Android
-  - 需要传 `actionName`
-  - `actionName` 由包名和类名组成
+  - `actionName` is required
+  - `actionName` consists of the package name and class name
 
-iOS 示例：
+iOS example:
 
 ```js
 import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
@@ -362,7 +362,7 @@ await AppCommon.ShareMedia({
 })
 ```
 
-Android 示例：
+Android example:
 
 ```js
 import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
@@ -373,23 +373,23 @@ await AppCommon.ShareMedia({
 })
 ```
 
-### 3.7 文件打开方式
+### 3.7 Open with another app
 
-推荐入口：
+Recommended entry:
 
 - `AppCommon.OpenWith(boxName, path, appid)`
 
-支持平台：
+Supported platforms:
 
 - iOS
 - Android
 
-说明：
+Notes:
 
-- 这是“用其他应用打开文件”能力
-- 经常和分享一起使用，但语义上更接近系统“打开方式”
+- This capability means opening a file with another app
+- It is often used together with sharing, but its semantics are closer to the system "open with" action
 
-示例：
+Example:
 
 ```js
 import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
@@ -397,21 +397,21 @@ import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
 await AppCommon.OpenWith("", "/private/path/to/demo.pdf", "")
 ```
 
-## 4. 仅 iOS 支持
+## 4. iOS Only
 
-### 4.1 轻应用临时窗口打开
+### 4.1 Open a lightweight app in a temporary window
 
-推荐入口：
+Recommended entry:
 
 - `AppCommon.OpenAppTemporaryWindow(url)`
 
-适用场景：
+Use cases:
 
-- 打开应用商店详情页
-- 打开升级页、说明页、外部跳转页
-- 希望以“临时窗口”方式打开，而不是常规轻应用栈
+- Open an app store detail page
+- Open an upgrade page, explanation page, or external jump page
+- Open a page as a temporary window instead of a regular lightweight app stack
 
-示例：
+Example:
 
 ```js
 import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
@@ -429,11 +429,11 @@ export async function openAppStoreDetail(pkgId) {
 }
 ```
 
-### 4.2 轻应用关闭按钮显示控制
+### 4.2 Close button visibility control
 
-当前没有统一 SDK 包装，直接通过 iOS JSBridge 调用。
+There is currently no unified SDK wrapper. Call the iOS JSBridge directly.
 
-接入方式：
+Integration:
 
 ```js
 function setIosCloseButtonVisible(visible) {
@@ -446,7 +446,7 @@ function setIosCloseButtonVisible(visible) {
 }
 ```
 
-页面事件示例：
+Page event example:
 
 ```js
 function setIosCloseButtonVisible(visible) {
@@ -467,26 +467,26 @@ document.getElementById("close-preview").addEventListener("click", function () {
 })
 ```
 
-说明：
+Notes:
 
-- 这个能力影响的是宿主层关闭按钮
-- 如果你的页面本身需要给关闭按钮留出额外空间，建议结合下一节的 CSS 变量一起用
+- This capability affects the host-level close button
+- If your page also needs to reserve space for the close button, use the CSS variables in the next section
 
-### 4.3 轻应用关闭按钮布局 CSS 变量
+### 4.3 Close button layout CSS variables
 
-宿主会注入以下 CSS 变量：
+The host injects these CSS variables:
 
 - `--lzc-client-safearea-view-width`
 - `--lzc-client-safearea-view-height`
 - `--lzc-client-safearea-view-top`
 - `--lzc-client-safearea-view-right`
 
-推荐用途：
+Recommended uses:
 
-- 给页面右上角标题 / 操作区让位
-- 给吸顶 header 增加安全区 padding
+- Reserve space for a title or action area in the top-right corner
+- Add safe-area padding to a sticky header
 
-示例：
+Example:
 
 ```css
 .page-header {
@@ -500,48 +500,48 @@ document.getElementById("close-preview").addEventListener("click", function () {
 }
 ```
 
-### 4.4 轻应用导航栏 / 状态栏 meta
+### 4.4 Navigation bar / status bar meta tags
 
-#### 4.4.1 导航栏样式
+#### 4.4.1 Navigation bar style
 
-支持的 meta：
+Supported meta:
 
 ```html
 <meta name="lzcapp-navigation-bar-scheme" content="sink" />
 ```
 
-当前可用值：
+Available values:
 
 - `default`
 - `sink`
 - `hidden`
 - `statusBarOnly`
 
-建议理解：
+Meaning:
 
 - `default`
-  - 显示顶部导航区域
-  - 显示关闭按钮
+  - Show the top navigation area
+  - Show the close button
 - `sink`
-  - 隐藏顶部导航区域
-  - 显示关闭按钮
+  - Hide the top navigation area
+  - Show the close button
 - `hidden`
-  - 隐藏顶部导航区域
-  - 隐藏关闭按钮
+  - Hide the top navigation area
+  - Hide the close button
 - `statusBarOnly`
-  - 隐藏顶部导航区域
-  - 显示关闭按钮
-  - 仅保留状态栏区域
+  - Hide the top navigation area
+  - Show the close button
+  - Keep only the status bar area
 
-示例：
+Example:
 
 ```html
 <meta name="lzcapp-navigation-bar-scheme" content="statusBarOnly" />
 ```
 
-#### 4.4.2 状态栏样式
+#### 4.4.2 Status bar style
 
-可配置 meta：
+Configurable meta tags:
 
 ```html
 <meta name="lzcapp-state-bar-scheme" content="hidden" />
@@ -549,14 +549,14 @@ document.getElementById("close-preview").addEventListener("click", function () {
 <meta name="lzcapp-state-bar-color-dark" content="#111111" />
 ```
 
-示例 1：沉浸式页面
+Example 1: immersive page
 
 ```html
 <meta name="lzcapp-navigation-bar-scheme" content="sink" />
 <meta name="lzcapp-state-bar-scheme" content="sink" />
 ```
 
-示例 2：保留状态栏颜色
+Example 2: keep a status bar color
 
 ```html
 <meta name="lzcapp-navigation-bar-scheme" content="statusBarOnly" />
@@ -564,28 +564,28 @@ document.getElementById("close-preview").addEventListener("click", function () {
 <meta name="lzcapp-state-bar-color-dark" content="#111111" />
 ```
 
-说明：
+Notes:
 
-- 推荐把这些 meta 放在页面初始 HTML 中
-- 如果页面会运行时动态改 meta，iOS 当前实现支持宿主监听刷新
+- Put these meta tags in the initial page HTML whenever possible
+- iOS currently supports host refresh when these meta tags are changed at runtime
 
-### 4.5 通用系统分享
+### 4.5 Generic system share
 
-推荐入口：
+Recommended entry:
 
 - `SystemShare(contentOrPath)`
 
-支持平台：
+Supported platform:
 
 - iOS
 
-适用场景：
+Use cases:
 
-- 分享一段文本
-- 分享一个本地文件路径
-- 分享 `file://` 文件 URL
+- Share text
+- Share a local file path
+- Share a `file://` file URL
 
-分享文本示例：
+Share text example:
 
 ```js
 const sdk = window.lzcSDK || window.sdk
@@ -595,7 +595,7 @@ if (sdk && typeof sdk.call === "function") {
 }
 ```
 
-分享文件示例：
+Share file example:
 
 ```js
 const sdk = window.lzcSDK || window.sdk
@@ -605,22 +605,22 @@ if (sdk && typeof sdk.call === "function") {
 }
 ```
 
-说明：
+Notes:
 
-- 这是当前 iOS 已明确实现的原生系统分享面板能力
-- 传入本地路径时会走文件分享
-- 传入普通字符串时会走文本分享
+- This is the currently implemented native system share sheet capability on iOS
+- A local path triggers file sharing
+- A regular string triggers text sharing
 
-### 4.6 音量 / 亮度控制
+### 4.6 Volume / brightness control
 
-推荐入口：
+Recommended entries:
 
 - `AppCommon.GetDeviceVolume()`
 - `AppCommon.SetDeviceVolume(value)`
 - `AppCommon.GetScreenBrightness()`
 - `AppCommon.SetScreenBrightness(value)`
 
-示例：
+Example:
 
 ```js
 import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
@@ -643,13 +643,13 @@ export async function readDeviceState() {
 }
 ```
 
-### 4.7 监听音量键
+### 4.7 Listen to volume keys
 
-推荐入口：
+Recommended entry:
 
 - `AppCommon.OnVolumeKeyEvent(callback)`
 
-示例：
+Example:
 
 ```js
 import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
@@ -658,24 +658,24 @@ const dispose = AppCommon.OnVolumeKeyEvent((event) => {
   console.log("volume key event", event)
 })
 
-// 页面卸载时取消监听
+// Cancel the listener when the page unloads
 // dispose()
 ```
 
-说明：
+Note:
 
-- 当前 iOS 原生和 SDK 封装的事件链路仍建议你在真实设备上做一次联调验证
+- The native iOS and SDK event chain should still be verified on a real device
 
-## 5. 仅 Android 支持
+## 5. Android Only
 
-### 5.1 锁屏音乐控制（MediaSession）
+### 5.1 Lock screen music control (MediaSession)
 
-推荐入口：
+Recommended entries:
 
 - `MediaSession`
 - `isMediaSessionAvailable()`
 
-导入方式：
+Import:
 
 ```js
 import {
@@ -684,7 +684,7 @@ import {
 } from "@lazycatcloud/sdk/dist/extentions/mediasession/index"
 ```
 
-基础示例：
+Basic example:
 
 ```js
 export async function setupPlayerMediaSession(audio, title) {
@@ -715,7 +715,7 @@ export async function setupPlayerMediaSession(audio, title) {
 }
 ```
 
-页面接入示例：
+Page integration example:
 
 ```js
 import {
@@ -728,7 +728,7 @@ const audio = document.getElementById("audio")
 async function bindMediaSession() {
   if (!isMediaSessionAvailable()) return
 
-  await MediaSession.setMetadata({ title: "示例音频" })
+  await MediaSession.setMetadata({ title: "Example audio" })
 
   await MediaSession.setActionHandler({ action: "play" }, function () {
     audio.play()
@@ -750,29 +750,29 @@ async function bindMediaSession() {
 bindMediaSession()
 ```
 
-该示例里实际使用了：
+This example uses:
 
 - `setMetadata`
 - `setPlaybackState`
 - `setPositionState`
 - `setActionHandler(nexttrack / previoustrack / play / pause / seekto / stop / seekforward / seekbackward)`
 
-### 5.2 图片原生分享
+### 5.2 Native image sharing
 
-推荐入口：
+Recommended entry:
 
 - `AppCommon.ShareImage(data)`
 
-支持平台：
+Supported platform:
 
 - Android
 
-适用场景：
+Use cases:
 
-- Android WebView 中无法直接用 `navigator.share` 分享图片
-- 你已经拿到了图片二进制数据
+- Share images from an Android WebView where `navigator.share` cannot directly share images
+- Share image binary data that you already have
 
-示例：
+Example:
 
 ```js
 import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
@@ -789,11 +789,11 @@ async function shareCanvasImage(canvas) {
 }
 ```
 
-### 5.3 状态栏颜色
+### 5.3 Status bar color
 
-Android 客户端通常会注入 `lzc_window` namespace。
+Android clients usually inject the `lzc_window` namespace.
 
-建议封装：
+Recommended wrapper:
 
 ```js
 export function setAndroidStatusBarColor(color) {
@@ -803,21 +803,21 @@ export function setAndroidStatusBarColor(color) {
 }
 ```
 
-使用示例：
+Usage example:
 
 ```js
 setAndroidStatusBarColor("#FFFFFF")
 setAndroidStatusBarColor("#D6E7EE")
 ```
 
-说明：
+Notes:
 
-- 颜色必须是 `#` 开头的字符串
-- 建议仅在 Android 客户端环境下调用
+- The color must be a string starting with `#`
+- Call this only in the Android client environment
 
-### 5.4 控制栏显隐
+### 5.4 Control bar visibility
 
-建议封装：
+Recommended wrapper:
 
 ```js
 export async function setAndroidControlViewVisible(visible) {
@@ -833,7 +833,7 @@ export async function getAndroidControlViewVisible() {
 }
 ```
 
-使用示例：
+Usage example:
 
 ```js
 await setAndroidControlViewVisible(false)
@@ -842,9 +842,9 @@ const oldVisible = await getAndroidControlViewVisible()
 console.log("control view visible:", oldVisible)
 ```
 
-### 5.5 WebView 跟随键盘 resize
+### 5.5 Resize WebView with keyboard
 
-建议封装：
+Recommended wrapper:
 
 ```js
 export function enableAndroidWebviewResize(enable) {
@@ -854,20 +854,20 @@ export function enableAndroidWebviewResize(enable) {
 }
 ```
 
-使用示例：
+Usage example:
 
 ```js
 enableAndroidWebviewResize(true)
 ```
 
-适用场景：
+Use cases:
 
-- 输入框聚焦时，希望页面跟随键盘压缩布局
-- 聊天页、表单页、编辑器页
+- Shrink the page layout when an input is focused and the keyboard opens
+- Chat pages, forms, and editors
 
-### 5.6 客户端主题模式
+### 5.6 Client theme mode
 
-建议封装：
+Recommended wrapper:
 
 ```js
 const ThemeMode = {
@@ -889,7 +889,7 @@ export function setAndroidThemeMode(mode, themeApplyMode) {
 }
 ```
 
-使用示例：
+Usage example:
 
 ```js
 const mode = getAndroidThemeMode()
@@ -900,36 +900,36 @@ console.log({ mode, applyMode })
 setAndroidThemeMode(ThemeMode.FOLLOW_SYSTEM, applyMode ?? 0)
 ```
 
-## 6. 推荐接入顺序
+## 6. Recommended Integration Order
 
-如果你是新页面，建议按这个顺序接入：
+For a new page, use this order:
 
-1. 先加平台判断
-2. 再加 `lzcapp-disable-dark`
-3. 如果页面有分享诉求，优先接 `ShareWithFiles`
-4. 如果是 iOS 轻应用，再补导航栏 / 状态栏 meta
-5. 如果页面需要沉浸展示，再接全屏接口
-6. 如果页面是播放器，再接 Android `MediaSession`
-7. 如果页面是 Android 宿主内页面，再按需接状态栏颜色、控制栏显隐、主题模式
+1. Add platform detection first
+2. Add `lzcapp-disable-dark`
+3. If the page needs sharing, integrate `ShareWithFiles` first
+4. For an iOS lightweight app, add navigation bar / status bar meta tags
+5. If the page needs immersive display, add fullscreen control
+6. For a player page, add Android `MediaSession`
+7. For a page inside the Android host, add status bar color, control bar visibility, and theme mode as needed
 
-## 7. 常见组合示例
+## 7. Common Combinations
 
-### 7.1 沉浸式详情页
+### 7.1 Immersive detail page
 
-适用平台：
+Applicable platforms:
 
 - iOS / Android
 
-建议组合：
+Recommended combination:
 
-- 两端：
+- Both platforms:
   - `lzcapp-disable-dark`
   - `AppCommon.SetFullScreen`
-- iOS：
+- iOS:
   - `lzcapp-navigation-bar-scheme=sink`
   - `lzcapp-state-bar-scheme=sink`
 
-示例：
+Example:
 
 ```html
 <meta name="lzcapp-disable-dark" content="true" />
@@ -943,14 +943,14 @@ import { AppCommon } from "@lazycatcloud/sdk/dist/extentions"
 await AppCommon.SetFullScreen()
 ```
 
-### 7.2 iOS 文件选择 / 图片预览页
+### 7.2 iOS file selection / image preview page
 
-建议组合：
+Recommended combination:
 
-- iOS 关闭按钮显隐
-- iOS 关闭按钮布局 CSS 变量
+- iOS close button visibility
+- iOS close button layout CSS variables
 
-示例：
+Example:
 
 ```js
 function onPreviewOpen() {
@@ -974,16 +974,16 @@ function onPreviewClose() {
 }
 ```
 
-### 7.3 Android 音频播放页
+### 7.3 Android audio playback page
 
-建议组合：
+Recommended combination:
 
 - `MediaSession.setMetadata`
 - `MediaSession.setPlaybackState`
 - `MediaSession.setPositionState`
 - `MediaSession.setActionHandler`
 
-示例：
+Example:
 
 ```js
 import {
@@ -1008,10 +1008,10 @@ export async function bindAudioSession(audio, title) {
 }
 ```
 
-## 8. 兼容性建议
+## 8. Compatibility Recommendations
 
-- 所有宿主能力都做存在性判断，不要假设每个环境都已注入
-- meta 类能力推荐在页面初始 HTML 中直接声明
-- Android 侧的 `lzc_window` / `lzc_tab` / `lzc_theme` 更适合做一层项目内封装后再使用
-- iOS 侧 `window.webkit.messageHandlers` 直接调用时，建议统一封装到 hook / util 中
-- 需要同时兼容普通浏览器时，一定要给出 fallback 行为
+- Check whether every host capability exists before calling it
+- Put meta-based capabilities in the initial page HTML whenever possible
+- Wrap Android `lzc_window` / `lzc_tab` / `lzc_theme` calls in project-level utilities
+- Wrap direct iOS `window.webkit.messageHandlers` calls in a shared hook or utility
+- Always provide fallback behavior when the page also needs to support regular browsers
