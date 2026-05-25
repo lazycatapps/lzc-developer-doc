@@ -62,10 +62,14 @@ To build a high-quality app store, the subjective review standards for developer
 
 **Localization Requirements**: Applications that provide only a pure English interface or English documentation without necessary localization support will not be listed.
 
+**Additional Note on Localization**: If a project is particularly popular and of high quality, the final review decision is at the discretion of the reviewer.
+
 **Complex Feature Application Review**: For applications with complex features but lacking detailed guides or documentation, developers must supplement complete user guides or operational walkthroughs before they can be listed after re-review.
 
 **Other unclarified situations**: The final interpretation of review results belongs to the Lazycat MicroServer team.
 
 ::: warning
-Additional note: For applications that require usernames and passwords, if regular users cannot obtain corresponding credentials in the Lazycat store, they cannot be listed in the Lazycat store.
+**Additional Note**:
+1.  For applications that require usernames and passwords, if regular users cannot obtain the corresponding credentials within the Lazycat Store, they cannot be listed.
+2.  If an application includes upload/download functionality, it must integrate the Lazycat NetDisk's automatic intercepting file chooser. Applications that do not integrate this cannot be listed. [Reference Document](https://gitee.com/lazycatcloud/lzc-developer-doc/edit/master/docs/store-rule.md)
 :::
