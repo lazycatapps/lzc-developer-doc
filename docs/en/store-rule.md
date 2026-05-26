@@ -71,5 +71,5 @@ To build a high-quality app store, the subjective review standards for developer
 ::: warning
 **Additional Note**:
 1.  For applications that require usernames and passwords, if regular users cannot obtain the corresponding credentials within the Lazycat Store, they cannot be listed.
-2.  If an application includes upload/download functionality, it must integrate the Lazycat NetDisk's automatic intercepting file chooser. Applications that do not integrate this cannot be listed. [Reference Document](https://gitee.com/lazycatcloud/lzc-developer-doc/edit/master/docs/store-rule.md)
+2.  If an application includes upload/download functionality, it must integrate the Lazycat NetDisk's automatic intercepting file chooser. Applications that do not integrate this cannot be listed. [Reference Document](./lazycat-file-picker-auto-intercept.md)
 :::
