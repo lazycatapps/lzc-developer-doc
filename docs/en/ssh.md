@@ -2,14 +2,16 @@
 
 ## How to Enable SSH?
 
-1. Administrator account logs into Lazycat client, go to 'Settings' -> 'Basic Settings'
+1. Administrator account logs into Lazycat client, go to 'Search system settings' -> 'Open the system settings' -> 'Basic Settings'
 
 2. Scroll down to find **Enable SSHD** 
 
    Set root user password and enable the option
    
 
-![image.png](./images/ssh-access.png "image.png")
+![image.png](https://lzc-playground-1301583638.cos.ap-chengdu.myqcloud.com/guidelines/1279/be016c8f-5914-4f9a-b480-086b5ea151fd.png "image.png")
+
+![image.png](https://lzc-playground-1301583638.cos.ap-chengdu.myqcloud.com/guidelines/1279/a0c1c0d0-2ca7-445d-9c1f-0ee7aa416ae1.png "image.png")
 
 
 3. Execute `ssh root@{LCMD_name}.heiyu.space` in your preferred terminal
