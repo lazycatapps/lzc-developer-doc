@@ -2,14 +2,16 @@
 
 ## 如何开启 SSH?
 
-1. 管理员账户登录懒猫客户端，进入'设置' -> '基本信息'
+1. 管理员账户登录懒猫客户端，搜索'系统设置' -> 进入'系统设置' -> '基本信息'
 
 2. 下拉找到**开启SSHD** 
 
    设定root用户密码并开启选项
    
 
-![image.png](https://lzc-playground-1301583638.cos.ap-chengdu.myqcloud.com/guidelines/625/833cf476-1710-4320-a96b-3e780334d81a.png "image.png")
+![image.png](https://lzc-playground-1301583638.cos.ap-chengdu.myqcloud.com/guidelines/1279/020f110e-2a7a-4a72-a7ab-4263c06834eb.png "image.png")
+
+![image.png](https://lzc-playground-1301583638.cos.ap-chengdu.myqcloud.com/guidelines/1279/abb22a5b-d31c-4d4d-9e48-36cf5557c6b2.png "image.png")
 
 
 3. 在您喜欢的终端执行`ssh root@{微服名称}.heiyu.space`
