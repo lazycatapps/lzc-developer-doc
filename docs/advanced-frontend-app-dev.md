@@ -99,7 +99,7 @@ export async function notifyCurrentDevice() {
   await device.notification.Notify({
     title: "任务完成",
     body: "导入任务已经处理完成",
-    deeplinkUrl: "lzc://app/cloud.lazycat.app.demo",
+    deeplinkUrl: "lzc://client/app/open?appId=cloud.lazycat.app.photo&path=/",
   })
 }
 ```
@@ -134,6 +134,145 @@ export async function notifyDevice(uniqueDeviceId) {
     body: "你有一条来自轻应用的新消息",
   })
 }
+```
+
+Go 后端发送通知示例：
+
+适用场景：
+
+- 通知发送逻辑在应用后端执行，而不是在前端页面执行
+- 后端已经知道当前用户的 `uid` 和目标客户端的 `uniqueDeivceId`
+- 后端进程运行在轻应用容器内，可以读取 SDK 默认的应用证书路径
+
+安装依赖：
+
+```bash
+go get -x gitee.com/linakesi/lzc-sdk@master
+```
+
+示例文件 `notification.go`：
+
+```go
+package notificationexample
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"net/url"
+	"strings"
+	"time"
+
+	gohelper "gitee.com/linakesi/lzc-sdk/lang/go"
+	"gitee.com/linakesi/lzc-sdk/lang/go/common"
+	"gitee.com/linakesi/lzc-sdk/lang/go/localdevice"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/metadata"
+)
+
+const requestTimeout = 15 * time.Second
+
+type NotificationPayload struct {
+	Title       string
+	Body        string
+	DeeplinkURL string
+}
+
+func SendNotificationToDevice(ctx context.Context, uid string, deviceID string, payload NotificationPayload) error {
+	ctx, cancel := context.WithTimeout(ctx, requestTimeout)
+	defer cancel()
+
+	gateway, err := gohelper.NewAPIGateway(ctx)
+	if err != nil {
+		return fmt.Errorf("create lzc api gateway: %w", err)
+	}
+	defer gateway.Close()
+
+	device, err := findOnlineDevice(ctx, gateway, uid, deviceID)
+	if err != nil {
+		return err
+	}
+
+	return notifyDevice(ctx, device.GetDeviceApiUrl(), payload)
+}
+
+func findOnlineDevice(ctx context.Context, gateway *gohelper.APIGateway, uid string, deviceID string) (*common.EndDevice, error) {
+	reply, err := gateway.Devices.ListEndDevices(ctx, &common.ListEndDeviceRequest{Uid: uid})
+	if err != nil {
+		return nil, fmt.Errorf("list devices: %w", err)
+	}
+
+	for _, device := range reply.GetDevices() {
+		if device.GetUniqueDeivceId() != deviceID {
+			continue
+		}
+		if !device.GetIsOnline() || strings.TrimSpace(device.GetDeviceApiUrl()) == "" {
+			return nil, errors.New("target device is offline or unavailable")
+		}
+		return device, nil
+	}
+
+	return nil, errors.New("device not found")
+}
+
+func notifyDevice(ctx context.Context, deviceAPIURL string, payload NotificationPayload) error {
+	parsedURL, err := url.Parse(deviceAPIURL)
+	if err != nil {
+		return fmt.Errorf("parse device api url: %w", err)
+	}
+	if parsedURL.Host == "" {
+		return errors.New("device api url has no host")
+	}
+
+	cred, err := gohelper.BuildClientCredOption(gohelper.CAPath, gohelper.APPKeyPath, gohelper.APPCertPath)
+	if err != nil {
+		return fmt.Errorf("build device tls credentials: %w", err)
+	}
+
+	authConn, err := grpc.DialContext(ctx, parsedURL.Host, grpc.WithBlock(), cred)
+	if err != nil {
+		return fmt.Errorf("dial device api for auth: %w", err)
+	}
+	token, err := gohelper.RequestAuthToken(ctx, authConn)
+	_ = authConn.Close()
+	if err != nil {
+		return fmt.Errorf("request device auth token: %w", err)
+	}
+
+	conn, err := grpc.DialContext(ctx, parsedURL.Host, grpc.WithBlock(), cred)
+	if err != nil {
+		return fmt.Errorf("dial device api: %w", err)
+	}
+	defer conn.Close()
+
+	req := &localdevice.NotifyRequest{
+		Title: payload.Title,
+		Body:  payload.Body,
+	}
+	if payload.DeeplinkURL != "" {
+		req.DeeplinkUrl = &payload.DeeplinkURL
+	}
+
+	ctx = metadata.AppendToOutgoingContext(ctx, "lzc_dapi_auth_token", token.Token)
+	_, err = localdevice.NewNotificationServiceClient(conn).Notify(ctx, req)
+	return err
+}
+```
+
+最小调用方式：
+
+```go
+err := notificationexample.SendNotificationToDevice(ctx, uid, deviceID, notificationexample.NotificationPayload{
+	Title:       "新消息",
+	Body:        "你有一条来自轻应用的新消息",
+	DeeplinkURL: "lzc://client/app/open?appId=cloud.lazycat.app.photo&path=/",
+})
+```
+
+验证：
+
+```bash
+go test ./...
 ```
 
 ### 3.2 打开轻应用

@@ -99,7 +99,7 @@ export async function notifyCurrentDevice() {
   await device.notification.Notify({
     title: "Task completed",
     body: "The import task has finished",
-    deeplinkUrl: "lzc://app/cloud.lazycat.app.demo",
+    deeplinkUrl: "lzc://client/app/open?appId=cloud.lazycat.app.photo&path=/",
   })
 }
 ```
@@ -134,6 +134,145 @@ export async function notifyDevice(uniqueDeviceId) {
     body: "You have a new message from the lightweight app",
   })
 }
+```
+
+Go backend notification example:
+
+Use this when:
+
+- Notification sending runs in the application backend instead of the frontend page
+- The backend already knows the current user's `uid` and the target client's `uniqueDeivceId`
+- The backend process runs inside the lightweight app container and can read the SDK default application certificate paths
+
+Install dependencies:
+
+```bash
+go get -x gitee.com/linakesi/lzc-sdk@master
+```
+
+Example file `notification.go`:
+
+```go
+package notificationexample
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"net/url"
+	"strings"
+	"time"
+
+	gohelper "gitee.com/linakesi/lzc-sdk/lang/go"
+	"gitee.com/linakesi/lzc-sdk/lang/go/common"
+	"gitee.com/linakesi/lzc-sdk/lang/go/localdevice"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/metadata"
+)
+
+const requestTimeout = 15 * time.Second
+
+type NotificationPayload struct {
+	Title       string
+	Body        string
+	DeeplinkURL string
+}
+
+func SendNotificationToDevice(ctx context.Context, uid string, deviceID string, payload NotificationPayload) error {
+	ctx, cancel := context.WithTimeout(ctx, requestTimeout)
+	defer cancel()
+
+	gateway, err := gohelper.NewAPIGateway(ctx)
+	if err != nil {
+		return fmt.Errorf("create lzc api gateway: %w", err)
+	}
+	defer gateway.Close()
+
+	device, err := findOnlineDevice(ctx, gateway, uid, deviceID)
+	if err != nil {
+		return err
+	}
+
+	return notifyDevice(ctx, device.GetDeviceApiUrl(), payload)
+}
+
+func findOnlineDevice(ctx context.Context, gateway *gohelper.APIGateway, uid string, deviceID string) (*common.EndDevice, error) {
+	reply, err := gateway.Devices.ListEndDevices(ctx, &common.ListEndDeviceRequest{Uid: uid})
+	if err != nil {
+		return nil, fmt.Errorf("list devices: %w", err)
+	}
+
+	for _, device := range reply.GetDevices() {
+		if device.GetUniqueDeivceId() != deviceID {
+			continue
+		}
+		if !device.GetIsOnline() || strings.TrimSpace(device.GetDeviceApiUrl()) == "" {
+			return nil, errors.New("target device is offline or unavailable")
+		}
+		return device, nil
+	}
+
+	return nil, errors.New("device not found")
+}
+
+func notifyDevice(ctx context.Context, deviceAPIURL string, payload NotificationPayload) error {
+	parsedURL, err := url.Parse(deviceAPIURL)
+	if err != nil {
+		return fmt.Errorf("parse device api url: %w", err)
+	}
+	if parsedURL.Host == "" {
+		return errors.New("device api url has no host")
+	}
+
+	cred, err := gohelper.BuildClientCredOption(gohelper.CAPath, gohelper.APPKeyPath, gohelper.APPCertPath)
+	if err != nil {
+		return fmt.Errorf("build device tls credentials: %w", err)
+	}
+
+	authConn, err := grpc.DialContext(ctx, parsedURL.Host, grpc.WithBlock(), cred)
+	if err != nil {
+		return fmt.Errorf("dial device api for auth: %w", err)
+	}
+	token, err := gohelper.RequestAuthToken(ctx, authConn)
+	_ = authConn.Close()
+	if err != nil {
+		return fmt.Errorf("request device auth token: %w", err)
+	}
+
+	conn, err := grpc.DialContext(ctx, parsedURL.Host, grpc.WithBlock(), cred)
+	if err != nil {
+		return fmt.Errorf("dial device api: %w", err)
+	}
+	defer conn.Close()
+
+	req := &localdevice.NotifyRequest{
+		Title: payload.Title,
+		Body:  payload.Body,
+	}
+	if payload.DeeplinkURL != "" {
+		req.DeeplinkUrl = &payload.DeeplinkURL
+	}
+
+	ctx = metadata.AppendToOutgoingContext(ctx, "lzc_dapi_auth_token", token.Token)
+	_, err = localdevice.NewNotificationServiceClient(conn).Notify(ctx, req)
+	return err
+}
+```
+
+Minimal call:
+
+```go
+err := notificationexample.SendNotificationToDevice(ctx, uid, deviceID, notificationexample.NotificationPayload{
+	Title:       "New message",
+	Body:        "You have a new message from the lightweight app",
+	DeeplinkURL: "lzc://client/app/open?appId=cloud.lazycat.app.photo&path=/",
+})
+```
+
+Verify:
+
+```bash
+go test ./...
 ```
 
 ### 3.2 Launch a lightweight app
