@@ -124,7 +124,7 @@ LPK is designed for one-click reproducible delivery to others. To keep runtime d
 
 Further reading:
 
-1. [LightOS Scenarios (placeholder)](../advanced-lightos.md)
+1. [LightOS Scenarios](../advanced-lightos.md)
 
 ### 7. Verify package contains embedded image {#step-verify-embedded-image-output}
 
@@ -183,4 +183,4 @@ Check order:
 1. [lzc-build.yml Spec](../spec/build.md)
 2. [lzc-manifest.yml Spec](../spec/manifest.md)
 3. [File Access (`/lzcapp/var` and `/lzcapp/documents`)](../advanced-file.md)
-4. [LightOS Scenarios (placeholder)](../advanced-lightos.md)
+4. [LightOS Scenarios](../advanced-lightos.md)

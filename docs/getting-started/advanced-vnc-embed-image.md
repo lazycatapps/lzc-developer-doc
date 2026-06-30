@@ -143,7 +143,7 @@ lzc-cli project info
 
 延伸阅读：
 
-1. [LightOS 场景（占位）](../advanced-lightos.md)
+1. [LightOS 使用场景](../advanced-lightos.md)
 
 ### 7. 验证产物包含 embed image {#step-verify-embedded-image-output}
 
@@ -204,4 +204,4 @@ lzc-cli lpk info embed-demo.lpk
 1. [lzc-build.yml 规范](../spec/build.md)
 2. [lzc-manifest.yml 规范](../spec/manifest.md)
 3. [文件访问（`/lzcapp/var`、`/lzcapp/run/mnt/home` 与 `/lzcapp/documents`）](../advanced-file.md)
-4. [LightOS 场景（占位）](../advanced-lightos.md)
+4. [LightOS 使用场景](../advanced-lightos.md)

@@ -33,38 +33,6 @@ Application List -> Submit Changes -> Application Description
 
 ## Why do software installed after ssh get lost? {#readonly_lzcos}
 
-Some users find that they still cannot fully control the system after applying for ssh permissions. Even the most basic apt install xxx operations will lose related software after restart.
-We fully understand users' confusion.
-- My system, my rules, why should I be restricted?
-- I have enough ability to be responsible for my own operations!
-- How come all the configurations I worked so hard to write are gone after a restart?
+The `lzcos` SSH environment is a read-only system. After restart, all changes made to the system through SSH are lost.
 
-We are a startup team with technical backgrounds, love tinkering, aspire to freedom, and respect freedom.
-We also want to make the product free enough, but we've thought for a long time: what should a good product provide to users?
-
-The fact that system modifications are lost after restart is not to restrict anyone, especially those users who spent real money and precious time supporting us.
-
-The fundamental reason: From a technical perspective, we cannot guarantee that when the system is in any state, a complete set of upper-layer application software can run normally.
-This problem is similar to why LCMD MicroServer doesn't just do the system, because only doing the system requires investing a lot of energy in hardware adaptation (our team has done a lot of work in this area over the past 10 years).
-If system modifications don't get lost after restart, then with the accumulation of time, the entire system will be in a completely unpredictable state.
-To run upper-layer applications in this state, it takes enormous effort to do adaptation (we don't want to waste users' money here).
-Worse, a system update might accidentally break user modifications that have been running normally for years. If it involves user data, that would cause disastrous consequences.
-
-We expect to build LCMD MicroServer into a new platform that integrates cross-device capabilities and has extremely high security.
-To achieve this goal, many permissions need to be gradually restricted. This restriction is not transferring existing permissions from users to Lazycat manufacturers, but transferring permissions from users and applications to users' LCMD systems.
-In this process (currently far from complete), there will inevitably be some decisions that conflict with users (we always know that the final decision-making power should and must be handed over to each specific user)
-Initially, the LCMD system didn't open ssh permissions, but considering:
-- Users' right to freely audit
-- Some functions we haven't considered in the development cycle or haven't had time to implement, we need to give users a way to freely explore
-But we never thought of restricting users, otherwise when opening SSH permissions, we would make users sign an agreement to waive warranty like some products do.
-
-The initially envisioned user group was non-technical users, but currently, seed users are all senior users with certain technical capabilities, so this issue is indeed quite prominent.
-Therefore, we gradually implemented virtual machines and [playground-docker](./dockerd-support), two components that were originally not considered or even opposed, to solve this user need.
-
-Because we can feel that the lzcapp system has places that cannot meet everyone's needs, and we have the ability to implement improvements, so we made modifications.
-
-Similarly, [Tun mode/Proxy mode](./network) was also proposed together with everyone after we truly felt the troubles of senior users, and we determined the current solution from multiple solutions.
-
-We increasingly realize the logic of making products: understand users' sincere words about the product and treat users with sincerity.
-
-We sincerely thank all the senior experts among the seed users. You are the motivation for us to persist when encountering difficulties.
+If you need persistent software, configuration, or runtime environment, use [LightOS](./advanced-lightos.md).
