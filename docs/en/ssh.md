@@ -34,4 +34,4 @@ The main purposes of SSH are:
 
 1. Observe and audit system behavior
 2. High-risk network operations such as [nmtui](./network-config.md)
-3. Use unrestricted dockerd services with [playground-docker](./dockerd-support.md)
+3. Temporarily troubleshoot system issues. If you need persistent software, configuration, or runtime environment, use [LightOS](./advanced-lightos.md). If you need Docker, use [Docker in LightOS](./dockerd-support.md)

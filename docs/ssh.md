@@ -34,4 +34,4 @@ ssh主要的目的是
 
 1. 观察审计系统行为
 2. [nmtui](./network-config.md)等高风险网络操作
-3. [playground-docker](./dockerd-support.md)使用不受限的dockerd服务
+3. 临时排查系统问题；如果需要长期保存软件、配置或运行环境，请使用 [LightOS](./advanced-lightos.md)。如果需要使用 Docker，请在 [LightOS 中使用 Docker](./dockerd-support.md)
