@@ -2,6 +2,17 @@
 
 This page aggregates developer-related system changes and lists versions in reverse chronological order.
 
+## v1.6.0 (2026-6-12) {#v1-6-0}
+
+### Feature Changes
+
+- Added [`run_as`](./spec/manifest.md#run_as) configuration for `application.run_as` and `services.<name>.run_as`. It declares the numeric UID/GID used by the container main process, and maps the owner of `/lzcapp/document`, `/lzcapp/documents/<uid>`, `/lzcapp/var`, and `/lzcapp/cache` with the same identity. This addresses document and appvar permission issues when an app runs as a non-root user.
+- Added the `/lzcinit/notify` client-message channel. After an app declares the `user.notify` permission, `/lzcinit/notify-send` is injected into the container so the app can send client notifications, in-app messages, or other user-visible notifications supported by the system.
+
+### Compatibility Changes
+
+- Administrators can disable user-document permissions for an individual lzcapp. Starting from `v1.7.0`, user-document permissions will no longer be enabled by default. Apps that actually need to read or write user documents should declare `document.read` / `document.write` in `package.yml.permissions` during the current migration window, and must not depend on the old automatic mount behavior when document permission is not granted.
+
 ## v1.5.0 (Unreleased) {#v1-5-0}
 
 ### Compatibility Changes

@@ -2,6 +2,17 @@
 
 本文汇总当前与开发者相关的系统版本变更，按版本倒序排列。
 
+## v1.6.0（2026-6-12) {#v1-6-0}
+
+### 功能调整
+
+- 新增 [`run_as`](./spec/manifest.md#run_as) 配置，支持 `application.run_as` 与 `services.<name>.run_as` 声明容器内主进程使用的数字 UID/GID；系统会按同一身份映射 `/lzcapp/document`、`/lzcapp/documents/<uid>`、`/lzcapp/var`、`/lzcapp/cache` 的 owner，解决应用以非 root 用户运行时访问文稿与 appvar 持久目录的权限问题
+- 新增 `/lzcinit/notify` 客户端消息通道；应用声明 [`user.notify`](./spec/package.md) 权限后，容器内会注入 `/lzcinit/notify-send`，用于向用户发送客户端通知、站内消息或其他系统支持的可感知通知
+
+### 兼容性调整
+
+- 管理员可以关闭单个 lzcapp 的用户文稿权限。`v1.7.0` 后默认不再开启用户文稿权限；确实需要读取或写入用户文稿的应用，应尽快在当前窗口期内通过 `package.yml.permissions` 主动声明 `document.read` / `document.write` 权限，并确认应用在未获得文稿权限时不会依赖旧的自动挂载行为
+
 ## v1.5.2（2026-5-6) {#v1-5-2}
 
 ### 功能调整

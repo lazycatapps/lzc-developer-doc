@@ -60,6 +60,8 @@ Note: since LPK v2, static package metadata is stored in `package.yml`, includin
 | `environment` | `map[string]string \| []string` | Environment variables for `app` container, supports map or list format |
 | `health_check` | `AppHealthCheckExt` | Health check for `app` container, only recommended to set `disable` field during development and debugging, not recommended to replace, otherwise the system's default injected automatic dependency detection logic will be lost |
 | `oidc_redirect_path` | `string` | Valid OIDC redirect path, full domain will be automatically composed based on subdomain |
+| `user` | `string` | User for running the `app` container. Syntax is compatible with Docker Compose `user`, and supports UID, UID:GID, username, or username:group |
+| `run_as` | `string \| int` | Numeric UID/GID used by the `app` container, and enables owner mapping for persistent `/lzcapp` directories. See 4.5 |
 
 Note: `routes` trims the path prefix by default when forwarding. If you need to keep the prefix, use `upstreams` and set `disable_trim_location: true` (lzcos v1.3.9+).
 
@@ -96,6 +98,43 @@ Entry title supports localization via `locales` with `entries.<entry_id>.title`.
 | `params` | `map[string]any` | Parameters passed to script |
 
 For runtime behavior, phase model, and best practices, see: [Script Injection (injects)](../advanced-injects.md).
+
+### 4.5 `run_as` Configuration {#run_as}
+
+Note: `run_as` requires `lzcos v1.6.0+`.
+
+`run_as` declares the numeric UID/GID used by the container main process, and lets the system map the owner of persistent directories under `/lzcapp` with the same identity.
+
+Supported formats:
+
+| Syntax | Meaning |
+| ---- | ---- |
+| `1000` | Use UID `1000`; GID is also `1000` |
+| `"1000:1000"` | Use UID `1000` and GID `1000` |
+
+Rules:
+
+1. `run_as` accepts only numeric UID/GID values. Usernames or group names are not accepted.
+2. `application.run_as` cannot be used together with `application.user`.
+3. `services.<name>.run_as` cannot be used together with `user` or `setup_script` on the same service.
+4. `application.run_as` only applies to the built-in `app` service. It does not automatically apply to other services under `services` that do not declare `run_as`.
+5. Each service can declare its own `run_as`. If different services declare different UID/GID values, each service gets a persistent `/lzcapp` directory view that matches its own identity.
+6. After `run_as` is used, `/lzcapp/document`, `/lzcapp/documents/<uid>`, `/lzcapp/var`, and `/lzcapp/cache` are exposed inside the container with owner values that match the declared UID/GID. New files created by that UID/GID inside the container keep the same owner semantics.
+7. `/lzcapp/run` is a runtime directory. The system ensures that containers declaring `run_as` can still write to this directory.
+8. If you continue to use the `user` field, only the container process user is changed; the persistent `/lzcapp` owner mapping described above is not enabled.
+
+Example:
+
+```yml
+application:
+  subdomain: demo
+  run_as: "1000:1000"
+
+services:
+  worker:
+    image: registry.lazycat.cloud/lzc/lzcapp:3.20.3
+    run_as: "2000:2000"
+```
 
 ## 5. `HealthCheckConfig` Configuration
 ### 5.1 AppHealthCheckExt
@@ -147,6 +186,7 @@ For runtime behavior, phase model, and best practices, see: [Script Injection (i
 | `depends_on` | `[]string` | Dependencies on other container services (except the name app), only supports other services within this application, and enforces detection type as `healthly`, optional |
 | `healthcheck` | `*HealthCheckConfig` | Health check strategy for the container, old version `health_check` has been deprecated |
 | `user` | `*string` | UID or username for container operation, optional |
+| `run_as` | `string \| int` | Numeric UID/GID used by the container, and enables owner mapping for persistent `/lzcapp` directories. See 4.5 |
 | `cpu_shares` | `int64` | CPU shares |
 | `cpus` | `float32` | Number of CPU cores |
 | `mem_limit`| `string\|int` | Container's memory limit |
