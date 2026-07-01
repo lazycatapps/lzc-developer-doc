@@ -55,7 +55,7 @@ Notes:
 lzc-cli box add-by-ssh root <Lazycat Microserver LAN IP>
 ```
 
-This requires SSH to be enabled on target Lazycat Microserver. `<Lazycat Microserver LAN IP>` must be the LAN IP address. Do not use a domain name.
+This requires [SSH](../ssh.md) to be enabled on target Lazycat Microserver. `<Lazycat Microserver LAN IP>` must be the LAN IP address. Do not use a domain name.
 
 ### 5. Upload public key to Developer Tool (first time for hclient mode only) {#step-upload-public-key}
 

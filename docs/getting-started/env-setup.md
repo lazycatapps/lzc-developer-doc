@@ -55,7 +55,7 @@ lzc-cli box default
 lzc-cli box add-by-ssh root <微服局域网IP>
 ```
 
-该方案需要目标微服已开通 SSH 功能。`<微服局域网IP>` 必须填写微服的局域网 IP 地址，不要填写域名。
+该方案需要目标微服已开通 [SSH](../ssh.md) 功能。`<微服局域网IP>` 必须填写微服的局域网 IP 地址，不要填写域名。
 
 ### 5. 上传公钥到开发者工具（仅 hclient 接入模式首次） {#step-upload-public-key}
 
