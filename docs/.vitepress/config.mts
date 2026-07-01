@@ -149,7 +149,6 @@ const zhLocaleThemeConfig = {
         { text: "网络机制与 VPN", link: "/network.md" },
         { text: "应用白屏", link: "/app-block.md" },
         { text: "高级网络配置", link: "/network-config.md" },
-        { text: "开机启动脚本", link: "/faq-startup_script.md" },
         { text: "自己架设网络穿透", link: "/network-pass-through.md" },
       ],
     },
@@ -307,7 +306,6 @@ const enLocaleThemeConfig = {
           text: "Advanced Network Configuration",
           link: "/en/network-config.md",
         },
-        { text: "Boot Startup Script", link: "/en/faq-startup_script.md" },
         {
           text: "Self-Hosted Network Penetration",
           link: "/en/network-pass-through.md",
