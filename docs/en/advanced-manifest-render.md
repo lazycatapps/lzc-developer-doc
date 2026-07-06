@@ -42,7 +42,7 @@ Mainly two large parameters (abbreviations in parentheses)
     - `.OSVersion`  LCMD system version number, note that if it is a test version, it will be forcibly modified to `v99.99.99-xxx`
     - `.AppDomain`  Application domain, note that this domain is currently hardcoded by developers, will be dynamically allocated in the future and support administrator dynamic adjustment.
     - `.IsMultiInstance` Whether it is multi-instance deployment mode, currently hardcoded by developers, future versions will be adjusted so administrators can dynamically adjust the final value.
-    - `.DeployUID`  Actual user ID during deployment, this field does not exist in single-instance deployment.
+    - `.DeployUID`  Actual user ID during deployment. This value has no practical meaning for single-instance apps.
     - `.DeployID`   Unique ID of the instance itself
 
 

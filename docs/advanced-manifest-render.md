@@ -17,13 +17,13 @@
    - 来源于 `lzc-deploy-params.yml`。
 2. `.SysParams(.S)`
    - 系统相关参数，例如：
-   - `.BoxName`
-   - `.BoxDomain`
-   - `.OSVersion`
-   - `.AppDomain`
-   - `.IsMultiInstance`
-   - `.DeployUID`
-   - `.DeployID`
+   - `.BoxName`：微服名称。
+   - `.BoxDomain`：微服域名。
+   - `.OSVersion`：微服系统版本号。测试版本可能显示为 `v99.99.99-xxx`。
+   - `.AppDomain`：当前应用实例域名。
+   - `.IsMultiInstance`：当前应用是否以多实例模式部署。
+   - `.DeployUID`：部署用户 UID。单实例应用下该值无实际意义。
+   - `.DeployID`：当前应用实例的唯一 ID。
 
 不再提供包内 `envs` 注入的 `.E` / `.PkgEnvs`。
 
