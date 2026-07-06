@@ -129,6 +129,9 @@ browser (async):
 Constraints:
 
 - `list` returns full results sorted by key (ascending).
+- `ctx.safe_uid` must be non-empty to access `ctx.persist`.
+- `key`/`prefix` are trimmed. Empty `key` cannot be used for `get`/`set`/`del`.
+- Values passed to `set` must be JSON-serializable.
 - No extra app-layer encryption is provided.
 
 ## `ctx.headers` (`request/response`)
@@ -140,11 +143,17 @@ Constraints:
 - `ctx.headers.add(name, value) -> void`
 - `ctx.headers.del(name) -> void`
 
+Notes:
+
+- `ctx.headers.set(name, null)` or `ctx.headers.set(name, undefined)` deletes the header.
+- `ctx.headers.set(name, array)` deletes existing values first, then adds each array item as a separate header value.
+- `ctx.headers.add(name, value)` appends one stringified value. `null`/`undefined` is ignored.
+
 ## `ctx.body` (`request/response`)
 
 - `ctx.body.getText(opts?) -> string`
 - `ctx.body.getJSON(opts?) -> any`
-- `ctx.body.getForm(opts?) -> Record<string, string | string[]>`
+- `ctx.body.getForm(opts?) -> Record<string, string[]>`
 - `ctx.body.set(body, opts?) -> void`
 
 `opts`:
@@ -157,6 +166,7 @@ Constraints:
 Notes:
 
 - `ctx.body.set(...)` updates `Content-Length` and clears `Content-Encoding` and `ETag`.
+- In `ctx.body.set(body, ...)`, string values are written as-is, `null`/`undefined` writes an empty body, and other values are JSON-encoded before writing.
 
 ## `ctx.flow` (`request/response`)
 
@@ -165,6 +175,12 @@ Notes:
 - `ctx.flow.del(key) -> void`
 - `ctx.flow.list(prefix?) -> Array<{key: string, value: any}>`
 
+Constraints:
+
+- `key`/`prefix` are trimmed. Empty `key` cannot be used for `get`/`set`/`del`.
+- Values passed to `set` must be JSON-serializable.
+- `list` returns full results sorted by key (ascending).
+
 ## `ctx.fs` (`request/response`)
 
 - `ctx.fs.exists(path) -> bool`
@@ -172,6 +188,29 @@ Notes:
 - `ctx.fs.readJSON(path, opts?) -> any`
 - `ctx.fs.stat(path) -> object`
 - `ctx.fs.list(path) -> string[]`
+
+Parameter constraints:
+
+- `path` must be absolute.
+- `ctx.fs.readText(...)` and `ctx.fs.readJSON(...)` read at most `max_bytes` bytes. If the file exceeds the limit, an error is thrown.
+- `ctx.fs.readJSON(...)` parses file content as JSON and returns the decoded value.
+- `ctx.fs.list(...)` returns direct child names only, without parent paths, sorted by name in ascending order.
+
+`opts`:
+
+| Field | Type | Default | Description |
+| ---- | ---- | ---- | ---- |
+| `max_bytes` | `int` | `1048576` | Max bytes for `readText`/`readJSON` file read |
+
+`ctx.fs.stat(path)` returns:
+
+| Field | Type | Description |
+| ---- | ---- | ---- |
+| `is_file` | `bool` | Whether the path is a regular file |
+| `is_dir` | `bool` | Whether the path is a directory |
+| `size` | `int` | File size in bytes |
+| `mod_time_unix` | `int` | Modification time as a Unix timestamp in seconds |
+| `mode` | `int` | File mode value |
 
 ## `ctx.client` (`request/response`)
 
@@ -191,6 +230,7 @@ Notes:
 ## `ctx.net` (`request/response`)
 
 - `ctx.net.joinHost(host, port) -> string`
+- `ctx.net.via.local() -> object`
 - `ctx.net.via.host() -> object`
 - `ctx.net.via.client(id) -> object`
 - `ctx.net.reachable(protocol, host, port, via?) -> bool`
@@ -199,6 +239,7 @@ Notes:
 
 - `protocol` currently supports `tcp`, `tcp4`, and `tcp6`.
 - `host` accepts either a container-reachable hostname or an IP literal.
+- `ctx.net.via.local()` returns `{ type: "local" }`, meaning the current container network.
 - `ctx.net.via.host()` means accessing the lzcos host network through remotesocket.
 - `ctx.net.via.client(id)` means accessing a specific client node network through remotesocket.
 - `reachable(...)` performs a live network probe with a default timeout of about `1200ms`.
@@ -222,11 +263,16 @@ Notes:
 
 `opts`:
 
-| Field | Type | Description |
-| ---- | ---- | ---- |
-| `headers` | `object` | Additional response headers |
-| `content_type` | `string` | `Content-Type` override |
-| `location` | `string` | Redirect location (required for `301/302/303/307/308`) |
+| Field | Type | Default | Description |
+| ---- | ---- | ---- | ---- |
+| `headers` | `object` | empty | Additional response headers |
+| `content_type` | `string` | `text/html; charset=utf-8` | `Content-Type` override |
+| `location` | `string` | empty | Redirect location (required for `301/302/303/307/308`) |
+
+Notes:
+
+- `headers` values can be single values or arrays. Arrays add multiple values for the same header.
+- Header fields with `null` values are not written.
 
 ## `ctx.proxy` (`request/response`)
 
@@ -234,14 +280,20 @@ Notes:
 
 `opts`:
 
-| Field | Type | Description |
-| ---- | ---- | ---- |
-| `use_target_host` | `bool` | Rewrite `Host` to target host |
-| `timeout_ms` | `int` | Per-request proxy timeout |
-| `path` | `string` | Optional path rewrite |
-| `query` | `string` | Optional query rewrite without `?` |
-| `via` | `object` | Optional network path object, usually from `ctx.net.via.host()` or `ctx.net.via.client(id)` |
-| `on_fail` | `string` | Failure policy: `keep_original` or `error` |
+| Field | Type | Default | Description |
+| ---- | ---- | ---- | ---- |
+| `use_target_host` | `bool` | `false` | Rewrite `Host` to target host |
+| `timeout_ms` | `int` | `5000` | Per-request proxy timeout in milliseconds |
+| `path` | `string` | empty | Optional path rewrite |
+| `query` | `string` | empty | Optional query rewrite without `?` |
+| `via` | `object` | empty | Optional network path object, usually from `ctx.net.via.local()`, `ctx.net.via.host()`, or `ctx.net.via.client(id)` |
+| `on_fail` | `string` | `keep_original` | Failure policy: `keep_original` or `error` |
+
+Notes:
+
+- `url` must include scheme and host.
+- If `path` is not set, the target URL path is used first. If the target URL has no path, the original request path is kept.
+- If `query` is not set, the target URL query is used first. If the target URL has no query, the original request query is kept.
 
 ## Execution Model Constraints
 
