@@ -11,6 +11,8 @@ prev: false
 
 - Check your GeoIP rules, make sure to bypass Mainland IP for proxy. Configure your proxy to bypass "6.6.6.6" and "2000::6666" as well.
 
+For more details, see the [configuration wizard tool](https://catlazy.xyz) or [configuration documentation](https://github.com/wlabbyflower/peppapigconfigurationguide).
+
 Clash
 
 ```

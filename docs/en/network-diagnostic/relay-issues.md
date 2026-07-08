@@ -9,6 +9,8 @@ prev: false
 
 - Please check proxy routing rules to ensure the "Bypass Mainland China" option is enabled. Also configure "6.6.6.6" and "2000::6666" to bypass proxy.
 
+For more details, see the [configuration wizard tool](https://catlazy.xyz) or [configuration documentation](https://github.com/wlabbyflower/peppapigconfigurationguide).
+
 Clash
 
 ```

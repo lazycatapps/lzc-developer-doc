@@ -9,3 +9,5 @@ prev: false
 
 ### Android
 - Please add LCMD MicroServer app to the bypass proxy application configuration in proxy software,
+
+For more details, see the [configuration wizard tool](https://catlazy.xyz) or [configuration documentation](https://github.com/wlabbyflower/peppapigconfigurationguide).

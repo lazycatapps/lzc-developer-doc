@@ -8,6 +8,8 @@ prev: false
 
 - In proxy configuration, add rules to bypass "*.heiyu.space".
 
+For more details, see the [configuration wizard tool](https://catlazy.xyz) or [configuration documentation](https://github.com/wlabbyflower/peppapigconfigurationguide).
+
 Clash:
 
 ```

@@ -11,7 +11,7 @@ prev: false
 
 由于不同系统和软件的设置方法不同，您可以参考以下链接进行更详细的设置:
 
-[配置指南](https://github.com/wlabbyflower/peppapigconfigurationguide)
+[配置向导工具](https://catlazy.xyz) 或者 [配置文档](https://github.com/wlabbyflower/peppapigconfigurationguide)
 
 ::: tip 6.6.6.6
 

@@ -8,6 +8,8 @@ prev: false
 
 - In proxy configuration, add rules to bypass LCMD MicroServer public service server domains.
 
+For more details, see the [configuration wizard tool](https://catlazy.xyz) or [configuration documentation](https://github.com/wlabbyflower/peppapigconfigurationguide).
+
 Clash:
 
 ```
