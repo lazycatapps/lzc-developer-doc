@@ -205,13 +205,15 @@ services:
 | `mime` | `[]string` | 支持的 MIME 类型列表 |
 | `actions` | `map[string]string` | 动作映射 |
 
-## 九、`HandlersConfig` 配置
+## 九、`HandlersConfig` 配置（已废弃）
 
-### 9.1 处理程序配置
+### 9.1 处理程序配置（已废弃）
+`application.handlers` 已废弃。请求和响应处理逻辑请使用 `application.injects` 的 `request` / `response` 阶段实现。
+
 | 字段名 | 类型 | 描述 |
 | ---- | ---- | ---- |
-| `acl_handler` | `string` | ACL 处理程序 |
-| `error_page_templates` | `map[string]string` | 错误页面模板， 可选 |
+| `acl_handler` | `string` | 已废弃，ACL 处理程序，可使用 `request inject` 替代 |
+| `error_page_templates` | `map[string]string` | 已废弃，错误页面模板，可使用 `response inject` 替代，可选 |
 
 
 ## 十、`UpstreamConfig` 配置

@@ -205,13 +205,15 @@ services:
 | `mime` | `[]string` | List of supported MIME types |
 | `actions` | `map[string]string` | Action mapping |
 
-## 9. `HandlersConfig` Configuration
+## 9. `HandlersConfig` Configuration (Deprecated)
 
-### 9.1 Handler Configuration
+### 9.1 Handler Configuration (Deprecated)
+`application.handlers` is deprecated. Use the `request` / `response` phases of `application.injects` for request and response handling logic.
+
 | Field Name | Type | Description |
 | ---- | ---- | ---- |
-| `acl_handler` | `string` | ACL handler |
-| `error_page_templates` | `map[string]string` | Error page templates, optional |
+| `acl_handler` | `string` | Deprecated, ACL handler. Use `request inject` instead |
+| `error_page_templates` | `map[string]string` | Deprecated, error page templates. Use `response inject` instead, optional |
 
 
 ## 10. `UpstreamConfig` Configuration
