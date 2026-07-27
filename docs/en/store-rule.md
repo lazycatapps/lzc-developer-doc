@@ -11,7 +11,7 @@ Open source software must include the upstream author's address, and closed sour
 When two developers port the same application, the incentive red envelope will only be given to the first application to be listed, and only applications with normal functionality can be listed.
 
 #### 2. Original Applications
-Original applications developed by developers themselves are incentivized at 150 ~ 500 yuan, and the incentive amount is comprehensively evaluated based on the application's functionality, interface beauty, and quality stability. Currently, it's quite subjective, so please understand.
+Original applications developed by developers themselves are incentivized at 100 ~ 500 yuan, and the incentive amount is comprehensively evaluated based on the application's functionality, interface beauty, and quality stability. Currently, it's quite subjective, so please understand.
 
 Original applications that respond to user needs and update features will continue to be incentivized.
 
@@ -43,7 +43,15 @@ The following types of guides may pass review and be listed, but do not have suf
 Please note that even if guides are not eligible for rewards, as long as the content is accurate and meets basic standards, they can still be reviewed and listed. We encourage everyone to create high-quality content to receive rewards and help more users!
 
 #### 5. Application Types Not Eligible for Red Envelopes
-Of course, some types of applications are temporarily not within the reward scope, such as pure web games, pure book pages, pure tutorial websites, web offline applications, image hosting, navigation sites, bookmark managers, note-taking apps, online video streaming (MoonTV-derived), to-do list apps, URL shorteners, self-destructing message apps, MyTube-type apps (pulling YouTube content), VPN apps, expense trackers, different mods of game servers, or pure database software.
+Of course, some types of applications are temporarily not within the reward scope, such as:
+
+| **Application Category**                     | **Specific Excluded Application Types**                                                                                                                                                                                        |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Content, Media & Information Aggregation** | Pure book pages, pure tutorial websites, online video streaming (e.g., MoonTV modified versions), MyTube-type apps (pulling YouTube content), image hosting, navigation sites, **RSS apps**, **Agent role-play/dialogue apps** |
+| **Productivity & Lifestyle Management**      | Note-taking apps, bookmark managers, to-do list apps, expense trackers, **AI job resume apps**                                                                                                                                 |
+| **Gaming & Entertainment**                   | Pure web games, different mods of game servers                                                                                                                                                                                 |
+| **Network, Operations & Basic Tools**        | VPN apps, URL shorteners, self-destructing message apps, web offline applications, pure database software, **Cron jobs**                                                                                                       |
+
 If developers feel these applications are necessary, everyone is welcome to upload them to the app store.
 
 
