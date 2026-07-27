@@ -10,8 +10,9 @@
 2. `import_resources` 要求 `lzcos >= v1.5.2`。
 3. `hidden_from_launcher` 要求 `lzcos >= v1.5.3`。
 4. `user.notify` 要求 `lzcos >= v1.6.0`。
-5. 如需实际构建对应的 `LPK v2` 包，请配合 `lzc-cli v2.0.0+`。
-6. 当前 `permissions` 只定义微服侧权限，不包含客户端权限，也不包含资源配额。
+5. `fuse.mount` 要求 `LZCOS v1.6.1+`。
+6. 如需实际构建对应的 `LPK v2` 包，请配合 `lzc-cli v2.0.0+`。
+7. 当前 `permissions` 只定义微服侧权限，不包含客户端权限，也不包含资源配额。
 
 自 LPK v2 起，以下静态字段应统一放在 `package.yml`，不再写到 `lzc-manifest.yml` 顶层：
 
@@ -114,7 +115,7 @@
 | `device.usb` | 访问 USB 设备 | 允许应用访问连接到微服的 USB 设备 |
 | `device.kvm` | 访问 KVM 设备 | 允许应用访问 KVM 相关设备 |
 | `device.block` | 访问块设备 | 允许应用访问块设备相关能力 |
-| `fuse.mount` | 挂载 FUSE 文件系统 | 允许应用自行挂载 FUSE 文件系统 |
+| `fuse.mount` | 挂载 FUSE 文件系统 | 允许应用挂载 FUSE 文件系统。声明后会在应用服务中注入 `/lzcinit/fusermount3`，并将 `/lzcinit` 加入 `PATH`，使 rclone、sshfs 等标准 FUSE 客户端无需额外配置即可使用。要求 `LZCOS v1.6.1+` |
 
 ### 5.4 跨应用数据
 
