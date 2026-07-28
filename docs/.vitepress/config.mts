@@ -104,6 +104,7 @@ const zhLocaleThemeConfig = {
         { text: "错误页面", link: "/advanced-error-template.md" },
         { text: "平台支持", link: "/advanced-platform.md" },
         { text: "GPU 加速", link: "/advanced-gpu.md" },
+        { text: "物理显示器应用", link: "/advanced-vt.md" },
       ],
     },
     {
@@ -250,6 +251,10 @@ const enLocaleThemeConfig = {
         { text: "Error Pages", link: "/en/advanced-error-template.md" },
         { text: "Platform Support", link: "/en/advanced-platform.md" },
         { text: "GPU Acceleration", link: "/en/advanced-gpu.md" },
+        {
+          text: "Physical Display Applications",
+          link: "/en/advanced-vt.md",
+        },
       ],
     },
     {

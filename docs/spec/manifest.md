@@ -44,6 +44,7 @@
 | `usb_accel` | `bool` | 挂载相关设备到所有服务容器内的 `/dev/bus/usb` |
 | `gpu_accel` | `bool` | 挂载相关设备到所有服务容器内的 `/dev/dri` |
 | `kvm_accel` | `bool` | 挂载相关设备到所有服务容器内的 `/dev/kvm` 和 `/dev/vhost-net` |
+| `vt` | `bool` | 是否为 lzcapp 启用物理显示器 VT，默认 `false`。启用时必须声明 `vt.display` 权限，且所有 service 均不能使用 `sysbox-runc`，详见 [物理显示器应用](../advanced-vt.md) |
 | `depends_on` | `[]string` | 依赖的其他容器服务， 仅支持本应用内的其他服务， 且强制检测类型为 `healthly`， 可选 |
 
 ### 4.2 功能配置

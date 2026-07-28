@@ -116,6 +116,7 @@
 | `device.kvm` | 访问 KVM 设备 | 允许应用访问 KVM 相关设备 |
 | `device.block` | 访问块设备 | 允许应用访问块设备相关能力 |
 | `fuse.mount` | 挂载 FUSE 文件系统 | 允许应用挂载 FUSE 文件系统。声明后会在应用服务中注入 `/lzcinit/fusermount3`，并将 `/lzcinit` 加入 `PATH`，使 rclone、sshfs 等标准 FUSE 客户端无需额外配置即可使用。要求 `LZCOS v1.6.1+` |
+| `vt.display` | 使用 VT 显示 | 允许 lzcapp 使用物理显示器 VT 能力。使用时还需要设置 `application.vt: true`，详见 [物理显示器应用](../advanced-vt.md) |
 
 ### 5.4 跨应用数据
 

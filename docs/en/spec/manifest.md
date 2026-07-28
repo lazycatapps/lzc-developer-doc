@@ -44,6 +44,7 @@ Note: since LPK v2, static package metadata is stored in `package.yml`, includin
 | `usb_accel` | `bool` | Mount related devices to `/dev/bus/usb` in all service containers |
 | `gpu_accel` | `bool` | Mount related devices to `/dev/dri` in all service containers |
 | `kvm_accel` | `bool` | Mount related devices to `/dev/kvm` and `/dev/vhost-net` in all service containers |
+| `vt` | `bool` | Whether to enable a physical display VT for the lzcapp. Defaults to `false`. Enabling it requires the `vt.display` permission, and all services must use a runtime other than `sysbox-runc`. See [Physical Display Applications](../advanced-vt.md) |
 | `depends_on` | `[]string` | Dependencies on other container services, only supports other services within this application, and enforces detection type as `healthly`, optional |
 
 ### 4.2 Functional Configuration
