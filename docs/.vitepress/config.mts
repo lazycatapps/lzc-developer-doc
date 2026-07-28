@@ -29,6 +29,7 @@ const zhLocaleThemeConfig = {
     { text: "指南", link: "/" },
     { text: "系统变更日志", link: "/changelog.md" },
     { text: "开发者中心", link: "https://developer.lazycat.cloud/manage" },
+    { text: "算力舱文档", link: "https://developer.lazycat.cloud/aipod/" },
     {
       text: "懒猫 AI Skills",
       link: "https://github.com/whoamihappyhacking/lazycat-skills",
