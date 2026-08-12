@@ -88,8 +88,8 @@ Entry title supports localization via `locales` with `entries.<entry_id>.title`.
 | `on` | `string` | Phase: `browser`/`request`/`response`, default `browser` |
 | `prefix_domain` | `string` | Domain prefix filter, matches only `<prefix>-<subdomain>...` |
 | `auth_required` | `bool` | Require valid `SAFE_UID`, default `true` |
-| `when` | `[]string` | Match rules (OR), at least one |
-| `unless` | `[]string` | Exclude rules (OR), optional |
+| `when` | `[]string` | Match rules (OR), at least one; supports exact matching or suffix-`*` prefix matching |
+| `unless` | `[]string` | Exclude rules (OR), optional; supports exact matching or suffix-`*` prefix matching |
 | `do` | `string \| []InjectScriptConfig` | Script definition, supports short syntax and long syntax |
 
 #### InjectScriptConfig

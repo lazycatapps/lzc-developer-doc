@@ -160,7 +160,6 @@ const zhLocaleThemeConfig = {
         { text: "lzc-build.yml", link: "/spec/build.md" },
         { text: "package.yml", link: "/spec/package.md" },
         { text: "lzc-manifest.yml", link: "/spec/manifest.md" },
-        { text: "inject.ctx", link: "/spec/inject-ctx.md" },
         { text: "lzc-deploy-params.yml", link: "/spec/deploy-params.md" },
         { text: "lpk format", link: "/spec/lpk-format.md" },
       ],
@@ -323,7 +322,6 @@ const enLocaleThemeConfig = {
       items: [
         { text: "lzc-build.yml", link: "/en/spec/build.md" },
         { text: "lzc-manifest.yml", link: "/en/spec/manifest.md" },
-        { text: "inject.ctx", link: "/en/spec/inject-ctx.md" },
         { text: "lzc-deploy-params.yml", link: "/en/spec/deploy-params.md" },
         { text: "lpk format", link: "/en/spec/lpk-format.md" },
       ],

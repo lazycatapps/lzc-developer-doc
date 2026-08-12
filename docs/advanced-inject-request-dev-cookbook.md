@@ -11,8 +11,7 @@
 相关基础文档：
 
 1. [开发流程总览](./getting-started/dev-workflow.md)
-2. [inject.ctx 规范](./spec/inject-ctx.md)
-3. [脚本注入（injects）](./advanced-injects.md)
+2. [脚本注入与 ctx API](./advanced-injects.md#ctx-api)
 
 ## 1. 只在 dev 模式下启用 {#dev-only}
 
@@ -263,6 +262,6 @@ ctx.headers.set("X-Debug-Dev-Online", String(ctx.dev.online()));
 
 ## 下一步 {#next}
 
-1. 如果你要看 API 规范：继续阅读 [inject.ctx 规范](./spec/inject-ctx.md)
+1. 如果你要看 API 规范：继续阅读 [脚本注入与 ctx API](./advanced-injects.md#ctx-api)
 2. 如果你要看总体开发流：继续阅读 [开发流程总览](./getting-started/dev-workflow.md)
 3. 如果你要看内置脚本与匹配机制：继续阅读 [脚本注入（injects）](./advanced-injects.md)

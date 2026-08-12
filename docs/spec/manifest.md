@@ -88,8 +88,8 @@
 | `on` | `string` | 阶段，支持 `browser`/`request`/`response`，默认 `browser` |
 | `prefix_domain` | `string` | 域名前缀过滤，仅匹配 `<prefix>-<subdomain>...` |
 | `auth_required` | `bool` | 是否要求请求带合法 `SAFE_UID`，默认 `true` |
-| `when` | `[]string` | 命中条件（OR），至少 1 条 |
-| `unless` | `[]string` | 排除条件（OR），可选 |
+| `when` | `[]string` | 命中条件（OR），至少 1 条；支持精确匹配或末尾 `*` 前缀匹配 |
+| `unless` | `[]string` | 排除条件（OR），可选；支持精确匹配或末尾 `*` 前缀匹配 |
 | `do` | `string \| []InjectScriptConfig` | 脚本定义，支持 short syntax 和 long syntax |
 
 #### InjectScriptConfig

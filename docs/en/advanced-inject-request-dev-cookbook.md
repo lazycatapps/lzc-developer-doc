@@ -11,8 +11,7 @@ Target scenarios:
 Related docs:
 
 1. [Dev Workflow Overview](./getting-started/dev-workflow.md)
-2. [inject.ctx spec](./spec/inject-ctx.md)
-3. [Script Injection (injects)](./advanced-injects.md)
+2. [Script Injection and the ctx API](./advanced-injects.md#ctx-api)
 
 ## 1. Enable only in dev mode {#dev-only}
 
@@ -263,6 +262,6 @@ These helpers work best together:
 
 ## Next {#next}
 
-1. For API reference: continue with [inject.ctx spec](./spec/inject-ctx.md)
+1. For API reference: continue with [Script Injection and the ctx API](./advanced-injects.md#ctx-api)
 2. For the full workflow: continue with [Dev Workflow Overview](./getting-started/dev-workflow.md)
 3. For inject matching and built-in scripts: continue with [Script Injection (injects)](./advanced-injects.md)
