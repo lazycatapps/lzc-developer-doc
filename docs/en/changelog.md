@@ -2,6 +2,12 @@
 
 This page aggregates developer-related system changes and lists versions in reverse chronological order.
 
+## v1.6.2 (Unreleased) {#v1-6-2}
+
+### Feature Changes
+
+- Added [Dynamic Application Icons](./advanced-dynamic-icon.md), allowing applications to update their launcher icons at runtime to indicate backup status, available updates, completed downloads, errors, and other state changes.
+
 ## v1.6.0 (2026-6-12) {#v1-6-0}
 
 ### Feature Changes

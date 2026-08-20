@@ -96,6 +96,7 @@ const zhLocaleThemeConfig = {
         { text: "4层转发", link: "/advanced-l4forward.md" },
         { text: "manifest.yml渲染 ", link: "/advanced-manifest-render.html" },
         { text: "多入口", link: "/advanced-entries.md" },
+        { text: "动态应用图标", link: "/advanced-dynamic-icon.md" },
         { text: "多实例", link: "/advanced-multi-instance.md" },
         { text: "启动依赖", link: "/advanced-depends.md" },
         { text: "初始化脚本", link: "/advanced-setupscript.md" },
@@ -242,6 +243,10 @@ const enLocaleThemeConfig = {
           link: "/en/advanced-manifest-render.html",
         },
         { text: "Multiple Entrypoints", link: "/en/advanced-entries.md" },
+        {
+          text: "Dynamic Application Icons",
+          link: "/en/advanced-dynamic-icon.md",
+        },
         { text: "Multi-Instance", link: "/en/advanced-multi-instance.md" },
         { text: "Startup Dependencies", link: "/en/advanced-depends.md" },
         { text: "Initialization Script", link: "/en/advanced-setupscript.md" },
