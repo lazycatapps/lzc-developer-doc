@@ -8,6 +8,17 @@
 
 - 新增[动态应用图标](./advanced-dynamic-icon.md)支持，应用可以在运行过程中更新启动器中显示的图标，用于展示备份、更新、下载完成和异常等状态
 
+## v1.6.1（2026-08-17） {#v1-6-1}
+
+### 功能调整
+
+- 新增 [`fuse.mount`](./spec/package.md) 权限，允许应用挂载 FUSE 文件系统；声明后会在应用服务中注入 `/lzcinit/fusermount3`，并将 `/lzcinit` 加入 `PATH`
+- 新增[物理显示器 VT](./advanced-vt.md)支持，应用可以将 Linux 控制台、Xorg、LightDM 等本地图形界面输出到连接微服的物理显示器，并查询或激活自己的显示界面
+
+### 兼容性调整
+
+- 取消 LPK 默认挂载 `/dev/fuse` 的行为；`/dev/fuse` 不支持非特权进程直接使用。需要使用 FUSE 的应用应声明 `fuse.mount` 权限，并使用系统注入的 `/lzcinit/fusermount3`
+
 ## v1.6.0（2026-6-12) {#v1-6-0}
 
 ### 功能调整

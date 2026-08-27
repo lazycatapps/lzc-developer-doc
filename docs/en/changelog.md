@@ -8,6 +8,17 @@ This page aggregates developer-related system changes and lists versions in reve
 
 - Added [Dynamic Application Icons](./advanced-dynamic-icon.md), allowing applications to update their launcher icons at runtime to indicate backup status, available updates, completed downloads, errors, and other state changes.
 
+## v1.6.1 (2026-08-17) {#v1-6-1}
+
+### Feature Changes
+
+- Added the [`fuse.mount`](../spec/package.md) permission, allowing applications to mount FUSE file systems. Declaring it injects `/lzcinit/fusermount3` into application services and adds `/lzcinit` to `PATH`.
+- Added [physical display VT](./advanced-vt.md) support. Applications can output Linux consoles, Xorg, LightDM, and other local graphical interfaces to a physical display connected to the Lazycat Microserver, and query or activate their own display interface.
+
+### Compatibility Changes
+
+- LPKs no longer mount `/dev/fuse` by default. `/dev/fuse` does not support direct use by unprivileged processes. Applications that use FUSE should declare the `fuse.mount` permission and use the `/lzcinit/fusermount3` helper injected by the system.
+
 ## v1.6.0 (2026-6-12) {#v1-6-0}
 
 ### Feature Changes
