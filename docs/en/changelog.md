@@ -8,6 +8,10 @@ This page aggregates developer-related system changes and lists versions in reve
 
 - Added [Dynamic Application Icons](./advanced-dynamic-icon.md), allowing applications to update their launcher icons at runtime to indicate backup status, available updates, completed downloads, errors, and other state changes.
 
+### Compatibility Changes
+
+- Fixed automatic health-check handling for `exec://$port,$exec_file_path` in `routes`. Older versions did not include these routes in automatic health checks, while newer versions correctly include the corresponding local port in monitoring. LPKs that depend on the old behavior and do not provide a service on `$port` may be affected; this fix breaks compatibility.
+
 ## v1.6.1 (2026-08-17) {#v1-6-1}
 
 ### Feature Changes
