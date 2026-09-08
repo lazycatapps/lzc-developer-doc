@@ -3,7 +3,7 @@
 ## 一、 概述
 `lzc-manifest.yml` 是用于定义应用运行结构与部署相关配置的文件。 本文档将详细描述其结构和各字段的含义。
 
-说明：自 LPK v2 起，静态包元数据统一放入 `package.yml`，包括 `package`、`version`、`name`、`description`、`locales`、`author`、`license`、`homepage`、`min_os_version` 与 `unsupported_platforms`。`lzc-manifest.yml` 只保留运行结构相关字段。
+说明：自 LPK v2 起，静态包元数据统一放入 [package.yml](./package.md)，包括 `package`、`version`、`name`、`description`、`locales`、`author`、`license`、`homepage`、`min_os_version` 与 `unsupported_platforms`。`lzc-manifest.yml` 只保留运行结构相关字段。
 
 ## 二、 顶层数据结构 `ManifestConfig`
 

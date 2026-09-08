@@ -3,7 +3,7 @@
 ## 1. Overview
 `lzc-manifest.yml` defines runtime structure and deployment-related behavior for an application. This document describes its structure and each field.
 
-Note: since LPK v2, static package metadata is stored in `package.yml`, including `package`, `version`, `name`, `description`, `locales`, `author`, `license`, `homepage`, `min_os_version`, and `unsupported_platforms`. `lzc-manifest.yml` keeps runtime-structure fields only.
+Note: since LPK v2, static package metadata is stored in [package.yml](../../spec/package.md) (Chinese), including `package`, `version`, `name`, `description`, `locales`, `author`, `license`, `homepage`, `min_os_version`, and `unsupported_platforms`. `lzc-manifest.yml` keeps runtime-structure fields only.
 
 ## 2. Top-level Data Structure `ManifestConfig`
 

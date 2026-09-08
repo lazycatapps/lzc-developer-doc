@@ -1,5 +1,7 @@
 # 平台支持
-微服官方应用天然支持 Linux/Windows/macOS/Android/iOS/鸿蒙等 6 个平台， 当您开发的应用并不想支持某些平台时， 可以在 `lzc-manifest.yml` 文件中加入 `unsupported_platforms` 字段即可：
+懒猫微服客户端覆盖 Linux、Windows、macOS、Android、iOS、鸿蒙等平台，各应用实际支持的平台取决于自身的适配情况。如果您的应用不支持某些平台，可以通过 `unsupported_platforms` 字段声明。
+
+LPK v1 将该字段放在 `lzc-manifest.yml` 顶层，与 `application` 同级；LPK v2 将其放在 `package.yml` 顶层，与 `package`、`version` 同级。两个版本的字段含义和写法相同，在对应文件顶层加入以下配置片段：
 
 ```yml
 unsupported_platforms:
