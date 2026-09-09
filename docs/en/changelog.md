@@ -2,7 +2,7 @@
 
 This page aggregates developer-related system changes and lists versions in reverse chronological order.
 
-## v1.6.2 (Unreleased) {#v1-6-2}
+## v1.6.2 (2026-09-09) {#v1-6-2}
 
 ### Feature Changes
 
