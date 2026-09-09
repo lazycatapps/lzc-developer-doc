@@ -52,8 +52,11 @@ Of course, some types of applications are temporarily not within the reward scop
 | **Gaming & Entertainment**                   | Pure web games, different mods of game servers                                                                                                                                                                                 |
 | **Network, Operations & Basic Tools**        | VPN apps, URL shorteners, self-destructing message apps, web offline applications, pure database software, **Cron jobs**                                                                                                       |
 
-If developers feel these applications are necessary, everyone is welcome to upload them to the app store.
+::: tip Supplementary Note
+  VNC-type applications are not eligible for the incentive program. For example, building a VNC environment to deploy and list a single application in the store is not covered by the incentive scope. Such applications are recommended for users to install and deploy directly within the lightOS system.
+:::
 
+If developers feel these applications are necessary, everyone is welcome to upload them to the app store.
 
 #### 6. Totoro Skill Launch
 To ensure the quality and security of Little Totoro Skills (many Skills online are known to steal user data), the Skill review process will be exceptionally strict. Skills that are not high enough in quality or lack sufficient utility will not pass review. There will be no incentives at the time of Skill launch. The official team will provide retroactive incentives for reviewed and approved Skills based on download numbers at a later stage.
