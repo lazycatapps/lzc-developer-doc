@@ -102,7 +102,8 @@
 
 #### iOS保活图文教程{#iOS}
 
-<img src="https://lzc-playground-1301583638.cos.ap-chengdu.myqcloud.com/guidelines/395/20250414140712138.png?imageSlim" alt="image-20250414140711942" style="zoom:50%;" /> 
+![ios](./images/ios-keepalive.jpg)
+
 
 #### Android保活图文教程{#Android}
 
