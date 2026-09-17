@@ -42,21 +42,23 @@ The following types of guides may pass review and be listed, but do not have suf
 
 Please note that even if guides are not eligible for rewards, as long as the content is accurate and meets basic standards, they can still be reviewed and listed. We encourage everyone to create high-quality content to receive rewards and help more users!
 
-#### 5. Application Types Not Eligible for Red Envelopes
-Of course, some types of applications are temporarily not within the reward scope, such as:
+#### 5. Application Types Not Eligible for Incentives
 
-| **Application Category**                     | **Specific Excluded Application Types**                                                                                                                                                                                        |
-| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Content, Media & Information Aggregation** | Pure book pages, pure tutorial websites, online video streaming (e.g., MoonTV modified versions), MyTube-type apps (pulling YouTube content), image hosting, navigation sites, **RSS apps**, **Agent role-play/dialogue apps** |
-| **Productivity & Lifestyle Management**      | Note-taking apps, bookmark managers, to-do list apps, expense trackers, **AI job resume apps**                                                                                                                                 |
-| **Gaming & Entertainment**                   | Pure web games, different mods of game servers                                                                                                                                                                                 |
-| **Network, Operations & Basic Tools**        | VPN apps, URL shorteners, self-destructing message apps, web offline applications, pure database software, **Cron jobs**                                                                                                       |
+The following application types are currently not eligible for the incentive program:
+
+| **Application Category** | **Application Types Not Eligible for Incentives** |
+| --- | --- |
+| **Content, Media & Information** | Image hosting, navigation sites, online video streaming (such as modified MoonTV versions), MyTube-type apps (pulling YouTube content), blogs, RSS apps, and AI novel-writing apps |
+| **Productivity & Lifestyle Management** | Bookmark managers, note-taking apps, to-do list apps, personal finance and expense-tracking apps, and AI job resume apps |
+| **Network, API & Basic Tools** | VPN apps, URL shorteners, self-destructing message apps, database apps, API aggregation or relay services, Web-to-API apps with time-sensitive functionality, reverse-engineered API apps, and Cron job apps |
+| **AI Interaction** | Agent role-play/dialogue apps |
+| **Remote Desktop** | VNC-type apps |
 
 ::: tip Supplementary Note
-  VNC-type applications are not eligible for the incentive program. For example, building a VNC environment to deploy and list a single application in the store is not covered by the incentive scope. Such applications are recommended for users to install and deploy directly within the lightOS system.
+VNC-type applications are not eligible for the incentive program. For example, building a VNC environment to deploy and list a single application in the store is not covered by the incentive scope. Such applications are recommended for users to install and deploy directly within the lightOS system.
 :::
 
-If developers feel these applications are necessary, everyone is welcome to upload them to the app store.
+Not being eligible for incentives does not mean an application cannot be listed. Applications that meet the store review requirements may still be submitted for review.
 
 #### 6. Totoro Skill Launch
 To ensure the quality and security of Little Totoro Skills (many Skills online are known to steal user data), the Skill review process will be exceptionally strict. Skills that are not high enough in quality or lack sufficient utility will not pass review. There will be no incentives at the time of Skill launch. The official team will provide retroactive incentives for reviewed and approved Skills based on download numbers at a later stage.
