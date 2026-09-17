@@ -102,7 +102,7 @@ Optimization tutorial: [PeppaPig](https://github.com/wlabbyflower/peppapigconfig
 
 #### iOS Keep-Alive Graphic Tutorial {#iOS}
 
-<img src="https://lzc-playground-1301583638.cos.ap-chengdu.myqcloud.com/guidelines/395/20250414140712138.png?imageSlim" alt="image-20250414140711942" style="zoom:50%;" /> 
+![ios](./images/ios-keepalive-en.jpg)
 
 #### Android Keep-Alive Graphic Tutorial {#Android}
 
