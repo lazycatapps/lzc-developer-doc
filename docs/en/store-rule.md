@@ -47,11 +47,11 @@ Of course, some types of applications are temporarily not within the reward scop
 
 | **Application Category**                     | **Specific Excluded Application Types**                                                                                                                                                                                        |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Content, Media & Information Aggregation** | Pure book pages, pure tutorial websites, online video streaming (e.g., MoonTV modified versions), MyTube-type apps (pulling YouTube content), image hosting, navigation sites, **RSS apps**, **media apps (poster wall, Jellyfin front-end apps)**, **forum apps**, **information dashboards** |
+| **Content, Media & Information Aggregation** | Pure book pages, pure tutorial websites, online video streaming (e.g., MoonTV modified versions), MyTube-type apps (pulling YouTube content), image hosting, navigation sites, RSS apps, **media apps (poster wall, Jellyfin front-end apps)**, **forum apps**, **information dashboards** |
 | **Productivity & Lifestyle Management** | Note-taking apps, bookmark managers, to-do list apps, expense trackers, **self-hosted management apps (warehouse/inventory, medicine, asset, ticketing, etc.)** |
-| **AI Generation & Wrapper Tools** | **Agent role-play/dialogue apps**, **AI resume/cover letter generators**, **AI novel/article generators**, and other general-purpose AI tools that merely wrap a large model API with a simple UI and have no complex workflow |
+| **AI Generation & Wrapper Tools** | Agent role-play/dialogue apps, AI resume/cover letter generators, **AI novel/article generators**, and **other general-purpose AI tools that merely wrap a large model API with a simple UI and have no complex workflow** |
 | **Gaming & Entertainment** | Pure web games, different mods of game servers |
-| **Network, Operations & Basic Tools** | VPN apps, URL shorteners, self-destructing message apps, web offline applications, pure database software, **Cron jobs** |
+| **Network, Operations & Basic Tools** | VPN apps, URL shorteners, self-destructing message apps, web offline applications, pure database software, Cron jobs |
 
 ::: tip Supplementary Note
   VNC-type applications are not eligible for the incentive program. For example, building a VNC environment to deploy and list a single application in the store is not covered by the incentive scope. Such applications are recommended for users to install and deploy directly within the lightOS system.
