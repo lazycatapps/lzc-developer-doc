@@ -1,88 +1,55 @@
 # Community Incentive Rules
-To make LCMD MicroServer applications more numerous and better to use, we have prepared red envelope rewards for community contributors:
 
-#### 1. Port High-Quality Self-Hosted Applications
-For each successfully ported self-hosted application, we will give a 100 yuan red envelope reward.
+To make LazyCat Cloud's applications more abundant and user-friendly, we have prepared cash bonuses and a tipping mechanism for community contributors:
 
-For porting game masterpieces' server-side, for each successfully ported one, we will give a 300 yuan red envelope reward. The criteria for game masterpieces are: beautiful graphics, relatively famous, and many players. For general quality game server-side, 100 yuan each.
+#### 1. Application Incentive and Tipping Mechanism
 
-Open source software must include the upstream author's address, and closed source software is also welcome to be listed in the store.
+To encourage the emergence of more high-quality applications, the LazyCat Store implements a dual-track incentive model: "Download Milestone Incentives + User Tipping". As long as an application is successfully published, there are no restrictions on specific application types, and all can participate in the following incentives:
 
-When two developers port the same application, the incentive red envelope will only be given to the first application to be listed, and only applications with normal functionality can be listed.
+* **Download Milestone Incentive**: After an application is ported or originally developed and published, once its cumulative downloads in the LazyCat Store exceed **100**, the official team will directly issue a **100 RMB** cash bonus (executed via the store's tipping feature).
+* **User Tipping Channel**: All high-quality applications can enable the tipping channel upon publishing and updating. In addition to the official milestone incentives, developers can continuously receive direct tipping revenue from real users, with no cap on earnings.
 
-#### 2. Original Applications
-Original applications developed by developers themselves are incentivized at 100 ~ 500 yuan, and the incentive amount is comprehensively evaluated based on the application's functionality, interface beauty, and quality stability. Currently, it's quite subjective, so please understand.
+#### 2. Writing Store Application Guides
 
-Original applications that respond to user needs and update features will continue to be incentivized.
+In alignment with this incentive upgrade, **no official cash bonuses will be issued for any tutorial or guide content**.
 
-#### 3. Integrate with LCMD Account System and Cloud Storage Right-Click Menu Interface
-On the basis of porting applications, if you can also integrate with the LCMD account system or cloud storage right-click menu interface, we will give an additional 50 yuan red envelope reward.
+Although there are no cash incentives, we still encourage developers and creators to share their insights on using applications. As long as the guide content is authentic, accurate, and meets basic standards, it can be reviewed and published normally.
 
-For self-ported applications with integration features, each application rewards 150 yuan red envelope.
-Fork other developers' software and add integration features, each application rewards 50 yuan red envelope.
+**Why do we still encourage writing guides?**
 
-#### 4. Write Store Application Guides
+1. **Assisting Application Review**: For applications with complex features, providing a comprehensive user manual or operational guide is a **mandatory prerequisite for passing the application review**.
+2. **Boosting Downloads and Tipping Revenue**: Excellent guides help new users get started quickly, effectively increasing the application's download volume (helping you reach the 100-download official incentive faster) and user retention, thereby indirectly increasing user tipping revenue.
 
-We provide 50 yuan red envelope rewards for high-quality application guides. To ensure the guide content is practical and valuable, please follow the rules below. Only guides that meet these rules can receive rewards.
+**Basic Requirements for Publishing Guides:**
 
-**Requirements for High-Quality Guides**
-Guides must be authentic, detailed, and provide complete guidance for specific use cases of the application. Specifically including:
-1. **Include software screenshots and link to app store**: The guide needs to insert actual software interface screenshots and clearly link or reference relevant information from the app store.
-2. **Steps are authentic and effective**: All operation steps must be based on actual testing to ensure users can successfully reproduce them.
-3. **Detailed introduction for specific use cases**: Choose a typical scenario of the application (such as daily use or professional functions) and provide complete steps from start to finish.
-4. **Key explanations for complex applications**: For applications with more complex operations, provide detailed explanations of key steps, operation techniques, or parameter filling rules (such as input format, precautions).
-5. **Use case examples**: Use actual examples to illustrate the application's applicable scenarios and help users understand its value.
-6. **Share practical tips**: Focus on content-level tip sharing, for example, in AI image generation applications, not only introduce software operations but also emphasize how to optimize Prompts to achieve better results.
+* **Authentic and Effective**: All operational steps must be based on actual testing to ensure users can smoothly replicate them.
+* **Rich Media**: It is recommended to include actual screenshots of the software interface and clearly link to the application store.
+* **Clear Scenarios**: Provide guidance for typical use cases of the application, avoiding shallow descriptions of single buttons without context.
 
-**Guide Types Not Eligible for Rewards**
-The following types of guides may pass review and be listed, but do not have sufficient depth or innovation, so they cannot receive red envelope rewards:
-1. **Simple tool software**: The software itself is ready to use out of the box, requires no complex operations, and has no shareable content tips (such as basic calculators).
-2. **Only labeling and translating interfaces**: Only simple labeling or translation of software interfaces without providing actual usage guidance.
-3. **Isolated button introductions**: Only superficial descriptions of a certain button or function without a complete usage flow.
+*Note: For simple, out-of-the-box utility software, while complex guides are not required for publishing, sharing practical tips will still be welcomed by the community.*
 
-Please note that even if guides are not eligible for rewards, as long as the content is accurate and meets basic standards, they can still be reviewed and listed. We encourage everyone to create high-quality content to receive rewards and help more users!
+#### 3. Totoro Skill Launch
 
-#### 5. Application Types Not Eligible for Incentives
+To ensure the quality and security of Totoro Skills (many Skills online are known to steal user data), the Skill review process will be exceptionally strict. Skills that are not high enough in quality or lack sufficient utility will not pass review. There will be no incentives at the time of Skill launch. The official team will provide retroactive incentives for reviewed and approved Skills based on download numbers at a later stage.
 
-The following application types are currently not eligible for the incentive program:
+#### 4. Prohibited Application Types
 
-| **Application Category** | **Application Types Not Eligible for Incentives** |
-| --- | --- |
-| **Content, Media & Information** | Image hosting, navigation sites, online video streaming (such as modified MoonTV versions), MyTube-type apps (pulling YouTube content), blogs, RSS apps, AI novel/article-writing apps, **media apps (poster wall, Jellyfin front-end apps)**, **forum apps**, and **information dashboards** |
-| **Productivity & Lifestyle Management** | Bookmark managers, note-taking apps, to-do list apps, personal finance and expense-tracking apps, AI job resume/cover letter apps, and **self-hosted management apps (warehouse/inventory, medicine, asset, ticketing, etc.)** |
-| **Network, API & Basic Tools** | VPN apps, URL shorteners, self-destructing message apps, database apps, API aggregation or relay services, Web-to-API apps with time-sensitive functionality, reverse-engineered API apps, and Cron job apps |
-| **AI Interaction** | Agent role-play/dialogue apps, and **other general-purpose AI tools that merely wrap a large model API with a simple UI and have no complex workflow** |
-| **Remote Desktop** | VNC-type apps |
+Currently, applications involving pornography, gambling, drugs, airdrops, cracked software, or any software that violates Chinese laws and regulations cannot be published in the application store.
 
-::: tip Supplementary Note
-VNC-type applications are not eligible for the incentive program. For example, building a VNC environment to deploy and list a single application in the store is not covered by the incentive scope. Such applications are recommended for users to install and deploy directly within the lightOS system.
-:::
+#### 5. Subjective Review Standards for Applications
 
-Not being eligible for incentives does not mean an application cannot be listed. Applications that meet the store review requirements may still be submitted for review.
+To build a high-quality application store, the subjective review standards for applications uploaded by developers are explicitly defined as follows:
 
-#### 6. Totoro Skill Launch
-To ensure the quality and security of Little Totoro Skills (many Skills online are known to steal user data), the Skill review process will be exceptionally strict. Skills that are not high enough in quality or lack sufficient utility will not pass review. There will be no incentives at the time of Skill launch. The official team will provide retroactive incentives for reviewed and approved Skills based on download numbers at a later stage.
+* **Similar Application Review**: If the submitted application is highly similar to an already published application in the store, the subjective review will adopt a more cautious approach, and it will generally not be published. However, if the application has significantly innovative features or effectively solves needs unmet by existing applications, it may be approved at our discretion.
+* **Functionality and UI Quality Review**: Applications with overly simplistic features, no practical utility, or rough front-end interfaces will not pass the subjective review and will not be published due to failing overall quality standards.
+* **Localization Requirements**: Applications that only provide a pure English interface or English operation guides, lacking necessary localization support, will not be published. (Supplement: If the project is highly popular and of high quality, the final review decision will be made by the reviewers.)
+* **Complex Application Review**: For applications with complex features but lacking detailed guides, developers must supplement complete user manuals or operational guides before they can be published after passing the re-review.
 
-#### 7. Application Types That Cannot Be Listed in the App Store
-Currently, pornography, gambling, drugs, airdrops, cracked software, or software that violates Chinese laws cannot be listed in the app store.
-
-#### 8. Subjective Standards for Application Review
-To build a high-quality app store, the subjective review standards for developer-submitted applications are clarified as follows:
-
-**Similar Application Review**: If a submitted application has a high degree of similarity with an application already listed in the store, the subjective review will adopt a more cautious approach and will in principle not approve it for listing; however, if the application has significant innovative features, or can effectively address needs that existing applications cannot meet, it may be approved on a case-by-case basis.
-
-**Feature and Interface Quality Review**: Applications with overly simplistic features, no practical utility, or a rough frontend interface will not pass subjective review and will not be listed, as the overall quality does not meet the standard.
-
-**Localization Requirements**: Applications that provide only a pure English interface or English documentation without necessary localization support will not be listed.
-
-**Additional Note on Localization**: If a project is particularly popular and of high quality, the final review decision is at the discretion of the reviewer.
-
-**Complex Feature Application Review**: For applications with complex features but lacking detailed guides or documentation, developers must supplement complete user guides or operational walkthroughs before they can be listed after re-review.
-
-**Other unclarified situations**: The final interpretation of review results belongs to the Lazycat MicroServer team.
+For any other unspecified situations, the LazyCat Cloud team reserves the right of final interpretation of the review results.
 
 ::: warning
 **Additional Note**:
 1.  For applications that require usernames and passwords, if regular users cannot obtain the corresponding credentials within the Lazycat Store, they cannot be listed.
 2.  If an application includes upload/download functionality, it must integrate the Lazycat NetDisk's automatic intercepting file chooser. Applications that do not integrate this cannot be listed. [Reference Document](./lazycat-file-picker-auto-intercept.md)
 :::
+
