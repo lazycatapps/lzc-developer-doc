@@ -2,6 +2,14 @@
 
 This page aggregates developer-related system changes and lists versions in reverse chronological order.
 
+## v1.6.3 (Unreleased) {#v1-6-3}
+
+### Feature Changes
+
+- Added the [`X-HC-User-Groups`](./http-request-headers.md#user-groups) request header, providing a JSON array of the current user's groups with stable UUIDs and Base64-encoded names for group-level permission decisions and name display.
+
+User groups do not yet have a formal management page. During testing, administrators must manually open `/sys/debug/` on the system settings site and select `user-groups` to create groups and manage members.
+
 ## v1.6.2 (2026-09-09) {#v1-6-2}
 
 ### Feature Changes

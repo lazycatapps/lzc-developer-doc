@@ -10,6 +10,7 @@ lzc-ingress主要处理以下任务
 在鉴权成功转发给具体的lzcapp前，`lzc-ingress`会设置以下额外的http headers
 
 - `X-HC-User-ID`        登录的UID(用户名)
+- `X-HC-User-Groups`    当前用户所属组的 JSON 数组，包含组 UUID 和 Base64 编码的组名；无组时不发送，详见[用户组](#user-groups)（`lzcos v1.6.3+`）
 - `X-HC-Device-ID`      客户端位于本微服内的唯一ID， 应用程序可以使用这个作为设备标识符
 - `X-HC-Device-PeerID`  客户端的peerid， 仅内部使用。
 - `X-HC-Device-Version` 客户端的内核版本号
@@ -31,6 +32,43 @@ lzc-ingress主要处理以下任务
 - 如果鉴权成功，则会带上上述`X-HC-XX`的header。
 
 也就是lzcapp开发者在编写后端代码时，不用考虑是否为`public_path`， 直接信任`X-HC-User-ID`即可。
+
+## `X-HC-User-Groups` {#user-groups}
+
+用户组是一组用户的集合，应用可以根据用户所属组实现自身的权限判断。此能力最低要求 `lzcos v1.6.3`。
+
+真实客户端经 `lzc-ingress` 正常入口访问 lzcapp，鉴权成功后，应用通过 `X-HC-User-Groups` 获取当前用户的组信息：
+
+- 系统发送单个请求头，其值直接为 JSON 数组。每个元素仅包含两个字符串字段：`id` 为明文的稳定组 UUID；`name` 为当前组名的 UTF-8 字节经标准 Base64 编码后的字符串，保留所需的 `=` 填充。
+- 应用先将请求头值解析为 JSON，再对各元素的 `name` 做 Base64 解码并按 UTF-8 读取，得到可展示的组名。应用可使用 `id` 绑定权限规则；重命名用户组不会改变 `id`。
+- 用户未加入任何组时，不发送该请求头；未登录请求也不携带该请求头。
+- `lzc-ingress` 会清除调用方传入的同名请求头，再按已认证用户的实际组成员关系设置。
+- 管理员保存成员或组名变更后，每次新请求都反映最新成员关系和组名，无需用户重新登录。
+
+### 格式与解码示例
+
+例如，用户属于“研发组 A”时，请求头值如下：
+
+```json
+[{"id":"550e8400-e29b-41d4-a716-446655440000","name":"56CU5Y+R57uEIEE="}]
+```
+
+以下命令需要 Python 3，演示应用解析请求头和解码组名的顺序：
+
+```bash
+python3 - <<'PY'
+import base64
+import json
+
+header = '[{"id":"550e8400-e29b-41d4-a716-446655440000","name":"56CU5Y+R57uEIEE="}]'
+groups = json.loads(header)
+for group in groups:
+    name = base64.b64decode(group["name"], validate=True).decode("utf-8")
+    print(group["id"], name)
+PY
+```
+
+输出为 `550e8400-e29b-41d4-a716-446655440000 研发组 A`。
 
 ## `X-HC-User-Ticket`
 
